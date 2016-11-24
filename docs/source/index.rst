@@ -6,10 +6,10 @@
 Hermes Messaging Gateway
 ========================
 
-Contents:
-
 .. toctree::
    :maxdepth: 2
+
+.. image:: images/corvus-logo-slant.gif
 
 Introduction
 ============
@@ -29,6 +29,8 @@ One nation governs all colonies
 -------------------------------
 H2O provides individual modules to handle different message protocols (e.g. AS/2, ebXML MS, etc.). Regardless of the difference of the message formats, they can all be operated simultaneously in the common H2O platform, managed by a unified environment.
 
+..image:: images/corvus-usage.jpg
+
 Different destinations, same vehicle
 ------------------------------------
 Time is precious. Instead of learning various programs in delivering different type messages; we have standardized the programming interface for message delivery. To send an AS2 or ebXML message, your program simply invokes the corresponding endpoint provided by H2O, and you can focus on the business logic.
@@ -37,6 +39,8 @@ We are certified, to be good
 ----------------------------
 You care about quality, and so do we. Hermes 2 and the AS2 plugins have joined the 8th AS2 Interoperability Test organized by Drummond Group Inc., a US leading testing company. Hermes 2 successfully completed the AS2 Interoperability Testing with 29 other participants in the same product test round. It has also demonstrated ebXML interoperability through tests conducted with products developed by vendors and members in the ebXML Asia Committee.
 
+..image:: images/ebusinessready.png
+
 You plug, we converse
 ---------------------
 H2O provides a Simple Plug-in Architecture (SPA) specification to reduce implementation efforts for business requirements change. Quickly, the message gateway can bridge to the backend applications of an enterprise and make them converse with the world.
@@ -44,3 +48,5 @@ H2O provides a Simple Plug-in Architecture (SPA) specification to reduce impleme
 What's under the hood
 ---------------------
 H2O operates as a Java web application. The ebMS and AS2 messaging capabilities are operated by the corresponding plug-in, written according to the H2O SPA specification. The messaging operation requires a database with JDBC connectivity in keeping track of the messaging status. H2O has open endpoints, and the enterprise backend applications can invoke H2O's Web Services for message delivery. The message delivery can be secured by using SSL or e-certificates, which conforms the public standards.
+
+..image:: images/corvus-diagram2.gif
