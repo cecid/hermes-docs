@@ -6,14 +6,10 @@
 Hermes Messaging Gateway
 ========================
 
-.. toctree::
-   :maxdepth: 2
-
 .. image:: images/corvus-logo-slant.gif
 
 Introduction
 ------------
-
 Each day, millions of documents and information, such as purchase orders and invoices are exchanged between business partners. When it comes to machine-to-machine document exchange, the existence of boundary between organizations is a hurdle that needs to be overcome.
 
 EDI over Internet
@@ -53,7 +49,8 @@ H2O operates as a Java web application. The ebMS and AS2 messaging capabilities 
 
 Technical documents
 -------------------
-* :ref:`installation`
-* :ref:`configuration`
+.. toctree::
+   :maxdepth: 2
 
-
+   installation
+   configuration
