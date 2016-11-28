@@ -6,7 +6,7 @@
 Hermes Messaging Gateway
 ========================
 
-.. image:: static/images/corvus-logo-slant.gif
+.. image:: _static/images/corvus-logo-slant.gif
 
 Introduction
 ------------
@@ -25,7 +25,7 @@ One nation governs all colonies
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 H2O provides individual modules to handle different message protocols (e.g. AS/2, ebXML MS, etc.). Regardless of the difference of the message formats, they can all be operated simultaneously in the common H2O platform, managed by a unified environment.
 
-.. image:: static/images/corvus-usage.jpg
+.. image:: _static/images/corvus-usage.jpg
 
 Different destinations, same vehicle
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -35,7 +35,7 @@ We are certified, to be good
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 You care about quality, and so do we. Hermes 2 and the AS2 plugins have joined the 8th AS2 Interoperability Test organized by Drummond Group Inc., a US leading testing company. Hermes 2 successfully completed the AS2 Interoperability Testing with 29 other participants in the same product test round. It has also demonstrated ebXML interoperability through tests conducted with products developed by vendors and members in the ebXML Asia Committee.
 
-.. image:: static/images/ebusinessready.png
+.. image:: _static/images/ebusinessready.png
 
 You plug, we converse
 ^^^^^^^^^^^^^^^^^^^^^
@@ -45,7 +45,7 @@ What's under the hood
 ^^^^^^^^^^^^^^^^^^^^^
 H2O operates as a Java web application. The ebMS and AS2 messaging capabilities are operated by the corresponding plug-in, written according to the H2O SPA specification. The messaging operation requires a database with JDBC connectivity in keeping track of the messaging status. H2O has open endpoints, and the enterprise backend applications can invoke H2O's Web Services for message delivery. The message delivery can be secured by using SSL or e-certificates, which conforms the public standards.
 
-.. image:: static/images/corvus-diagram2.gif
+.. image:: _static/images/corvus-diagram2.gif
 
 Technical documents
 -------------------
