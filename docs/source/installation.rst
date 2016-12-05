@@ -97,10 +97,10 @@ Install all the prerequisite items. It is assumed that they are all running on t
 
 3.4. Step 2 – Configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-3.4.1 Database
-""""""""""""""
+*3.4.1 Database*
+""""""""""""""""
 
-* Postgres
+* *Postgres*
 
 
 1 Create database user with username "**corvus**" and password "**corvus**".
@@ -133,7 +133,7 @@ Install all the prerequisite items. It is assumed that they are all running on t
   
   2.5 Repeat 2.3 - 2.4 for ebms database.
 
-* MySQL
+* *MySQL*
 
 1 Create two database named "**as2**" and "**ebms**" with username "**corvus**" and password "**corvus**".
 
@@ -153,7 +153,7 @@ Install all the prerequisite items. It is assumed that they are all running on t
   
   1.6 Repeat 1.4 – 1.5 for ebMS database.
 
-* Oracle
+* *Oracle*
 
 For Oracle database creation, since it involve a number of steps and custom parameters for different requirement for the database server. We propose the following reference for the guideline of creating an Oracle database for Hermes 2:
 
@@ -302,7 +302,7 @@ Step 3 – Hermes 2 Deployment
 
 6. To verify Hermes 2 is running, access the following URL from browser.
 
-**http://localhost:8080/corvus/home**
+    **http://localhost:8080/corvus/home**
 
 Welcome page should be displayed as below:
 
@@ -310,7 +310,7 @@ Welcome page should be displayed as below:
 
 7. To access the admin page, go to the following URL. The login user and password is the same as the Tomcat user with admin privileges specified in Section 3.2.
 
-**http://localhost:8080/corvus/admin/home**
+    **http://localhost:8080/corvus/admin/home**
 
 8. Once you have gained access to the admin page, you should see the Hermes 2 Administration Console page like this:
 
@@ -354,13 +354,13 @@ A tool kit called **Web Service Usage Sample** was installed under Hermes 2, “
 4.2. Preparation
 ^^^^^^^^^^^^^^^^
 
-4.2.1. Windows environment
-""""""""""""""""""""""""""
+*4.2.1. Windows environment*
+""""""""""""""""""""""""""""
 
 1. Set environment variable **JAVA_HOME** to the directory installed the java.
 
-4.2.2. UNIX environment
-"""""""""""""""""""""""
+*4.2.2. UNIX environment*
+"""""""""""""""""""""""""
 
 1. Set environment variable **JAVA_HOME** to the directory installed the java.
 
@@ -385,12 +385,12 @@ A web service sample program is provided to manage "Partnership" (to add, update
 
 .. _4.3.1:
 
-4.3.1. Creating AS2 Partnership
-"""""""""""""""""""""""""""""""
+*4.3.1. Creating AS2 Partnership*
+"""""""""""""""""""""""""""""""""
 
-To create the partnership required to perform the AS2 messaging loopback test using Web Service Usage Sample in next step, you just need to execute the following command.
+To create the partnership required to perform the AS2 messaging loopback test using Web Service Usage Sample in next step, you just need to execute the following command. ::
 
-    `as2-partnership`
+    as2-partnership
 
 **OR**
 
@@ -447,17 +447,21 @@ Access http://localhost:8080/corvus/admin/as2/partnership to configure the partn
 | Certificate For Verification                                     | none                                           |
 +------------------------------------------------------------------+------------------------------------------------+
 
-4.3.2. Creating AS2 Plus Partnership
-""""""""""""""""""""""""""""""""""""
+.. _4.3.2:
 
-Please reference the procedures of section 4.3.1_ to create AS2 Plus  partnership.
+*4.3.2. Creating AS2 Plus Partnership*
+""""""""""""""""""""""""""""""""""""""
 
-4.3.3. Creating ebMS Partnership
-""""""""""""""""""""""""""""""""
+Please reference the procedures of `section 4.3.1`__ to create AS2 Plus  partnership.
 
-To create the partnership required to perform the ebMS messaging loopback test using Web Service Usage Sample in next step, you need to execute the following command.
+__ 4.3.1_
 
-    `ebms-partnership`
+*4.3.3. Creating ebMS Partnership*
+""""""""""""""""""""""""""""""""""
+
+To create the partnership required to perform the ebMS messaging loopback test using Web Service Usage Sample in next step, you need to execute the following command. ::
+
+    ebms-partnership
 
 **OR**
 
@@ -510,6 +514,22 @@ Access http://localhost:8080/corvus/admin/ebms/partnership to configure the part
 
 In order to validate the installation of Hermes 2, a web service usage sample program is provided. It can be simply executed by running the following command in a command prompt.
 
+Usage:
+
++---------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| as2-send      | Send a AS2 / ebMS message to the local Hermes 2. installed                                                                                                                                                                                                                                        |
+|               |                                                                                                                                                                                                                                                                                                   |
+| ebms-send     |                                                                                                                                                                                                                                                                                                   |
++---------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| as2-history   | Show the message history in the Hermes 2. This program will list the inbox and outbox message stored in the Hermes 2 data storage. User can view the details of inbox and outbox. For inbox message, user can also download the payload received in the Hermes 2 repository, if it is available.  |
+|               |                                                                                                                                                                                                                                                                                                   |
+| ebms-history  |                                                                                                                                                                                                                                                                                                   |
++---------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
+
+
+
 In order to test whether the Hermes 2 are installed success or not, we suggest to run sample programs in following steps:
 
 1. Add a partnership by running **ebms-partnership / as2-partnership**.
@@ -520,14 +540,18 @@ In order to test whether the Hermes 2 are installed success or not, we suggest t
 
 4. Check the received message by running **ebms-history / as2-history** and select the message from inbox, download the payload.
 
-4.4.1. AS2 Web Service Usage Sample
-"""""""""""""""""""""""""""""""""""
+*4.4.1. AS2 Web Service Usage Sample*
+"""""""""""""""""""""""""""""""""""""
 
-You are required to execute section 4.3.1_ successfully before executing the following AS2 web service usage sample. Next we illustrate the steps to run the test described in section 4.4_
+You are required to execute `section 4.3.1`__ successfully before executing the following AS2 web service usage sample. Next we illustrate the steps to run the test described in `section 4.4`__
 
-Send message to the local Hermes 2
+__ 4.3.1_
 
-    `as2-send`
+__ 4.4_
+
+Send message to the local Hermes 2 ::
+
+    as2-send
 
 This program creates and sends the request attached with payload named "**testpayload**" under the directory "**/config/as2-send**" to Hermes2.
 
@@ -561,9 +585,9 @@ Upon successful execution, you should be able to see the similar output shown as
 
     Please view log for details ..
 
-Check the sent message
+Check the sent message ::
 
-    `as2-history`
+    as2-history
 
 This program retrieves the list of sent/received message from Hermes 2. ::
 
@@ -629,10 +653,14 @@ From the select message screen of **as2-history**, enter 1 to select the inbox m
 Finally, the test for AS2 plugin installation has been done after executed the above steps successfully.
 
 
-4.4.2. ebMS Web Service Usage Sample
-""""""""""""""""""""""""""""""""""""
+*4.4.2. ebMS Web Service Usage Sample*
+""""""""""""""""""""""""""""""""""""""
 
-You are required to execute section 4.3.2 successfully before executing the following ebMS web service usage sample. Next we illustrate the steps to run the test described in section 4.4
+You are required to execute `section 4.3.2`__ successfully before executing the following ebMS web service usage sample. Next we illustrate the steps to run the test described in `section 4.4`__
+
+__ 4.3.2_
+
+__ 4.4_
 
 Send message to the local Hermes 2 server ::
     
@@ -765,19 +793,19 @@ In order to store private key for message signing, keystore is needed. Under cur
 5.1. Message Signing
 ^^^^^^^^^^^^^^^^^^^^
 
-To enable message signing, please configure the plugin with corresponding keystore. A default keystore setting are set through the installer. Or make a new customized keystore. To learn more about generating a keystore, please refer to article about "Generate Certificate_".
+To enable message signing, please configure the plugin with corresponding keystore. A default keystore setting are set through the installer. Or make a new customized keystore. To learn more about generating a keystore, please refer to article about `"Generate Certificate"`__.
 
-.. _Certificate: http://community.cecid.hku.hk/index.php/product/article/configuration_for_message_signning_and_secure_channel/#generate_cert
+__ http://community.cecid.hku.hk/index.php/product/article/configuration_for_message_signning_and_secure_channel/#generate_cert
 
-Article on “Generate Certificate”:
+**Article on “Generate Certificate”:**
 
 http://community.cecid.hku.hk/index.php/product/article/configuration_for_message_signning_and_secure_channel/#generate_cert
 
-Sender Setting for Message Signing
+*Sender Setting for Message Signing*
 
 To instruct Hermes to perform message signing with correct private-key, the corresponding Keystore Manager should be configured with correct parameters.
 
-* ebMS Sender-SideSetting
+* *ebMS Sender-SideSetting*
 
 Open the configuration file named "**ebms.module.xml**" which is placed in the conf folder of ebMS plugin. A component named "**keystore-manager-for-signature**" is defined to manage the keystore.
 
@@ -806,7 +834,7 @@ Open the configuration file named "**ebms.module.xml**" which is placed in the c
     </component>
 
 
-* AS2/AS2 Plus Sender-Side Setting 
+* *AS2/AS2 Plus Sender-Side Setting*
 
 Open the configuration file named "**as2.module.core.xml**", which is placed in the conf folder of AS2/AS2 Plus plugin. A component named "**keystore-manager**" is defined to manage the keystore.
 
@@ -851,18 +879,18 @@ Here are descriptions of parameters.
 +-------------------+--------------------------------------------------------------------------------------------------------+
 
 
-5.1.2. Receiver Setting for Message Signing
-"""""""""""""""""""""""""""""""""""""""""""
+*5.1.2. Receiver Setting for Message Signing*
+"""""""""""""""""""""""""""""""""""""""""""""
 
 For receiver to verify the signature, a public certificate should be provided by the sender through the partnership maintenance page.
 
   .. image:: _static/images/5-1-2-1.gif
 
-After that, set the value of "**Signing Required**" to "**true**". For detail setting of the partnership, please refer to as2-partnership-reference_ or ebMS-partnership-reference_.
+After that, set the value of "**Signing Required**" to "**true**". For detail setting of the partnership, please refer to `as2 partnership reference`__ or `ebMS partnership reference`__.
 
-.. _as2-partnership-reference : http://community.cecid.hku.hk/index.php/product/article/reference_of_as2_partnership_configuration/
+__ http://community.cecid.hku.hk/index.php/product/article/reference_of_as2_partnership_configuration/
 
-.. _ebMS-partnership-reference :  http://community.cecid.hku.hk/index.php/product/article/reference_of_ebms_2_0_partnership_configuration/
+__  http://community.cecid.hku.hk/index.php/product/article/reference_of_ebms_2_0_partnership_configuration/
 
   .. image:: _static/images/5-1-2-2.gif
 
@@ -879,7 +907,9 @@ http://community.cecid.hku.hk/index.php/product/article/reference_of_ebms_2_0_pa
 5.2. Message Tranfer with Secure Channel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To further ensure security of message transfer, secure channel is preferable. For more detail on the configuration that have to do, please visit our community site for the article "**Configuration for Message Signning and Secure Channel**".
+To further ensure security of message transfer, secure channel is preferable. For more detail on the configuration that have to do, please visit our community site for the article "`Configuration for Message Signning and Secure Channel`__".
+
+__ http://community.cecid.hku.hk/index.php/product/article/configuration_for_message_signning_and_secure_channel/#send_msg_thur_https
 
 **Article “Configuration for Message Signning and Secure Channel”:**
 
