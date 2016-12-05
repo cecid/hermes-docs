@@ -169,14 +169,14 @@ Step 3 – Hermes 2 Deployment
   
   3. In Windows platform, you can execute by double-click or right-click on the .jar file and selecting "**open with**" and choosing **javaw** (located where you installed java, in the bin folder).
 
-  .. image:: _static/images/hermes-2-0-opensource-installer.gif
+  .. image:: _static/images/3-4-1-hermes-2-0-opensource-installer.jpeg
   
   4. Click **next** until you get to Step 1 of the installation.
 
   5. Step 1 - Configure Hermes 2 Core:
 
-  .. image:: _static/images/step-1-configure-hermes-2-core.gif
-  .. image:: _static/images/step-1-h2o-installer.gif
+  .. image:: _static/images/3-4-1-step-1-configure-hermes-2-core.png
+  .. image:: _static/images/3-4-1-step-1-h2o-installer.jpeg
 
   Setting description
 
@@ -203,8 +203,8 @@ Step 3 – Hermes 2 Deployment
 
   7. Step 2 - Configure Database for ebMS Plugin (Optional)
   
-  .. image:: _static/images/step-2-configure-database-for-ebms-plugin.gif
-  .. image:: _static/images/step-2-h2o-installer.gif
+  .. image:: _static/images/3-4-1-step-2-configure-database-for-ebms-plugin.png
+  .. image:: _static/images/3-4-1-step-2-h2o-installer.jpeg
 
 
   Setting description
@@ -246,8 +246,8 @@ Step 3 – Hermes 2 Deployment
 
   11. Step 3 - Configure Database for AS2 Plugin (Optional)
 
-  .. image:: _static/images/step-3-configure-database-for-as2-plugin.gif
-  .. image:: _static/images/step-3-h2o-installer.gif
+  .. image:: _static/images/3-4-1-step-3-configure-database-for-as2-plugin.png
+  .. image:: _static/images/3-4-1-step-3-h2o-installer.jpeg
 
 
   Setting description
@@ -306,7 +306,7 @@ Step 3 – Hermes 2 Deployment
 
 Welcome page should be displayed as below:
 
-.. image:: _static/images/step-4-welcome-page.gif
+.. image:: _static/images/3-5-step-4-welcome-page.jpeg
 
 7. To access the admin page, go to the following URL. The login user and password is the same as the Tomcat user with admin privileges specified in Section 3.2.
 
@@ -314,7 +314,7 @@ Welcome page should be displayed as below:
 
 8. Once you have gained access to the admin page, you should see the Hermes 2 Administration Console page like this:
 
-.. image:: _static/images/step-4-administration-console-page.gif
+.. image:: _static/images/3-5-step-4-administration-console-page.png
 
 That’s it! Your Hermes 2 should now be up and running. You can test your setup by running our web service usage sample in Section!.
 
@@ -396,7 +396,7 @@ To create the partnership required to perform the AS2 messaging loopback test us
 
 Access http://localhost:8080/corvus/admin/as2/partnership to configure the partnership manually. Below is a simple loop-back configuration sample.
 
-.. image:: _static/images/4-3-1-create-as2-partnership.gif
+.. image:: _static/images/4-3-1-create-as2-partnership.png
 
 
 +------------------------------------------------------------------+------------------------------------------------+
@@ -467,7 +467,7 @@ To create the partnership required to perform the ebMS messaging loopback test u
 
 Access http://localhost:8080/corvus/admin/ebms/partnership to configure the partnership manually. Below is a simple loop-back configuration sample.
 
-  .. image:: _static/images/4-4-3.gif
+  .. image:: _static/images/4-3-3-ebms-plugin.png
 
 +----------------------------------+-------------------------------------------------+
 | Partnership ID                   | ebms-loopback                                   |
@@ -646,7 +646,7 @@ Check the received message, download the payload
 
 From the select message screen of **as2-history**, enter 1 to select the inbox message, then it will prompt for "*Please provide the folder to store the payload(s):*", press enter to save in the current folder. Then there should be a file named “**as2.<timestamp>@127.0.1.1.Payload.0**”, where <timestamp> is the time you just execute **as2-send** before. Open that file and you will see the follow content:
 
-  .. image:: _static/images/4-4-1-1.gif
+  .. image:: _static/images/4-4-1-smaple-message.png
 
 
 
@@ -781,7 +781,7 @@ From the select message screen of **ebms-history**, enter 1 to select the inbox 
 
 Finally, the test for ebMS plugin installation has been done after executed the above steps successfully.
 
-  .. image:: _static/images/4-4-2-3.gif
+  .. image:: _static/images/4-4-1-smaple-message.png
 
 
 5. Configuration for Secure Messaging & Secure Channel
@@ -884,7 +884,7 @@ Here are descriptions of parameters.
 
 For receiver to verify the signature, a public certificate should be provided by the sender through the partnership maintenance page.
 
-  .. image:: _static/images/5-1-2-1.gif
+  .. image:: _static/images/5-1-2-1.png
 
 After that, set the value of "**Signing Required**" to "**true**". For detail setting of the partnership, please refer to `as2 partnership reference`__ or `ebMS partnership reference`__.
 
@@ -892,7 +892,7 @@ __ http://community.cecid.hku.hk/index.php/product/article/reference_of_as2_part
 
 __  http://community.cecid.hku.hk/index.php/product/article/reference_of_ebms_2_0_partnership_configuration/
 
-  .. image:: _static/images/5-1-2-2.gif
+  .. image:: _static/images/5-1-2-2.png
 
 
 AS2 partnership reference:
