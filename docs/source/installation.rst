@@ -3,9 +3,6 @@
 Hermes 2 Installation Guide
 ===========================
 
-Version 0.9
-28/11/2016
-
 © CECID
 
 Produced by the Center for E-Commerce Infrastructure Development The University of Hong Kong
@@ -14,40 +11,15 @@ The contents of this document remain the property of and may not be reproduced i
 
 Status of This Document
 -----------------------
-1.1. Version History
+Version History
 ^^^^^^^^^^^^^^^^^^^^
 
-+---------+------------------+---------------+-------------------------------------------------------------------------------------------------+-------------------------------------+
-| Ver.No. | Date             | Revised By    | Description                                                                                     | Filename                            |
-+=========+==================+===============+=================================================================================================+=====================================+
-| 0.1     | 31 October 2005  | KO Chiu       | Initial draft                                                                                   | Hermes 2 Installation Guide.doc     |
-+---------+------------------+---------------+-------------------------------------------------------------------------------------------------+-------------------------------------+
-| 0.2     | 11 November 2005 | KO Chiu       | Partnership maintenance and loop back test section added                                        | Hermes 2 Installation Guide 0_2.doc |
-+---------+------------------+---------------+-------------------------------------------------------------------------------------------------+-------------------------------------+
-| 0.3     | 17 November 2005 | KO Chiu       | Updated the description                                                                         | Hermes 2 Installation Guide 0_3.doc |
-+---------+------------------+---------------+-------------------------------------------------------------------------------------------------+-------------------------------------+
-| 0.4     | 28 November 2005 | Ronnie Kwok   | Content revise                                                                                  | Hermes 2 Installation Guide 0_4.doc |
-+---------+------------------+---------------+-------------------------------------------------------------------------------------------------+-------------------------------------+
-| 0.5     | 23 May 2007      | Twinsen Tsang | Content revise for new H2O                                                                      | Hermes 2 Installation Guide 0_5.doc |
-+---------+------------------+---------------+-------------------------------------------------------------------------------------------------+-------------------------------------+
-| 0.6     | 29 May 2008      | Philip Wong   | Change instruction of loopback test                                                             | Hermes 2 Installation Guide.doc     |
-+---------+------------------+---------------+-------------------------------------------------------------------------------------------------+-------------------------------------+
-| 0.7     | 1 Aug 2008       | Patrick Yip   | H2O installer update and web service usage sample is included                                   | Hermes 2 Installation Guide.doc     |
-+---------+------------------+---------------+-------------------------------------------------------------------------------------------------+-------------------------------------+
-| 0.8     | 30 Jan 2009      | Steve Chan    | Added tomcat-user and partnership configuration                                                 | Hermes 2 Installation Guide.doc     |
-|         |                  |               |                                                                                                 |                                     |
-|         |                  |               | Added JDK 1.6 & Tomcat 6.0 Support Updated references                                           |                                     |
-+---------+------------------+---------------+-------------------------------------------------------------------------------------------------+-------------------------------------+
-| 0.9     | 8 Jan 2010       | Jumbo Cheung  | Updated to lastest installer screen                                                             | Hermes 2 Installation Guide.doc     |
-|         |                  |               |                                                                                                 |                                     |
-|         |                  |               | Added section to explain Message Signing and Secure Channel                                     |                                     |
-+---------+------------------+---------------+-------------------------------------------------------------------------------------------------+-------------------------------------+
 
-3.Procedures
+Procedures
 ------------
 This document is to describe how to install and run open-source business-to-business messaging gateway Hermes 2.0 (codenamed Corvus).
 
-3.1. Introduction
+Introduction
 ^^^^^^^^^^^^^^^^^
 
 The application is packaged in the form of a self-extracted java archive (JAR). Upon proper invocation, you will see an installation wizard, either in graphical or text format. Following through the steps will have the following components installed,
@@ -62,118 +34,95 @@ The application is packaged in the form of a self-extracted java archive (JAR). 
 * Web service usage sample
 
 
-3.2. Prerequisite
+Prerequisite
 ^^^^^^^^^^^^^^^^^
 1. Java 2 SDK version 5.0 or above 
-2. A security patch, Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files, is also required for the java cryptography extension. 
-3. Tomcat 5.5 or above with port 8080, TOMCAT_HOME is used for referring to the home directory of tomcat in the remaining parts of document.  
+#. A security patch, Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files, is also required for the java cryptography extension. 
+#. Tomcat 5.5 or above with port 8080, TOMCAT_HOME is used for referring to the home directory of tomcat in the remaining parts of document.  
 
-  **Note:**  To access the admin page, you will need to have a Tomcat user with an admin role.  One way is to define the user in "**tomcat-users.xml**".  Please refer to the Realm Configuration section in the Tomcat documentation for more details.
+   **Note:**  To access the admin page, you will need to have a Tomcat user with an admin role.  One way is to define the user in "**tomcat-users.xml**".  Please refer to the Realm Configuration section in the Tomcat documentation for more details.
 
-  ***Sample:**
+   ***Sample:**
 
-  Tomcat-user.xml
+   Tomcat-user.xml
 
-  .. code-block:: xml
+   .. code-block:: xml
 
-      <?xml version='1.0' encoding='utf-8'?>
-      <tomcat-users>
-        <role rolename="tomcat"/>
-        <role rolename="admin"/>
-        <user username="corvus" password="corvus" roles="tomcat,admin"/>
-      </tomcat-users>
+       <?xml version='1.0' encoding='utf-8'?>
+       <tomcat-users>
+         <role rolename="tomcat"/>
+         <role rolename="admin"/>
+         <user username="corvus" password="corvus" roles="tomcat,admin"/>
+       </tomcat-users>
 
-
-
-4. One of the following database installed on any server:
+#. One of the following database installed on any server:
 
   * PostgreSQL 8.0 or later, POSTGRES_HOME is referring to the home directory of PostgreSQL in the remaining parts of the document.
   * MySQL 5.0 or later, MYSQL_HOME is referring to the home directory of MySQL in the remaining parts of the document.
   * Oracle 9i or later, ORACLE_HOME is referring to the home directory of Oracle in the remaining parts of the document.
 
-3.3. Step 1 – Environment setup
+Step 1 – Environment setup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Install all the prerequisite items. It is assumed that they are all running on the same machine in the rest of this guide.
 
-3.4. Step 2 – Configuration
+Step 2 – Configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-*3.4.1 Database*
+*Database*
 """"""""""""""""
 
-* *Postgres*
+*Postgres*
+``````````````````````````````
 
+#. Create database user with username "**corvus**" and password "**corvus**".
 
-1 Create database user with username "**corvus**" and password "**corvus**".
+   i. Open a command prompt
+   #. Go to POSTGRES_HOME/bin
+   #. Type "``createuser -A -d -P -U <postgres_admin>``" where ``<postgres_admin>`` representing the name of administrator / super-user in PostgreSQL database. This value is "``postgres``" if not specified. It may require super user or Postgres owner to execute in Linux.
+   #. Create a user named "**corvus**"
+   #. Enter the password "**corvus**"
+   #. Enter the password again for confirmation
+   #. Enter "n" for question "Shall the new role be allowed to create more new roles?"
+   #. Enter the PostgreSQL administrator password for creating a new user role.
 
-  1.1 Open a command prompt
-  
-  1.2 Go to POSTGRES_HOME/bin
-  
-  1.3 Type "**createuser -A -d -P -U <postgres_admin>**" where <postgres_admin> representing the name of administrator / super-user in PostgreSQL database. This value is "**postgres**" if not specified. It may require super user or Postgres owner to execute in Linux.
-  
-  1.4 Create a user named "**corvus**"
-  
-  1.5 Enter the password "**corvus**"
-  
-  1.6 Enter the password again for confirmation
-  
-  1.7 Enter "n" for question "Shall the new role be allowed to create more new roles?"
-  
-  1.8 Enter the PostgreSQL administrator password for creating a new user role.
+#. Create two databases named "**as2**" and "**ebms**" with "**corvus**" user
 
-2 Create two databases named "**as2**" and "**ebms**" with "**corvus**" user
+  i. Open a command prompt
+  #. Go to POSTGRES_HOME/bin
+  #. Type "``createdb –U corvus –W as2``"
+  #. Enter the password "**corvus**"
+  #. Repeat 2.3 - 2.4 for ebms database.
 
-  2.1 Open a command prompt
-  
-  2.2 Go to POSTGRES_HOME/bin
-  
-  2.3 Type "**createdb –U corvus –W as2**"
-  
-  2.4 Enter the password "**corvus**"
-  
-  2.5 Repeat 2.3 - 2.4 for ebms database.
+*MySQL*
+``````````````````````````````
 
-* *MySQL*
+1. Create two database named "**as2**" and "**ebms**" with username "**corvus**" and password "**corvus**".
 
-1 Create two database named "**as2**" and "**ebms**" with username "**corvus**" and password "**corvus**".
+  i. Open a command prompt
+  #. Go to MYSQL_HOME/bin
+  #. Type "``mysql –u <mysql_admin> -p``" where <mysql_admin> representing the name of administrator / super-user in mySQL database. This is "**root**" by default. It may require super user or mySQL owner to execute in Linux.
+  #. Enter command below to create as2 database. Notice that specifying collate to "latin1_general_cs" is essential.
+     ``create database as2 collate=latin1_general_cs;``
+  #. Enter command below to create and assign access privileges to user "**corvus**".
+     ``grant all on as2.* to 'corvus'@'localhost' identified by 'corvus';``
+  #. Repeat 1.4 – 1.5 for ebMS database.
 
-  1.1 Open a command prompt
-  
-  1.2 Go to MYSQL_HOME/bin
-  
-  1.3 Type "**mysql –u <mysql_admin> -p**" where <mysql_admin> representing the name of administrator / super-user in mySQL database. This is "**root**" by default. It may require super user or mySQL owner to execute in Linux.
-  
-  1.4 Enter command below to create as2 database. Notice that specifying collate to "latin1_general_cs" is essential.
-  
-  **create database as2 collate=latin1_general_cs;**
-  
-  1.5 Enter command below to create and assign access privileges to user "**corvus**".
-  
-  **grant all on as2.* to 'corvus'@'localhost' identified by 'corvus';**
-  
-  1.6 Repeat 1.4 – 1.5 for ebMS database.
+*Oracle*
+``````````````````````````````
 
-* *Oracle*
-
-For Oracle database creation, since it involve a number of steps and custom parameters for different requirement for the database server. We propose the following reference for the guideline of creating an Oracle database for Hermes 2:
+For Oracle database creation, since it involves a number of steps and custom parameters for different requirement for the database server. We propose the following reference for the guideline of creating an Oracle database for Hermes 2:
 
 http://www.peacetech.com/flipper/oracle9i/901_doc/server.901/a90117/create.htm
 
 Step 3 – Hermes 2 Deployment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  1. In Windows platform, open a command prompt and type "**java –jar hermes2_installer.jar**" or if java is not set in your environment path, specify the full path.
-  
-  2. In Unix/Linux platform, open **xterm** and follow the same procedure as above.
-  
-  **OR**
-  
-  3. In Windows platform, you can execute by double-click or right-click on the .jar file and selecting "**open with**" and choosing **javaw** (located where you installed java, in the bin folder).
-
-  .. image:: _static/images/3-4-1-hermes-2-0-opensource-installer.jpeg
-  
-  4. Click **next** until you get to Step 1 of the installation.
-
-  5. Step 1 - Configure Hermes 2 Core:
+  1. In Windows platform, open a command prompt and type "``java –jar hermes2_installer.jar``" or if java is not set in your environment path, specify the full path.
+  #. In Unix/Linux platform, open ``xterm`` and follow the same procedure as above.
+     **OR**
+  #. In Windows platform, you can execute by double-click or right-click on the .jar file and selecting "**open with**" and choosing **javaw** (located where you installed java, in the bin folder).
+     .. image:: _static/images/3-4-1-hermes-2-0-opensource-installer.jpeg
+  #. Click **next** until you get to Step 1 of the installation.
+  #. Step 1 - Configure Hermes 2 Core:
 
   .. image:: _static/images/3-4-1-step-1-configure-hermes-2-core.png
   .. image:: _static/images/3-4-1-step-1-h2o-installer.jpeg
@@ -207,9 +156,8 @@ Step 3 – Hermes 2 Deployment
   .. image:: _static/images/3-4-1-step-2-h2o-installer.jpeg
 
 
-  Setting description
-
-
+Setting description
+"""""""""""""""""""""""""""""
 
 +-------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Database URL      | The URL address of the database server located. Port number may attached to the address as the format <host_address>:<port> where <host_address> is the address of the database server and <port > is the port number of the database server address |
@@ -231,13 +179,6 @@ Step 3 – Hermes 2 Deployment
 |                   |                                                                                                                                                                                                                                                      |
 +-------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-
-
-
-
-
-
-
   8. If you followed the prerequisite install procedures from above, you can just leave it as the default.
 
   9. Then click **next**.
@@ -249,8 +190,8 @@ Step 3 – Hermes 2 Deployment
   .. image:: _static/images/3-4-1-step-3-configure-database-for-as2-plugin.png
   .. image:: _static/images/3-4-1-step-3-h2o-installer.jpeg
 
-
-  Setting description
+Setting description
+"""""""""""""""""""""""""""""
 
 +---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Database URL        | The URL address of the database server located. Port number may attached to the address as the format <host_address>:<port> where <host_address> is the address of the database server and <port> is the port number of the database server address |
@@ -282,10 +223,7 @@ Step 3 – Hermes 2 Deployment
 
   13. Then click **next** and then click on **install** and you’re done!
 
-
-
-
-3.5. Step 4 – Start Hermes 2
+Step 4 – Start Hermes 2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Check list:**
@@ -319,12 +257,12 @@ Welcome page should be displayed as below:
 That’s it! Your Hermes 2 should now be up and running. You can test your setup by running our web service usage sample in Section!.
 
 
-4. Partnership Maintenance and Web Service Usage Sample
+Partnership Maintenance and Web Service Usage Sample
 -------------------------------------------------------
 
 A tool kit called **Web Service Usage Sample** was installed under Hermes 2, “<HERMES2_HOME>/sample” folder. It contains tools to test the installed Hermes, demonstrate messaging flow and provided a set of sample code for user to write web service client application to connect to the Hermes 2.
 
-4.1. Directory Organization
+Directory Organization
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 +-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -347,28 +285,28 @@ A tool kit called **Web Service Usage Sample** was installed under Hermes 2, “
 +-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
 | lib/*     | The library files required for the sample programs.                                                                                                 |
 +-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-| *.bat /   | The scripts for executing the sample programs.                                                                                                      |
-| *.sh      |                                                                                                                                                     |
+| \*.bat /  | The scripts for executing the sample programs.                                                                                                      |
+| \*.sh     |                                                                                                                                                     |
 +-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
 
-4.2. Preparation
+Preparation
 ^^^^^^^^^^^^^^^^
 
-*4.2.1. Windows environment*
-""""""""""""""""""""""""""""
+*Windows environment*
+""""""""""""""""""""""
 
-1. Set environment variable **JAVA_HOME** to the directory installed the java.
+1. Set environment variable ``JAVA_HOME`` to the directory installed the java.
 
-*4.2.2. UNIX environment*
+*UNIX environment*
 """""""""""""""""""""""""
 
-1. Set environment variable **JAVA_HOME** to the directory installed the java.
+1. Set environment variable ``JAVA_HOME`` to the directory installed the java.
 
 2. Change the permission of all shell-script files to 755 by following command.
 
-    **chown 755 *.sh**
+    ``chown 755 *.sh``
 
-4.3. Partnership Maintenance
+Partnership Maintenance
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Users need to define a "**Partnership**", which contains the relationship of messaging in transport level between a sender and a recipient. It is required to specify the "**Partnership**" in sender the recipient.
@@ -385,12 +323,12 @@ A web service sample program is provided to manage "Partnership" (to add, update
 
 .. _4.3.1:
 
-*4.3.1. Creating AS2 Partnership*
+*Creating AS2 Partnership*
 """""""""""""""""""""""""""""""""
 
-To create the partnership required to perform the AS2 messaging loopback test using Web Service Usage Sample in next step, you just need to execute the following command. ::
+To create the partnership required to perform the AS2 messaging loopback test using Web Service Usage Sample in next step, you just need to execute the following command. 
 
-    as2-partnership
+    ``as2-partnership``
 
 **OR**
 
@@ -447,21 +385,17 @@ Access http://localhost:8080/corvus/admin/as2/partnership to configure the partn
 | Certificate For Verification                                     | none                                           |
 +------------------------------------------------------------------+------------------------------------------------+
 
-.. _4.3.2:
-
-*4.3.2. Creating AS2 Plus Partnership*
+*Creating AS2 Plus Partnership*
 """"""""""""""""""""""""""""""""""""""
 
-Please reference the procedures of `section 4.3.1`__ to create AS2 Plus  partnership.
+Please reference the procedures of `Creating AS2 Partnership`_ to create AS2 Plus  partnership.
 
-__ 4.3.1_
-
-*4.3.3. Creating ebMS Partnership*
+*Creating ebMS Partnership*
 """"""""""""""""""""""""""""""""""
 
-To create the partnership required to perform the ebMS messaging loopback test using Web Service Usage Sample in next step, you need to execute the following command. ::
+To create the partnership required to perform the ebMS messaging loopback test using Web Service Usage Sample in next step, you need to execute the following command. 
 
-    ebms-partnership
+    `ebms-partnership`
 
 **OR**
 
@@ -509,7 +443,7 @@ Access http://localhost:8080/corvus/admin/ebms/partnership to configure the part
 
 .. _4.4:
 
-4.4. Web Service Usage Sample Flow
+Web Service Usage Sample Flow
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In order to validate the installation of Hermes 2, a web service usage sample program is provided. It can be simply executed by running the following command in a command prompt.
@@ -532,28 +466,24 @@ Usage:
 
 In order to test whether the Hermes 2 are installed success or not, we suggest to run sample programs in following steps:
 
-1. Add a partnership by running **ebms-partnership / as2-partnership**.
+1. Add a partnership by running ``ebms-partnership / as2-partnership``.
 
-2. Send message to the local Hermes 2 by running **ebms-send / as2-send**.
+2. Send message to the local Hermes 2 by running ``ebms-send / as2-send``.
 
-3. Check the status of sent message by running **ebms-history / as2-history** and select the message from outbox.
+3. Check the status of sent message by running ``ebms-history / as2-history`` and select the message from outbox.
 
-4. Check the received message by running **ebms-history / as2-history** and select the message from inbox, download the payload.
+4. Check the received message by running ``ebms-history / as2-history`` and select the message from inbox, download the payload.
 
-*4.4.1. AS2 Web Service Usage Sample*
+*AS2 Web Service Usage Sample*
 """""""""""""""""""""""""""""""""""""
 
-You are required to execute `section 4.3.1`__ successfully before executing the following AS2 web service usage sample. Next we illustrate the steps to run the test described in `section 4.4`__
-
-__ 4.3.1_
-
-__ 4.4_
+You are required to execute `Creating AS2 Partnership`_ successfully before executing the following AS2 web service usage sample. Next we illustrate the steps to run the test described in `Web Service Usage Sample Flow`_
 
 Send message to the local Hermes 2 ::
 
     as2-send
 
-This program creates and sends the request attached with payload named "**testpayload**" under the directory "**/config/as2-send**" to Hermes2.
+This program creates and sends the request attached with payload named "``testpayload``" under the directory "``/config/as2-send``" to Hermes2.
 
 
 Upon successful execution, you should be able to see the similar output shown as follow: ::
@@ -644,7 +574,7 @@ Enter 0 to check the sent message, the screen silimiar as following will show::
 
 Check the received message, download the payload
 
-From the select message screen of **as2-history**, enter 1 to select the inbox message, then it will prompt for "*Please provide the folder to store the payload(s):*", press enter to save in the current folder. Then there should be a file named “**as2.<timestamp>@127.0.1.1.Payload.0**”, where <timestamp> is the time you just execute **as2-send** before. Open that file and you will see the follow content:
+From the select message screen of ``as2-history``, enter 1 to select the inbox message, then it will prompt for "``Please provide the folder to store the payload(s):``", press enter to save in the current folder. Then there should be a file named “``as2.<timestamp>@127.0.1.1.Payload.0``”, where <timestamp> is the time you just execute ``as2-send`` before. Open that file and you will see the follow content:
 
   .. image:: _static/images/4-4-1-smaple-message.png
 
@@ -653,20 +583,16 @@ From the select message screen of **as2-history**, enter 1 to select the inbox m
 Finally, the test for AS2 plugin installation has been done after executed the above steps successfully.
 
 
-*4.4.2. ebMS Web Service Usage Sample*
+*ebMS Web Service Usage Sample*
 """"""""""""""""""""""""""""""""""""""
 
-You are required to execute `section 4.3.2`__ successfully before executing the following ebMS web service usage sample. Next we illustrate the steps to run the test described in `section 4.4`__
-
-__ 4.3.2_
-
-__ 4.4_
+You are required to execute `Creating AS2 Plus Partnership`_ successfully before executing the following ebMS web service usage sample. Next we illustrate the steps to run the test described in `Web Service Usage Sample Flow`_
 
 Send message to the local Hermes 2 server ::
     
     ebms-send
 
-This program creates and sends the request attached with payload named "**testpayload**" under the directory "**/config/ebms-send**" to Hermes2.
+This program creates and sends the request attached with payload named "``testpayload``" under the directory "``/config/ebms-send``" to Hermes2.
 
 Upon successful execution, you should be able to see the similar output shown in following: ::
 
@@ -776,7 +702,7 @@ Enter 0 to check the sent message, the screen similar as follow will show: ::
 
 Check the received message, download the payload
 
-From the select message screen of **ebms-history**, enter 1 to select the inbox message, then it will prompt for **"Please provide the folder to store the payload(s):"**, press enter to save in the current folder. Then there should a file named "**ebms.<timestamp>@127.0.1.1.Payload.0**", where *<timestamp>* is the time you just execute **ebms-send** before. Open that file and you will see the follow content:
+From the select message screen of ``ebms-history``, enter 1 to select the inbox message, then it will prompt for "``Please provide the folder to store the payload(s):``", press enter to save in the current folder. Then there should a file named "``ebms.<timestamp>@127.0.1.1.Payload.0``", where *<timestamp>* is the time you just execute ``ebms-send`` before. Open that file and you will see the follow content:
 
 
 Finally, the test for ebMS plugin installation has been done after executed the above steps successfully.
@@ -784,13 +710,13 @@ Finally, the test for ebMS plugin installation has been done after executed the 
   .. image:: _static/images/4-4-1-smaple-message.png
 
 
-5. Configuration for Secure Messaging & Secure Channel
+Configuration for Secure Messaging & Secure Channel
 ------------------------------------------------------
 
 
 In order to store private key for message signing, keystore is needed. Under current implementation, only PKCS12 keystore is supported. If you are running Hermes Installer, there are keystore files put under folder called “security” under both ebMS and AS2/AS2 Plus plugins.
 
-5.1. Message Signing
+Message Signing
 ^^^^^^^^^^^^^^^^^^^^
 
 To enable message signing, please configure the plugin with corresponding keystore. A default keystore setting are set through the installer. Or make a new customized keystore. To learn more about generating a keystore, please refer to article about `"Generate Certificate"`__.
@@ -807,7 +733,7 @@ To instruct Hermes to perform message signing with correct private-key, the corr
 
 * *ebMS Sender-SideSetting*
 
-Open the configuration file named "**ebms.module.xml**" which is placed in the conf folder of ebMS plugin. A component named "**keystore-manager-for-signature**" is defined to manage the keystore.
+Open the configuration file named "``ebms.module.xml``" which is placed in the conf folder of ebMS plugin. A component named "``keystore-manager-for-signature``" is defined to manage the keystore.
 
 
   .. code-block:: xml
@@ -836,7 +762,7 @@ Open the configuration file named "**ebms.module.xml**" which is placed in the c
 
 * *AS2/AS2 Plus Sender-Side Setting*
 
-Open the configuration file named "**as2.module.core.xml**", which is placed in the conf folder of AS2/AS2 Plus plugin. A component named "**keystore-manager**" is defined to manage the keystore.
+Open the configuration file named "``as2.module.core.xml``", which is placed in the conf folder of AS2/AS2 Plus plugin. A component named "``keystore-manager``" is defined to manage the keystore.
 
   .. code-block:: xml
 
@@ -879,7 +805,7 @@ Here are descriptions of parameters.
 +-------------------+--------------------------------------------------------------------------------------------------------+
 
 
-*5.1.2. Receiver Setting for Message Signing*
+*Receiver Setting for Message Signing*
 """""""""""""""""""""""""""""""""""""""""""""
 
 For receiver to verify the signature, a public certificate should be provided by the sender through the partnership maintenance page.
@@ -904,7 +830,7 @@ ebMS Partnership reference:
 http://community.cecid.hku.hk/index.php/product/article/reference_of_ebms_2_0_partnership_configuration/
 
 
-5.2. Message Tranfer with Secure Channel
+Message Tranfer with Secure Channel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To further ensure security of message transfer, secure channel is preferable. For more detail on the configuration that have to do, please visit our community site for the article "`Configuration for Message Signning and Secure Channel`__".
@@ -916,11 +842,11 @@ __ http://community.cecid.hku.hk/index.php/product/article/configuration_for_mes
 http://community.cecid.hku.hk/index.php/product/article/configuration_for_message_signning_and_secure_channel/#send_msg_thur_https
 
 
-6. FAQ
+FAQ
 ------
 
 
-6.1. Hermes 2 Deployment
+Hermes 2 Deployment
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 Q1.From the corvus.log show,
@@ -949,7 +875,7 @@ A2. Please check whether:
 
     plugins\hk.hku.cecid.ebms\conf\hk\hku\cecid\ebms\spa\conf\ebms.module.xml under Hermes 2 installation directory. There have a tag named “parameter” with attribute “name=url” and check the “value” attribute to see whether it is reference to the correct server address. The format of the value attribute is the same as the JDBC connection string.
 
-6.2. Web Service Usage Sample
+Web Service Usage Sample
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Q1. Exception in thread "main" **java.lang.UnsupportedClassVersionError:** xxx (Unsupported major.minor version 49.0)
