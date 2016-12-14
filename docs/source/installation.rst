@@ -466,7 +466,7 @@ Send message to the local Hermes 2 ::
 
   as2-send
 
-This program creates and sends the request attached with payload named "``testpayload``" under the directory "``/config/as2-send``" to Hermes2.
+This program creates and sends the request attached with payload named *testpayload* under the directory */config/as2-send* to Hermes2.
 
 
 Upon successful execution, you should be able to see the similar output shown as follow: ::
