@@ -119,7 +119,7 @@ Step 3 – Hermes 2 Deployment
 
   1. In Windows platform, open a command prompt and type :samp:`java –jar hermes2_installer.jar` or if :program:`java` is not set in your environment path, specify the full path.
   #. In Unix/Linux platform, open :program:`xterm` and follow the same procedure as above.
-     **OR**
+     *Or:*
   #. In Windows platform, you can execute by double-click or right-click on the :file:`.jar` file and selecting :menuselection:`open with --> javaw` (located where you installed java, in the bin folder).
      
      .. image:: _static/images/3-4-1-hermes-2-0-opensource-installer.jpeg
@@ -321,7 +321,7 @@ Creating AS2 Partnership
 
 To create the partnership required to perform the AS2 messaging loopback test using Web Service Usage Sample in next step, you just need to execute the command :program:`as2-partnership`.
 
-**OR**
+*Or:*
 
 Access http://localhost:8080/corvus/admin/as2/partnership to configure the partnership manually. Below is a simple loop-back configuration sample.
 
@@ -386,7 +386,7 @@ Creating ebMS Partnership
 
 To create the partnership required to perform the ebMS messaging loopback test using Web Service Usage Sample in next step, you need to execute the command :program:`ebms-partnership`.
 
-**OR**
+*Or:*
 
 Access http://localhost:8080/corvus/admin/ebms/partnership to configure the partnership manually. Below is a simple loop-back configuration sample.
 
@@ -723,7 +723,7 @@ A2. Please check whether:
 
     PostgreSQL OR MySQL OR Oracle was installed properly.
 
-    **AND**
+    *And:*
 
     Check the following file(s):
 
