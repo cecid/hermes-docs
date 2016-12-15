@@ -1,5 +1,8 @@
 .. _installation:
 
+.. role:: sh(code)
+   :language: sh
+
 Hermes 2 Installation Guide
 ===========================
 
@@ -22,6 +25,7 @@ The application is packaged in the form of a self-extracted java archive (JAR). 
 * Hermes 2 Core
 * Hermes 2 plugins
 * Database tables of Hermes 2 plugins for either one of the following database:
+  
   * Postgres 8.0 or later
   * Oracle 9i or later
   * MySQL 5.0 or later with InnoDB storage engine supported
@@ -32,11 +36,11 @@ Prerequisite
 ^^^^^^^^^^^^^^^^^
 1. Java 2 SDK version 5.0 or above 
 #. A security patch, Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files, is also required for the java cryptography extension. 
-#. Tomcat 5.5 or above with port 8080, TOMCAT_HOME is used for referring to the home directory of tomcat in the remaining parts of document.  
+#. Tomcat 5.5 or above with port :literal:`8080`, :file:`TOMCAT_HOME` is used for referring to the home directory of tomcat in the remaining parts of document.  
 
-   **Note:**  To access the admin page, you will need to have a Tomcat user with an admin role.  One way is to define the user in *tomcat-users.xml*.  Please refer to the Realm Configuration section in the Tomcat documentation for more details.
+   **Note:**  To access the admin page, you will need to have a Tomcat user with an admin role.  One way is to define the user in :file:`tomcat-users.xml`.  Please refer to the Realm Configuration section in the Tomcat documentation for more details.
 
-   Sample of *tomcat-user.xml*:
+   Sample of :file:`tomcat-user.xml`:
 
    .. code-block:: xml
 
@@ -49,9 +53,9 @@ Prerequisite
 
 #. One of the following database installed on any server:
 
-  * PostgreSQL 8.0 or later, ``POSTGRES_HOME`` is referring to the home directory of PostgreSQL in the remaining parts of the document.
-  * MySQL 5.0 or later, ``MYSQL_HOME`` is referring to the home directory of MySQL in the remaining parts of the document.
-  * Oracle 9i or later, ``ORACLE_HOME`` is referring to the home directory of Oracle in the remaining parts of the document.
+  * PostgreSQL 8.0 or later, :file:`POSTGRES_HOME` is referring to the home directory of PostgreSQL in the remaining parts of the document.
+  * MySQL 5.0 or later, :file:`MYSQL_HOME` is referring to the home directory of MySQL in the remaining parts of the document.
+  * Oracle 9i or later, :file:`ORACLE_HOME` is referring to the home directory of Oracle in the remaining parts of the document.
 
 Step 1 – Environment setup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -65,38 +69,46 @@ Database
 Postgres
 ````````
 
-#. Create database user with username *corvus* and password ``corvus``.
+#. Create database user with username ``corvus`` and password ``corvus``.
 
    i. Open a command prompt
-   #. Go to *POSTGRES_HOME/bin*
-   #. Type ``createuser -A -d -P -U <postgres_admin>`` where ``<postgres_admin>`` representing the name of administrator / super-user in PostgreSQL database. This value is ``postgres`` if not specified. It may require super user or Postgres owner to execute in Linux.
-   #. Create a user named *corvus*
+   #. Go to :file:`POSTGRES_HOME/bin`
+   #. Type :sh:`createuser -A -d -P -U <postgres_admin>` where ``<postgres_admin>`` representing the name of administrator / super-user in PostgreSQL database. This value is ``postgres`` if not specified. It may require super user or Postgres owner to execute in Linux.
+   #. Create a user named ``corvus``
    #. Enter the password ``corvus``
    #. Enter the password again for confirmation
    #. Enter ``n`` for the question *Shall the new role be allowed to create more new roles?*
    #. Enter the PostgreSQL administrator password for creating a new user role.
 
-#. Create two databases named *as2* and *ebms* with *corvus* user
+#. Create two databases named ``as2`` and ``ebms`` with ``corvus`` user
 
   i. Open a command prompt
-  #. Go to *POSTGRES_HOME/bin*
-  #. Type ``createdb –U corvus –W as2``
+  #. Go to :file:`POSTGRES_HOME/bin`
+  #. Type :sh:`createdb –U corvus –W as2`
   #. Enter the password ``corvus``
-  #. Repeat 2.3 - 2.4 for the *ebms* database.
+  #. Repeat 2.3 - 2.4 for the ``ebms`` database.
 
 MySQL
 `````
 
-1. Create two database named *as2* and *ebms* with username *corvus* and password ``corvus``.
+1. Create two database named ``as2`` and ``ebms`` with username ``corvus`` and password ``corvus``.
 
   i. Open a command prompt
-  #. Go to *MYSQL_HOME/bin*
-  #. Type ``mysql –u <mysql_admin> -p`` where ``<mysql_admin>`` representing the name of administrator / super-user in mySQL database. This is *root* by default. It may require super user or mySQL owner to execute in Linux.
-  #. Enter command below to create the *as2* database. Notice that specifying collate to *latin1_general_cs* is essential.
-     ``create database as2 collate=latin1_general_cs;``
-  #. Enter command below to create and assign access privileges to user *corvus*.
-     ``grant all on as2.* to 'corvus'@'localhost' identified by 'corvus';``
-  #. Repeat 1.4 – 1.5 for the *ebms* database.
+  #. Go to :file:`MYSQL_HOME/bin`
+  #. Type :sh:`mysql –u <mysql_admin> -p` where ``<mysql_admin>`` representing the name of administrator / super-user in mySQL database. This is *root* by default. It may require super user or mySQL owner to execute in Linux.
+  #. Enter the command below to create the ``as2`` database. Notice that specifying collate to ``latin1_general_cs`` is essential.
+    
+     .. code-block:: sql
+
+        create database as2 collate=latin1_general_cs;
+     
+  #. Enter the command below to create and assign access privileges to user ``corvus``. 
+
+     .. code-block:: sql
+
+        grant all on as2.* to 'corvus'@'localhost' identified by 'corvus';
+     
+  #. Repeat 1.4 – 1.5 for the ``ebms`` database.
 
 Oracle
 ``````
@@ -108,40 +120,40 @@ http://www.peacetech.com/flipper/oracle9i/901_doc/server.901/a90117/create.htm
 Step 3 – Hermes 2 Deployment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  1. In Windows platform, open a command prompt and type ``java –jar hermes2_installer.jar`` or if *java* is not set in your environment path, specify the full path.
-  #. In Unix/Linux platform, open **xterm** and follow the same procedure as above.
+  1. In Windows platform, open a command prompt and type :sh:`java –jar hermes2_installer.jar` or if :command:`java` is not set in your environment path, specify the full path.
+  #. In Unix/Linux platform, open :command:`xterm` and follow the same procedure as above.
      **OR**
-  #. In Windows platform, you can execute by double-click or right-click on the .jar file and selecting **open with** and choosing **javaw** (located where you installed java, in the bin folder).
+  #. In Windows platform, you can execute by double-click or right-click on the :file:`.jar` file and selecting :menuselection:`open with --> javaw` (located where you installed java, in the bin folder).
      
      .. image:: _static/images/3-4-1-hermes-2-0-opensource-installer.jpeg
-  #. Click **next** until you get to Step 1 of the installation.
+  #. Click :guilabel:`next` until you get to Step 1 of the installation.
   #. Step 1 - Configure Hermes 2 Core:
 
-    .. image:: _static/images/3-4-1-step-1-configure-hermes-2-core.png
-    .. image:: _static/images/3-4-1-step-1-h2o-installer.jpeg
+     .. image:: _static/images/3-4-1-step-1-configure-hermes-2-core.png
+     .. image:: _static/images/3-4-1-step-1-h2o-installer.jpeg
 
-  Setting description:
+     Setting descriptions:
 
-  +-----------------------------------+-------------------------------------------------------------------+
-  | Web Application Folder            | Folder to place the web application (e.g *webapps*) in Tomcat     |
-  +-----------------------------------+-------------------------------------------------------------------+
-  | Hermes 2 Home                     | Location to place the Hermes 2 core library and some related files|
-  +-----------------------------------+-------------------------------------------------------------------+
-  | JDBC Driver                       | Specify which database vendor to connect to                       |
-  |                                   | One of these 3 database vendor can be chosen:                     |
-  |                                   |                                                                   | 
-  |                                   |   * Postgres                                                      |
-  |                                   |   * Oracle                                                        |
-  |                                   |   * MySQL                                                         |
-  +-----------------------------------+-------------------------------------------------------------------+
-  | Hermes 2 ebMS Plugin              | Whether to install the ebMS conponent                             |
-  +-----------------------------------+-------------------------------------------------------------------+
-  | Hermes 2 AS2 Plugin               | Whether to install the AS2 component                              |
-  +-----------------------------------+-------------------------------------------------------------------+
-  | Web Service Usage Sample          | Whether to install the sample program of web service client       |
-  +-----------------------------------+-------------------------------------------------------------------+
+     +-----------------------------------+---------------------------------------------------------------------+
+     | Web Application Folder            | Folder to place the web application (e.g :file:`webapps`) in Tomcat |
+     +-----------------------------------+---------------------------------------------------------------------+
+     | Hermes 2 Home                     | Location to place the Hermes 2 core library and some related files  |
+     +-----------------------------------+---------------------------------------------------------------------+
+     | JDBC Driver                       | Specify which database vendor to connect to                         |
+     |                                   | One of these 3 database vendor can be chosen:                       |
+     |                                   |                                                                     | 
+     |                                   |   * Postgres                                                        |
+     |                                   |   * Oracle                                                          |
+     |                                   |   * MySQL                                                           |
+     +-----------------------------------+---------------------------------------------------------------------+
+     | Hermes 2 ebMS Plugin              | Whether to install the ebMS conponent                               |
+     +-----------------------------------+---------------------------------------------------------------------+
+     | Hermes 2 AS2 Plugin               | Whether to install the AS2 component                                |
+     +-----------------------------------+---------------------------------------------------------------------+
+     | Web Service Usage Sample          | Whether to install the sample program of web service client         |
+     +-----------------------------------+---------------------------------------------------------------------+
 
-  6. Click *next* and press *yes* if the installer prompts you to create a new directory.
+  6. Click :guilabel:`next` and press :guilabel:`yes` if the installer prompts you to create a new directory.
 
   7. Step 2 - Configure Database for ebMS Plugin (Optional)
   
@@ -149,72 +161,70 @@ Step 3 – Hermes 2 Deployment
      .. image:: _static/images/3-4-1-step-2-h2o-installer.jpeg
 
 
-Setting description
-"""""""""""""""""""
-
-+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Database URL      | The URL address of the database server located. Port number may attached to the address as the format *<host_address>:<port>* where *host_address>* is the address of the database server and <port > is the port number of the database server address |
-+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Database Name/SID | For Postgres and MySQL, please specify the name of the database. For Oracle, please specify the Oracle System ID (SID)                                                                                                                                  |
-+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Username          | Username to access database                                                                                                                                                                                                                             |
-+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Password          | Password to access database                                                                                                                                                                                                                             |
-+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Re-create Tables  | Whether to re-create all the table in the specified database                                                                                                                                                                                            | 
-|                   |                                                                                                                                                                                                                                                         |
-|                   |                                                                                                                                                                                                                                                         |
-|                   | **Important Notes:**                                                                                                                                                                                                                                    |
-|                   |                                                                                                                                                                                                                                                         |
-|                   | If this is your **first time to install hermes**, please check this option.                                                                                                                                                                             |
-|                   |                                                                                                                                                                                                                                                         |
-|                   | If choose to re-create the tables, all of the existing data in the specified database will remove at the later step of installation. Please backup all the data on the selected database before choose to re-create tables.                             |
-|                   |                                                                                                                                                                                                                                                         |
-+-------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+     Setting descriptions:
+     
+     +-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+     | Database URL      | The URL address of the database server located. Port number may attached to the address as the format ``<host_address>:<port>`` where ``<host_address>`` is the address of the database server and ``<port>`` is the port number of the database server address |
+     +-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+     | Database Name/SID | For Postgres and MySQL, please specify the name of the database. For Oracle, please specify the Oracle System ID (SID)                                                                                                                                          |
+     +-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+     | Username          | Username to access database                                                                                                                                                                                                                                     |
+     +-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+     | Password          | Password to access database                                                                                                                                                                                                                                     |
+     +-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+     | Re-create Tables  | Whether to re-create all the table in the specified database                                                                                                                                                                                                    | 
+     |                   |                                                                                                                                                                                                                                                                 |
+     |                   |                                                                                                                                                                                                                                                                 |
+     |                   | **Important Notes:**                                                                                                                                                                                                                                            |
+     |                   |                                                                                                                                                                                                                                                                 |
+     |                   | If this is your **first time to install hermes**, please check this option.                                                                                                                                                                                     |
+     |                   |                                                                                                                                                                                                                                                                 |
+     |                   | If choose to re-create the tables, all of the existing data in the specified database will remove at the later step of installation. Please backup all the data on the selected database before choose to re-create tables.                                     |
+     |                   |                                                                                                                                                                                                                                                                 |
+     +-------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
   8. If you followed the prerequisite install procedures from above, you can just leave it as the default.
 
-  9. Then click *next*.
+  9. Then click :guilabel:`next`.
 
-  10. If AS2 Plugin was not selected, click *next* and then click on *install* and you’re done!
+  10. If AS2 Plugin was not selected, click :guilabel:`next` and then click on :guilabel:`install` and you’re done!
 
   11. Step 3 - Configure Database for AS2 Plugin (Optional)
 
   .. image:: _static/images/3-4-1-step-3-configure-database-for-as2-plugin.png
   .. image:: _static/images/3-4-1-step-3-h2o-installer.jpeg
 
-Setting description
-"""""""""""""""""""""""""""""
+     Setting descriptions:
 
-+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Database URL        | The URL address of the database server located. Port number may attached to the address as the format <host_address>:<port> where <host_address> is the address of the database server and <port> is the port number of the database server address |
-+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Database Name / SID | For Postgres and MySQL, please specify the name of the database. For Oracle, please specify the Oracle System ID (SID)                                                                                                                              |
-+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Username            | Username to access database                                                                                                                                                                                                                         |
-+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Password            | Password to access database                                                                                                                                                                                                                         |
-+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| AS2 Plugin          | AS2: Original AS2 plugin certified by Drummond Group Inc.                                                                                                                                                                                           |
-+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                     | AS2 Plus: Built based on AS2 plugin with new/enhanced features.                                                                                                                                                                                     |
-+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Re-create Tables    | Whether to re-create all the table in the specified database                                                                                                                                                                                        |
-|                     |                                                                                                                                                                                                                                                     |
-|                     |                                                                                                                                                                                                                                                     |
-|                     |                                                                                                                                                                                                                                                     |
-|                     | **Important Notes:**                                                                                                                                                                                                                                |
-|                     |                                                                                                                                                                                                                                                     |
-|                     | If this is your **first time to install hermes**, pleas check this option.                                                                                                                                                                          |
-|                     |                                                                                                                                                                                                                                                     |
-|                     | If you purposely switch your plugin from AS2 to AS2 Plus, or versus. We highly recommend you **check this option**.                                                                                                                                 |
-|                     |                                                                                                                                                                                                                                                     |
-|                     | If choose to re-create the tables, all of the existing data on the specified database will remove at the later step of installation. Please backup all the data on the selected database before choose to re-create tables.                         |
-+---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+     +---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+     | Database URL        | The URL address of the database server located. Port number may attached to the address as the format <host_address>:<port> where <host_address> is the address of the database server and <port> is the port number of the database server address |
+     +---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+     | Database Name / SID | For Postgres and MySQL, please specify the name of the database. For Oracle, please specify the Oracle System ID (SID)                                                                                                                              |
+     +---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+     | Username            | Username to access database                                                                                                                                                                                                                         |
+     +---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+     | Password            | Password to access database                                                                                                                                                                                                                         |
+     +---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+     | AS2 Plugin          | AS2: Original AS2 plugin certified by Drummond Group Inc.                                                                                                                                                                                           |
+     +---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+     |                     | AS2 Plus: Built based on AS2 plugin with new/enhanced features.                                                                                                                                                                                     |
+     +---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+     | Re-create Tables    | Whether to re-create all the table in the specified database                                                                                                                                                                                        |
+     |                     |                                                                                                                                                                                                                                                     |
+     |                     |                                                                                                                                                                                                                                                     |
+     |                     |                                                                                                                                                                                                                                                     |
+     |                     | **Important Notes:**                                                                                                                                                                                                                                |
+     |                     |                                                                                                                                                                                                                                                     |
+     |                     | If this is your **first time to install hermes**, pleas check this option.                                                                                                                                                                          |
+     |                     |                                                                                                                                                                                                                                                     |
+     |                     | If you purposely switch your plugin from AS2 to AS2 Plus, or versus. We highly recommend you **check this option**.                                                                                                                                 |
+     |                     |                                                                                                                                                                                                                                                     |
+     |                     | If choose to re-create the tables, all of the existing data on the specified database will remove at the later step of installation. Please backup all the data on the selected database before choose to re-create tables.                         |
+     +---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
   12. If you followed the prerequisite install procedures from above, you can just leave it as the default.
 
-  13. Then click *next* and then click on *install* and you’re done!
+  13. Then click :guilabel:`next` and then click on :guilabel:`install` and you're done!
 
 Step 4 – Start Hermes 2
 ^^^^^^^^^^^^^^^^^^^^^^^
