@@ -539,7 +539,7 @@ ebMS Web Service Usage Sample
 
 You are required to execute `Creating AS2 Plus Partnership`_ successfully before executing the following ebMS web service usage sample. Next we illustrate the steps to run the test described in `Web Service Usage Sample Flow`_
 
-Send message to the local Hermes 2 server using the command :command:`ebms-send`.
+Send message to the local Hermes 2 server using the command :program:`ebms-send`.
 
 This program creates and sends the request attached with the payload named :file:`testpayload` under the directory :file:`/config/ebms-send` to Hermes2.
 
@@ -621,7 +621,7 @@ In order to store private key for message signing, keystore is needed. Under cur
 Message Signing
 ^^^^^^^^^^^^^^^
 
-To enable message signing, please configure the plugin with corresponding keystore. A default keystore setting are set through the installer. Or make a new customized keystore. To learn more about generating a keystore, please refer to article about `"Generate Certificate"`__.
+To enable message signing, please configure the plugin with corresponding keystore. A default keystore setting are set through the installer. Or make a new customized keystore. To learn more about generating a keystore, please refer to article about `Generate Certificate`__.
 
 __ http://community.cecid.hku.hk/index.php/product/article/configuration_for_message_signning_and_secure_channel/#generate_cert
 
@@ -723,7 +723,7 @@ Q1. The :file:`corvus.log` shows:
 
 A1. Please check whether the Java 2 SDK is patched by JCE or not.
 
-Q2. From any one of logs show: hk.hku.cecid.piazza.commons.dao.DAOException: **Unable to begin transaction**.
+Q2. Some log files show the following error: :code:`hk.hku.cecid.piazza.commons.dao.DAOException: Unable to begin transaction.`
 
 A2. Please check whether:
 
@@ -744,11 +744,7 @@ A2. Please check whether:
 Web Service Usage Sample
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Q1. The following exception is thrown:
-
-.. code-block:: none
-
-   Exception in thread "main" java.lang.UnsupportedClassVersionError: xxx (Unsupported major.minor version 49.0)
+Q1. The following exception is thrown: :code:`Exception in thread "main" java.lang.UnsupportedClassVersionError: xxx (Unsupported major.minor version 49.0)`
 
 A1. It is very likely you are using an incompatible java version. The web service usage sample requires J2SE 5.0 or above for running properly. In command prompt, enter :samp:`java –version` to see whether you are using J2SE 5.0 or above.
 
