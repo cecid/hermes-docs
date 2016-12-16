@@ -119,7 +119,7 @@ Step 3 – Hermes 2 Deployment
 
   1. In Windows platform, open a command prompt and type :samp:`java –jar hermes2_installer.jar` or if :program:`java` is not set in your environment path, specify the full path.
   #. In Unix/Linux platform, open :program:`xterm` and follow the same procedure as above.
-     *Or:*
+     **Or:**
   #. In Windows platform, you can execute by double-click or right-click on the :file:`.jar` file and selecting :menuselection:`open with --> javaw` (located where you installed java, in the bin folder).
      
      .. image:: _static/images/3-4-1-hermes-2-0-opensource-installer.jpeg
@@ -321,7 +321,7 @@ Creating AS2 Partnership
 
 To create the partnership required to perform the AS2 messaging loopback test using Web Service Usage Sample in next step, you just need to execute the command :program:`as2-partnership`.
 
-*Or:*
+**Or:**
 
 Access http://localhost:8080/corvus/admin/as2/partnership to configure the partnership manually. Below is a simple loop-back configuration sample.
 
@@ -386,7 +386,7 @@ Creating ebMS Partnership
 
 To create the partnership required to perform the ebMS messaging loopback test using Web Service Usage Sample in next step, you need to execute the command :program:`ebms-partnership`.
 
-*Or:*
+**Or:**
 
 Access http://localhost:8080/corvus/admin/ebms/partnership to configure the partnership manually. Below is a simple loop-back configuration sample.
 
@@ -467,7 +467,9 @@ Send message to the local Hermes 2 using the command :program:`as2-send`.
 This program creates and sends the request attached with the payload named :file:`testpayload` under the directory :file:`/config/as2-send` to Hermes2.
 
 
-Upon successful execution, you should be able to see the similar output shown as follow: ::
+Upon successful execution, you should be able to see the similar output shown as follow: 
+
+.. code-block:: none
 
     ----------------------------------------------------
                     AS2 Message Sender
@@ -486,7 +488,9 @@ Upon successful execution, you should be able to see the similar output shown as
 
 Check the sent message using the command :program:`as2-history`.
 
-This program retrieves the list of sent/received message from Hermes 2. ::
+This program retrieves the list of sent/received message from Hermes 2. 
+
+.. code-block:: none
 
     ----------------------------------------------------
            AS2 Message History Web Service Client
@@ -509,8 +513,9 @@ This program retrieves the list of sent/received message from Hermes 2. ::
     Select message (0 - 1), -1 to exit:
 
 
-Enter :literal:`0` to check the sent message, the screen silimiar as following will show: ::
+Enter :literal:`0` to check the sent message, the screen silimiar as following will show: 
 
+.. code-block:: none
 
     Select message (0 - 1), -1 to exit: 0
     Query Message ID          : 20080722-133931-01300@127.0.1.1 
@@ -538,8 +543,9 @@ Send message to the local Hermes 2 server using the command :command:`ebms-send`
 
 This program creates and sends the request attached with the payload named :file:`testpayload` under the directory :file:`/config/ebms-send` to Hermes2.
 
-Upon successful execution, you should be able to see the similar output shown in following: ::
+Upon successful execution, you should be able to see the similar output shown in following:
 
+.. code-block:: none
 
     ----------------------------------------------------
                EbMS sender web service client           
@@ -562,7 +568,9 @@ Upon successful execution, you should be able to see the similar output shown in
 
 Check the sent message using the command :program:`ebms-history`.
 
-This program retrieves the list of sent/received message from Hermes 2. ::
+This program retrieves the list of sent/received message from Hermes 2.
+
+.. code-block:: none
 
     ----------------------------------------------------
                EbMS Message History Queryer
@@ -581,7 +589,9 @@ This program retrieves the list of sent/received message from Hermes 2. ::
     ----------------------------------------------------
     Select message (0 - 1), -1 to exit:
 
-Enter :literal:`0` to check the sent message, the screen similar as follow will show: ::
+Enter :literal:`0` to check the sent message, the screen similar as follow will show: 
+
+.. code-block:: none
 
                         Sending Done:
     ----------------------------------------------------
@@ -614,10 +624,6 @@ Message Signing
 To enable message signing, please configure the plugin with corresponding keystore. A default keystore setting are set through the installer. Or make a new customized keystore. To learn more about generating a keystore, please refer to article about `"Generate Certificate"`__.
 
 __ http://community.cecid.hku.hk/index.php/product/article/configuration_for_message_signning_and_secure_channel/#generate_cert
-
-uArticle on “Generate Certificate:
-
-http://community.cecid.hku.hk/index.php/product/article/configuration_for_message_signning_and_secure_channel/#generate_cert
 
 Sender Setting for Message Signing
 """"""""""""""""""""""""""""""""""
@@ -723,7 +729,7 @@ A2. Please check whether:
 
     PostgreSQL OR MySQL OR Oracle was installed properly.
 
-    *And:*
+    **And:**
 
     Check the following file(s):
 
@@ -740,7 +746,7 @@ Web Service Usage Sample
 
 Q1. The following exception is thrown:
 
-.. code::
+.. code-block:: none
 
    Exception in thread "main" java.lang.UnsupportedClassVersionError: xxx (Unsupported major.minor version 49.0)
 
@@ -748,8 +754,8 @@ A1. It is very likely you are using an incompatible java version. The web servic
 
 Q2. The following error occurs:
 
-.. code::
-   
+.. code-block:: none
+
    Sending ebMS/AS2 sending request ...
    java.net.ConnectException: Connection refused: connect
 
