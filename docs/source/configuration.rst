@@ -3,19 +3,6 @@
 Hermes 2 Configuration Guide
 ============================
 
-iASPEC Services Limited
-
-Unit 507-9, InnoCentre, 
-
-72 Tat Chee Avenue, Kowloon Tong, Hong Kong
-
-July 2005
-
-The copyright in the Document, and all original documents attached to it or enclosed, is vested in iASPEC Services Limited.  All other copyrights and Trademarks referenced in the Document are acknowledged.
-
-The Document must not be reproduced, in whole or in part by any means, or used for tendering or manufacturing purposes, or disclosed to a third party, except with the written consent of iASPEC Services Limited.
-
-
 Introduction
 ------------
 
