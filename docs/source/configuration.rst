@@ -80,7 +80,7 @@ Hermes 2 Core System properties
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 You can modify the following information either through the web admin interface or by manipulating the XML configuration files directly.
 
-The configuration files are stored in :file:`{[Webapps Location]}/corvus/WEB-INF/classes/hk/hku/cecid/piazza/corvus/core/conf` (where :file:`{[Webapps Location]}` is the Web application repository of the application server).
+The configuration files are stored in :file:`{<WEBAPPS_LOCATION>}/corvus/WEB-INF/classes/hk/hku/cecid/piazza/corvus/core/conf` (where :file:`{<WEBAPPS_LOCATION>}` is the Web application repository of the application server).
 
 +----------------------------------------------------------------------+----------------------------------------+
 | Tasks                                                                | Responsible configuration file         |
@@ -295,7 +295,7 @@ Hermes2 Plugins properties
 
 AS2 Plugin
 ^^^^^^^^^^
-In the directory :file:`{<Hermes 2 Plugins Location>}/hk.hku.cecid.edi.as2/conf/hk/hku/cecid/edi/as2/conf`, there are some configuration files for Hermes 2's AS2 plug-in. Which configuration file you should edit depends on your configuration task:
+In the directory :file:`{<HERMES_2_PLUGINS_LOCATION>}/hk.hku.cecid.edi.as2/conf/hk/hku/cecid/edi/as2/conf`, there are some configuration files for Hermes 2's AS2 plug-in. Which configuration file you should edit depends on your configuration task:
 
 
 +----------------------------------------------------+----------------------------------------+
@@ -523,7 +523,7 @@ Outgoing Repository:
 +-------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------+
 
 
-Original Message Repository (It is a temporary message repository used when Hermes 2 is composing or receiving AS2 messages):
+Original Message Repository (which is a temporary message repository used when Hermes 2 is composing or receiving AS2 messages):
 
 
 .. code-block:: xml
@@ -553,7 +553,7 @@ Original Message Repository (It is a temporary message repository used when Herm
 
 ebMS Plugin
 ^^^^^^^^^^^
-In the directory :file:`{<Hermes 2 Plugins Location>}/hk.hku.cecid.ebms/conf/hk/hku/cecid/ebms/spa/conf`, there are some configuration files for Hermes 2's AS2 plug-in. Which configuration file you should edit depends on your configuration task:
+In the directory :file:`{<HERMES_2_PLUGINS_LOCATION>}/hk.hku.cecid.ebms/conf/hk/hku/cecid/ebms/spa/conf`, there are some configuration files for Hermes 2's AS2 plug-in. Which configuration file you should edit depends on your configuration task:
 
 +------------------------------------------------------------------+----------------------------------------+
 | Tasks                                                            | Responsible configuration file         |

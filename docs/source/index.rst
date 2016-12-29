@@ -1,8 +1,7 @@
 .. hermes-docs documentation master file, created by sphinx-quickstart on Thu Nov 24 11:02:00 2016.  You can adapt this file completely to your liking, but it should at least contain the root `toctree` directive.  
+
 Hermes Messaging Gateway
 ========================
-
-.. image:: _static/images/corvus-logo-slant.gif
 
 Introduction
 ------------

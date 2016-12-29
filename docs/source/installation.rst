@@ -33,7 +33,7 @@ Prerequisite
 ^^^^^^^^^^^^^^^^^
 1. Java 2 SDK version 5.0 or above 
 #. A security patch, Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files, is also required for the java cryptography extension. 
-#. Tomcat 5.5 or above with port :literal:`8080`, :file:`{TOMCAT_HOME}` is used for referring to the home directory of tomcat in the remaining parts of document.  
+#. Tomcat 5.5 or above with port :literal:`8080`, :file:`{<TOMCAT_HOME>}` is used for referring to the home directory of tomcat in the remaining parts of document.  
 
    **Note:**  To access the admin page, you will need to have a Tomcat user with an admin role.  One way is to define the user in :file:`tomcat-users.xml`.  Please refer to the Realm Configuration section in the Tomcat documentation for more details.
 
@@ -50,9 +50,9 @@ Prerequisite
 
 #. One of the following database installed on any server:
 
-  * PostgreSQL 8.0 or later, :file:`{POSTGRES_HOME}` is referring to the home directory of PostgreSQL in the remaining parts of the document.
-  * MySQL 5.0 or later, :file:`{MYSQL_HOME}` is referring to the home directory of MySQL in the remaining parts of the document.
-  * Oracle 9i or later, :file:`{ORACLE_HOME}` is referring to the home directory of Oracle in the remaining parts of the document.
+  * PostgreSQL 8.0 or later, :file:`{<POSTGRES_HOME>}` is referring to the home directory of PostgreSQL in the remaining parts of the document.
+  * MySQL 5.0 or later, :file:`{<MYSQL_HOME>}` is referring to the home directory of MySQL in the remaining parts of the document.
+  * Oracle 9i or later, :file:`{<ORACLE_HOME>}` is referring to the home directory of Oracle in the remaining parts of the document.
 
 Step 1 – Environment setup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -69,8 +69,8 @@ Postgres
 #. Create database user with username :literal:`corvus` and password :literal:`corvus`.
 
    i. Open a command prompt
-   #. Go to :file:`{POSTGRES_HOME}/bin`
-   #. Type :samp:`createuser -A -d -P -U {<postgres_admin>}` where :samp:`{<postgres_admin>}` representing the name of administrator / super-user in PostgreSQL database. This value is :literal:`postgres` if not specified. It may require super user or Postgres owner to execute in Linux.
+   #. Go to :file:`{<POSTGRES_HOME>}/bin`
+   #. Type :samp:`createuser -A -d -P -U {<PROTGRES_ADMIN>}` where :samp:`{<PROTGRES_ADMIN>}` representing the name of administrator / super-user in PostgreSQL database. This value is :literal:`postgres` if not specified. It may require super user or Postgres owner to execute in Linux.
    #. Create a user named :literal:`corvus`
    #. Enter the password :literal:`corvus`
    #. Enter the password again for confirmation
@@ -80,7 +80,7 @@ Postgres
 #. Create two databases named :literal:`as2` and :literal:`ebms` with :literal:`corvus` user
 
   i. Open a command prompt
-  #. Go to :file:`POSTGRES_HOME/bin`
+  #. Go to :file:`<POSTGRES_HOME>/bin`
   #. Type :samp:`createdb –U corvus –W as2`
   #. Enter the password :literal:`corvus`
   #. Repeat 2.3 - 2.4 for the :literal:`ebms` database.
@@ -91,8 +91,8 @@ MySQL
 1. Create two database named :literal:`as2` and :literal:`ebms` with username :literal:`corvus` and password :literal:`corvus`.
 
   i. Open a command prompt
-  #. Go to :file:`MYSQL_HOME/bin`
-  #. Type :samp:`mysql –u {<mysql_admin>} -p` where :samp:`{<mysql_admin>}` representing the name of administrator / super-user in mySQL database. This is *root* by default. It may require super user or mySQL owner to execute in Linux.
+  #. Go to :file:`<MYSQL_HOME>/bin`
+  #. Type :samp:`mysql –u {<MYSQL_ADMIN>} -p` where :samp:`{<MYSQL_ADMIN>}` representing the name of administrator / super-user in mySQL database. This is *root* by default. It may require super user or mySQL owner to execute in Linux.
   #. Enter the command below to create the :literal:`as2` database. Notice that specifying collate to :literal:`latin1_general_cs` is essential.
     
      .. code-block:: sql
@@ -161,7 +161,7 @@ Step 3 – Hermes 2 Deployment
      Setting descriptions:
      
      +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-     | Database URL      | The URL address of the database server located. Port number may attached to the address as the format :samp:`{<host_address>}:{<port>}` where :samp:`{<host_address>}` is the address of the database server and :samp:`{<port>}` is the port number of the database server address |
+     | Database URL      | The URL address of the database server located. Port number may attached to the address as the format :samp:`{<HOST_ADDRESS>}:{<PORT>}` where :samp:`{<HOST_ADDRESS>}` is the address of the database server and :samp:`{<PORT>}` is the port number of the database server address |
      +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
      | Database Name/SID | For Postgres and MySQL, please specify the name of the database. For Oracle, please specify the Oracle System ID (SID)                                                                                                                                                              |
      +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -194,7 +194,7 @@ Step 3 – Hermes 2 Deployment
      Setting descriptions:
 
      +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-     | Database URL        | The URL address of the database server located. Port number may attached to the address as the format :samp:`{<host_address>}:{<port>}` where :samp:`{<host_address>}` is the address of the database server and :samp:`{<port>}` is the port number of the database server address |
+     | Database URL        | The URL address of the database server located. Port number may attached to the address as the format :samp:`{<HOST_ADDRESS>}:{<PORT>}` where :samp:`{<HOST_ADDRESS>}` is the address of the database server and :samp:`{<PORT>}` is the port number of the database server address |
      +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
      | Database Name / SID | For Postgres and MySQL, please specify the name of the database. For Oracle, please specify the Oracle System ID (SID)                                                                                                                                                              |
      +---------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+

@@ -421,3 +421,6 @@ epub_exclude_files = ['search.html']
 # If false, no index is generated.
 #
 # epub_use_index = True
+
+html_logo = '_static/images/corvus-logo-slant.gif'
+html_favicon = '_static/images/cecid_icon.ico'

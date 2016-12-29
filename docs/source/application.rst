@@ -645,36 +645,37 @@ The meanings of the elements in the request message:
 
 Glossary
 --------
+.. glossary::
 
-Administration Console:
-The Administration Console allows you to manage the partnerships, check the message histories, check the healthiess, and configure some of the properties.
+  Administration Console
+    The Administration Console allows you to manage the partnerships, check the message histories, check the healthiess, and configure some of the properties.
 
-AS2:
-Applicability Statement 2 is a draft standard from the Internet Engineering Task Force for securely exchanging business documents over the Internet.
+  AS2
+    Applicability Statement 2 is a draft standard from the Internet Engineering Task Force for securely exchanging business documents over the Internet.
 
-ebXML:
-Electronic Business XML. A international standard for electronic B2B messaging and process made by OASIS.
+  ebXML
+    Electronic Business XML. A international standard for electronic B2B messaging and process made by OASIS.
 
-ebMS:
-The messaging standard, in the ebXML standard suite.
+  ebMS
+    The messaging standard, in the ebXML standard suite.
 
-MDN:
-Message Dispensation Notification, the acknowledgement message in the AS2 protocol.
+  MDN
+    Message Dispensation Notification, the acknowledgement message in the AS2 protocol.
 
-Plugin:
-Corvus is a messaging gateway framework. Each plugin is an extension of such framework to handle a communication protocol. Currently, two protocols are supported, namely, ebMS and AS2.
+  Plugin
+    Corvus is a messaging gateway framework. Each plugin is an extension of such framework to handle a communication protocol. Currently, two protocols are supported, namely, ebMS and AS2.
 
-Partnership:
-A simplex communication channel, which abstracts the technical parameters of the channel. Since it is simplex, in a typical two-way commnunication, two partnerships should be created. One is for sending, another one is for receiving.
+  Partnership
+    A simplex communication channel, which abstracts the technical parameters of the channel. Since it is simplex, in a typical two-way commnunication, two partnerships should be created. One is for sending, another one is for receiving.
 
-SOAP:
-SOAP stands for Simple Object Access Protocol, which is a simple XML-based protocol to let applications exchange information over HTTP.
+  SOAP
+    SOAP stands for Simple Object Access Protocol, which is a simple XML-based protocol to let applications exchange information over HTTP.
 
-Web Service:
-Web services are web-based enterprise applications that use open, XML-based standards and transport protocols to exchange data with calling clients.
+  Web Service
+    Web services are web-based enterprise applications that use open, XML-based standards and transport protocols to exchange data with calling clients.
 
-URL:
-Universal Resource Locator.
+  URL
+    Universal Resource Locator.
 
 References
 ----------
