@@ -54,7 +54,7 @@ The main benefit of partnerships is that it provides abstraction on technical pa
 Partnership for ebMS 2.0 
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-If the communication protocol with your business partner’s messaging gateway is ebMS, CPA (Collaboration Protocol Agreement) ID, Service and Action are used to uniquely identify a partnership. Actually, these parameters are protocol parameters in ebMS protocol and their values appear in an ebMS message header. The meanings of these parameters for Send Partnership (the partnership for sending) and Receive Partnership (the partnership for receiving) are different:
+If the communication protocol with your business partner's messaging gateway is ebMS, CPA (Collaboration Protocol Agreement) ID, Service and Action are used to uniquely identify a partnership. Actually, these parameters are protocol parameters in ebMS protocol and their values appear in an ebMS message header. The meanings of these parameters for Send Partnership (the partnership for sending) and Receive Partnership (the partnership for receiving) are different:
 
 *	The values of CPA ID, Service and Action in Send Partnership are taken as the values in the ebMS header of the outgoing messages sent by the Send Partnership. 
 *	The values of CPA ID, Service and Action in Receive Partnership are taken as filtering criteria. If Hermes 2 receives an ebMS message whose CPA ID, Service and Action values do not have a matching partnership, a negative acknowledgement will be sent back to the sender and no application can retrieve the message on the receiver side.
@@ -75,7 +75,7 @@ Since a partnership is a simplex channel, each Hermes should have a pair of part
 
 The Service of the Send Partnership in the Hermes of company A should be the endpoint URL for receiving incoming ebMS messages or acknowledgements. Therefore, the Service should be http://1.1.1.1:8080/corvus/httpd/ebms/inbound. The messages sent by this Send Partnership will contain this Service value in the header, so the receiver Hermes will know where the acknowledgement should be sent to.
 
-The Receive Partnership’s CPA ID, Service and Action form a filtering criterion for the incoming messages. Therefore, these values in the Receive Partnership in the receiving Hermes should be always the same as the Send Partnership in the sending Hermes.
+The Receive Partnership's CPA ID, Service and Action form a filtering criterion for the incoming messages. Therefore, these values in the Receive Partnership in the receiving Hermes should be always the same as the Send Partnership in the sending Hermes.
 
 In the above scenario, we assume that company B will reply a business message after it has receives a message. So, the Hermes in company B also has a Send Partnership and the Hermes in company A has a Receive Partnership. 
 
@@ -89,7 +89,7 @@ A partnership for ebMS has the following properties:
 +-------------------------+-----------------------------------------------------------------------+-----------------------------------+
 | :code:`Hostname         | * Relevant if the transport endpoint is HTTPS.                        | Ignored                           |
 | Verified in SSL`        |                                                                       |                                   |
-|                         | * Check the HTTPS URL’s hostname matches the certificate.             |                                   |
+|                         | * Check the HTTPS URL's hostname matches the certificate.             |                                   |
 |                         |   Delivery will be failed if the checking fails.                      |                                   |  
 |                         |                                                                       |                                   |
 |                         | * Recommended to set it to :literal:`Yes`.                            |                                   |
@@ -113,7 +113,6 @@ A partnership for ebMS has the following properties:
 |                         |                                                                       |                                   |
 |                         | * Recommended to set it to :literal:`true` if the receiver can for    | Ignored.                          |
 |                         |   non-repudiation purpose.                                            |                                   |
-|                         |                                                                       |                                   |
 +-------------------------+-----------------------------------------------------------------------+-----------------------------------+
 | :code:`Duplicate        | * Request the receiver to eliminate duplicated messages.              | In order to enable duplicate      |
 | Elimination`            |                                                                       | elimination, both Send Partnership|
@@ -131,7 +130,6 @@ A partnership for ebMS has the following properties:
 |                         | * Both Send Partnership of the sender and Receive Partnership of      |                                   |
 |                         |   the receiver must enable it in order to enable message order.       |                                   |
 |                         |   Otherwise, the sender will receive negative acknowledgment.         |                                   |
-|                         |                                                                       |                                   |
 +-------------------------+-----------------------------------------------------------------------+-----------------------------------+
 | :code:`Signing          | * Request the sending Hermes to sign outgoing messages using XML      | In order to enable digital        |
 | Required`               |   signature                                                           | signatures, both Send Partnership |
@@ -140,7 +138,7 @@ A partnership for ebMS has the following properties:
 |                         |   the receiver must enable it in order to enable digital signature.   |                                   |
 |                         |   Otherwise, the sender will receive negative acknowledgment.         |                                   |
 |                         |                                                                       |                                   |
-|                         | * Receive negative acknowledgment if the message’s signature cannot   |                                   |
+|                         | * Receive negative acknowledgment if the message's signature cannot   |                                   |
 |                         |   be verified.                                                        |                                   |
 |                         |                                                                       |                                   |
 |                         | * The keystore (PKCS12 file) must be in the file system of the        |                                   |
@@ -184,7 +182,7 @@ Partnerships can be managed by the Administration Console. For details of how to
 Partnership for AS2
 ^^^^^^^^^^^^^^^^^^^
 
-If the communication protocol with your business partner’s messaging gateway is AS2, the AS2 From and AS2 To field in a partnership are used to uniquely identify a partnership. Actually, these parameters are protocol parameters in AS2 protocol and their values appear in an AS2 message header. 
+If the communication protocol with your business partner's messaging gateway is AS2, the AS2 From and AS2 To field in a partnership are used to uniquely identify a partnership. Actually, these parameters are protocol parameters in AS2 protocol and their values appear in an AS2 message header. 
 
 A partnership for AS2 has the following properties:
 
@@ -200,7 +198,6 @@ A partnership for AS2 has the following properties:
 | :code:`Disabled`       | Whether the Send Partnership is disabled.                                          | Whether the             |
 |                        |                                                                                    | Receive Partnership     |
 |                        |                                                                                    | is disabled.            |
-|                        |                                                                                    |                         |
 +------------------------+------------------------------------------------------------------------------------+-------------------------+
 | :code:`Subject`        | The :literal:`Subject` field in the outgoing AS2 messages sent                     | Ignored.                |
 |                        | by the Send Partnership.                                                           |                         |
@@ -210,7 +207,7 @@ A partnership for AS2 has the following properties:
 +------------------------+------------------------------------------------------------------------------------+-------------------------+
 | :code:`Hostname        | * Relevant if the transport endpoint is HTTPS.                                     | Ignored.                |
 | Verified in SSL`       |                                                                                    |                         |
-|                        | * Check the HTTPS URL’s hostname matches the certificate. Delivery will be failed  |                         |
+|                        | * Check the HTTPS URL's hostname matches the certificate. Delivery will be failed  |                         |
 |                        |   if the checking fails.                                                           |                         |
 |                        |                                                                                    |                         |
 |                        | * Recommended to set it to :literal:`Yes`.                                         |                         |
@@ -249,7 +246,6 @@ A partnership for AS2 has the following properties:
 |                        | :literal:`sha1` or :literal:`md5`.                                                 |                         |
 +------------------------+------------------------------------------------------------------------------------+-------------------------+
 | :code:`Maximum Retries`| The maximum number of retries after the first failed delivery.                     | Ignored.                |
-|                        |                                                                                    |                         |
 +------------------------+------------------------------------------------------------------------------------+-------------------------+
 | :code:`Retry Interval  | The interval in milliseconds between retries.                                      | Ignored.                |
 | (ms)`                  |                                                                                    |                         |
@@ -299,15 +295,15 @@ The SOAP Body of the request message has the following form. In the following re
 .. code-block:: xml
 
    <SOAP-ENV:Body>
-   <cpaId>…</cpaId>
-   <service>…<service >
-   <action>…</action>
-   <convId>…<convId>
-   <fromPartyId>…</fromPartyId>
-   <fromPartyType>…</fromPartyType>
-   <toPartyId>…</toPartyId>
-   <toPartyType>…</toPartyType>
-   <refToMessageId>…</refToMessageId>
+   <cpaId>...</cpaId>
+   <service>...<service >
+   <action>...</action>
+   <convId>...<convId>
+   <fromPartyId>...</fromPartyId>
+   <fromPartyType>...</fromPartyType>
+   <toPartyId>...</toPartyId>
+   <toPartyType>...</toPartyType>
+   <refToMessageId>...</refToMessageId>
    </ SOAP-ENV:Body>
 
 The meanings of the elements under SOAP Body in the above request message are as follows:
@@ -320,27 +316,18 @@ The meanings of the elements under SOAP Body in the above request message are as
 |                                                         | used to send the ebMS messages.                                           |
 +---------------------------------------------------------+---------------------------------------------------------------------------+
 | :code:`<convId>`                                        | It corresponds to the conversation id of the ebMS messages sent by Hermes.|
-|                                                         |                                                                           |
-|                                                         |                                                                           |
 +---------------------------------------------------------+---------------------------------------------------------------------------+
 | :code:`<fromPartyId>`                                   | It corresponds to the From Party Id of the ebMS messages sent by Hermes.  |
-|                                                         |                                                                           |
-|                                                         |                                                                           |
 +---------------------------------------------------------+---------------------------------------------------------------------------+
 | :code:`<fromPartyType>`                                 | It corresponds to the type attribute of the From Party Id of the ebMS     |
 |                                                         | messages sent by Hermes.                                                  |
-|                                                         |                                                                           |
 +---------------------------------------------------------+---------------------------------------------------------------------------+
 | :code:`<toPartyId>`                                     | It corresponds to the To Party Id of the ebMS messages sent by Hermes.    |
-|                                                         |                                                                           |
-|                                                         |                                                                           |
 +---------------------------------------------------------+---------------------------------------------------------------------------+
 | :code:`<toPartyIdType>`                                 | It corresponds to the type attribute of the To Party Id of the ebMS       |
 |                                                         | messages sent by Hermes.                                                  |
-|                                                         |                                                                           |
 +---------------------------------------------------------+---------------------------------------------------------------------------+
 | :code:`<refToMessageId>`                                | It corresponds to the RefToMessageId of the ebMS messages sent by Hermes. |
-|                                                         |                                                                           |
 +---------------------------------------------------------+---------------------------------------------------------------------------+
 
 To request Hermes to send payloads to the Hermes or compatible messaging gateway of the receiving party, your application should add SOAP Attachment to the request message. The content type (e.g. :code:`text/plain`, :code:`text/xml`) of each attachment part should be set.
@@ -353,7 +340,7 @@ The SOAP Body of the response message has the following form. In the following r
 .. code-block:: xml
 
    <SOAP-ENV:Body>
-      <message_id>…</message_id>
+      <message_id>...</message_id>
    </SOAP-ENV:Body>
 
 The :code:`<message_id>` element is the message identifier assigned by the Hermes of the sending party. The sending application can use it for later reference purpose and status tracking through Status Service.
@@ -377,15 +364,15 @@ Request Message
 .. code-block:: xml
 
    <SOAP-ENV:Body>
-   <cpaId>…</cpaId>
-   <service>…<service >
-   <action>…</action>
-   <convId>…<convId>
-   <fromPartyId>…</fromPartyId>
-   <fromPartyType>…</fromPartyType>
-   <toPartyId>…</toPartyId>
-   <toPartyType>…</toPartyType>
-   <numOfMessages>…</numOfMessages >
+   <cpaId>...</cpaId>
+   <service>...<service >
+   <action>...</action>
+   <convId>...<convId>
+   <fromPartyId>...</fromPartyId>
+   <fromPartyType>...</fromPartyType>
+   <toPartyId>...</toPartyId>
+   <toPartyType>...</toPartyType>
+   <numOfMessages>...</numOfMessages >
    </SOAP-ENV:Body>
 
 The meanings of the elements under SOAP Body in the above request message are as follows:
@@ -413,7 +400,6 @@ The meanings of the elements under SOAP Body in the above request message are as
 |                                    | the value of :code:`<ToPartyType>` will be retrieved.                       |
 +------------------------------------+-----------------------------------------------------------------------------+
 | :code:`<numOfMessages>`            | The maximum number of message identifiers retrieved by this request.        |
-|                                    |                                                                             |
 +------------------------------------+-----------------------------------------------------------------------------+
 
 
@@ -427,10 +413,10 @@ The SOAP Body of the response message has the following form. In the following r
 .. code-block:: xml
 
    <SOAP-ENV:Body>
-       <message_id>…</message_id>
-       <message_id>…</message_id>
-                   …
-       <message_id>…</message_id>
+       <message_id>...</message_id>
+       <message_id>...</message_id>
+                   ...
+       <message_id>...</message_id>
    </SOAP-ENV:Body>
 
 In the response message, each <message_id> element represents the message identifier of a ebMS message received by Hermes in the receiving party. 
@@ -454,7 +440,7 @@ The SOAP Body of the request message has the following form. In the following re
 .. code-block:: xml
 
    <SOAP-ENV:Body>
-     <messageId>…</messageId>
+     <messageId>...</messageId>
    </SOAP-ENV:Body>
 
 The :code:`<messageId>` is the message identifier of which the message payloads are downloaded.
@@ -466,7 +452,7 @@ The SOAP Body of the response message has the following form. In the following r
 .. code-block:: xml
 
    <SOAP-ENV:Body>
-   <!—has this element and equal to "TRUE" only when the ebMS message exists>
+   <!-has this element and equal to "TRUE" only when the ebMS message exists>
      <hasMessage>TRUE</hasMessage> 
    </SOAP-ENV:Body>
 
@@ -492,7 +478,7 @@ The SOAP Body of the request message has the following form. In the following re
 .. code-block:: xml
 
    <SOAP-Env:Body>
-   <messageId>…</messageId>
+   <messageId>...</messageId>
    </ SOAP-Env:Body>
 
 The :code:`<messageId>` specifies the message identifier.
@@ -506,11 +492,11 @@ The SOAP Body of the response message has the following form. In the following r
 
    <SOAP-ENV:Body>
    <messageInfo>
-       <status>…</status>
-       <statusDescription>…</statusDescription>
-       <ackMessageId>…</ackMessageId>
-       <ackStatus>…</ackStatus>
-       <ackStatusDescription>…</ackStatusDescription>
+       <status>...</status>
+       <statusDescription>...</statusDescription>
+       <ackMessageId>...</ackMessageId>
+       <ackStatus>...</ackStatus>
+       <ackStatusDescription>...</ackStatusDescription>
    </messageInfo>
    </SOAP-ENV:Body>
 
@@ -539,9 +525,9 @@ The SOAP Body of the request message has the following form. In the following re
 .. code-block:: xml
 
    <SOAP-ENV:Body>
-   <as2_from>…</as2_from>
-   <as2_to>…</as2_to>
-   <type>…</type>
+   <as2_from>...</as2_from>
+   <as2_to>...</as2_to>
+   <type>...</type>
    </ SOAP-ENV:Body>
 
 The meanings of the elements under SOAP Body in the above request message are as follows:
@@ -552,7 +538,6 @@ The meanings of the elements under SOAP Body in the above request message are as
 | :code:`<as2_from>`, :code:`<as2_to>`      | They are the values of the :literal:`from` and :literal:`to` fields in                  |
 |                                           | the AS2 messages sent through the partnership by Hermes. These two fields               |
 |                                           | are used to identify the partnership used to send the AS2 messages.                     |
-|                                           |                                                                                         |
 +-------------------------------------------+-----------------------------------------------------------------------------------------+
 | :code:`<type>` The three-character        | * :literal:`edi`, for the content type :literal:`application/EDIFACT`.                  |
 | code indicating the content type of       |                                                                                         |
@@ -578,7 +563,7 @@ The SOAP Body of the response message has the following form. In the following r
 .. code-block:: xml
 
    <SOAP-ENV:Body>
-      <message_id>…</message_id>
+      <message_id>...</message_id>
    </SOAP-ENV:Body>
 
 The <message_id> element is the message identifier assigned by the Hermes of the sending party. The sending application should keep it for later reference purpose and status tracking through Status Service.
@@ -602,9 +587,9 @@ The SOAP Body of the request message has the following form. In the following re
 .. code-block:: xml
 
    <SOAP-ENV:Body>
-   <as2From>…</as2From>
-   <as2To>…</as2To>
-   <numOfMessages>…</numOfMessages>
+   <as2From>...</as2From>
+   <as2To>...</as2To>
+   <numOfMessages>...</numOfMessages>
    </SOAP-ENV:Body>
 
 The meanings of the elements under SOAP Body in the above request message are as follows:
@@ -615,7 +600,6 @@ The meanings of the elements under SOAP Body in the above request message are as
 | :code:`<as2From>`, :code:`<as2To>` | They are the values of the :literal:`from` and :literal:`to` fields in the AS2 messages|
 |                                    | received through the partnership by Hermes. These two fields are used to identify the  |
 |                                    | partnership used to receive the AS2 messages.                                          |
-|                                    |                                                                                        |
 +------------------------------------+----------------------------------------------------------------------------------------+
 | :code:`<numOfMessages>`            | The maximum number of message identifiers retrieved by this request.                   |
 +------------------------------------+----------------------------------------------------------------------------------------+
@@ -630,10 +614,10 @@ The SOAP Body of the response message has the following form. In the following r
 .. code-block:: xml
 
    <SOAP-ENV:Body>
-     <message_id>…</message_id>
-     <message_id>…</message_id>
-                 …
-     <message_id>…</message_id>
+     <message_id>...</message_id>
+     <message_id>...</message_id>
+                 ...
+     <message_id>...</message_id>
    </SOAP-ENV:Body>
 
 In the response message, each :code:`<message_id>` element represents the message identifier of an AS2 message received by Hermes in the receiving party. 
@@ -657,7 +641,7 @@ The SOAP Body of the request message has the following form. In the following re
 .. code-block:: xml
 
    <SOAP-ENV:Body>
-     <messageId>…</messageId>
+     <messageId>...</messageId>
    </SOAP-ENV:Body>
 
 The :code:`<messageId>` is the message identifier of which the message payloads are downloaded.
@@ -671,7 +655,7 @@ The SOAP Body of the response message has the following form. In the following r
 .. code-block:: xml
 
    <SOAP-ENV:Body>
-   <!—has this element and equal to "TRUE" only when the AS2 message exists>
+   <!-has this element and equal to "TRUE" only when the AS2 message exists>
      <hasMessage>TRUE</hasMessage> 
    </SOAP-ENV:Body>
 
@@ -698,7 +682,7 @@ The SOAP Body of the request message has the following form. In the following re
 .. code-block:: xml
 
    <SOAP-Env:Body>
-   <messageId>…</messageId>
+   <messageId>...</messageId>
    </ SOAP-Env:Body>
 
 The :code:`<messageId>` specifies the message identifier.
@@ -712,11 +696,11 @@ The SOAP Body of the response message has the following form. In the following r
 
    <SOAP-ENV:Body>
    <messageInfo>
-   <status>…</status>
-   <statusDescription>…</statusDescription>
-   <mdnMessageId>…<mdnMessageId>
-   <mdnStatus>…</mdnStatus>
-   <mdnStatusDescription>…</mdnStatusDescription>
+   <status>...</status>
+   <statusDescription>...</statusDescription>
+   <mdnMessageId>...<mdnMessageId>
+   <mdnStatus>...</mdnStatus>
+   <mdnStatusDescription>...</mdnStatusDescription>
    </messageInfo>
    </SOAP-ENV:Body>
 
@@ -735,7 +719,6 @@ The meanings of the elements in the request message:
 +----------------------+----------------------------------------------------------------------------------------------------+
 | mdnStatus            | The message status of the associated MDN. Please reference section 9.5, "Life Cycle of AS2 Message"|
 |                      | of Hermes 2 Technical Guide for the meanings of each message status.                               |
-|                      |                                                                                                    |
 +----------------------+----------------------------------------------------------------------------------------------------+
 | mdnStatusDescription | A free text description of the message status of the associated MDN.                               |
 +----------------------+----------------------------------------------------------------------------------------------------+
