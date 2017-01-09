@@ -81,67 +81,103 @@ In the above scenario, we assume that company B will reply a business message af
 
 A partnership for ebMS has the following properties:
 
-+----------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| Properties                                                                             | Meaning for Send Partnership                                                                                                                                                                       | Meaning for Receiving Partnership                                                                                      |
-+========================================================================================+====================================================================================================================================================================================================+========================================================================================================================+
-| :code:`Transport Endpoint`                                                             | The endpoint URL of the receiving Hermes to which the message is sent                                                                                                                              | Ignored                                                                                                                |
-+----------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| :code:`Hostname Verified in SSL`                                                       | * Relevant if the transport endpoint is HTTPS.                                                                                                                                                     | Ignored                                                                                                                |
-|                                                                                        |                                                                                                                                                                                                    |                                                                                                                        |
-|                                                                                        | * Check the HTTPS URL’s hostname matches the certificate. Delivery will be failed if the checking fails.                                                                                           |                                                                                                                        |
-|                                                                                        |                                                                                                                                                                                                    |                                                                                                                        |  
-|                                                                                        | * Recommended to set it to :literal:`Yes`.                                                                                                                                                         |                                                                                                                        |
-+----------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| :code:`Sync Reply Mode`                                                                | * Only :literal:`mshSignalOnly` supported                                                                                                                                                          | Ignored                                                                                                                |
-|                                                                                        |                                                                                                                                                                                                    |                                                                                                                        |
-|                                                                                        | * Recommended to set to :literal:`none` because it has no effect from the view of the sending application                                                                                          |                                                                                                                        |
-+----------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| :code:`Acknowledgement Requested`                                                      | * If it is set to :literal:`always`, the receiving Hermes will be requested to send an acknowledgement message.                                                                                    | The receiving Hermes will send negative acknowledgement to the sender if the Receive Partnership has not enabled this. |
-|                                                                                        |                                                                                                                                                                                                    |                                                                                                                        |
-|                                                                                        | * The corresponding Receive Partnership in the receiving Hermes should also enable this. Otherwise, the receiving Hermes will return negative acknowledgement.                                     |                                                                                                                        |
-|                                                                                        |                                                                                                                                                                                                    |                                                                                                                        |
-|                                                                                        | * Recommended to set to :literal:`always`.                                                                                                                                                         |                                                                                                                        |
-+----------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| :code:`Acknowledgement Signed Requested`                                               | * Request the acknowledgement sent by the receiving Hermes returns a signed acknowledgement.                                                                                                       |                                                                                                                        |
-|                                                                                        |                                                                                                                                                                                                    |                                                                                                                        |
-|                                                                                        | * Recommended to set it to :literal:`true` if the receiver can for non-repudiation purpose.                                                                                                        | Ignored.                                                                                                               |
-+----------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| :code:`Duplicate Elimination`                                                          | * Request the receiver to eliminate duplicated messages.                                                                                                                                           | In order to enable duplicate elimination, both Send Partnership and Receive Partnership should both enable it.         |
-|                                                                                        |                                                                                                                                                                                                    |                                                                                                                        |
-|                                                                                        | * Both Send Partnership of the sender and Receive Partnership of the receiver must enable it in order to enable duplicate elimination. Otherwise, the sender will receive negative acknowledgment. |                                                                                                                        |
-|                                                                                        |                                                                                                                                                                                                    |                                                                                                                        |
-|                                                                                        | * Recommended to set it to :literal:`always`.                                                                                                                                                      |                                                                                                                        |
-+----------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| :code:`Message Order`                                                                  | * If it is enabled, the receiver application will receive messages in the order of sending.                                                                                                        | In order to enable message order, both Send Partnership and Receive Partnership should both enable it.                 |
-|                                                                                        |                                                                                                                                                                                                    |                                                                                                                        |
-|                                                                                        | * Both Send Partnership of the sender and Receive Partnership of the receiver must enable it in order to enable message order. Otherwise, the sender will receive negative acknowledgment.         |                                                                                                                        |
-+----------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| :code:`Signing Required`                                                               | * Request the sending Hermes to sign outgoing messages using XML signature                                                                                                                         | In order to enable digital signatures, both Send Partnership and Receive Partnership should both enable it.            |
-|                                                                                        |                                                                                                                                                                                                    |                                                                                                                        |
-|                                                                                        | * Both Send Partnership of the sender and Receive Partnership of the receiver must enable it in order to enable digital signature. Otherwise, the sender will receive negative acknowledgment.     |                                                                                                                        |
-|                                                                                        |                                                                                                                                                                                                    |                                                                                                                        |
-|                                                                                        | * Receive negative acknowledgment if the message’s signature cannot be verified.                                                                                                                   |                                                                                                                        |
-|                                                                                        |                                                                                                                                                                                                    |                                                                                                                        |
-|                                                                                        | * The keystore (PKCS12 file) must be in the file system of the sending Hermes and configured properly.                                                                                             |                                                                                                                        |
-+----------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| :code:`Encryption Required`                                                            | Request Hermes to encrypt outgoing message sent via SMTP protocol.                                                                                                                                 | Ignored.                                                                                                               |
-+----------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| :code:`Certificate for` Encryption                                                     | The public key certificate (.cer file) of the receiver.                                                                                                                                            | Ignored.                                                                                                               |
-+----------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| :code:`Maximum Retries`                                                                | The maximum number of retries after the first failed delivery.                                                                                                                                     | Ignored.                                                                                                               |
-+----------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| :code:`Retry Interval`                                                                 | The interval in milliseconds between retries                                                                                                                                                       | Ignored.                                                                                                               |
-+----------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| :code:`Certificate for Verification`                                                   | Ignored.                                                                                                                                                                                           | * The public key certificate (.cer) to verify the signature of incoming messages                                       |
-|                                                                                        |                                                                                                                                                                                                    |                                                                                                                        |
-|                                                                                        |                                                                                                                                                                                                    | * This cert is the certificate for the subject, not the certificate of its certificate of its certificate authority.   |
-|                                                                                        |                                                                                                                                                                                                    |                                                                                                                        |
-|                                                                                        |                                                                                                                                                                                                    | * Signature cannot be verified if the certificate has not been uploaded.                                               |
-+----------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| :code:`Partnership` ID                                                                 | Unique identifier of each partnership.                                                                                                                                                             | Unique identifier of each partnership.                                                                                 |
-+----------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
-| :code:`Disabled`                                                                       | If the partnership is disabled, the Send Partnership will not deliver any message.                                                                                                                 | If the partnership is disabled, the Receive Partnership will not receive any message.                                  |
-+----------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------+
++-------------------------+-----------------------------------------------------------------------+-----------------------------------+
+| Properties              | Meaning for Send Partnership                                          | Meaning for Receiving Partnership |
++=========================+=======================================================================+===================================+
+| :code:`Transport        | The endpoint URL of the receiving Hermes to which the message is sent | Ignored                           |
+| Endpoint`               |                                                                       |                                   |
++-------------------------+-----------------------------------------------------------------------+-----------------------------------+
+| :code:`Hostname         | * Relevant if the transport endpoint is HTTPS.                        | Ignored                           |
+| Verified in SSL`        |                                                                       |                                   |
+|                         | * Check the HTTPS URL’s hostname matches the certificate.             |                                   |
+|                         |   Delivery will be failed if the checking fails.                      |                                   |  
+|                         |                                                                       |                                   |
+|                         | * Recommended to set it to :literal:`Yes`.                            |                                   |
++-------------------------+-----------------------------------------------------------------------+-----------------------------------+
+| :code:`Sync Reply Mode` | * Only :literal:`mshSignalOnly` supported                             | Ignored                           |
+|                         |                                                                       |                                   |
+|                         | * Recommended to set to :literal:`none` because it has no effect      |                                   |
+|                         |   from the view of the sending application                            |                                   |
++-------------------------+-----------------------------------------------------------------------+-----------------------------------+
+| :code:`Acknowledgement  | * If it is set to :literal:`always`, the receiving Hermes will be     | The receiving Hermes will send    |
+| Requested`              |   requested to send an acknowledgement message.                       | negative acknowledgement to the   |
+|                         |                                                                       | sender if the Receive Partnership |
+|                         | * The corresponding Receive Partnership in the receiving Hermes       | has not enabled this.             |
+|                         |   should also enable this. Otherwise the receiving Hermes will        |                                   |
+|                         |   return negative acknowledgement.                                    |                                   |
+|                         |                                                                       |                                   |
+|                         | * Recommended to set to :literal:`always`.                            |                                   |
++-------------------------+-----------------------------------------------------------------------+-----------------------------------+
+| :code:`Acknowledgement  | * Request the acknowledgement sent by the receiving Hermes returns    |                                   |
+| Signed Requested`       |   a signed acknowledgement.                                           |                                   |
+|                         |                                                                       |                                   |
+|                         | * Recommended to set it to :literal:`true` if the receiver can for    | Ignored.                          |
+|                         |   non-repudiation purpose.                                            |                                   |
+|                         |                                                                       |                                   |
++-------------------------+-----------------------------------------------------------------------+-----------------------------------+
+| :code:`Duplicate        | * Request the receiver to eliminate duplicated messages.              | In order to enable duplicate      |
+| Elimination`            |                                                                       | elimination, both Send Partnership|
+|                         |                                                                       | and Receive Partnership should    |
+|                         | * Both Send Partnership of the sender and Receive                     | both enable it.                   |
+|                         |   Partnership of the receiver must enable it in order to enable       |                                   |
+|                         |   duplicate elimination. Otherwise, the sender will receive           |                                   |
+|                         |   negative acknowledgment.                                            |                                   |
+|                         |                                                                       |                                   |
+|                         | * Recommended to set it to :literal:`always`.                         |                                   |
++-------------------------+-----------------------------------------------------------------------+-----------------------------------+
+| :code:`Message          | * If it is enabled, the receiver application will receive messages    | In order to enable message order, |
+| Order`                  |   in the order of sending.                                            | both Send Partnership and Receive |
+|                         |                                                                       | Partnership should both enable it.|
+|                         | * Both Send Partnership of the sender and Receive Partnership of      |                                   |
+|                         |   the receiver must enable it in order to enable message order.       |                                   |
+|                         |   Otherwise, the sender will receive negative acknowledgment.         |                                   |
+|                         |                                                                       |                                   |
++-------------------------+-----------------------------------------------------------------------+-----------------------------------+
+| :code:`Signing          | * Request the sending Hermes to sign outgoing messages using XML      | In order to enable digital        |
+| Required`               |   signature                                                           | signatures, both Send Partnership |
+|                         |                                                                       | and Receive Partnership should    |
+|                         | * Both Send Partnership of the sender and Receive Partnership of      | both enable it.                   |
+|                         |   the receiver must enable it in order to enable digital signature.   |                                   |
+|                         |   Otherwise, the sender will receive negative acknowledgment.         |                                   |
+|                         |                                                                       |                                   |
+|                         | * Receive negative acknowledgment if the message’s signature cannot   |                                   |
+|                         |   be verified.                                                        |                                   |
+|                         |                                                                       |                                   |
+|                         | * The keystore (PKCS12 file) must be in the file system of the        |                                   |
+|                         |   sending Hermes and configured properly.                             |                                   |
++-------------------------+-----------------------------------------------------------------------+-----------------------------------+
+| :code:`Encryption       | Request Hermes to encrypt outgoing message sent via SMTP protocol.    | Ignored.                          |
+| Required`               |                                                                       |                                   |
++-------------------------+-----------------------------------------------------------------------+-----------------------------------+
+| :code:`Certificate      | The public key certificate (.cer file) of the receiver.               | Ignored.                          |
+| for Encryption`         |                                                                       |                                   |
++-------------------------+-----------------------------------------------------------------------+-----------------------------------+
+| :code:`Maximum          | The maximum number of retries after the first failed delivery.        | Ignored.                          |
+| Retries`                |                                                                       |                                   |
++-------------------------+-----------------------------------------------------------------------+-----------------------------------+
+| :code:`Retry            | The interval in milliseconds between retries                          | Ignored.                          |
+| Interval`               |                                                                       |                                   |
++-------------------------+-----------------------------------------------------------------------+-----------------------------------+
+| :code:`Certificate      | Ignored.                                                              | * The public key certificate      |
+| for Verification`       |                                                                       |   (.cer) to verify the signature  |
+|                         |                                                                       |   of incoming messages            |
+|                         |                                                                       |                                   |
+|                         |                                                                       | * This cert is the certificate    |
+|                         |                                                                       |   for the subject, not the        |
+|                         |                                                                       |   certificate of its certificate  |
+|                         |                                                                       |   of its certificate authority.   |
+|                         |                                                                       |                                   |
+|                         |                                                                       | * Signature cannot be verified    |
+|                         |                                                                       |   if the certificate has not      |
+|                         |                                                                       |   been uploaded.                  |
++-------------------------+-----------------------------------------------------------------------+-----------------------------------+
+| :code:`Partnership ID`  | Unique identifier of each partnership.                                | Unique identifier of each         |
+|                         |                                                                       | partnership.                      |
++-------------------------+-----------------------------------------------------------------------+-----------------------------------+
+| :code:`Disabled`        | If the partnership is disabled,                                       | If the partnership is disabled,   |
+|                         | the Send Partnership will not deliver any message.                    | the Receive Partnership will not  |
+|                         |                                                                       | receive any message.              |
++-------------------------+-----------------------------------------------------------------------+-----------------------------------+
 
 Partnerships can be managed by the Administration Console. For details of how to manage partnerships through the Administration Console, please refer the Hermes 2 Administration Tool User Guide. 
 
@@ -152,57 +188,86 @@ If the communication protocol with your business partner’s messaging gateway i
 
 A partnership for AS2 has the following properties:
 
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| Properties                                                                | Meaning for Send Partnership                                                                                                                               | Meaning for Receiving Partnership                                                         |
-+===========================================================================+============================================================================================================================================================+===========================================================================================+
-| :code:`AS2 From`, :code:`AS2 To`                                          | * The outgoing messages sent by the Send Partnership will have the :literal:`From` and :literal:`To` values in the header.                                 | This pair is for the application for identifying the Receive Partnership.                 |
-|                                                                           |                                                                                                                                                            |                                                                                           |
-|                                                                           | * This pair is for the application for identifying the Send Partnership.                                                                                   |                                                                                           |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Disabled`                                                          | Whether the Send Partnership is disabled.                                                                                                                  | Whether the Receive Partnership is disabled.                                              |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Subject`                                                           | The :literal:`Subject` field in the outgoing AS2 messages sent by the Send Partnership.                                                                    | Ignored.                                                                                  |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Recipient Address`                                                 | The receiving URL of the receiving Hermes or compatible messaging gateway.                                                                                 | Ignored.                                                                                  |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Hostname Verified in SSL`                                          | * Relevant if the transport endpoint is HTTPS.                                                                                                             | Ignored.                                                                                  |
-|                                                                           |                                                                                                                                                            |                                                                                           +
-|                                                                           | * Check the HTTPS URL’s hostname matches the certificate. Delivery will be failed if the checking fails.                                                   |                                                                                           +
-|                                                                           |                                                                                                                                                            |                                                                                           +
-|                                                                           | * Recommended to set it to :literal:`Yes`.                                                                                                                 |                                                                                           +
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Request Receipt`                                                   | Request the receiving Hermes or the compatible messaging gateway to send receipt message upon receiving the incoming messages.                             | Ignored.                                                                                  |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Signed Receipt`                                                    | Request the receiving Hermes or the compatible messaging gateway to send digitally signed receipt message upon receiving the incoming messages.            | Ignored.                                                                                  |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Asynchronous Receipt`                                              | Request the receiving Hermes or the compatible messaging gateway to send asynchronous receipt message upon receiving the incoming messages.                | Ignored.                                                                                  |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Receipt Return URL`                                                | The URL of the Hermes or the compatible messaging gateway for receiving receipts. It should be always the receiving URL for the sending Hermes.            | Ignored.                                                                                  |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Message Compression Required`                                      | Whether the outgoing messages sent by the Send Partnership should be compressed.                                                                           | Ignored.                                                                                  |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Message Signing Required`                                          | Whether the outgoing messages sent by the Send Partnership should be signed.                                                                               | Ignored.                                                                                  |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Signing Algorithm`                                                 | The signing algorithm for the outgoing messages sent by the Send Partnership. It may be either :literal:`sha1` or :literal:`md5`.                          | Ignored.                                                                                  |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Message Encryption Required`                                       | Whether the outgoing messages should be encrypted with S/MIME encryption.                                                                                  | Ignored.                                                                                  |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Encryption Algorithm`                                              | The algorithm used to encrypt the outgoing messages. It may be either :literal:`3des` or :literal:`rc2`.                                                   | Ignored.                                                                                  |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Certificate For Encryption`                                        | The public key certificate of the receiver for encryption on the outgoing messages.                                                                        | Ignored.                                                                                  |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`MIC Algorithm`                                                     | The MIC algorithm for outgoing messages. It may be either :literal:`sha1` or :literal:`md5`.                                                               | Ignored.                                                                                  |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Maximum Retries`                                                   | The maximum number of retries after the first failed delivery.                                                                                             | Ignored.                                                                                  |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Retry Interval (ms)`                                               | The interval in milliseconds between retries.                                                                                                              | Ignored.                                                                                  |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Message Signature Enforced`                                        | N/A                                                                                                                                                        | Whether the incoming messages have to be signed.                                          |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Message Encryption Enforced`                                       | N/A                                                                                                                                                        | Whether the incoming messages have to be encrypted.                                       |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
-| :code:`Certificate for Verification`                                      | N/A                                                                                                                                                        | The certificate of the trusted party which sends signed messages to the receiving Hermes. |
-+---------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------+
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| Properties             | Meaning for Send Partnership                                                       | Meaning for             |
+|                        |                                                                                    | Receiving Partnership   |
++========================+====================================================================================+=========================+
+| :code:`AS2 From`,      | * The outgoing messages sent by the Send Partnership                               | This pair is for the    |
+| :code:`AS2 To`         |   will have the :literal:`From` and :literal:`To` values in the header.            | application for         |
+|                        |                                                                                    | identifying the Receive |
+|                        | * This pair is for the application for identifying the Send Partnership.           | Partnership.            |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Disabled`       | Whether the Send Partnership is disabled.                                          | Whether the             |
+|                        |                                                                                    | Receive Partnership     |
+|                        |                                                                                    | is disabled.            |
+|                        |                                                                                    |                         |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Subject`        | The :literal:`Subject` field in the outgoing AS2 messages sent                     | Ignored.                |
+|                        | by the Send Partnership.                                                           |                         |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Recipient       | The receiving URL of the receiving Hermes or compatible messaging gateway.         | Ignored.                |
+| Address`               |                                                                                    |                         |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Hostname        | * Relevant if the transport endpoint is HTTPS.                                     | Ignored.                |
+| Verified in SSL`       |                                                                                    |                         |
+|                        | * Check the HTTPS URL’s hostname matches the certificate. Delivery will be failed  |                         |
+|                        |   if the checking fails.                                                           |                         |
+|                        |                                                                                    |                         |
+|                        | * Recommended to set it to :literal:`Yes`.                                         |                         |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Request         | Request the receiving Hermes or the compatible messaging gateway to send           | Ignored.                |
+| Receipt`               | receipt message upon receiving the incoming messages.                              |                         |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Signed          | Request the receiving Hermes or the compatible messaging gateway to send           | Ignored.                |
+| Receipt`               | digitally signed receipt message upon receiving the incoming messages.             |                         |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Asynchronous    | Request the receiving Hermes or the compatible messaging gateway to send           | Ignored.                |
+| Receipt`               | asynchronous receipt message upon receiving the incoming messages.                 |                         |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Receipt         | The URL of the Hermes or the compatible messaging gateway for receiving receipts.  | Ignored.                |
+| Return URL`            | It should be always the receiving URL for the sending Hermes.                      |                         |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Message         | Whether the outgoing messages sent by the Send Partnership should be compressed.   | Ignored.                |
+| Compression Required`  |                                                                                    |                         |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Message         | Whether the outgoing messages sent by the Send Partnership should be signed.       | Ignored.                |
+| Signing Required`      |                                                                                    |                         |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Signing         | The signing algorithm for the outgoing messages sent by the Send Partnership.      | Ignored.                |
+| Algorithm`             | It may be either :literal:`sha1` or :literal:`md5`.                                |                         |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Message         | Whether the outgoing messages should be encrypted with S/MIME encryption.          | Ignored.                |
+| Encryption Required`   |                                                                                    |                         |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Encryption      | The algorithm used to encrypt the outgoing messages. It may be either              | Ignored.                |
+| Algorithm`             | :literal:`3des` or :literal:`rc2`.                                                 |                         |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Certificate     | The public key certificate of the receiver for encryption on the outgoing messages.| Ignored.                |
+| For Encryption`        |                                                                                    |                         |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`MIC Algorithm`  | The MIC algorithm for outgoing messages. It may be either                          | Ignored.                |
+|                        | :literal:`sha1` or :literal:`md5`.                                                 |                         |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Maximum Retries`| The maximum number of retries after the first failed delivery.                     | Ignored.                |
+|                        |                                                                                    |                         |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Retry Interval  | The interval in milliseconds between retries.                                      | Ignored.                |
+| (ms)`                  |                                                                                    |                         |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Message         | N/A                                                                                | Whether the             |
+| Signature Enforced`    |                                                                                    | incoming messages       |
+|                        |                                                                                    | have to be signed.      |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Message         | N/A                                                                                | Whether the             |
+| Encryption Enforced`   |                                                                                    | incoming messages       |
+|                        |                                                                                    | have to be encrypted.   |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
+| :code:`Certificate     | N/A                                                                                | The certificate of      |
+| for Verification`      |                                                                                    | the trusted party       |
+|                        |                                                                                    | which sends signed      |
+|                        |                                                                                    | messages to the         |
+|                        |                                                                                    | receiving Hermes.       |
++------------------------+------------------------------------------------------------------------------------+-------------------------+
 
 Let us look at a typical example below, in which two Hermes communicate with AS2 protocol in two-way manner. Company A sends a message Company B, and then Company B sends back a message to Company A. Therefore, each Hermes has two partnerships:
 
@@ -247,23 +312,36 @@ The SOAP Body of the request message has the following form. In the following re
 
 The meanings of the elements under SOAP Body in the above request message are as follows:
     
-+---------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Elements                                                | Descriptions                                                                                                                                                                  |
-+=========================================================+===============================================================================================================================================================================+
-| :code:`<cpaId>`, :code:`<service>` and :code:`<action>` | They are the CPA Id, service and action elements in the ebMS messages sent by Hermes. These three fields are used to identify the partnership used to send the ebMS messages. |
-+---------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :code:`<convId>`                                        | It corresponds to the conversation id of the ebMS messages sent by Hermes.                                                                                                    |
-+---------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :code:`<fromPartyId>`                                   | It corresponds to the From Party Id of the ebMS messages sent by Hermes.                                                                                                      |
-+---------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :code:`<fromPartyType>`                                 | It corresponds to the type attribute of the From Party Id of the ebMS messages sent by Hermes.                                                                                |
-+---------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :code:`<toPartyId>`                                     | It corresponds to the To Party Id of the ebMS messages sent by Hermes.                                                                                                        |
-+---------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :code:`<toPartyIdType>`                                 | It corresponds to the type attribute of the To Party Id of the ebMS messages sent by Hermes.                                                                                  |
-+---------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :code:`<refToMessageId>`                                | It corresponds to the RefToMessageId of the ebMS messages sent by Hermes.                                                                                                     |
-+---------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++---------------------------------------------------------+---------------------------------------------------------------------------+
+| Elements                                                | Descriptions                                                              |
++=========================================================+===========================================================================+
+| :code:`<cpaId>`, :code:`<service>` and :code:`<action>` | They are the CPA Id, service and action elements in the ebMS messages     |
+|                                                         | sent by Hermes. These three fields are used to identify the partnership   |
+|                                                         | used to send the ebMS messages.                                           |
++---------------------------------------------------------+---------------------------------------------------------------------------+
+| :code:`<convId>`                                        | It corresponds to the conversation id of the ebMS messages sent by Hermes.|
+|                                                         |                                                                           |
+|                                                         |                                                                           |
++---------------------------------------------------------+---------------------------------------------------------------------------+
+| :code:`<fromPartyId>`                                   | It corresponds to the From Party Id of the ebMS messages sent by Hermes.  |
+|                                                         |                                                                           |
+|                                                         |                                                                           |
++---------------------------------------------------------+---------------------------------------------------------------------------+
+| :code:`<fromPartyType>`                                 | It corresponds to the type attribute of the From Party Id of the ebMS     |
+|                                                         | messages sent by Hermes.                                                  |
+|                                                         |                                                                           |
++---------------------------------------------------------+---------------------------------------------------------------------------+
+| :code:`<toPartyId>`                                     | It corresponds to the To Party Id of the ebMS messages sent by Hermes.    |
+|                                                         |                                                                           |
+|                                                         |                                                                           |
++---------------------------------------------------------+---------------------------------------------------------------------------+
+| :code:`<toPartyIdType>`                                 | It corresponds to the type attribute of the To Party Id of the ebMS       |
+|                                                         | messages sent by Hermes.                                                  |
+|                                                         |                                                                           |
++---------------------------------------------------------+---------------------------------------------------------------------------+
+| :code:`<refToMessageId>`                                | It corresponds to the RefToMessageId of the ebMS messages sent by Hermes. |
+|                                                         |                                                                           |
++---------------------------------------------------------+---------------------------------------------------------------------------+
 
 To request Hermes to send payloads to the Hermes or compatible messaging gateway of the receiving party, your application should add SOAP Attachment to the request message. The content type (e.g. :code:`text/plain`, :code:`text/xml`) of each attachment part should be set.
 
@@ -312,23 +390,31 @@ Request Message
 
 The meanings of the elements under SOAP Body in the above request message are as follows:
 
-+---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Elements                                                | Descriptions                                                                                                                                                                         |
-+=========================================================+======================================================================================================================================================================================+
-| :code:`<cpaId>`, :code:`<service>` and :code:`<action>` | They are the CPA Id, service and action elements in the ebMS messages received by Hermes. These three fields are used to identify the partnership used to receive the ebMS messages. |
-+---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :code:`<convId>`                                        | Only the message identifiers of those messages with Conversation Id matching the value of :code:`<convId>` will be retrieved.                                                        |
-+---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :code:`<fromPartyId>`                                   | Only the message identifiers of those messages with From Party Id matching the value of :code:`<fromPartyId>` will be retrieved.                                                     |
-+---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :code:`<fromPartyType>`                                 | Only the message identifiers of those messages with From Party Type matching the value of :code:`<fromPartyType>` will be retrieved.                                                 |
-+---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :code:`<toPartyId>`                                     | Only the message identifiers of those messages with To Party Id matching the value of :code:`<ToPartyId>` will be retrieved.                                                         |
-+---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :code:`<toPartyIdType>`                                 | Only the message identifiers of those messages with To Party Type matching the value of :code:`<ToPartyType>` will be retrieved.                                                     |
-+---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :code:`<numOfMessages>`                                 | The maximum number of message identifiers retrieved by this request.                                                                                                                 |
-+---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++------------------------------------+-----------------------------------------------------------------------------+
+| Elements                           | Descriptions                                                                |
++====================================+=============================================================================+
+| :code:`<cpaId>`, :code:`<service>` | They are the CPA Id, service and action elements in the ebMS messages       |
+| and :code:`<action>`               | received by Hermes. These three fields are used to identify the partnership |
+|                                    | used to receive the ebMS messages.                                          |
++------------------------------------+-----------------------------------------------------------------------------+
+| :code:`<convId>`                   | Only the message identifiers of those messages with Conversation Id matching|
+|                                    | the value of :code:`<convId>` will be retrieved.                            |
++------------------------------------+-----------------------------------------------------------------------------+
+| :code:`<fromPartyId>`              | Only the message identifiers of those messages with From Party Id matching  |
+|                                    | the value of :code:`<fromPartyId>` will be retrieved.                       |
++------------------------------------+-----------------------------------------------------------------------------+
+| :code:`<fromPartyType>`            | Only the message identifiers of those messages with From Party Type matching|
+|                                    | the value of :code:`<fromPartyType>` will be retrieved.                     |
++------------------------------------+-----------------------------------------------------------------------------+
+| :code:`<toPartyId>`                | Only the message identifiers of those messages with To Party Id matching the|
+|                                    | value of :code:`<ToPartyId>` will be retrieved.                             |
++------------------------------------+-----------------------------------------------------------------------------+
+| :code:`<toPartyIdType>`            | Only the message identifiers of those messages with To Party Type matching  |
+|                                    | the value of :code:`<ToPartyType>` will be retrieved.                       |
++------------------------------------+-----------------------------------------------------------------------------+
+| :code:`<numOfMessages>`            | The maximum number of message identifiers retrieved by this request.        |
+|                                    |                                                                             |
++------------------------------------+-----------------------------------------------------------------------------+
 
 
 Note that a message is considered as already downloaded by an application only when the message body has been downloaded by the Receiver Service. If your application never calls the Receiver Service to download the message body and payloads, the same set of message identifiers will always be retrieved because they are never marked as downloaded.
@@ -460,23 +546,27 @@ The SOAP Body of the request message has the following form. In the following re
 
 The meanings of the elements under SOAP Body in the above request message are as follows:
 
-+-------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Elements                                                                                                          | Descriptions                                                                                                                                                                                                         |
-+===================================================================================================================+======================================================================================================================================================================================================================+
-| :code:`<as2_from>`, :code:`<as2_to>`                                                                              | They are the values of the :literal:`from` and :literal:`to` fields in the AS2 messages sent through the partnership by Hermes. These two fields are used to identify the partnership used to send the AS2 messages. |
-+-------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :code:`<type>` The three-character code indicating the content type of the sent payload. The available codes are: | * :literal:`edi`, for the content type :literal:`application/EDIFACT`.                                                                                                                                               |
-|                                                                                                                   |                                                                                                                                                                                                                      |
-|                                                                                                                   | * :literal:`x12`, for the content type :literal:`application/EDI-X12`.                                                                                                                                               |
-|                                                                                                                   |                                                                                                                                                                                                                      |
-|                                                                                                                   | * :literal:`eco`, for the content type :literal:`application/edi-consent`.                                                                                                                                           |
-|                                                                                                                   |                                                                                                                                                                                                                      |
-|                                                                                                                   | * :literal:`xml`, for the content type :literal:`application/XML`.                                                                                                                                                   |
-|                                                                                                                   |                                                                                                                                                                                                                      |
-|                                                                                                                   | * :literal:`bin`, for the content type :literal:`application/ octet-stream`.                                                                                                                                         |
-|                                                                                                                   |                                                                                                                                                                                                                      |
-|                                                                                                                   | * For other values, Hermes will assume the content type of the payload is :literal:`application/deflate`, which means that the payload is compressed by Zip.                                                         |
-+-------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++-------------------------------------------+-----------------------------------------------------------------------------------------+
+| Elements                                  | Descriptions                                                                            |
++===========================================+=========================================================================================+
+| :code:`<as2_from>`, :code:`<as2_to>`      | They are the values of the :literal:`from` and :literal:`to` fields in                  |
+|                                           | the AS2 messages sent through the partnership by Hermes. These two fields               |
+|                                           | are used to identify the partnership used to send the AS2 messages.                     |
+|                                           |                                                                                         |
++-------------------------------------------+-----------------------------------------------------------------------------------------+
+| :code:`<type>` The three-character        | * :literal:`edi`, for the content type :literal:`application/EDIFACT`.                  |
+| code indicating the content type of       |                                                                                         |
+| the sent payload. The available codes are:| * :literal:`x12`, for the content type :literal:`application/EDI-X12`.                  |
+|                                           |                                                                                         |
+|                                           | * :literal:`eco`, for the content type :literal:`application/edi-consent`.              |
+|                                           |                                                                                         |
+|                                           | * :literal:`xml`, for the content type :literal:`application/XML`.                      |
+|                                           |                                                                                         |
+|                                           | * :literal:`bin`, for the content type :literal:`application/ octet-stream`.            |
+|                                           |                                                                                         |
+|                                           | * For other values, Hermes will assume the content type of the payload is               |
+|                                           |   :literal:`application/deflate`, which means that the payload is compressed by Zip.    |
++-------------------------------------------+-----------------------------------------------------------------------------------------+
 
 The application can request Hermes to send exactly one payload in an AS2 message. To do so, your application should add SOAP Attachment to the request message and set the "type" element properly in the SOAP request of the Sender Service.
 
@@ -519,13 +609,16 @@ The SOAP Body of the request message has the following form. In the following re
 
 The meanings of the elements under SOAP Body in the above request message are as follows:
 
-+------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Elements                           | Descriptions                                                                                                                                                                                                                |
-+====================================+=============================================================================================================================================================================================================================+
-| :code:`<as2From>`, :code:`<as2To>` | They are the values of the :literal:`from` and :literal:`to` fields in the AS2 messages received through the partnership by Hermes. These two fields are used to identify the partnership used to receive the AS2 messages. |
-+------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :code:`<numOfMessages>`            | The maximum number of message identifiers retrieved by this request.                                                                                                                                                        |
-+------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++------------------------------------+----------------------------------------------------------------------------------------+
+| Elements                           | Descriptions                                                                           |
++====================================+========================================================================================+
+| :code:`<as2From>`, :code:`<as2To>` | They are the values of the :literal:`from` and :literal:`to` fields in the AS2 messages|
+|                                    | received through the partnership by Hermes. These two fields are used to identify the  |
+|                                    | partnership used to receive the AS2 messages.                                          |
+|                                    |                                                                                        |
++------------------------------------+----------------------------------------------------------------------------------------+
+| :code:`<numOfMessages>`            | The maximum number of message identifiers retrieved by this request.                   |
++------------------------------------+----------------------------------------------------------------------------------------+
 
 Note that a message is considered as already downloaded by an application only when the message body has been downloaded by the Receiver Service. If your application never calls the Receiver Service to download the message body and payloads, the same set of message identifiers will always be retrieved because they are never marked as downloaded.
 
@@ -629,19 +722,23 @@ The SOAP Body of the response message has the following form. In the following r
 
 The meanings of the elements in the request message:
 
-+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Elements             | Meanings                                                                                                                                                                                                                                        |
-+======================+=================================================================================================================================================================================================================================================+
-| status               | The :code:`<status>` is a 2-character status code indicating the status of an outgoing and incoming AS2 message. Please reference section 9.5, "Life Cycle of AS2 Message" of Hermes 2 Technical Guide for the meanings of each message status. |
-+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| statusDescription    | A free text description of the message status.                                                                                                                                                                                                  |
-+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| mdnMessageId         | The message identifier of the associated MDN.                                                                                                                                                                                                   |
-+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| mdnStatus            | The message status of the associated MDN. Please reference section 9.5, "Life Cycle of AS2 Message" of Hermes 2 Technical Guide for the meanings of each message status.                                                                        |
-+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| mdnStatusDescription | A free text description of the message status of the associated MDN.                                                                                                                                                                            |
-+----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++----------------------+----------------------------------------------------------------------------------------------------+
+| Elements             | Meanings                                                                                           |
++======================+====================================================================================================+
+| status               | The :code:`<status>` is a 2-character status code indicating the status of                         |
+|                      | an outgoing and incoming AS2 message. Please reference section 9.5,                                |
+|                      | "Life Cycle of AS2 Message" of Hermes 2 Technical Guide for the meanings of each message status.   |
++----------------------+----------------------------------------------------------------------------------------------------+
+| statusDescription    | A free text description of the message status.                                                     |
++----------------------+----------------------------------------------------------------------------------------------------+
+| mdnMessageId         | The message identifier of the associated MDN.                                                      |
++----------------------+----------------------------------------------------------------------------------------------------+
+| mdnStatus            | The message status of the associated MDN. Please reference section 9.5, "Life Cycle of AS2 Message"|
+|                      | of Hermes 2 Technical Guide for the meanings of each message status.                               |
+|                      |                                                                                                    |
++----------------------+----------------------------------------------------------------------------------------------------+
+| mdnStatusDescription | A free text description of the message status of the associated MDN.                               |
++----------------------+----------------------------------------------------------------------------------------------------+
 
 Glossary
 --------
