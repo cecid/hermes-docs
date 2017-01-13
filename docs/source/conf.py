@@ -422,5 +422,5 @@ epub_exclude_files = ['search.html']
 #
 # epub_use_index = True
 
-html_logo = '_static/images/corvus-logo-slant.gif'
+html_logo = '_static/images/hermes-2-plus-logo.png'
 html_favicon = '_static/images/cecid_icon.ico'
