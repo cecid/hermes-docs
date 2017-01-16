@@ -79,8 +79,8 @@ Postgres
 
 #. Create two databases named :literal:`as2` and :literal:`ebms` with :literal:`corvus` user
 
-  i. Open a command prompt
-  #. Go to :file:`<POSTGRES_HOME>/bin`
+  i. Open a command`` prompt
+  #. Go to :file:`{<POSTGRES_HOME>}/bin`
   #. Type :samp:`createdb –U corvus –W as2`
   #. Enter the password :literal:`corvus`
   #. Repeat 2.3 - 2.4 for the :literal:`ebms` database.
@@ -278,7 +278,7 @@ Directory Organization
 +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
 | :file:`lib/*`                         | The library files required for the sample programs.                                                                                                 |
 +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-| :file:`*.bat` / :file:`\*.sh`         | The scripts for executing the sample programs.                                                                                                      |
+| :file:`*.bat` / :file:`*.sh`          | The scripts for executing the sample programs.                                                                                                      |
 +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Preparation

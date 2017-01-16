@@ -48,9 +48,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'my docs'
-copyright = u'2016, Alex Cao'
-author = u'Alex Cao'
+project = u'Hermes 2+ Documentation'
+copyright = u'2016, CECID, HKU'
+author = u'CECID'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -259,8 +259,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'mydocs.tex', u'my docs Documentation',
-     u'Alex Cao', 'manual'),
+    (master_doc, 'hermes.tex', u'Hermes 2+ Documentation',
+     u'CECID', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
