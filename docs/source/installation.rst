@@ -326,7 +326,7 @@ UNIX environment
    
    .. code:: sh
 
-      sudo chown 755 *.sh
+      sudo chmod 755 *.sh
 
 #. Change the owner and the group of :file:`{<HERMES2_HOME>}` and :file:`{<TOMCAT_HOME>}/webapps/corvus` by the following commands.
 
