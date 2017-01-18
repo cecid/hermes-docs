@@ -47,6 +47,7 @@ Technical documents
 .. toctree::
    :maxdepth: 2
 
+   quickstart
    installation
    configuration
    application
