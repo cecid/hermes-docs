@@ -10,7 +10,7 @@ partners through secure and reliable exchange of electronic documents
 (e.g., purchase orders). Hermes is secure; it allows you to encrypt
 and digitally sign the documents for transmission. Hermes is reliable;
 the sender can automatically retransmit a message when it is dropped
-in the network and the receiver can guarantee every message is
+in the network while the receiver can guarantee every message is
 delivered once and only once, and in the right order.
 
 .. image:: _static/images/hermes_intro.png
@@ -23,8 +23,8 @@ EDI over the Internet
 developed as the de facto standard for organizations to exchange
 information electronically on private networks. EDI is running on
 private networks and based on a cryptic protocol, which makes
-implementation complicated, expensive, and inflexible. These
-disadvantages limit the EDI usage to very large organizations
+implementation complicated, expensive, and not extensible. These
+disadvantages have limited the EDI usage to very large organizations
 only. Hermes is designed to use the Internet, Public Key
 Infrastructure (PKI), and XML technologies to replace the EDI as a
 more affordable and flexible solution. Hermes supports mainstream
