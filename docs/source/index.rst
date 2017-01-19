@@ -4,13 +4,13 @@ Hermes Business Messaging Gateway
 Proven Solution to Automate B2B Transactions
 --------------------------------------------
 
-**Hermes Business Messaging Gateway** is a proven open-source solution for
-enterprises to automate business transactions with business partners
-through secure and reliable exchange of electronic documents (e.g.,
-purchase orders). Hermes is secure; it allows you to encrypt and
-digitally sign the documents for transmission. Hermes is reliable; the
-sender can automatically retransmit a message when it is dropped in
-the network and the receiver can also guarantee every message is
+**Hermes Business Messaging Gateway** is a proven open-source solution
+for enterprises to automate business transactions with business
+partners through secure and reliable exchange of electronic documents
+(e.g., purchase orders). Hermes is secure; it allows you to encrypt
+and digitally sign the documents for transmission. Hermes is reliable;
+the sender can automatically retransmit a message when it is dropped
+in the network and the receiver can guarantee every message is
 delivered once and only once, and in the right order.
 
 .. image:: _static/images/hermes_intro.png
