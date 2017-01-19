@@ -50,7 +50,7 @@ AS2 From
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | Identifier of the sending party in a data exchange. The values may be company specific, such as Data Universal   |
 |                 | Numbering System (DUNS) numbers, or they may simply be identification strings agreed upon between trading        |
-|                 | partners. [AS2 RFC4130 6.2]                                                                                      |
+|                 | partners. [`AS2 RFC4130 6.2 <https://www.ietf.org/rfc/rfc4130.txt>`_]                                            |
 |                 |                                                                                                                  |
 |                 | This parameter is used as the ``AS2-From`` property in AS2 message headers in this partnership.                  |
 |                 |                                                                                                                  |
@@ -65,7 +65,7 @@ AS2 To
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | Identifier of the receiving party in a data exchange. The values may be company specific, such as Data Universal |
 |                 | Numbering System (DUNS) numbers, or they may simply be identification strings agreed upon between trading        |
-|                 | partners. [AS2 RFC4130 6.2]                                                                                      |
+|                 | partners. [`AS2 RFC4130 6.2 <https://www.ietf.org/rfc/rfc4130.txt>`_]                                            |
 |                 |                                                                                                                  |
 |                 | This parameter is used as the ``AS2-To`` property in AS2 message headers in this partnership.                    |
 |                 |                                                                                                                  |
