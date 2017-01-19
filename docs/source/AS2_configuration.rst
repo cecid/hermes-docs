@@ -1,10 +1,10 @@
-Reference of AS2 Partnership Configuration
-==========================================
+Reference for AS2 Partnership Configuration
+===========================================
 
-AS2 Partnership parameter
--------------------------
+AS2 Partnership Parameters
+--------------------------
 
-Here is the summary of the AS2 Partnership parameter.
+Here is a summary of the AS2 partnership parameters.
 
 1. `Partnership ID`_
 #. `AS2 From`_
@@ -35,11 +35,11 @@ Partnership ID
 ^^^^^^^^^^^^^^
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Description** | The unique identifier of an AS2 2.0 partnership in local Hermes 2.                                               |
+| **Description** | The unique identifier of an AS2 partnership in Hermes 2.                                                         |
 |                 |                                                                                                                  |
-|                 | The value of this field has no restriction but **RECOMMENDED** to be an identifier between sender and recipient. |
+|                 | The value of this field has no restrictions but it is **RECOMMENDED** to be unique between sender and recipient. |
 |                 |                                                                                                                  |
-|                 | It is **mandatory** and its maximum length of this field is 255.                                                 |
+|                 | This field is **mandatory** and its maximum length is 255 characters.                                            |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
 
@@ -48,57 +48,50 @@ AS2 From
 ^^^^^^^^
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Description** | It identifies the sender party of a data exchange. The values may be company specific, such as Data Universal    |
-|                 | Numbering System (DUNS) numbers, or they may be simply identification strings agreed upon between the trading    |
+| **Description** | Identifier of the sending party in a data exchange. The values may be company specific, such as Data Universal   |
+|                 | Numbering System (DUNS) numbers, or they may simply be identification strings agreed upon between trading        |
 |                 | partners. [AS2 RFC4130 6.2]                                                                                      |
 |                 |                                                                                                                  |
-|                 | The parameter is used as the one of property called AS2-From in the AS2 message header which applied this        |
-|                 | partnership.                                                                                                     |
+|                 | This parameter is used as the ``AS2-From`` property in AS2 message headers in this partnership.                  |
 |                 |                                                                                                                  |
-|                 | AS2 From and AS2 To form a pair for identifying the **Sender** and **Recipient** Partnership. I.e. They form     |
-|                 | composite key for identifying the parties involved in the data exchange.                                         |
+|                 | This field is **mandatory** and it is **RECOMMENDED** that the length of this value be less than 255 characters. |
 |                 |                                                                                                                  |
-|                 | It is **mandatory** and **RECOMMENDED** the length of this value should be less than 255.                        |
-|                 |                                                                                                                  |
-|                 | **NOTE**: The value of [**AS2 From**, **AS2 To**] pair is reversed in the **Recipient** partnership respect to   |
-|                 | the **Sender** partnership. For example:                                                                         |
-|                 |                                                                                                                  |
-|                 | If the value of [AS2 From, AS2 To] of **Sender** partnership is [CompanyA, CompanyB],                            |
-|                 |                                                                                                                  |
-|                 | then the value of [AS2 From, AS2 To] of **Recipient** partnership should be [CompanyB, CompanyA].                |
+|                 | See :ref:`note <note>` below.                                                                                    |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
 AS2 To
 ^^^^^^
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Description** | It identifies the receiver party of a data exchange. The values may be company specific, such as Data Universal  |
-|                 | Numbering System (DUNS) numbers, or they may be simply identification strings agreed upon between the trading    |
+| **Description** | Identifier of the receiving party in a data exchange. The values may be company specific, such as Data Universal |
+|                 | Numbering System (DUNS) numbers, or they may simply be identification strings agreed upon between trading        |
 |                 | partners. [AS2 RFC4130 6.2]                                                                                      |
 |                 |                                                                                                                  |
-|                 | The parameter is used as the one of property called AS2-To in the AS2 message header which applied this          |
-|                 | partnership. AS2 From and AS2 To form a pair for identifying the **Sender** and **Recipient** Partnership. I.e.  |
-|                 | They form composite key for identifying the parties involved in the data exchange.                               |
+|                 | This parameter is used as the ``AS2-To`` property in AS2 message headers in this partnership.                    |
 |                 |                                                                                                                  |
-|                 | It is mandatory and RECOMMENDED the length of this value should be less than 255.                                |
+|                 | This field is **mandatory** and it is **RECOMMENDED** that the length of this value be less than 255 characters. |
 |                 |                                                                                                                  |
-|                 | **NOTE**: The value of [**AS2 From**, **AS2 To**] pair is reversed in the **Recipient** partnership respect to   |
-|                 | the **Sender** partnership. For example:                                                                         |
-|                 |                                                                                                                  |
-|                 | If the value of [AS2 From, AS2 To] of **Sender** partnership is [CompanyA, CompanyB],                            |
-|                 |                                                                                                                  |
-|                 | then the value of [AS2 From, AS2 To] of **Recipient** partnership should has [CompanyB, CompanyA].               |
+|                 | See :ref:`note <note>` below.                                                                                    |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
+
+.. _note:
+
+| **NOTE**:
+| `AS2 From`_ and `AS2 To`_ form a pair that identify the **send** and **recieve** partnerships (i.e. they form a composite key that identifies the parties involved in the data exchange).
+
+The values of [``AS2 From``, ``AS2 To``] are reversed in the **receive** partnership with respect to the **send** partnership. For example:
+  
+  **Send**: [``CompanyA``, ``CompanyB``] --> **Receive**: [``CompanyB``, ``CompanyA``].
 
 Disabled
 ^^^^^^^^
 
 +-----------------+-----------------------------------------------------------------------------------------------+
-| **Description** | The boolean option indicates whether the partnership is disabled or not.                      |
+| **Description** | This boolean option indicates whether the partnership is disabled or not.                     |
 |                 |                                                                                               |
-|                 | Disabled partnership does not deliver / receive any outgoing message / incoming respectively. |
+|                 | Disabled partnerships do not deliver/receive any outgoing/incoming messages.                  |
 +-----------------+-----------------------------------------------------------------------------------------------+
-| **Options**     | [ **true** = disabled ], [ **false** = enabled ]                                              |
+| **Options**     | [ ``true`` = disabled ], [ ``false`` = enabled ]                                              |
 +-----------------+-----------------------------------------------------------------------------------------------+
 
 
@@ -109,10 +102,9 @@ Subject
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | The subject of the partnership.                                                                                  |
 |                 |                                                                                                                  |
-|                 | The parameter is used as the one of property called Subject in those AS2 message header which applied this       |
-|                 | partnership.                                                                                                     |
+|                 | This parameter is used as the ``Subject`` property in AS2 message headers in this partnership.                   |
 |                 |                                                                                                                  |
-|                 | It is applicable only for **Sender** partnership.                                                                |
+|                 | This field is only applicable to **send** partnerships.                                                          |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
 
@@ -121,13 +113,12 @@ Recipient Address
 ^^^^^^^^^^^^^^^^^
 
 +-----------------+--------------------------------------------------------------------------------------+
-| **Description** | The endpoint URL of the receiving message gateway.                                   |
+| **Description** | The endpoint URL of the receiving messaging gateway.                                 |
 |                 |                                                                                      |
-|                 | If the receiving message gateway is Hermes 2, the endpoint URL is formatted as this. |
+|                 | If the receiving messaging gateway is Hermes 2, the endpoint URL is                  |
+|                 | :samp:`http://{<RECIPIENT_HOST>}:{<PORT>}/corvus/httpd/as2/inbound`.                 |
 |                 |                                                                                      |
-|                 | :samp:`http://{<RECIPIENT HOST>}:{<PORT>}/corvus/httpd/as2/inbound`.                 |
-|                 |                                                                                      |
-|                 | It is **mandatory** and it MUST be a **HTTP/HTTPS URL**.                             |
+|                 | This field is **mandatory** and it must be an **HTTP/HTTPS URL**.                    |
 +-----------------+--------------------------------------------------------------------------------------+
 
 
@@ -136,13 +127,13 @@ Hostname Verified in SSL?
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Description** | The boolean flag indicates whether HTTP SSL/TLS protocol is used and required to verify the receipient hostname. |
+| **Description** | This boolean flag indicates whether HTTP SSL/TLS protocol is used to verify the recipient hostname.              |
 |                 |                                                                                                                  |
-|                 | It is relevant if **HTTPS** transport protocol is set under the Receipient Address                               |
+|                 | This is relevant only if **HTTPS** transport protocol is used in `Recipient Address`_.                           |
 |                 |                                                                                                                  |
-|                 | It is applicable only for **Sender** partnership.                                                                |
-|                 |                                                                                                                  |
-| **Options**     | [ **true** = hostname verified using SSL , **false** = none ]                                                    |
+|                 | This field is only applicable to **send** partnerships.                                                          |
++-----------------+------------------------------------------------------------------------------------------------------------------+
+| **Options**     | [ ``true`` = hostname verified using SSL ], [ ``false`` = no verification using SSL ]                            |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
 
@@ -151,16 +142,15 @@ Request Receipt
 ^^^^^^^^^^^^^^^
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Description** | Indicates whether the recipient is requested to send an AS2 receipt (acknowledgement) back to the sender.        |
-|                 | The mode of receipt sending back depends on the value Asynchronous Receipt, if `Asynchronous Receipt`_ is        |
-|                 | disabled, the receipt will return immediately in the same HTTP connection. If the recipient is using Hermes 2,   |
-|                 | the receipt will be put into an outgoing queue and keep waiting until it is delivered to the sender.             |
+| **Description** | Indicates whether the sender has requested the recipient to reply with an AS2 receipt (acknowledgement).         |
+|                 | How the receipt is sent depends on the value of `Asynchronous Receipt`_. If the recipient is using               |
+|                 | Hermes 2, the receipt will be placed into an outgoing queue until it is delivered to the sender.                 |
 |                 |                                                                                                                  |
-|                 | It is **RECOMMENDED** to set this parameter to **true** for reliable messaging.                                  |
+|                 | It is **RECOMMENDED** to set this parameter to ``true`` for reliable messaging.                                  |
 |                 |                                                                                                                  |
-|                 | It is applicable only for **Sender** partnership.                                                                |
+|                 | This field is only applicable to **send** partnerships.                                                          |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Options**     | [ **true** = receipt requested ], [ **false** = receipt does not request ]                                       |
+| **Options**     | [ ``true`` = receipt requested ], [ ``false`` = receipt is not requested ]                                       |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
 
@@ -169,22 +159,23 @@ Signed Receipt
 ^^^^^^^^^^^^^^
 
 +------------------+-----------------------------------------------------------------------------------------------------------------+
-| **Description**  | Indicates whether the recipient **MUST** sign the AS2 receipt digitally using its private key before delivering |
-|                  | back to the sender.                                                                                             |
+| **Description**  | Indicates whether the sender has requested the recipient to digitally sign the AS2 receipt with their private   |
+|                  | key before delivering it.                                                                                       |
 |                  |                                                                                                                 |
-|                  | The format of the private key **SHOULD BE** in PKCS12 and the signatures created is conformed to IETF S/MIME.   |
+|                  | The format of the private key should be in PKCS12 and the created signatures should conform to IETF S/MIME.     |
 |                  |                                                                                                                 |
-|                  | The sender partnership MUST enable `Request Receipt`_ from recipient for running this features properly.        |
+|                  | The send partnership must enable Request Receipt for this feature to function properly.                         |
 |                  |                                                                                                                 |
-|                  | Recipient is required to provide its public certificate to sender for verifying the source of the receipt.      |
+|                  | The recipient is required to provide a Certificate for Verification so the source of the receipt can            |
+|                  | be verified.                                                                                                    |
 |                  |                                                                                                                 |
-|                  | It is applicable only for **Sender** partnership.                                                               |
+|                  | This field is only applicable to **send** partnerships.                                                         |
 +------------------+-----------------------------------------------------------------------------------------------------------------+
-| **Dependencies** | [ Request Receipt = true ] , [ Certificate for Verification **REQUIRED** ]                                      |
+| **Dependencies** | [ `Request Receipt`_ = true ] , [ `Certificate for Verification`_ **REQUIRED** ]                                |
 +------------------+-----------------------------------------------------------------------------------------------------------------+
-| **Options**      | [ **true** = receipt MUST be digitally signed ],                                                                |
+| **Options**      | [ ``true`` = receipt must be digitally signed ],                                                                |
 |                  |                                                                                                                 |
-|                  | [ **false** = receipt MUST not be digitally signed ]                                                            |
+|                  | [ ``false`` = receipt must not be digitally signed ]                                                            |
 +------------------+-----------------------------------------------------------------------------------------------------------------+
 
 
@@ -193,24 +184,25 @@ Asynchronous Receipt
 ^^^^^^^^^^^^^^^^^^^^^
 
 +------------------+-----------------------------------------------------------------------------------------------------------------+
-| **Description**  | Indicates whether the recipient should reply the incoming AS2 message in same HTTP/HTTPS connection the sender  |
-|                  | uses for delivery.                                                                                              |
+| **Description**  | Indicates whether the recipient should reply to incoming AS2 messages using the same HTTP/HTTPS connection      |
+|                  | that the sender is using for delivery.                                                                          |
 |                  |                                                                                                                 |
-|                  | It is applicable only for **Sender** partnership.                                                               |
+|                  | This field is only applicable to **send** partnerships.                                                         |
 +------------------+-----------------------------------------------------------------------------------------------------------------+
-| **Dependencies** | [ Request Receipt = true ]                                                                                      |
+| **Dependencies** | [ `Request Receipt`_ = ``true`` ]                                                                               |
 +------------------+-----------------------------------------------------------------------------------------------------------------+
-| **Options**      | [ **true** = asynchronous reply ], [ **false** = synchronous reply ]                                            |
+| **Options**      | [ ``true`` = asynchronous reply ], [ ``false`` = synchronous reply ]                                            |
 +------------------+-----------------------------------------------------------------------------------------------------------------+
 
-
-An example of synchronous reply from the recipient:
-AS2 message receipt is encapsulated in the HTTP response when synchronous reply is applied.
+Synchronous reply
+~~~~~~~~~~~~~~~~~~~~~~
+AS2 message receipts are encapsulated in the HTTP response.
 
 .. image:: /_static/images/first_step/as2-send-sync.png
-
-An example of asynchronous reply from the recipient:
-AS2 message receipt will be delivered through another HTTP connection from recipient to sender.
+     
+Asynchronous reply
+~~~~~~~~~~~~~~~~~~
+AS2 message receipts will be delivered through another HTTP connection from recipient to sender.
 
 .. image:: /_static/images/first_step/as2-send-async.png
 
@@ -218,25 +210,20 @@ Receipt Return URL
 ^^^^^^^^^^^^^^^^^^
 
 +------------------+-----------------------------------------------------------------------------------------------------------------+
-| **Description**  | It is the endpoint URL of Hermes 2 or any compatible messaging gateway for receiving receipts. It **SHOULD**    |
-|                  | always be the inbound endpoint URL of the **Sender**.                                                           |
+| **Description**  | This is the endpoint URL of Hermes 2 or another compatible messaging gateway for receiving receipts. It is      |
+|                  | always the inbound endpoint URL of the **send** partnership. For example:                                       |
 |                  |                                                                                                                 |
-|                  | For example:                                                                                                    |
+|                  |   | **Sender (A)** IP address: ``1.1.1.1:8080``                                                                 |
+|                  |   | **Recipient (B)** IP address: ``1.1.1.2:8080``                                                              |
+|                  |   | AS2 inbound endpoint : ``/corvus/httpd/as2/inbound``                                                        |
 |                  |                                                                                                                 |
-|                  | **Sender (A)** IP address: 1.1.1.1:8080                                                                         |
+|                  |   Then the Receipt Return URL for an AS2 message from **sender (A)** is the inbound                             |
+|                  |   endpoint of **sender (A)**, which is ``http://1.1.1.1:8080/corvus/httpd/as2/inbound/``                        |
 |                  |                                                                                                                 |
-|                  | **Recipient (B)** IP address: 1.1.1.2:8080                                                                      |
-|                  |                                                                                                                 |
-|                  | AS2 inbound endpoint : /corvus/httpd/as2/inbound                                                                |
-|                  |                                                                                                                 |
-|                  | Then the Receipt Return URL for sending an AS2 message from **sender (A)** to **recipient (B)** is the inbound  |
-|                  | endpoint of **sender (A)**, which is *http://1.1.1.1:8080/corvus/httpd/as2/inbound/*                            |
-|                  |                                                                                                                 |
-|                  | It is applicable only for **Sender** partnership.                                                               |
+|                  | This field is only applicable to **send** partnerships.                                                         |
 +------------------+-----------------------------------------------------------------------------------------------------------------+
-| **Dependencies** | [ Request Receipt = true ],                                                                                     |
-|                  |                                                                                                                 |
-|                  | [ Asynchronous Receipt = true ]                                                                                 |
+| **Dependencies** | [ `Request Receipt`_ = ``true`` ],                                                                              |
+|                  | [ `Asynchronous Receipt`_ = ``true`` ]                                                                          |
 +------------------+-----------------------------------------------------------------------------------------------------------------+
 
 
@@ -245,13 +232,13 @@ Message Compression Required
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 +-----------------+---------------------------------------------------------------------------------------------------------+
-| **Description** | Indicates whether the sender **MUST** compress the outgoing AS2 message which applied this partnership. |
+| **Description** | Indicates whether the sender must compress outgoing AS2 messages in this partnership.                   |
 |                 |                                                                                                         |
-|                 | It is applicable only for **Sender** partnership.                                                       |
+|                 | This field is only applicable for **send** partnerships.                                                |
 +-----------------+---------------------------------------------------------------------------------------------------------+
-| **Options**     | [ **true** = The outgoing normal/payload AS2 message MUST be compressed first. ],                       |
+| **Options**     | [ ``true`` = outgoing AS2 messages must be compressed ],                                                |
 |                 |                                                                                                         |
-|                 | [ **false** = The outgoing normal/payload AS2 message MUST not be compressed. ]                         |
+|                 | [ ``false`` = outgoing AS2 messages must not be compressed ]                                            |
 +-----------------+---------------------------------------------------------------------------------------------------------+
 
 
@@ -260,22 +247,22 @@ Message Signing Required
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 +-----------------+---------------------------------------------------------------------------------------------+
-| **Description** | Indicates whether the sender **MUST** sign digitally the AS2 message using its private key. |
+| **Description** | Indicates whether the sender must digitally sign AS2 messages using their private key.      |
 |                 |                                                                                             |
-|                 | It is applicable only for **Sender** partnership.                                           |
+|                 | This field is only applicable for **send** partnerships.                                    |
 +-----------------+---------------------------------------------------------------------------------------------+
-| **Options**     | [ **true** = The outgoing AS2 message MUST be digitally signed. ],                          |
+| **Options**     | [ ``true`` = outgoing AS2 messages must be digitally signed ],                              |
 |                 |                                                                                             |
-|                 | [ **false** = The outgoing AS2 message MUST not sign digitally. ]                           |
+|                 | [ ``false`` = outgoing AS2 messages must not be digitally signed ]                          |
 +-----------------+---------------------------------------------------------------------------------------------+
 
 Signing Algorithm
 ^^^^^^^^^^^^^^^^^
 
 +-----------------+-----------------------------------------------------------------------------------------------+
-| **Description** | The algorithm used to sign digitally the outgoing AS2 message which applied this partnership. |
+| **Description** | The algorithm used to digitally sign outgoing AS2 messages in this partnership.               |
 +-----------------+-----------------------------------------------------------------------------------------------+
-| **Options**     | [ SHA1],[ MD5 ]                                                                               |
+| **Options**     | [ ``SHA1`` ], [ ``MD5`` ]                                                                     |
 +-----------------+-----------------------------------------------------------------------------------------------+
 
 
@@ -284,18 +271,18 @@ Message Encryption Required
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 +------------------+----------------------------------------------------------------------------------------+
-| **Description**  | Indicates whether the sender **MUST** encrypt the AS2 message using recipient's public |
+| **Description**  | Indicates whether the sender must encrypt AS2 messages using the recipient's public    |
 |                  | certificate defined in Certificate for Encryption.                                     |
 |                  |                                                                                        |
-|                  | The encryption method is based on S/MIME standard.                                     |
+|                  | The encryption method is based on the S/MIME standard.                                 |
 |                  |                                                                                        |
-|                  | It is applicable only for **Sender** partnership.                                      |
+|                  | This field is only applicable for **send** partnerships.                               |
 +------------------+----------------------------------------------------------------------------------------+
-| **Dependencies** | [ Certificate for Encryption **REQUIRED** ] ,                                          |
+| **Dependencies** | [ `Certificate for Encryption`_ **REQUIRED** ]                                         |
 +------------------+----------------------------------------------------------------------------------------+
-| **Options**      | [ **true** = The outgoing normal/payload AS2 message MUST be encrypted. ],             |
+| **Options**      | [ ``true`` = outgoing AS2 messages must be encrypted ],                                |
 |                  |                                                                                        |
-|                  | [ **false** = The outgoing AS2 message does not require to encrypt. ]                  |
+|                  | [ ``false`` = outgoing AS2 messages must not be encrypted ]                            |
 +------------------+----------------------------------------------------------------------------------------+
 
 
@@ -304,9 +291,9 @@ Encryption Algorithm
 ^^^^^^^^^^^^^^^^^^^^
 
 +-----------------+----------------------------------------------------------------------------------------+
-| **Description** | The algorithm used to encrypt the outgoing AS2 message which applied this partnership. |
+| **Description** | The algorithm used to encrypt outgoing AS2 messages in this partnership.               |
 +-----------------+----------------------------------------------------------------------------------------+
-| **Options**     | [ **3DES** ],[ **RC2** ]                                                               |
+| **Options**     | [ ``3DES`` ], [ ``RC2`` ]                                                              |
 +-----------------+----------------------------------------------------------------------------------------+
 
 
@@ -314,17 +301,17 @@ Encryption Algorithm
 Certificate for Encryption
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-+-----------------+--------------------------------------------------------------------------------------------------------------------+
-| **Description** | The certificate (.cer) file for encrypting the outgoing AS2 message by using the public key exported by recipient. |
-|                 |                                                                                                                    |
-|                 | For recipient, it should use the keystore in AS2 plugin to export the public certificate for sender.               |
-|                 |                                                                                                                    |
-|                 | AS2 default keystore location: <HERMES2 HOME>/plugins/hk.hku.cecid.edi.as2/security                                |
-|                 |                                                                                                                    |
-|                 | The keystore **MUST** be in PKCS12 format.                                                                         |
-|                 |                                                                                                                    |
-|                 | See Message Encryption Required for details.                                                                       |
-+-----------------+--------------------------------------------------------------------------------------------------------------------+
++-----------------+---------------------------------------------------------------------------------------------------------------------+
+| **Description** | The certificate (``.cer``) file for encrypting outgoing AS2 messages using the public key exported by the recipient.|
+|                 |                                                                                                                     |
+|                 | The recipient should use the keystore in the AS2 plugin to export the public certificate for the sender.            |
+|                 |                                                                                                                     |
+|                 | AS2 default keystore location: :file:`{<HERMES2_HOME>}/plugins/hk.hku.cecid.edi.as2/security`                       |
+|                 |                                                                                                                     |
+|                 | The keystore must be in PKCS12 format.                                                                              |
+|                 |                                                                                                                     |
+|                 | See `Message Encryption Required`_ for details.                                                                     |
++-----------------+---------------------------------------------------------------------------------------------------------------------+
 
 
 
@@ -332,9 +319,9 @@ MIC Algorithm
 ^^^^^^^^^^^^^
 
 +-----------------+----------------------------------------------------------------------------------------------------------+
-| **Description** | The algorithm to create message digest/hash for the outgoing AS2 message which applied this partnership. |
+| **Description** | The algorithm used to create message digests/hashes for outgoing AS2 messages in this partnership.       |
 +-----------------+----------------------------------------------------------------------------------------------------------+
-| **Options**     | [ **SHA1** ],[ **MD5** ]                                                                                 |
+| **Options**     | [ ``SHA1`` ], [ ``MD5`` ]                                                                                |
 +-----------------+----------------------------------------------------------------------------------------------------------+
 
 
@@ -343,14 +330,14 @@ Maximum Retries
 ^^^^^^^^^^^^^^^
 
 +-----------------+-------------------------------------------------------------------------------------------------------------------+
-| **Description** | The maximum number of retry that the sender can attempt to deliver the AS2 message.                               |
+| **Description** | The maximum number of retries allowed for the sender to attempt delivering an AS2 message.                        |
 |                 |                                                                                                                   |
-|                 | Hermes 2 tries to deliver the AS2 message again under the specification of reliable messaging until exceeding     |
+|                 | Hermes 2 tries to deliver the AS2 message under the specification of reliable messaging until exceeding           |
 |                 | the maximum number of retries.                                                                                    |
 |                 |                                                                                                                   |
-|                 | Each retry will be executed after a interval defined in Retry Interval from the last delivery attempt.            |
-+-----------------+-------------------------------------------------------------------------------------------------------------------+
-| **Options**     | [ recommended range = 1-10 ]                                                                                      |
+|                 | There will be a time interval between each attempt, which is defined in `Retry Interval (ms)`_.                   |
+|                 |                                                                                                                   |
+|                 | It is **RECOMMENDED** that the value of this field be between ``1-10``.                                           |
 +-----------------+-------------------------------------------------------------------------------------------------------------------+
 
 
@@ -358,11 +345,11 @@ Maximum Retries
 Retry Interval (ms)
 ^^^^^^^^^^^^^^^^^^^
 
-+-----------------+--------------------------------------------------------------------+
-| **Description** | The interval in millesecond between consecutive retry in delivery. |
-+-----------------+--------------------------------------------------------------------+
-| **Options**     | [ recommended range = 30000 - 300000 ]                             |
-+-----------------+--------------------------------------------------------------------+
++-----------------+----------------------------------------------------------------------------------------------+
+| **Description** | The time interval (milleseconds) between each consecutive attempt to deliver an AS2 message. |
+|                 |                                                                                              |
+|                 | It is **RECOMMENDED** that the value of this field be between ``30000-300000``.              |
++-----------------+----------------------------------------------------------------------------------------------+
 
 
 
@@ -370,16 +357,16 @@ Message Signature Enforced
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 +-----------------+--------------------------------------------------------------------------------------------------------------------+
-| **Description** | Indicates whether the incoming AS2 message **MUST** be digitally signed.                                           |
+| **Description** | Indicates whether incoming AS2 messages must be digitally signed.                                                  |
 |                 |                                                                                                                    |
-|                 | It enforced, AS2 message applied this partnership **MUST** be digitally signed by **Sender** before the message is |
-|                 | received by **Recipient**.                                                                                         |
+|                 | If enabled, AS2 messages in this partnership must be digitally signed by the sender before the message is          |
+|                 | received by the recipient.                                                                                         |
 |                 |                                                                                                                    |
-|                 | It is applicable only for **Recipient** partnership.                                                               |
+|                 | This field is only applicable to **recieve** partnerships.                                                         |
 +-----------------+--------------------------------------------------------------------------------------------------------------------+
-| **Options**     | [ **true** = incoming AS2 messages must be digitally signed ],                                                     |
+| **Options**     | [ ``true`` = incoming AS2 messages must be digitally signed ],                                                     |
 |                 |                                                                                                                    |
-|                 | [ **false** = incoming As2 messages may or may not be digitally signed ]                                           |
+|                 | [ ``false`` = incoming As2 messages may not be digitally signed ]                                                  |
 +-----------------+--------------------------------------------------------------------------------------------------------------------+
 
 
@@ -388,16 +375,17 @@ Message Encryption Enforced
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 +-----------------+-------------------------------------------------------------------------------------------------------------------+
-| **Description** | Indicates whether the incoming AS2 message **MUST** be encrypted.                                                 |
+| **Description** | Indicates whether incoming AS2 messages must be encrypted.                                                        |
 |                 |                                                                                                                   |
-|                 | It enforced, AS2 message applied this partnership **MUST** be encrypted by **Sender** before the message is       |
-|                 | received by **Recipient**.                                                                                        |
+|                 | It enforced, AS2 message in this partnership must be encrypted by the sender before the message is                |
+|                 | received by the recipient.                                                                                        |
 |                 |                                                                                                                   |
-|                 | It is applicable only for **Recipient** partnership.                                                              |
+|                 | This field is only applicable to **recieve** partnerships.                                                        |
 |                 |                                                                                                                   |
-| **Options**     | [ **true** = incoming AS2 messages must be encrypted ],                                                           |
 +-----------------+-------------------------------------------------------------------------------------------------------------------+
-|                 | [ **false** = incoming AS2 messages may or may not be encrypted ]                                                 |
+| **Options**     | [ ``true`` = incoming AS2 messages must be encrypted ],                                                           |
+|                 |                                                                                                                   |
+|                 | [ ``false`` = incoming AS2 messages may not be encrypted ]                                                        |
 +-----------------+-------------------------------------------------------------------------------------------------------------------+
 
 
@@ -406,15 +394,15 @@ Certificate for Verification
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 +-----------------+-------------------------------------------------------------------------------------------------------------------+
-| **Description** | The certificate (.cer) file for verifying the incoming digitally signed AS2 message by using the public key       |
-|                 | generated by sender.                                                                                              |
+| **Description** | The certificate (``.cer``) file for verifying the incoming digitally signed AS2 messages using the public key     |
+|                 | generated by the sender.                                                                                          |
 |                 |                                                                                                                   |
-|                 | For sender, it should use the keystore in AS2 plugin to export the public certificate for recipient.              |
+|                 | The sender should use the keystore in the AS2 plugin to export the public certificate for the recipient.          |
 |                 |                                                                                                                   |
-|                 | AS2 default keystore location: *<HERMES2 HOME>/plugins/hk.hku.cecid.edi.as2/security*                             |
+|                 | AS2 default keystore location: :file:`{<HERMES2_HOME>}/plugins/hk.hku.cecid.edi.as2/security`                     |
 |                 |                                                                                                                   |
-|                 | The keystore **MUST** be in PKCS12 format.                                                                        |
+|                 | The keystore must be in PKCS12 format.                                                                            |
 |                 |                                                                                                                   |
-|                 | See Message Signing Required for details.                                                                         |
+|                 | See `Message Signing Required`_ for details.                                                                      |
 +-----------------+-------------------------------------------------------------------------------------------------------------------+
 
