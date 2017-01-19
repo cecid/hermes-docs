@@ -30,10 +30,39 @@ The application is packaged in the form of a self-extracted java archive (JAR). 
 
 
 Prerequisite
-^^^^^^^^^^^^^^^^^
-1. Java 2 SDK version 5.0 or above 
-#. A security patch, Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files, is also required for the java cryptography extension. 
-#. Tomcat 5.5 or above with port :literal:`8080`, :file:`{<TOMCAT_HOME>}` is used for referring to the home directory of tomcat in the remaining parts of document.  
+^^^^^^^^^^^^
+1. Java SE Development Kit 8
+#. Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files 
+
+   i. Download the JCE Unlimited Strength Jurisdiction Policy Files for JDK 8 from 
+
+      http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html
+
+   #. Unzip the downloaded file
+
+      .. code:: sh
+
+        unzip jce_policy-8.zip
+      
+   #. Replace the two jar files :file:`local_policy.jar` and :file:`US_export_policy.jar` in the directory :file:`/usr/lib/jvm/java-8-oracle/jre/lib/security` with the corresponding jar file unzipped in step ii.
+
+      .. code:: sh
+
+        cd UnilmitedJCEPolicyJDK8
+        sudo cp local_policy.jar /usr/lib/jvm/java-8-oracle/jre/lib/security/local_policy.jar
+        sudo cp US_export_policy.jar /usr/lib/jvm/java-8-oracle/jre/lib/security/US_export_policy.jar
+
+#. Tomcat 5.5 or above with port :literal:`8080` 
+
+   i. Change the access permission, the owner and the group of :file:`{<TOMCAT_HOME>}/webapps` after Tomcat is installed.
+
+      .. code:: sh
+
+        sudo chmod 775 <TOMCAT_HOME>/webapps
+        sudo chown tomcat:cecid <TOMCAT_HOME>/webapps
+
+   #. Edit :file:`/etc/systemd/system/tomcat.service`. Change :envvar:`Environment=JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre` to :envvar:`Environment=JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre`
+   #. Restart Tomcat
 
    **Note:**  To access the admin page, you will need to have a Tomcat user with an admin role.  One way is to define the user in :file:`tomcat-users.xml`.  Please refer to the Realm Configuration section in the Tomcat documentation for more details.
 
@@ -41,18 +70,18 @@ Prerequisite
 
    .. code-block:: xml
 
-       <?xml version='1.0' encoding='utf-8'?>
-       <tomcat-users>
-         <role rolename="tomcat"/>
-         <role rolename="admin"/>
-         <user username="corvus" password="corvus" roles="tomcat,admin"/>
-       </tomcat-users>
+      <?xml version='1.0' encoding='utf-8'?>
+      <tomcat-users>
+        <role rolename="tomcat"/>
+        <role rolename="admin"/>
+        <user username="corvus" password="corvus" roles="tomcat,admin"/>
+      </tomcat-users>
 
 #. One of the following database installed on any server:
 
-  * PostgreSQL 8.0 or later, :file:`{<POSTGRES_HOME>}` is referring to the home directory of PostgreSQL in the remaining parts of the document.
-  * MySQL 5.0 or later, :file:`{<MYSQL_HOME>}` is referring to the home directory of MySQL in the remaining parts of the document.
-  * Oracle 9i or later, :file:`{<ORACLE_HOME>}` is referring to the home directory of Oracle in the remaining parts of the document.
+   * PostgreSQL 8.0 or later, :file:`{<POSTGRES_HOME>}` is referring to the home directory of PostgreSQL in the remaining parts of the document.
+   * MySQL 5.0 or later, :file:`{<MYSQL_HOME>}` is referring to the home directory of MySQL in the remaining parts of the document.
+   * Oracle 9i or later, :file:`{<ORACLE_HOME>}` is referring to the home directory of Oracle in the remaining parts of the document.
 
 Step 1 – Environment setup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -79,8 +108,8 @@ Postgres
 
 #. Create two databases named :literal:`as2` and :literal:`ebms` with :literal:`corvus` user
 
-  i. Open a command prompt
-  #. Go to :file:`<POSTGRES_HOME>/bin`
+  i. Open a command`` prompt
+  #. Go to :file:`{<POSTGRES_HOME>}/bin`
   #. Type :samp:`createdb –U corvus –W as2`
   #. Enter the password :literal:`corvus`
   #. Repeat 2.3 - 2.4 for the :literal:`ebms` database.
@@ -278,7 +307,7 @@ Directory Organization
 +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
 | :file:`lib/*`                         | The library files required for the sample programs.                                                                                                 |
 +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-| :file:`*.bat` / :file:`\*.sh`         | The scripts for executing the sample programs.                                                                                                      |
+| :file:`*.bat` / :file:`*.sh`          | The scripts for executing the sample programs.                                                                                                      |
 +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Preparation
@@ -293,12 +322,18 @@ UNIX environment
 """"""""""""""""
 
 1. Set environment variable :envvar:`JAVA_HOME` to the directory installed the java.
-
-2. Change the permission of all shell-script files to :literal:`755` by following command.
+#. Change the permission of all shell-script files to :literal:`755` by the following command.
    
    .. code:: sh
 
-      chown 755 *.sh
+      sudo chmod 755 *.sh
+
+#. Change the owner and the group of :file:`{<HERMES2_HOME>}` and :file:`{<TOMCAT_HOME>}/webapps/corvus` by the following commands.
+
+   .. code:: sh
+
+      sudo chown -R tomcat:cecid <HERMES2_HOME>
+      sudo chown -R tomcat:cecid <TOMCAT_HOME>/webapps/corvus
 
 Partnership Maintenance
 ^^^^^^^^^^^^^^^^^^^^^^^

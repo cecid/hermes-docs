@@ -1,6 +1,10 @@
 # Visual Studio Code files
 .vscode
 
+# Emacs temp files
+\#*\#
+.\#*
+
 # Project ignores
 *.db
 

@@ -48,9 +48,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'my docs'
-copyright = u'2016, Alex Cao'
-author = u'Alex Cao'
+project = u'Hermes Business Messaging Gatweay Documentation'
+copyright = u'2016, CECID, HKU'
+author = u'CECID'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -233,7 +233,7 @@ html_static_path = ['_static']
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'mydocsdoc'
+htmlhelp_basename = 'hermes_docs'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -259,8 +259,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'mydocs.tex', u'my docs Documentation',
-     u'Alex Cao', 'manual'),
+    (master_doc, 'hermes_docs.tex', u'Hermes Documentation',
+     u'CECID', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -301,7 +301,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'mydocs', u'my docs Documentation',
+    (master_doc, 'hermes_docs', u'my docs Documentation',
      [author], 1)
 ]
 
@@ -316,8 +316,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'mydocs', u'my docs Documentation',
-     author, 'mydocs', 'One line description of project.',
+    (master_doc, 'hermes_docs', u'Hermes Business Messaging Gateway Documentation',
+     author, 'hermes_docs', 'Documentation of Hermes Business Messaging Gateway',
      'Miscellaneous'),
 ]
 
@@ -422,5 +422,5 @@ epub_exclude_files = ['search.html']
 #
 # epub_use_index = True
 
-html_logo = '_static/images/corvus-logo-slant.gif'
-html_favicon = '_static/images/cecid_icon.ico'
+html_logo = '_static/images/hermes-2-plus-logo.png'
+html_favicon = '_static/images/favicon.ico'
