@@ -6,15 +6,15 @@ Hermes 2 Configuration Guide
 Introduction
 ------------
 
-Purpose of This Document
+Purpose of this document
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-This document acts as a configuration reference for Hermes 2.0 Community Edition (CE) and Enterprise Edition (EE). The configurations of Hermes 2.0 are specified by various XML-based configuration files. By modifying these files, the administrators or developers can configure all the settings such as the location of the message database, log file locations, etc.
+This document acts as a configuration reference for Hermes 2.0 Community Edition (CE) and Enterprise Edition (EE). The configurations of Hermes 2.0 are specified by various XML-based configuration files. By modifying these files, administrators or developers can configure all the settings such as the location of the message database and log file locations.
 
-Intended Audience
+Intended audience
 ^^^^^^^^^^^^^^^^^
 
-The intended audience of this document includes system administrators, application developers and plug-in developers of the Hermes 2.0 system. It is expected the audience has some background knowledge of the following:
+The intended audience of this document includes system administrators, application developers and plugin developers of the Hermes 2.0 system. It assumes the audience has some background knowledge of the following:
 
 *   Java 2 Standard Edition
 *   XML
@@ -24,22 +24,22 @@ The intended audience of this document includes system administrators, applicati
 *   Application server compliant to Servlet 2.x specification
 *   Databases
 
-Overview on how properties file are loaded
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Overview on loading property files
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Hermes 2 has employed a module-group-component architecture which you can define your own module for each application. You can then assign a property file for each component and the Hermes 2 Core System will load them.
+Hermes 2 has employed a module-group-component architecture where you can define your own module for each application. You can then assign a property file for each component and the Hermes 2 Core System will load them.
 
-There are 2 loading mechanism, one for the Core System and one for the Plugins. The two resembles closely except the initial definition.  
+There are two loading mechanisms, one for the core system and one for the plugins. The two are almost identical except for their initial definitions.  
 
-Let's take a look at how the Core System modules are being loaded. 
+Let's take a look at how the core system modules are loaded. 
 
 .. image:: _static/images/2-overview-1.jpeg
 
-For the Core System, it will look for the existence of a file named :file:`sys.properties` from the classpath which contains the location of the module-group definition file. E.g.,
+For the core system, Hermes 2 will look for the existence of a file named :file:`sys.properties` from the classpath which contains the location of the module-group definition file. E.g.,
 
     :file:`sys.module.group=doc-processor.module-group.xml`
 
-From there, the system will look for the specified XML file and load up the modules specified in within. The modules specified could be a System Module, which contains infrastructure components like logging, database access. Or, it could be an Active Module, which performs the business function like sending out messages.
+From there, the system will look for the specified XML file and load up the modules specified within. The modules could be System Modules, which contain infrastructure components such as logging and database access, or they could be Active Modules, which perform business functions such as sending messages.
 
 .. code-block:: xml
 
@@ -53,11 +53,11 @@ From there, the system will look for the specified XML file and load up the modu
    ...
    </module>
 
-For the plugins, the loading mechanism will be a little bit different, instead of looking for a file named :file:`sys.properties`, it will look for a file named :file:`plugin.xml` instead. 
+For the plugins, instead of looking for a file named :file:`sys.properties`, Hermes 2 will look for a file named :file:`plugin.xml` instead. 
 
 .. image:: _static/images/2-overview-2.jpeg
 
-From within, a parameter with value named as :literal:`module-group-descriptor` will define the location of the module-group definition.
+From within, a parameter with the value :literal:`module-group-descriptor` will define the location of the module-group definition.
 
 .. code-block:: xml
 
@@ -76,33 +76,33 @@ From within, a parameter with value named as :literal:`module-group-descriptor` 
    ...
    </plugin>
 
-Hermes 2 Core System properties
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Hermes 2 core system properties
+-------------------------------
 You can modify the following information either through the web admin interface or by manipulating the XML configuration files directly.
 
-The configuration files are stored in :file:`{<WEBAPPS_LOCATION>}/corvus/WEB-INF/classes/hk/hku/cecid/piazza/corvus/core/conf` (where :file:`{<WEBAPPS_LOCATION>}` is the Web application repository of the application server).
+The configuration files are stored in :file:`{<WEBAPPS_LOCATION>}/corvus/WEB-INF/classes/hk/hku/cecid/piazza/corvus/core/conf` (where :file:`{<WEBAPPS_LOCATION>}` is the web application repository of the application server).
 
-+----------------------------------------------------------------------+----------------------------------------+
-| Tasks                                                                | Responsible configuration file         |
-+======================================================================+========================================+
-| 1.    Hermes 2 location                                              |                                        |
-|                                                                      |                                        | 
-| 2.    Plugin location for Hermes 2                                   |                                        |
-|                                                                      |                                        | 
-| 3.    SSL trust store information                                    |                                        |
-|                                                                      |                                        | 
-| 4.    Information in accessing proxy server                          | :file:`corvus.properties.xml`          |           
-|                                                                      |                                        | 
-| 5.    Encoding setting for core system                               |                                        |       
-|                                                                      |                                        | 
-| 6.    Connection timeout setting                                     |                                        | 
-+----------------------------------------------------------------------+----------------------------------------+
-| 7.    Log file location and levels of logging                        | :file:`corvus.log.properties.xml`      |
-+----------------------------------------------------------------------+----------------------------------------+
++-----------------------------------------------------------------------+----------------------------------------+
+| Properties                                                            | Configuration file                     |
++=======================================================================+========================================+
+| 1.    Hermes 2 location                                               |                                        |
+|                                                                       |                                        | 
+| 2.    Plugin location for Hermes 2                                    |                                        |
+|                                                                       |                                        | 
+| 3.    SSL trust store information                                     |                                        |
+|                                                                       |                                        | 
+| 4.    HTTP/HTTPS proxy server                                         | :file:`corvus.properties.xml`          |           
+|                                                                       |                                        | 
+| 5.    Encoding settings for core system                               |                                        |       
+|                                                                       |                                        | 
+| 6.    Connection timeout settings                                     |                                        | 
++-----------------------------------------------------------------------+----------------------------------------+
+| 7.    Log file location and level of logging                          | :file:`corvus.log.properties.xml`      |
++-----------------------------------------------------------------------+----------------------------------------+
 
 Hermes 2 location
 ^^^^^^^^^^^^^^^^^
-You can change the location of the Hermes 2 by modifying this element:
+You can change the location of Hermes 2 by modifying this element:
 
 .. code-block:: xml
 
@@ -111,15 +111,15 @@ You can change the location of the Hermes 2 by modifying this element:
      ...
    </corvus>
 
-+----------------------------------+--------------------------------------------------------------------------------------------------+
-| XPath of the Element / Attribute | Expected information                                                                             |
-+==================================+==================================================================================================+
-| :file:`/corvus/home`             | The location from which Hermes 2 is installed. Note that the path specified is an absolute path. |
-+----------------------------------+--------------------------------------------------------------------------------------------------+
++------------------------+------------------------------------------------------------------------------------------------+
+| XPath                  | Expected information                                                                           |
++========================+================================================================================================+
+| :code:`/corvus/home`   | The location in which Hermes 2 is installed. Note that the specified path is an absolute path. |
++------------------------+------------------------------------------------------------------------------------------------+
  
 Plugin location for Hermes 2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-You can change the plugin location of the Hermes 2 by modifying this element.
+You can change the plugin location of Hermes 2 by modifying this element:
 
 .. code-block:: xml
 
@@ -134,16 +134,16 @@ You can change the plugin location of the Hermes 2 by modifying this element.
      ...
    </corvus>
 
-+-----------------------------------+---------------------------------------------------------------------------------------+
-| Element / Attribute               | Expected information                                                                  |
-+===================================+=======================================================================================+
-| :code:`/corvus/plugin/registry`   | The location from which Hermes 2 plugin is installed. Normally it should be the       |
-|                                   | :literal:`plugins` directory under the home directory where Hermes 2 is installed.    |
-|                                   | Note that the path specified is an absolute path.                                     |
-|                                   |                                                                                       |
-+-----------------------------------+---------------------------------------------------------------------------------------+
-| :code:`/corvus/plugin/descriptor` | The name of the XML file which Hermes 2 will use in loading the Modulegroup-Component.|
-+-----------------------------------+---------------------------------------------------------------------------------------+
++--------------------------------------+--------------------------------------------------------------------------------------------+
+| XPath                                | Expected information                                                                       |
++======================================+============================================================================================+
+| :code:`/corvus/plugin/registry`      | The location in which Hermes 2 plugins are installed. By default, it should be the         |
+|                                      | :literal:`plugins` directory under the home directory where Hermes 2 is installed.         |
+|                                      | Note that the specified path is an absolute path.                                          |
+|                                      |                                                                                            |
++--------------------------------------+--------------------------------------------------------------------------------------------+
+| :code:`/corvus/plugin/descriptor`    | The name of the XML file which Hermes 2 will use when loading the module-group-component.  |
++--------------------------------------+--------------------------------------------------------------------------------------------+
 
 SSL trust store information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -164,20 +164,19 @@ SSL trust store information
    </corvus>
 
 
-+-------------------------------------------------------------------------+--------------------------------------------------------------------+
-| Element / Attribute                                                     | Expected information                                               |
-+=========================================================================+====================================================================+
-| :code:`/corvus/environment/properties/javax.net.ssl.trustStore`         | The location of the java keystore which is used for                |
-|                                                                         | establishing SSL connection. The keystore should contain           |
-|                                                                         | the certificates of trusted certificate authorities. To            |
-|                                                                         | maintain the keystore, the reader should use the                   |
-|                                                                         | :program:`keytool` provided by :program:`JDK`. For more            |
-|                                                                         | information, the reader may reference                              |
-|                                                                         | http://java.sun.com/j2se/1.4.2/docs/tooldocs/windows/keytool.html. |
-+-------------------------------------------------------------------------+--------------------------------------------------------------------+
-| :code:`/corvus/environment/properties/javax.net.ssl.truststorepassword` | The password used to access the keystore specified above.          |
-|                                                                         |                                                                    |
-+-------------------------------------------------------------------------+--------------------------------------------------------------------+
++-------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| XPath                                                                   | Expected information                                                       |
++=========================================================================+============================================================================+
+| :code:`/corvus/environment/properties/javax.net.ssl.trustStore`         | The location of the Java keystore which is used for                        |
+|                                                                         | establishing SSL connections. The keystore should contain                  |
+|                                                                         | the certificates of trusted certificate authorities. To                    |
+|                                                                         | maintain the keystore, the reader should use the                           |
+|                                                                         | :program:`keytool` provided by :program:`JDK`. For more                    |
+|                                                                         | information, the reader may reference                                      |
+|                                                                         | http://docs.oracle.com/javase/8/docs/technotes/tools/windows/keytool.html. |
++-------------------------------------------------------------------------+----------------------------------------------------------------------------+
+| :code:`/corvus/environment/properties/javax.net.ssl.trustStorePassword` | The password used to access the keystore specified above.                  |
++-------------------------------------------------------------------------+----------------------------------------------------------------------------+
 
 HTTP/HTTPS proxy server
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -199,23 +198,23 @@ HTTP/HTTPS proxy server
 
 
 +--------------------------------------------------------+--------------------------------------------------------------+
-| Element / Attribute                                    | Expected information                                         |
+| XPath                                                  | Expected information                                         |
 +========================================================+==============================================================+
-| :code:`/corvus/environment/properties/http.proxyHost`  | The hostname or IP address of the proxy host for Hermes 2    |
-|                                                        | to establish HTTP connections for outgoing messages.         |
+| :code:`/corvus/environment/properties/http.proxyHost`  | The hostname or IP address of the proxy host that Hermes 2   |
+|                                                        | will establish HTTP connections with for outgoing messages.  |
 +--------------------------------------------------------+--------------------------------------------------------------+
-| :code:`/corvus/environment/properties/http.proxyPort`  | The TCP port of the proxy server that is specified above.    |
+| :code:`/corvus/environment/properties/http.proxyPort`  | The TCP port of the proxy server specified above.            |
 |                                                        |                                                              |
 +--------------------------------------------------------+--------------------------------------------------------------+
-| :code:`/corvus/environment/properties/https.proxyHost` | The hostname or IP address of the proxy host for Hermes 2 to |
-|                                                        | establish HTTPS connections for outgoing messages.           |
+| :code:`/corvus/environment/properties/https.proxyHost` | The hostname or IP address of the proxy host that Hermes 2   |
+|                                                        | will establish HTTPS connections with for outgoing messages. |
 +--------------------------------------------------------+--------------------------------------------------------------+
-| :code:`/corvus/environment/properties/https.proxyPort` | The TCP port of the proxy that is specified above.           |
+| :code:`/corvus/environment/properties/https.proxyPort` | The TCP port of the proxy server specified above.            |
 |                                                        |                                                              |
 +--------------------------------------------------------+--------------------------------------------------------------+
 
-Encoding setting for core system
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Encoding settings for core system
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: xml
 
@@ -230,16 +229,16 @@ Encoding setting for core system
 
 
 +-------------------------------------------+-----------------------------------------------------------------------------------------+
-| Element / Attribute                       | Expected information                                                                    |
+| XPath                                     | Expected information                                                                    |
 +===========================================+=========================================================================================+
-| :code:`/corvus/encoding/servlet-request`  | The encoding of the incoming HTTP or HTTPS requests.                                    |
+| :code:`/corvus/encoding/servlet-request`  | The encoding of incoming HTTP or HTTPS requests.                                        |
 |                                           | :literal:`UTF-8` is the recommended value because it can handle most written languages. |
 +-------------------------------------------+-----------------------------------------------------------------------------------------+
-| :code:`/corvus/encoding/servlet-response` | The encoding of the outgoing HTTP or HTTP responses.                                    |
+| :code:`/corvus/encoding/servlet-response` | The encoding of outgoing HTTP or HTTP responses.                                        |
 +-------------------------------------------+-----------------------------------------------------------------------------------------+
 
-Connection timeout setting
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Connection timeout settings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: xml
 
    <corvus>
@@ -255,20 +254,21 @@ Connection timeout setting
 
 
 +----------------------------------------------------------------+--------------------------------------------------------------------+
-| Element / Attribute                                            | Expected information                                               |
+| XPath                                                          | Expected information                                               |
 +================================================================+====================================================================+
-| :code:`/corvus/properies/sun.net.client.defaultConnectTimeout` | It specifies the timeout (in milliseconds) to establish the HTTP   |
+| :code:`/corvus/properies/sun.net.client.defaultConnectTimeout` | It specifies the timeout (in milliseconds) for establishing HTTP   |
 |                                                                | or HTTPS connections for outgoing messages. :literal:`30` seconds  |
 |                                                                | is the recommended value.                                          |
 +----------------------------------------------------------------+--------------------------------------------------------------------+
-| :code:`/corvus/properies/sun.net.client.defaultReadTimeout`    | It specifies the timeout (in milliseconds) when reading from input |
-|                                                                | stream when a HTTP or HTTPS connection is established.             |
+| :code:`/corvus/properies/sun.net.client.defaultReadTimeout`    | It specifies the timeout (in milliseconds) for reading from input  |
+|                                                                | streams when a HTTP or HTTPS connection is established.            |
 |                                                                | :literal:`300` seconds is the recommended value.                   |
 |                                                                |                                                                    |
 +----------------------------------------------------------------+--------------------------------------------------------------------+
 
-Log file location and levels of logging
-To change the settings of the log reported by corvus, you will need to modify the XML file named :file:`corvus.log.properties.xml`. How to configure the logging module is the same as configuring Apache Log4j. Note that for configuring the logs of ebMS plug-ins, you need to edit another configuration file.
+Log file location and level of logging
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+To change the settings of the log written by the core system, you will need to modify the XML file named :file:`corvus.log.properties.xml`. Configuring the logging module is the same as configuring Apache Log4j. Note that for configuring the logs of plugins, you need to edit another configuration file.
 
 .. code-block:: xml
 
@@ -289,82 +289,84 @@ To change the settings of the log reported by corvus, you will need to modify th
    </log4j:configuration>
 
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| Element / Attribute                                                              | Expected information                                 |
+| XPath                                                                            | Expected information                                 |
 +==================================================================================+======================================================+
-| :code:`log4j/category/priority`                                                  | The log level of the Corvus logging. The available   |
-|                                                                                  | levels are :code:`debug`, :code:`info`,              |
-|                                                                                  | :code:`warn`, :code:`error` and :code:`fatal`.       |
-|                                                                                  | If you set the value as :code:`debug`,               |
+| :code:`log4j/category/priority`                                                  | The log level of core system logging. The available  |
+|                                                                                  | levels are ``debug``, ``info``, ``warn``, ``error``  |
+|                                                                                  | and ``fatal``. If you set the value as ``debug``,    |
 |                                                                                  | all logs will be printed.                            |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| :code:`/log4j/category/appender-ref@ref`                                         | The name of the :code:`appender` to be used for      |
-|                                                                                  | logging. An :code:`appender` is to specify how       |
-|                                                                                  | to generate log files. In the above example,         |
-|                                                                                  | an :code:`appender` configuration element            |
-|                                                                                  | :code:`corvus` is used. The settings of the          |
-|                                                                                  | :code:`appender` are specified by the referenced     |
-|                                                                                  | :code:`appender` element.                            |
+| :code:`/log4j/category/appender-ref@ref`                                         | The name of the ``appender`` element to be used      |
+|                                                                                  | for logging. The ``appender`` element specifies      |
+|                                                                                  | how to generate log files. In the above example,     |
+|                                                                                  | the appender named ``corvus`` is used. The           |
+|                                                                                  | settings of the appender are specified by the        |
+|                                                                                  | referenced ``appender`` element.                     |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| :code:`/log4j/appender@class`                                                    | The appender specified by this :code:`appender`      |
+| :code:`/log4j/appender@class`                                                    | The appender specified by the ``appender``           |
 |                                                                                  | configuration element. Apache Log4j provides a       |
-|                                                                                  | series of appender, such :code:`RollingFileAppender`,|
-|                                                                                  | :code:`DailyRollingFileAppender`, etc.               |
+|                                                                                  | series of appenders, such as ``RollingFileAppender`` |
+|                                                                                  | and ``DailyRollingFileAppender``.                    |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| :code:`/log4j/appender@name`                                                     | The name of this appender configuration element.     |
-|                                                                                  | The :file:`/category/appender-ref@ref` should        |
-|                                                                                  | reference the appender configuration element         |
+| :code:`/log4j/appender@name`                                                     | The name of the ``appender`` configuration element.  |
+|                                                                                  | :file:`/log4j/category/appender-ref@ref` should      |
+|                                                                                  | reference the ``appender`` configuration element     |
 |                                                                                  | by this name.                                        |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| :code:`/log4j/appender/param[@name='File']/@value`                               | The path of Corvus log of this appender.             |
-| (i.e. The :code:`value` attribute of the :code:`param` element                   |                                                      |
-| under :code:`appender` element, whose :code:`name` attribute is :code:`File`)    |                                                      |
+| :code:`/log4j/appender/param[@name='File']/@value`                               | The path of the core system log from this appender.  |
+|                                                                                  |                                                      |
+| (i.e. The ``value`` attribute of the ``param`` element                           |                                                      |
+| under the ``appender`` element, whose ``name`` attribute is ``File``)            |                                                      |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
 | :code:`/log4j/appender/param[@name='Encoding']/@value`                           | The encoding to be used for the log file.            |
-| (i.e. The :code:`value` attribute of the :code:`param` element under             |                                                      |
-| :code:`appender` element, whose :code:`name` attribute is :code:`Encoding`)      |                                                      |
+|                                                                                  |                                                      |
+| (i.e. The ``value`` attribute of the ``param`` element under the                 |                                                      |
+| ``appender`` element, whose ``name`` attribute is ``Encoding``)                  |                                                      |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
 | :code:`/log4j/appender/param[@name='MaxFileSize']/@value`                        | If the size of a log file has grown to exceed this   |
-| (i.e. The :code:`value` attribute of the :code:`param` element under             | limit, another new log file will be written and the  |
-| :code:`appender` element, whose :code:`name` attribute is :code:`MaxFileSize'`)  | old log file will be backed up. The backed-up log    |
-|                                                                                  | file's filename will have an index appended          |
+|                                                                                  | limit, a new log file will be written and the        |
+| (i.e. The ``value`` attribute of the ``param`` element under the                 | old log file will be backed up. An index will be     |
+| ``appender`` element, whose ``name`` attribute is ``MaxFileSize``)               | appended to the name of the old log file.            |
 |                                                                                  | (e.g. :file:`corvus.log.1`).                         |
+|                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| :code:`/log4j/appender/param[@name='MaxBackupIndex']/@value`                     | The maximum number of log files which will be backed | 
-| (i.e. The :code:`value` attribute of the :code:`param` element under             | up. For example, if it is set to 10, the maximum     |
-| :code:`appender` element, whose :code:`name` attribute is :code:`MaxBackupIndex`)| number of backed up log files will be 10 and their   |
-|                                                                                  | filenames will be :file:`xxx.log.1`,                 |
-|                                                                                  | :file:`xxx.log.2`, ... :file:`xxx.log.10`.           |
+| :code:`/log4j/appender/param[@name='MaxBackupIndex']/@value`                     | The maximum number of log files that will be backed  |
+|                                                                                  | up. For example, if it is set to 10, the maximum     |
+| (i.e. The ``value`` attribute of the ``param`` element under the                 | number of backed up log files will be 10 and their   |
+| ``appender`` element, whose ``name`` attribute is ``MaxBackupIndex``)            | filenames will be :file:`{xxx}.log.1`,               |
+|                                                                                  | :file:`{xxx}.log.2`, ..., :file:`{xxx}.log.10`.      |
+|                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| :code:`/log4j/appender/layout/param[@name='ConversionPattern']/@value`           | The pattern used in writing out the log file.        |
+| :code:`/log4j/appender/layout/param[@name='ConversionPattern']/@value`           | The pattern used when writing the log file.          |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
 
-Hermes2 Plugins properties
-----------------------------------------------
+Hermes 2 plugin properties
+--------------------------
 
-AS2 Plugin
+AS2 plugin
 ^^^^^^^^^^
-In the directory :file:`{<HERMES_2_PLUGINS_LOCATION>}/hk.hku.cecid.edi.as2/conf/hk/hku/cecid/edi/as2/conf`, there are some configuration files for Hermes 2's AS2 plug-in. Which configuration file you should edit depends on your configuration task:
+In the directory :file:`{<HERMES_2_PLUGINS_LOCATION>}/hk.hku.cecid.edi.as2/conf/hk/hku/cecid/edi/as2/conf`, there are some configuration files for Hermes 2's AS2 plugin. Which configuration file you should edit depends on the property:
 
 
 +----------------------------------------------------+----------------------------------------+
-| Tasks                                              | Responsible configuration file         |
+| Properties                                         | Configuration file                     |
 +====================================================+========================================+
-| Log file location and level of logging             | :file:`As2.log.properties.xml`         |
+| Log file location and level of logging             | :file:`as2.log.properties.xml`         |
 +----------------------------------------------------+----------------------------------------+
-| Information of the database to use                 | :file:`As2.module.core.xml`            |
+| Connection to message database                     | :file:`as2.module.core.xml`            |
 +----------------------------------------------------+                                        |
 | Location of keystore for signing outgoing messages |                                        |
 +----------------------------------------------------+                                        |
-| Location of the message repository                 |                                        |
+| Location of message repository                     |                                        |
 +----------------------------------------------------+----------------------------------------+
 
 
-Log file location and levels of logging
-"""""""""""""""""""""""""""""""""""""""
+Log file location and level of logging
+""""""""""""""""""""""""""""""""""""""
 To change the location of the log file, you will need to modify the XML file named :file:`as2.log.properties.xml`.
 
     .. code-block:: xml
@@ -387,65 +389,68 @@ To change the location of the log file, you will need to modify the XML file nam
        </log4j:configuration>
 
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
-| Element / Attribute                                                    | Expected information                                            | 
+| XPath                                                                  | Expected information                                            | 
 +========================================================================+=================================================================+
-| :code:`/log4j/category/priority`                                       | The log level of the AS2 plug-in logging. The available         | 
-|                                                                        | levels are :code:`debug`, :code:`info`, :code:`warn`,           |
-|                                                                        | :code:`error` and :code:`fatal`. If you set the value           |
-|                                                                        | as :code:`debug`, all logs will be printed.                     |
+| :code:`/log4j/category/priority`                                       | The log level of the AS2 plugin logging. The available          | 
+|                                                                        | levels are ``debug``, ``info``, ``warn``, ``error`` and         |
+|                                                                        | ``fatal``. If you set the value as ``debug``, all logs will be  |
+|                                                                        | printed.                                                        |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
-| :code:`/log4j/category/appender-ref@ref`                               | The name of the :code:`appender` to be used for logging.        |
-|                                                                        | An :code:`appender` is to specify how to generate log           |
-|                                                                        | files. In the above example, an :code:`appender`                |
-|                                                                        | configuration element :code:`as2` is used. The settings         |
-|                                                                        | of the :code:`appender` are specified by the referenced         |
-|                                                                        | :code:`appender` element.                                       |
-+------------------------------------------------------------------------+-----------------------------------------------------------------+
-| :code:`/log4j/appender@class`                                          | The appender specified by this "appender" configuration         | 
-|                                                                        | element. Apache Log4j provides a series of appender, such       |
-|                                                                        | RollingFileAppender, DailyRollingFileAppender, etc.             |
+| :code:`/log4j/category/appender-ref@ref`                               | The name of the ``appender`` element to be used for logging.    |
+|                                                                        | The ``appender`` element specifies how to generate log          |
+|                                                                        | files. In the above example, the appender named ``as2``         |
+|                                                                        | is used. The settings of the appender are specified by the      |
+|                                                                        | referenced :code:`appender` element.                            |
 |                                                                        |                                                                 |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
-| :code:`/log4j/appender@name`                                           | The name of this appender configuration element. The            | 
-|                                                                        | :file:`/category/appender-ref@ref` should reference the         |
-|                                                                        | appender configuration element by this name.                    |
+| :code:`/log4j/appender@class`                                          | The appender specified by this ``appender`` configuration       | 
+|                                                                        | element. Apache Log4j provides a series of appenders, such as   |
+|                                                                        | ``RollingFileAppender`` and ``DailyRollingFileAppender``.       |
 |                                                                        |                                                                 |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
-| :code:`/log4j/appender/param[@name='File']/@value`                     | The path of AS2 log of this appender.                           |
-| (i.e. The :code:`value` attribute of the :code:`param`                 |                                                                 |
-| element under :code:`appender` element,                                |                                                                 |
-| whose :code:`name` attribute is :code:`File`)                          |                                                                 |
+| :code:`/log4j/appender@name`                                           | The name of this ``appender`` configuration element.            | 
+|                                                                        | :file:`/log4j/category/appender-ref@ref` should reference the   |
+|                                                                        | ``appender`` configuration element by this name.                |
+|                                                                        |                                                                 |
++------------------------------------------------------------------------+-----------------------------------------------------------------+
+| :code:`/log4j/appender/param[@name='File']/@value`                     | The path of the AS2 log of this appender.                       |
+|                                                                        |                                                                 |
+| (i.e. The ``value`` attribute of the ``param`` element under the       |                                                                 |
+| ``appender`` element, whose ``name`` attribute is ``File``)            |                                                                 |
+|                                                                        |                                                                 |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
 | :code:`/log4j/appender/param[@name='Encoding']/@value`                 | The encoding to be used for the log file.                       |
-| (i.e. The :code:`value` attribute of the :code:`param`                 |                                                                 |
-| element under :code:`appender` element, whose                          |                                                                 |
-| :code:`name` attribute is :code:`Encoding`)                            |                                                                 |
+|                                                                        |                                                                 |
+| (i.e. The ``value`` attribute of the ``param`` element under the       |                                                                 |
+| ``appender`` element, whose ``name`` attribute is ``Encoding``)        |                                                                 |
+|                                                                        |                                                                 |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
 | :code:`/log4j/appender/param[@name='MaxFileSize']/@value`              | If the size of a log file has grown to exceed this limit,       |
-| (i.e. The :code:`value` attribute of the :code:`param`                 | another new log file will be written and the old log file       |
-| element under :code:`appender` element, whose :code:`name`             | will be backed up. The backed-up log file's filename will       |
-| attribute is :code:`MaxFileSize`)                                      | have an index appended (e.g. :file:`as2.log.1`).                |
+|                                                                        | another new log file will be written and the old log file       |
+| (i.e. The ``value`` attribute of the ``param`` element under the       | will be backed up. An index will be appended to the name        |
+| ``appender`` element, whose ``name`` attribute is ``MaxFileSize``)     | of the old log file (e.g. :file:`as2.log.1`).                   |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
-| :code:`/log4j/appender/param[@name='MaxBackupIndex]/@value`            | The maximum number of log files which will be backed up.        |
-| (i.e. The :code:`value` attribute of the :code:`param`                 | For example, if it is set to 10, the maximum number of          |
-| element under :code:`appender` element, whose :code:`name`             | backed up log files will be 10 and their filenames will         |
-| attribute is :code:`MaxBackupIndex`)                                   | be :file:`xxx.log.1`, :file:`xxx.log.2`, ... :file:`xxx.log.10`.|
+| :code:`/log4j/appender/param[@name='MaxBackupIndex]/@value`            | The maximum number of log files that will be backed up.         |
+|                                                                        | For example, if it is set to 10, the maximum number of          |
+| (i.e. The ``value`` attribute of the ``param`` element under the       | backed up log files will be 10 and their filenames will         |
+| ``appender`` element, whose ``name`` attribute is ``MaxBackupIndex``)  | be :file:`{xxx}.log.1`, :file:`{xxx}.log.2`, ...,               |
+|                                                                        | :file:`{xxx}.log.10`.                                           |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
-| :code:`/log4j/appender/layout/param[@name='ConversionPattern']/@value` | The pattern used in writing out the log file.                   |
+| :code:`/log4j/appender/layout/param[@name='ConversionPattern']/@value` | The pattern used when writing the log file.                     |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
 
 
-Connections to Message Database
-"""""""""""""""""""""""""""""""
+Connection to message database
+""""""""""""""""""""""""""""""
 
 .. code-block:: xml
 
    <module>
    ...
    <component id="daofactory" name="AS2 DAO Factory">
-   <class>
-   hk.hku.cecid.piazza.commons.dao.ds.SimpleDSDAOFactory
-   </class>
+     <class>
+     hk.hku.cecid.piazza.commons.dao.ds.SimpleDSDAOFactory
+     </class>
      <parameter name="driver" value="org.postgresql.Driver" />
      <parameter name="url" 
                 value="jdbc:postgresql://localhost:5432/as2" />
@@ -461,61 +466,61 @@ Connections to Message Database
    ...
    </module>
 
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| Element / Attribute                               | Expected information                                                                       |
-+===================================================+============================================================================================+
-| :code:`/module/component[@id='daofactory']/class` | The java class to use in establishing database connection, you can select from             |  
-|                                                   |                                                                                            | 
-|                                                   | * :code:`hk.hku.cecid.piazza.commons.dao.ds.SimpleDSDAOFactory`,                           |
-|                                                   |   if you want AS2 to manage the database connection pool                                   | 
-|                                                   |                                                                                            | 
-|                                                   | * :code:`hk.hku.cecid.piazza.commons.dao.ds.DataSourceDAOFactory`,                         | 
-|                                                   |   if you want the application server manages the database connection pool,                 | 
-|                                                   |   which is accessible through JNDI (Java Naming and Directory Interface) name.             | 
-|                                                   |                                                                                            | 
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| Belows are fields you need to fill in if you are using SimpleDSDAOFactory                                                                      |
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| :code:`/module/component[@id='daofactory']/`      | The JDBC driver that should be used, we have provided the driver for postgres              |
-| :code:`parameter[@name='driver']/@value`          | by default. You should put the driver to your                                              | 
-|                                                   | :file:`{[Tomcat Home]}/webapps/corvus/WEB-INF/lib`, where we suppose the web               | 
-|                                                   | application repository is configured as :file:`{[Tomcat Home]}/webapps`.                   | 
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| :code:`/module/component[@id='daofactory']/`      | The URL in establishing the database connection, please refer to the document              |
-| :code:`parameter[@name='url']/@value`             | of the JDBC driver for the syntax. For PostgreSQL datatabse, the syntax is                 | 
-|                                                   | :code:`jdbc:postgresql://<IP or hostname of the database>/<message database name for AS2>` | 
-|                                                   |                                                                                            | 
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| :code:`/module/component[@id='daofactory']/`      | The username to connect to the database.                                                   |
-| :code:`parameter[@name='username']/@value`        |                                                                                            | 
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| :code:`/module/component[@id='daofactory']/`      | The password for the username specified.                                                   |
-| :code:`parameter[@name='password']/@value`        |                                                                                            | 
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| :code:`/module/component[@id='daofactory']/`      | The boolean value (:literal:`true`/:literal:`false`) specifying if connection              |
-| :code:`parameter[@name='pooling']/@value`         | pooling should be used.                                                                    | 
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| :code:`/module/component[@id='daofactory']/`      | The maximum number of active threads.                                                      |
-| :code:`parameter[@name='maxActive']/@value`       |                                                                                            | 
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| :code:`/module/component[@id='daofactory']/`      | The maximum number of threads that can remains idle.                                       |
-| :code:`parameter[@name='maxIdle']/@value`         |                                                                                            | 
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| :code:`/module/component[@id='daofactory']/`      | The maximum number of milliseconds that the pool will wait (when there are no              |
-| :code:`parameter[@name='maxWait']/@value`         | available connections) for a connection to be returned before throwing an                  | 
-|                                                   | exception, or :literal:`-1` to wait indefinitely.                                          | 
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| :code:`/module/component[@id='daofactory']/`      | Additional configuration files that will be used by the plug-in. You should just           |
-| :code:`parameter[@name='config']/@value`          | leave it as is.                                                                            | 
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| Belows are fields you need to fill in if you are using DataSourceDAOFactory                                                                    |
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| datasource                                        | The JNDI name of the Data Source for connecting the message database,                      |
-|                                                   | e.g. :code:`java:/comp/env/jdbc/as2db`                                                     | 
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
++---------------------------------------------------+-----------------------------------------------------------------------------------------------+
+| XPath                                             | Expected information                                                                          |
++===================================================+===============================================================================================+
+| :code:`/module/component[@id='daofactory']/class` | The Java class to use when establishing a database connection. You can select:                |
+|                                                   |                                                                                               |
+|                                                   | * :code:`hk.hku.cecid.piazza.commons.dao.ds.SimpleDSDAOFactory`,                              |
+|                                                   |   if you want AS2 to manage the database connection pool                                      |
+|                                                   |                                                                                               |
+|                                                   | * :code:`hk.hku.cecid.piazza.commons.dao.ds.DataSourceDAOFactory`,                            |
+|                                                   |   if you want the application server to manage the database connection pool,                  |
+|                                                   |   which is accessible through the Java Naming and Directory Interface (JNDI) name.            |
+|                                                   |                                                                                               |
++---------------------------------------------------+-----------------------------------------------------------------------------------------------+
+| Belows are fields you need to fill in if you are using SimpleDSDAOFactory                                                                         |
++---------------------------------------------------+-----------------------------------------------------------------------------------------------+
+| :code:`/module/component[@id='daofactory']/`      | The JDBC driver that should be used. The driver for Postgres is provided                      |
+| :code:`parameter[@name='driver']/@value`          | by default. The driver should be placed in the directory                                      | 
+|                                                   | :file:`{<TOMCAT_HOME>}/webapps/corvus/WEB-INF/lib`, where we suppose the web                  |
+|                                                   | application repository is configured as :file:`{<TOMCAT_HOME>}/webapps`.                      |
++---------------------------------------------------+-----------------------------------------------------------------------------------------------+
+| :code:`/module/component[@id='daofactory']/`      | The URL for establishing the database connection. Please refer to the documentation           |
+| :code:`parameter[@name='url']/@value`             | of the JDBC driver for the syntax. For PostgreSQL, the syntax is                              | 
+|                                                   | :file:`jdbc:postgresql://{<IP or hostname of the database>}/{<message database name for AS2>}`| 
+|                                                   |                                                                                               | 
++---------------------------------------------------+-----------------------------------------------------------------------------------------------+
+| :code:`/module/component[@id='daofactory']/`      | The username to connect to the database.                                                      |
+| :code:`parameter[@name='username']/@value`        |                                                                                               | 
++---------------------------------------------------+-----------------------------------------------------------------------------------------------+
+| :code:`/module/component[@id='daofactory']/`      | The password for the username specified.                                                      |
+| :code:`parameter[@name='password']/@value`        |                                                                                               | 
++---------------------------------------------------+-----------------------------------------------------------------------------------------------+
+| :code:`/module/component[@id='daofactory']/`      | The boolean value (:literal:`true`/:literal:`false`) specifying if connection                 |
+| :code:`parameter[@name='pooling']/@value`         | pooling should be used.                                                                       | 
++---------------------------------------------------+-----------------------------------------------------------------------------------------------+
+| :code:`/module/component[@id='daofactory']/`      | The maximum number of active threads.                                                         |
+| :code:`parameter[@name='maxActive']/@value`       |                                                                                               | 
++---------------------------------------------------+-----------------------------------------------------------------------------------------------+
+| :code:`/module/component[@id='daofactory']/`      | The maximum number of threads that can remains idle.                                          |
+| :code:`parameter[@name='maxIdle']/@value`         |                                                                                               | 
++---------------------------------------------------+-----------------------------------------------------------------------------------------------+
+| :code:`/module/component[@id='daofactory']/`      | The maximum amount of time (milliseconds) that the pool will wait (when there are no          |
+| :code:`parameter[@name='maxWait']/@value`         | available connections) for a connection to be returned before throwing an                     | 
+|                                                   | exception, or :literal:`-1` to wait indefinitely.                                             | 
++---------------------------------------------------+-----------------------------------------------------------------------------------------------+
+| :code:`/module/component[@id='daofactory']/`      | Additional configuration files that will be used by the plugin. You should just               |
+| :code:`parameter[@name='config']/@value`          | leave it as is.                                                                               | 
++---------------------------------------------------+-----------------------------------------------------------------------------------------------+
+| Belows are fields you need to fill in if you are using DataSourceDAOFactory                                                                       |
++---------------------------------------------------+-----------------------------------------------------------------------------------------------+
+| datasource                                        | The JNDI name of the data source for connecting to the message database,                      |
+|                                                   | e.g. :code:`java:/comp/env/jdbc/as2db`                                                        | 
++---------------------------------------------------+-----------------------------------------------------------------------------------------------+
 
-Location of Keystore for Digital Sigature on Outgoing Messages
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Location of keystore for signing outgoing messages
+""""""""""""""""""""""""""""""""""""""""""""""""""
 
 .. code-block:: xml
 
@@ -530,12 +535,12 @@ Location of Keystore for Digital Sigature on Outgoing Messages
       <parameter name="keystore-type" value="PKCS12"/>
       <parameter name="keystore-provider" 
                  value="org.bouncycastle.jce.provider.BouncyCastleProvider"/>
-      </component>
+    </component>
     ...
     </module>
 
 +-----------------------------------------------------------------------------------------------+--------------------------------------+
-| Element / Attribute                                                                           | Expected information                 |
+| XPath                                                                                         | Expected information                 |
 +===============================================================================================+======================================+
 | :code:`/module/component[@id='keystore-manager']/parameter[@name='keystore-location']/@value` | The path of the keystore for         |
 |                                                                                               | signing outgoing messages.           |
@@ -544,12 +549,12 @@ Location of Keystore for Digital Sigature on Outgoing Messages
 |                                                                                               | keystore.                            |
 +-----------------------------------------------------------------------------------------------+--------------------------------------+
 | :code:`/module/component[@id='keystore-manager]/parameter[@name='key-alias']/@value`          | The alias of the private key         |
-|                                                                                               | for digital signature.               |
+|                                                                                               | for a digital signature.             |
 +-----------------------------------------------------------------------------------------------+--------------------------------------+
 | :code:`/module/component[@id='keystore-manager]/parameter[@name='key-password']/@value`       | The password protecting the          |
-|                                                                                               | private key for digital signature.   |
+|                                                                                               | private key for a digital signature. |
 +-----------------------------------------------------------------------------------------------+--------------------------------------+
-| :code:`/module/component[@id='keystore-manager]/parameter[@name='keystore-type']/@value`      | The keystore format of the keystore. |
+| :code:`/module/component[@id='keystore-manager]/parameter[@name='keystore-type']/@value`      | The keystore format.                 |
 |                                                                                               | It is either :literal:`PKCS12` or    |
 |                                                                                               | :literal:`JKS`.                      |
 +-----------------------------------------------------------------------------------------------+--------------------------------------+
@@ -577,15 +582,15 @@ Outgoing Repository:
 
 
 +-------------------------------------------------------------------+---------------------------------------------------------------------------+
-| Element / Attribute                                               | Expected information                                                      |
+| XPath                                                             | Expected information                                                      |
 +===================================================================+===========================================================================+
-| :code:`/module/component[id='outgoing-payload-repository']/class` | The java class responsible for handing the outgoing payload.              |
+| :code:`/module/component[id='outgoing-payload-repository']/class` | The Java class responsible for handling outgoing payload.                 |
 |                                                                   | You should just leave it as is.                                           |
 +-------------------------------------------------------------------+---------------------------------------------------------------------------+
-| :code:`/module/component[id='outgoing-payload-repository']/`      | The folder location which will store the outgoing payload.                |
+| :code:`/module/component[id='outgoing-payload-repository']/`      | The directory that will store the outgoing payload.                       |
 | :code:`parameter[@name='location']/@value`                        | E.g., :file:`c:\program files\hermes2\repository\as2-outgoing-repository` |
 +-------------------------------------------------------------------+---------------------------------------------------------------------------+
-| :code:`/module/component[id='outgoing-payload-repository']/`      | You should leave the field as what it is.                                 |
+| :code:`/module/component[id='outgoing-payload-repository']/`      | You should leave these fields as is.                                      |
 | :code:`parameter[@name='type-edi]/@value`                         |                                                                           |
 +-------------------------------------------------------------------+                                                                           |
 | :code:`/module/component[id='outgoing-payload-repository']/`      |                                                                           |
@@ -617,15 +622,15 @@ Outgoing Repository:
 
 
 +-------------------------------------------------------------------+---------------------------------------------------------------------+
-| Element / Attribute                                               | Expected information                                                |
+| XPath                                                             | Expected information                                                |
 +===================================================================+=====================================================================+
-| :code:`/module/component[id='incoming-payload-repository']/class` | The java class responsible for handing the incoming payload.        |
+| :code:`/module/component[id='incoming-payload-repository']/class` | The Java class responsible for handling incoming payloads.          |
 |                                                                   | You should just leave it as is.                                     |
 +-------------------------------------------------------------------+---------------------------------------------------------------------+
-| :code:`/module/component[id='outgoing-payload-repository']/`      | The folder location which will store the outgoing payload. E.g.,    |
+| :code:`/module/component[id='outgoing-payload-repository']/`      | The directory that will store the outgoing payload. E.g.,           |
 | :code:`parameter[@name='location']/@value`                        | :file:`c:\program files\hermes2\repository\as2-incoming-repository` |
 +-------------------------------------------------------------------+---------------------------------------------------------------------+
-| :code:`/module/component[id='outgoing-payload-repository']/`      | You should leave the field as what it is.                           |
+| :code:`/module/component[id='outgoing-payload-repository']/`      | You should leave these fields as is.                                |
 | :code:`parameter[@name='type-edi]/@value`                         |                                                                     |
 +-------------------------------------------------------------------+                                                                     |
 | :code:`/module/component[id='outgoing-payload-repository']/`      |                                                                     |
@@ -639,7 +644,7 @@ Outgoing Repository:
 +-------------------------------------------------------------------+---------------------------------------------------------------------+
 
 
-Original Message Repository (which is a temporary message repository used when Hermes 2 is composing or receiving AS2 messages):
+Original Message Repository (a temporary message repository used when Hermes 2 is composing or receiving AS2 messages):
 
 
 .. code-block:: xml
@@ -656,39 +661,39 @@ Original Message Repository (which is a temporary message repository used when H
    ...
    </module>
 
-+-------------------------------------------------------------------+---------------------------------------------------------------------+
-| Element / Attribute                                               | Expected information                                                |
-+===================================================================+=====================================================================+
-| :code:`/module/component[id='original-payload-repository']/class` | The java class responsible for handing the original message.        |
-|                                                                   | You should just leave it as is.                                     |
-+-------------------------------------------------------------------+---------------------------------------------------------------------+
-| :code:`location`                                                  | The folder location which will store the outgoing payload. E.g.,    |
-|                                                                   | :file:`c:\program files\hermes2\repository\as2-message-repository`  |
-+-------------------------------------------------------------------+---------------------------------------------------------------------+
-| :code:`is-disabled`                                               | The flag indicates if the original message should be stored locally.|
-+-------------------------------------------------------------------+---------------------------------------------------------------------+
++-------------------------------------------------------------------+----------------------------------------------------------------------+
+| XPath                                                             | Expected information                                                 |
++===================================================================+======================================================================+
+| :code:`/module/component[id='original-payload-repository']/class` | The Java class responsible for handling original messages.           |
+|                                                                   | You should just leave it as is.                                      |
++-------------------------------------------------------------------+----------------------------------------------------------------------+
+| :code:`location`                                                  | The directory that will store outgoing payloads. E.g.,               |
+|                                                                   | :file:`c:\program files\hermes2\repository\as2-message-repository`   |
++-------------------------------------------------------------------+----------------------------------------------------------------------+
+| :code:`is-disabled`                                               | This flag indicates if the original message should be stored locally.|
++-------------------------------------------------------------------+----------------------------------------------------------------------+
 
 
-ebMS Plugin
+ebMS plugin
 ^^^^^^^^^^^
-In the directory :file:`{<HERMES_2_PLUGINS_LOCATION>}/hk.hku.cecid.ebms/conf/hk/hku/cecid/ebms/spa/conf`, there are some configuration files for Hermes 2's AS2 plug-in. Which configuration file you should edit depends on your configuration task:
+In the directory :file:`{<HERMES_2_PLUGINS_LOCATION>}/hk.hku.cecid.ebms/conf/hk/hku/cecid/ebms/spa/conf`, there are some configuration files for Hermes 2's ebMS plugin. The configuration file you should edit depends on the property:
 
 +------------------------------------------------------------------+----------------------------------------+
-| Tasks                                                            | Responsible configuration file         |
+| Properties                                                       | Configuration file                     |
 +==================================================================+========================================+
-| Log file location and level of logging                           | :file:`Log4j.properties.xml`           |
+| Log file location and level of logging                           | :file:`ebms.log.properties.xml`        |
 +------------------------------------------------------------------+----------------------------------------+
-| Connections to Message Database                                  | :file:`Ebms.module.xml`                |
+| Connections to message database                                  | :file:`ebms.module.xml`                |
 +------------------------------------------------------------------+                                        |
-| Location of keystore for digital signature on outgoing messages  |                                        |
+| Location of keystore for signing outgoing messages               |                                        |
 +------------------------------------------------------------------+                                        |
-| Location of keystore for S/MIME decryption for incoming messages |                                        |
+| Location of keystore for S/MIME decryption (incoming messages)   |                                        |
 +------------------------------------------------------------------+----------------------------------------+
 
 
-Log file location and levels of logging
-"""""""""""""""""""""""""""""""""""""""
-To change the location of the log file, you will need to modify the XML file named :file:`as2.log.properties.xml`
+Log file location and level of logging
+""""""""""""""""""""""""""""""""""""""
+To change the location of the log file, you will need to modify the XML file named :file:`ebms.log.properties.xml`
 
 .. code-block:: xml
 
@@ -710,73 +715,71 @@ To change the location of the log file, you will need to modify the XML file nam
    </log4j:configuration>
 
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| Element / Attribute                                                    | Expected information                                           |
+| XPath                                                                  | Expected information                                           |
 +========================================================================+================================================================+
-| :code:`/log4j/category/priority`                                       | The log level of the AS2 plug-in logging. The available        |
-|                                                                        | levels are :code:`debug`, :code:`info`, :code:`warn`,          |
-|                                                                        | :code:`error` and :code:`fatal`. If you set the value as       |
-|                                                                        | :code:`debug`, all logs will be printed.                       |
+| :code:`/log4j/category/priority`                                       | The log level of the ebMS plugin logging. The available        |
+|                                                                        | levels are ``debug``, ``info``, ``warn``,                      |
+|                                                                        | ``error`` and ``fatal``. If you set the value as               |
+|                                                                        | ``debug``, all logs will be printed.                           |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| :code:`/log4j/category/appender-ref@ref`                               | The name of the :code:`appender` to be used for logging.       |
-|                                                                        | An :code:`appender` is to specify how to generate log files.   |
-|                                                                        | In the above example, an :code:`appender` configuration        |
-|                                                                        | element :code:`RollingFileAppender` is used. The settings of   |
-|                                                                        | the :code:`appender` are specified by the referenced           |
-|                                                                        | :code:`appender` element.                                      |
+| :code:`/log4j/category/appender-ref@ref`                               | The name of the ``appender`` element to be used for logging.   |
+|                                                                        | The ``appender`` element specifies how to generate log files.  |
+|                                                                        | In the above example, the appender named                       |
+|                                                                        | ``RollingFileAppender`` is used. The settings of the appender  |
+|                                                                        | are specified by the referenced ``appender`` element.          |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| :code:`/log4j/appender@class`                                          | The appender specified by this :code:`appender` configuration  |
-|                                                                        | element. Apache Log4j provides a series of appender, such      |
-|                                                                        | :code:`RollingFileAppender`, :code:`DailyRollingFileAppender`, |
-|                                                                        | etc.                                                           |
+| :code:`/log4j/appender@class`                                          | The appender specified by this ``appender`` configuration      |
+|                                                                        | element. Apache Log4j provides a series of appenders, such     |
+|                                                                        | ``RollingFileAppender`` and ``DailyRollingFileAppender``.      |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| :code:`/log4j/appender@name`                                           | The name of this appender configuration element. The           |
+| :code:`/log4j/appender@name`                                           | The name of this ``appender`` configuration element.           |
 |                                                                        | :file:`/category/appender-ref@ref` should reference            |
-|                                                                        | the appender configuration element by this name.               |
+|                                                                        | the ``appender`` configuration element by this name.           |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| :code:`/log4j/appender/param[@name='File']/@value`                     | The path of AS2 log of this appender.                          |
-| (i.e. The :code:`value` attribute of the :code:`param`                 |                                                                |
-| element under :code:`appender` element, whose                          |                                                                |
-| :code:`name` attribute is :code:`File`)                                |                                                                |
+| :code:`/log4j/appender/param[@name='File']/@value`                     | The path of the ebMS log of this appender.                     |
+|                                                                        |                                                                |
+| (i.e. The ``value`` attribute of the ``param`` element under the       |                                                                |
+| ``appender`` element, whose ``name`` attribute is ``File``)            |                                                                |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
 | :code:`/log4j/appender/param[@name='Encoding']/@value`                 | The encoding to be used for the log file.                      |
-| (i.e. The :code:`value` attribute of the :code:`param`                 |                                                                |
-| element under :code:`appender` element, whose                          |                                                                |
-| :code:`name` attribute is :code:`Encoding`)                            |                                                                |
+|                                                                        |                                                                |
+| (i.e. The ``value`` attribute of the ``param`` element under the       |                                                                |
+| ``appender`` element, whose ``name`` attribute is ``Encoding``)        |                                                                |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
 | :code:`/log4j/appender/param[@name='MaxFileSize']/@value`              | If the size of a log file has grown to exceed this limit,      |
-| (i.e. The :code:`value` attribute of the :code:`param`                 | another new log file will be written and the old log file      |
-| element under :code:`appender` element, whose                          | will be backed up. The backed-up log file's filename will      |
-| :code:`name` attribute is :code:`MaxFileSize'`)                        | have an index appended (e.g. :file:`as2.log.1`).               |
+|                                                                        | another log file will be written and the old log file          |
+| (i.e. The ``value`` attribute of the ``param`` element under the       | will be backed up. An index will be appended to the name of    |
+| ``appender`` element, whose ``name`` attribute is ``MaxFileSize``)     | the old log file (e.g. :file:`ebms.log.1`).                    |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| :code:`/log4j/appender/param[@name='MaxBackupIndex']/@value`           | The maximum number of log files which will be backed up.       |
-| (i.e. The :code:`value` attribute of the :code:`param`                 | For example, if it is set to 10, the maximum number of         |
-| element under :code:`appender` element, whose                          | backed up log files will be 10 and their filenames will        |
-| :code:`name` attribute is :code:`MaxBackupIndex`)                      | be :file:`xxx.log.1`, :file:`xxx.log.2`, ...                   |
-|                                                                        | :file:`xxx.log.10`.                                            |
+| :code:`/log4j/appender/param[@name='MaxBackupIndex']/@value`           | The maximum number of log files that will be backed up.        |
+|                                                                        | For example, if it is set to 10, the maximum number of         |
+| (i.e. The ``value`` attribute of the ``param`` element under the       | backed up log files will be 10 and their filenames will        |
+| ``appender`` element, whose ``name`` attribute is ``MaxBackupIndex``)  | be :file:`{xxx}.log.1`, :file:`{xxx}.log.2`, ...,              |
+|                                                                        | :file:`{xxx}.log.10`.                                          |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| :code:`/log4j/appender/layout/param[@name='ConversionPattern']/@value` | The pattern used in writing out the log file.                  |
+| :code:`/log4j/appender/layout/param[@name='ConversionPattern']/@value` | The pattern used when writing the log file.                    |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
 
-Connections to Message Database
-"""""""""""""""""""""""""""""""
+Connection to message database
+""""""""""""""""""""""""""""""
 
 .. code-block:: xml
 
    <module>
    ...
    <component id="daofactory" name="System DAO Factory">
-   <class>
-   hk.hku.cecid.piazza.commons.dao.ds.SimpleDSDAOFactory
-   </class>
+     <class>
+     hk.hku.cecid.piazza.commons.dao.ds.SimpleDSDAOFactory
+     </class>
      <parameter name="driver" value="org.postgresql.Driver" />
      <parameter name="url" 
                 value="jdbc:postgresql://localhost:5432/ebms" />
      <parameter name="username" value="corvus" />
      <parameter name="password" value="corvus" />
-       <parameter name="pooling" value="true" />
-       <parameter name="maxActive" value="20" />
-       <parameter name="maxIdle" value="10" />
-       <parameter name="maxWait" value="-1" />
+     <parameter name="pooling" value="true" />
+     <parameter name="maxActive" value="20" />
+     <parameter name="maxIdle" value="10" />
+     <parameter name="maxWait" value="-1" />
      <parameter name="config">
              hk/hku/cecid/ebms/spa/conf/DAOMessage.xml,
              hk/hku/cecid/ebms/spa/conf/DAORepository.xml,
@@ -789,61 +792,60 @@ Connections to Message Database
    ...
    </module>
 
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| Element / Attribute                               | Expected information                                                                       |
-+===================================================+============================================================================================+
-| :code:`/module/component[@id='daofactory']/class` | The java class to use in establishing database connection, you can select from             |
-|                                                   |                                                                                            |
-|                                                   |                                                                                            |
-|                                                   | * :code:`hk.hku.cecid.piazza.commons.dao.ds.SimpleDSDAOFactory`,                           |
-|                                                   |   if you want AS2 to manage the database connection pool.                                  |
-|                                                   |                                                                                            |
-|                                                   | * :code:`hk.hku.cecid.piazza.commons.dao.ds.DataSourceDAOFactory`,                         |
-|                                                   |   if you want the application server manages the database connection pool,                 |
-|                                                   |   which is accessible through JNDI (Java Naming and Directory Interface) name.             |
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| Belows are fields you need to fill in if you are using SimpleDSDAOFactory                                                                      |
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| :code:`/module/component[@id='daofactory']/`      | The JDBC driver that should be used, we have provided the driver for postgres by           |
-| :code:`parameter[@name='driver']/@value`          | default. You should put the driver to your                                                 |
-|                                                   | :file:`{[Tomcat Home]}/webapps/corvus/WEB-INF/lib`, where we suppose the web               |
-|                                                   | application repository is configured as :file:`{[Tomcat Home]}/webapps`.                   |
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| :code:`/module/component[@id='daofactory']/`      | The URL in establishing the database connection, please refer to the document of           |
-| :code:`parameter[@name='url']/@value`             | the JDBC driver for the syntax. For PostgreSQL datatabse, the syntax is                    |
-|                                                   | :code:`jdbc:postgresql://<IP or hostname of the database>/<message database name for AS2>` |
-|                                                   |                                                                                            |
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| :code:`/module/component[@id='daofactory']/`      | The username to connect to the database.                                                   |
-| :code:`parameter[@name='username']/@value`        |                                                                                            |
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| :code:`/module/component[@id='daofactory']/`      | The password for the username specified.                                                   |
-| :code:`parameter[@name='password']/@value`        |                                                                                            |
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| :code:`/module/component[@id='daofactory']/`      | The boolean value (:literal:`true`/:literal:`false`) specifying if connection              |
-| :code:`parameter[@name='pooling']/@value`         | pooling should be used.                                                                    |
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| :code:`/module/component[@id='daofactory']/`      | The maximum number of active threads.                                                      |
-| :code:`parameter[@name='maxActive']/@value`       |                                                                                            |
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| :code:`/module/component[@id='daofactory']/`      | The maximum number of threads that can remains idle.                                       |
-| :code:`parameter[@name='maxIdle']/@value`         |                                                                                            |
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| :code:`/module/component[@id='daofactory']/`      | The maximum number of milliseconds that the pool will wait (when there are no              |
-| :code:`parameter[@name='maxWait']/@value`         | available connections) for a connection to be returned before throwing an                  |
-|                                                   | exception, or :literal:`-1` to wait indefinitely.                                          |
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| :code:`/module/component[@id='daofactory']/`      | Additional configuration files that will be used by the plug-in. You should just           |
-| :code:`parameter[@name='config']/@value`          | leave it as is.                                                                            |
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| Belows are fields you need to fill in if you are using DataSourceDAOFactory                                                                    |
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
-| datasource                                        | The JNDI name of the Data Source for connecting the message database, e.g.                 |
-|                                                   | :code:`java:/comp/env/jdbc/ebmsdb`                                                         |
-+---------------------------------------------------+--------------------------------------------------------------------------------------------+
++---------------------------------------------------+------------------------------------------------------------------------------------------------+
+| XPath                                             | Expected information                                                                           |
++===================================================+================================================================================================+
+| :code:`/module/component[@id='daofactory']/class` | The Java class to use when establishing a database connection. You can select:                 |
+|                                                   |                                                                                                |
+|                                                   | * :code:`hk.hku.cecid.piazza.commons.dao.ds.SimpleDSDAOFactory`,                               |
+|                                                   |   if you want ebMS to manage the database connection pool.                                     |
+|                                                   |                                                                                                |
+|                                                   | * :code:`hk.hku.cecid.piazza.commons.dao.ds.DataSourceDAOFactory`,                             |
+|                                                   |   if you want the application server to manage the database connection pool,                   |
+|                                                   |   which is accessible through the Java Naming and Directory Interface (JNDI) name.             |
++---------------------------------------------------+------------------------------------------------------------------------------------------------+
+| Belows are fields you need to fill in if you are using SimpleDSDAOFactory                                                                          |
++---------------------------------------------------+------------------------------------------------------------------------------------------------+
+| :code:`/module/component[@id='daofactory']/`      | The JDBC driver that should be used. The driver for Postgres is provided by                    |
+| :code:`parameter[@name='driver']/@value`          | default. The driver should be placed in the directory                                          |
+|                                                   | :file:`{<TOMCAT_HOME>}/webapps/corvus/WEB-INF/lib`, where we suppose the web                   |
+|                                                   | application repository is configured as :file:`{<TOMCAT_HOME>}/webapps`.                       |
++---------------------------------------------------+------------------------------------------------------------------------------------------------+
+| :code:`/module/component[@id='daofactory']/`      | The URL for establishing the database connection. Please refer to the documentation of         |
+| :code:`parameter[@name='url']/@value`             | the JDBC driver for the syntax. For PostgreSQL, the syntax is                                  |
+|                                                   | :file:`jdbc:postgresql://{<IP or hostname of the database>}/{<message database name for AS2>}` |
+|                                                   |                                                                                                |
++---------------------------------------------------+------------------------------------------------------------------------------------------------+
+| :code:`/module/component[@id='daofactory']/`      | The username to connect to the database.                                                       |
+| :code:`parameter[@name='username']/@value`        |                                                                                                |
++---------------------------------------------------+------------------------------------------------------------------------------------------------+
+| :code:`/module/component[@id='daofactory']/`      | The password for the username specified.                                                       |
+| :code:`parameter[@name='password']/@value`        |                                                                                                |
++---------------------------------------------------+------------------------------------------------------------------------------------------------+
+| :code:`/module/component[@id='daofactory']/`      | The boolean value (:literal:`true`/:literal:`false`) specifying if connection                  |
+| :code:`parameter[@name='pooling']/@value`         | pooling should be used.                                                                        |
++---------------------------------------------------+------------------------------------------------------------------------------------------------+
+| :code:`/module/component[@id='daofactory']/`      | The maximum number of active threads.                                                          |
+| :code:`parameter[@name='maxActive']/@value`       |                                                                                                |
++---------------------------------------------------+------------------------------------------------------------------------------------------------+
+| :code:`/module/component[@id='daofactory']/`      | The maximum number of threads that can remains idle.                                           |
+| :code:`parameter[@name='maxIdle']/@value`         |                                                                                                |
++---------------------------------------------------+------------------------------------------------------------------------------------------------+
+| :code:`/module/component[@id='daofactory']/`      | The maximum amount of time (milliseconds) that the pool will wait (when there are no           |
+| :code:`parameter[@name='maxWait']/@value`         | available connections) for a connection to be returned before throwing an                      |
+|                                                   | exception, or :literal:`-1` to wait indefinitely.                                              |
++---------------------------------------------------+------------------------------------------------------------------------------------------------+
+| :code:`/module/component[@id='daofactory']/`      | Additional configuration files that will be used by the plugin. You should just                |
+| :code:`parameter[@name='config']/@value`          | leave it as is.                                                                                |
++---------------------------------------------------+------------------------------------------------------------------------------------------------+
+| Belows are fields you need to fill in if you are using DataSourceDAOFactory                                                                        |
++---------------------------------------------------+------------------------------------------------------------------------------------------------+
+| datasource                                        | The JNDI name of the data source for connecting to the message database, e.g.                  |
+|                                                   | :code:`java:/comp/env/jdbc/ebmsdb`                                                             |
++---------------------------------------------------+------------------------------------------------------------------------------------------------+
 
-Location of Keystore for Digital Signature on Outgoing Messages
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Location of keystore for signing outgoing messages
+""""""""""""""""""""""""""""""""""""""""""""""""""
 
 .. code-block:: xml
 
@@ -863,7 +865,7 @@ Location of Keystore for Digital Signature on Outgoing Messages
    </module>
 
 +-----------------------------------------------------------------------------------------------+--------------------------------------+
-| Element / Attribute                                                                           | Expected information                 |
+| XPath                                                                                         | Expected information                 |
 +===============================================================================================+======================================+
 | :code:`/module/component[@id='keystore-manager']/parameter[@name='keystore-location']/@value` | The path of the keystore for         |
 |                                                                                               | signing outgoing messages.           |
@@ -877,13 +879,13 @@ Location of Keystore for Digital Signature on Outgoing Messages
 | :code:`/module/component[@id='keystore-manager]/parameter[@name='key-password']/@value`       | The password protecting the private  |
 |                                                                                               | key for digital signature.           |
 +-----------------------------------------------------------------------------------------------+--------------------------------------+
-| :code:`/module/component[@id='keystore-manager]/parameter[@name='keystore-type']/@value`      | The keystore format of the keystore. |
+| :code:`/module/component[@id='keystore-manager]/parameter[@name='keystore-type']/@value`      | The keystore format.                 |
 |                                                                                               | It is either :literal:`PKCS12` or    |
 |                                                                                               | :literal:`JKS`.                      |
 +-----------------------------------------------------------------------------------------------+--------------------------------------+
 
-Location of Keystore for S/MIME Decryption (for Incoming Messages)
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Location of keystore for S/MIME decryption (incoming messages)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 .. code-block:: xml
 
@@ -904,22 +906,22 @@ Location of Keystore for S/MIME Decryption (for Incoming Messages)
 
 
 +-----------------------------------------------------------------------------------------------+-----------------------------------------+
-| Element / Attribute                                                                           | Expected information                    |
+| XPath                                                                                         | Expected information                    |
 +===============================================================================================+=========================================+
 | :code:`/module/component[@id='keystore-manager']/parameter[@name='keystore-location']/@value` | The path of the keystore for decrypting |
-|                                                                                               | incoming messages encrypted by S/MIME   |
+|                                                                                               | incoming messages with S/MIME           |
 |                                                                                               | encryption.                             |
 +-----------------------------------------------------------------------------------------------+-----------------------------------------+
-| :code:`/module/component[@id='keystore-manager']/parameter[@name='keystore-password']/@value` | The password for accessing the keystore |
+| :code:`/module/component[@id='keystore-manager']/parameter[@name='keystore-password']/@value` | The password for accessing the keystore.|
 |                                                                                               |                                         |
 +-----------------------------------------------------------------------------------------------+-----------------------------------------+
 | :code:`/module/component[@id='keystore-manager]/parameter[@name='key-alias']/@value`          | The alias of the private key for the    |
 |                                                                                               | decryption.                             |
 +-----------------------------------------------------------------------------------------------+-----------------------------------------+
 | :code:`/module/component[@id='keystore-manager]/parameter[@name='key-password']/@value`       | The password protecting the private key |
-|                                                                                               | for digital signature.                  |
+|                                                                                               | for digital signatures.                 |
 +-----------------------------------------------------------------------------------------------+-----------------------------------------+
-| :code:`/module/component[@id='keystore-manager]/parameter[@name='keystore-type']/@value`      | The keystore format of the keystore.    |
+| :code:`/module/component[@id='keystore-manager]/parameter[@name='keystore-type']/@value`      | The keystore format.                    |
 |                                                                                               | It is either :literal:`PKCS12` or       |
 |                                                                                               | :literal:`JKS`.                         |
 +-----------------------------------------------------------------------------------------------+-----------------------------------------+
@@ -934,5 +936,5 @@ References
 * Hermes 2 Enterprise Edition Installation Guide
 * Hermes 2 GPL Edition Installation Guide
 * Hermes 2 Plug-in Development Guide
-* OASIS ebXML Message Service Specification 2.0
-* MIME-based Secure Peer-to-Peer Business Data Interchange over the Internet Using HTTP AS2 (:file:`draft-ietf-ediint-as2-17.txt`)
+* `OASIS ebXML Message Service Specification 2.0 <https://www.oasis-open.org/committees/download.php/272/ebMS_v2_0.pdf>`_
+* `MIME-based Secure Peer-to-Peer Business Data Interchange over the Internet Using HTTP AS2 <https://tools.ietf.org/html/rfc4130>`_
