@@ -3,6 +3,7 @@
 
 # Emacs temp files
 \#*\#
+.\#*
 
 # Project ignores
 *.db
