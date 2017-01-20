@@ -99,11 +99,9 @@ Postgres
 
    i. Open a command prompt
    #. Go to :file:`{<POSTGRES_HOME>}/bin`
-   #. Type :samp:`createuser -A -d -P -U {<PROTGRES_ADMIN>}` where :samp:`{<PROTGRES_ADMIN>}` representing the name of administrator / super-user in PostgreSQL database. This value is :literal:`postgres` if not specified. It may require super user or Postgres owner to execute in Linux.
-   #. Create a user named :literal:`corvus`
+   #. Type :samp:`createuser -A -d -P -U {<PROTGRES_ADMIN>} corvus` where :samp:`{<PROTGRES_ADMIN>}` representing the name of administrator / super-user in PostgreSQL database. This value is :literal:`postgres` if not specified. It may require super user or Postgres owner to execute in Linux.
    #. Enter the password :literal:`corvus`
    #. Enter the password again for confirmation
-   #. Enter ``n`` for the question *Shall the new role be allowed to create more new roles?*
    #. Enter the PostgreSQL administrator password for creating a new user role.
 
 #. Create two databases named :literal:`as2` and :literal:`ebms` with :literal:`corvus` user
