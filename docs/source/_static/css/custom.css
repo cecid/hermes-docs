@@ -47,5 +47,5 @@
 }
 
 div.wy-menu.rst-pro {
-    display: none;
+    display: none !important;
 }
