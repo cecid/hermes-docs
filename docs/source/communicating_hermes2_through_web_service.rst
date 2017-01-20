@@ -45,27 +45,27 @@ ebMS 2.0 Sender Web Service is the web service interface for external sending pa
 
 .. image:: /_static/images/web_service/h2o-ws-sender-ebms.png
 
--- SOAP Request Message --
+**-- SOAP Request Message --**
 
 Instead of requiring sender to compose the entire ebMS message or acquire ebMS knowledge, sender just needed to request Hermes 2 to do so with key identities including CPA-ID, Service, Action. These 3 key parameter identify the sender's partnership in Hermes 2 that will be used to configure the ebMS message.
 
-The sender web service requires elements with namespace URI **http://service.ebms.edi.cecid.hku.hk/** and namespace prefix **tns**. The sample SOAP request for sender web service is shown below.
+The sender web service requires elements with namespace URI http://service.ebms.edi.cecid.hku.hk/ and namespace prefix :code:`tns`. The sample SOAP request for sender web service is shown below.
 
 .. code-block:: xml
 
    <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
    <SOAP-ENV:Header/>
    <SOAP-ENV:Body>
-   <tns:cpaId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <CPA-id> </tns:cpaId>
-   <tns:service xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <Service> </tns:service>
-   <tns:action xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <Action> </tns:action>
-   <tns:convId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <Conversation Id> </tns:convId>
-   <tns:fromPartyId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <From Party ID> </tns:fromPartyId>
-   <tns:fromPartyType xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <From Party Type> </tns:fromPartyType>
-   <tns:toPartyId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <To Party ID> </tns:toPartyId>
-   <tns:toPartyType xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <To Party Type> </tns:toPartyType>
-   <tns:refToMessageId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <Reference Message Id> </refToMessageId>
-   <tns:serviceType xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <Service Type> </tns:serviceType>
+   <tns:cpaId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [CPA_Id] </tns:cpaId>
+   <tns:service xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [Service] </tns:service>
+   <tns:action xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [Action] </tns:action>
+   <tns:convId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [Conversation_Id] </tns:convId>
+   <tns:fromPartyId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [From_Party_Id] </tns:fromPartyId>
+   <tns:fromPartyType xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [From_Party_Type] </tns:fromPartyType>
+   <tns:toPartyId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [To_Party_Id] </tns:toPartyId>
+   <tns:toPartyType xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [To_Party_Type] </tns:toPartyType>
+   <tns:refToMessageId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [Reference_Message_Id] </refToMessageId>
+   <tns:serviceType xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [Service_Type] </tns:serviceType>
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
    .
@@ -114,7 +114,7 @@ The meaning of the elements under SOAP Body in the above request message is as f
 | :code:`<serviceType>`    | No        | A type identifier for the ebXML service defined in partnership.                              |
 +--------------------------+-----------+----------------------------------------------------------------------------------------------+
 
--- SOAP Response Message --
+**-- SOAP Response Message --**
 
 The element inside SOAP Body is using namespace URI http://service.ebms.edi.cecid.hku.hk/.
 
@@ -127,7 +127,7 @@ The sample SOAP response for sender web service is shown below:
    <SOAP-ENV:Body>
    <message_id xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:type="xsd:string" 
                xmlns="http://service.ebms.edi.cecid.hku.hk/" 
-               xmlns:xsd="http://www.w3.org/2001/XMLSchema"> <Newly created message id>
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"> [Newly_created_message_id]
    </message_id>
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
@@ -141,9 +141,9 @@ Service Endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/ebms/receiver_lis
 
 The Receiver List Service is used by the application of the receiving party to retrieve message identifiers of received and processed ebMS messages which have not been downloaded by the application. These message identifiers will be used to retrieve message payloads with the Receiver Service.
 
--- SOAP Request Message --
+**-- SOAP Request Message --**
 
-The Receiver List Web Service requires elements with namespace URI http://service.ebms.edi.cecid.hku.hk/ and namespace prefix tns.
+The Receiver List Web Service requires elements with namespace URI http://service.ebms.edi.cecid.hku.hk/ and namespace prefix :code:`tns`.
 
 A sample SOAP request for the Receiver List Web Service is shown below: 
 
@@ -153,14 +153,14 @@ A sample SOAP request for the Receiver List Web Service is shown below:
    <SOAP-ENV:Header/>
    <SOAP-ENV:Body>
    <tns:cpaId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <CPA-id> </tns:cpaId>
-   <tns:service xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <Service> </tns:service>
-   <tns:action xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <Action> </tns:action>
-   <tns:convId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <Conversation Id> </tns:convId>
-   <tns:fromPartyId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <From Party ID> </tns:fromPartyId>
-   <tns:fromPartyType xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <From Party Type> </tns:fromPartyType>
-   <tns:toPartyId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <To Party ID> </tns:toPartyId>
-   <tns:toPartyType xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <To Party Type> </tns:toPartyType>
-   <tns:numOfMessages xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <Number of messages> </SOAP-ENV:Body>
+   <tns:service xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [Service] </tns:service>
+   <tns:action xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [Action] </tns:action>
+   <tns:convId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [Conversation_Id] </tns:convId>
+   <tns:fromPartyId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [From_Party_Id] </tns:fromPartyId>
+   <tns:fromPartyType xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [From_Party_Type] </tns:fromPartyType>
+   <tns:toPartyId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [To_Party_Id] </tns:toPartyId>
+   <tns:toPartyType xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [To_Party_Type] </tns:toPartyType>
+   <tns:numOfMessages xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [Number_of_messages] </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
 The meanings of the elements in the SOAP Body are as follows:
@@ -187,7 +187,7 @@ The meanings of the elements in the SOAP Body are as follows:
 +-------------------------+-----------+---------------------------------------------------------------------------------------------------+
 
 
--- SOAP Response Message --
+**-- SOAP Response Message --**
 
 As with the SOAP request message, the element inside SOAP Body is using namespace URI http://service.ebms.edi.cecid.hku.hk/.
 
@@ -199,8 +199,8 @@ A sample SOAP response for the Receiver List Web Service is shown below:
    <SOAP-ENV:Header/>
    <SOAP-ENV:Body>
    <messageIds xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:type="MessageIDs" xmlns="http://service.ebms.edi.cecid.hku.hk/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <messageId ns0:type="xsd:string"> <downloadable message id> </messageId>
-   <messageId ns0:type="xsd:string"> <downloadable message id> </messageId>
+   <messageId ns0:type="xsd:string"> [downloadable_message_id] </messageId>
+   <messageId ns0:type="xsd:string"> [downloadable_message_id] </messageId>
 
    </messageIds>
    </SOAP-ENV:Body>
@@ -222,7 +222,7 @@ The Receiver Web Service is for the application of the receiving party to retrie
 
 **-- SOAP Request Message --**
 
-The Receiver Web Service requires only one element with namespace URI **http://service.ebms.edi.cecid.hku.hk/** and namespace prefix **tns**.
+The Receiver Web Service requires only one element with namespace URI http://service.ebms.edi.cecid.hku.hk/ and namespace prefix :code:`tns`.
 
 A sample SOAP request for the Receiver Web Service is shown below:
 
@@ -231,7 +231,7 @@ A sample SOAP request for the Receiver Web Service is shown below:
    <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
    <SOAP-ENV:Header/>
    <SOAP-ENV:Body>
-   <tns:messageId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <messageId> <The message id you want to download> </tns:messageId>
+   <tns:messageId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [messageId] [The_message_id_you_want_to_download] </tns:messageId>
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
@@ -239,7 +239,7 @@ A sample SOAP request for the Receiver Web Service is shown below:
 The :code:`<messageId>` element contains the message identifiers you can obtain from the ebMS Receiver List Web Service.
 
 
--- SOAP Response Message --
+**-- SOAP Response Message --**
 
 The element inside the SOAP body is using namespace URI http://service.ebms.edi.cecid.hku.hk/.
 
@@ -258,11 +258,8 @@ A sample SOAP response for the Receiver Web Service is shown below:
    .
    Attached Payload
 
-
 If a payload is associated with the message identifier, the :code:`<hasMessage>` element will have the value true.
 If the received ebMS message has payloads, the response message will have one or more SOAP attachments. Each SOAP attachment has a content type, which is set by the sending application. 
-
-
 
 ebMS 2.0 Status Web Service
 ---------------------------
@@ -275,7 +272,7 @@ The message status is a two-character code indicating the progress of an ebMS me
 
 **-- SOAP Request Message --**
 
-The Status Web Service requires only one element with namespace URI http://service.ebms.edi.cecid.hku.hk/ and namespace prefix **tns**.
+The Status Web Service requires only one element with namespace URI http://service.ebms.edi.cecid.hku.hk/ and namespace prefix :code:`tns`.
 
 A sample SOAP request for the Status Web Service is shown below:
 
@@ -284,7 +281,7 @@ A sample SOAP request for the Status Web Service is shown below:
    <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
    <SOAP-ENV:Header/>
    <SOAP-ENV:Body>
-   <tns:messageId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <messageId> <The message id you want to download> </tns:messageId>
+   <tns:messageId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [messageId] [The_message_id_you_want_to_download] </tns:messageId>
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
@@ -304,11 +301,11 @@ A sample SOAP response for the Status Web Service is shown below:
    <SOAP-ENV:Body>
    <messageInfo xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:type="MessageInfo" xmlns="http://service.ebms.edi.cecid.hku.hk/"
    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <status ns0:type="xsd:string"> <status> </status>
-   <statusDescription ns0:type="xsd:string"> <statusDescription> </statusDescription>
-   <ackMessageId ns0:type="xsd:string"> <ackMessageId> </ackMessageId>
-   <ackStatus ns0:type="xsd:string"> <ackStatus> </ackStatus>
-   <ackStatusDescription ns0:type="xsd:string"> <ackStatusDescription> </ackStatusDescription>
+   <status ns0:type="xsd:string"> [status] </status>
+   <statusDescription ns0:type="xsd:string"> [statusDescription] </statusDescription>
+   <ackMessageId ns0:type="xsd:string"> [ackMessageId] </ackMessageId>
+   <ackStatus ns0:type="xsd:string"> [ackStatus] </ackStatus>
+   <ackStatusDescription ns0:type="xsd:string"> [ackStatusDescription] </ackStatusDescription>
    </messageInfo>
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
@@ -348,13 +345,13 @@ A sample SOAP request for the Message History Web Service is shown below:
    <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
    <SOAP-ENV:Header/>
    <SOAP-ENV:Body>
-   <tns:messageBox xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"><Message Box></tns:messageBox>
-   <tns:status xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"><Message Status></tns:status>
-   <tns:messageId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"><Message Id></tns:messageId>
-   <tns:conversationId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"><Conversation Id></tns:conversationId>
-   <tns:cpaId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"><CPA Id></tns:cpaId>
-   <tns:service xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"><Defined Service with trading party></tns:service>
-   <tns:action xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"><Action></tns:action>
+   <tns:messageBox xmlns:tns="http://service.ebms.edi.cecid.hku.hk/">[Message_Box]</tns:messageBox>
+   <tns:status xmlns:tns="http://service.ebms.edi.cecid.hku.hk/">[Message_Status]</tns:status>
+   <tns:messageId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/">[Message_Id]</tns:messageId>
+   <tns:conversationId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/">[Conversation_Id]</tns:conversationId>
+   <tns:cpaId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/">[CPA_Id]</tns:cpaId>
+   <tns:service xmlns:tns="http://service.ebms.edi.cecid.hku.hk/">[Defined_Service_with_trading_party]</tns:service>
+   <tns:action xmlns:tns="http://service.ebms.edi.cecid.hku.hk/">[Action]</tns:action>
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
@@ -371,7 +368,10 @@ A sample SOAP response for the Message History Web Service is shown below:
    <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
    <SOAP-ENV:Header/>
    <SOAP-ENV:Body>
-   <messageList xmlns="http://service.ebms.edi.cecid.hku.hk/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:type="MessageList">
+   <messageList xmlns="http://service.ebms.edi.cecid.hku.hk/" 
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance"
+                ns0:type="MessageList">
    <messageElement ns0:type="MessageElement">
    <messageId ns0:type="xsd:string"> MessageID of the Message </messageId>
    <messageBox ns0:type="xsd:string">Message Box containing this message </messageBox>
@@ -413,7 +413,7 @@ The Sender Web Service is for the application of the sending party to request He
 
 **-- SOAP Request Message --**
 
-The Sender Web Service requires elements with namespace URI http://service.as2.edi.cecid.hku.hk/ and namespace prefix tns.
+The Sender Web Service requires elements with namespace URI http://service.as2.edi.cecid.hku.hk/ and namespace prefix :code:`tns`.
 
 The sample SOAP request for sender web service is shown below:
 
@@ -422,9 +422,9 @@ The sample SOAP request for sender web service is shown below:
    <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
    <SOAP-ENV:Header/>
    <SOAP-ENV:Body>
-   <tns:as2_from xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <as2_from> </tns:as2_from>
-   <tns:as2_to xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <as2_to> </tns:as2_to>
-   <tns:type xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <type> </tns:type>
+   <tns:as2_from xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [as2_from] </tns:as2_from>
+   <tns:as2_to xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [as2_to] </tns:as2_to>
+   <tns:type xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [type] </tns:type>
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
@@ -468,7 +468,10 @@ A sample SOAP response for the Sender Web Service is shown below:
    <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
    <SOAP-ENV:Header/>
    <SOAP-ENV:Body>
-   <message_id xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:type="xsd:string" xmlns="http://service.as2.edi.cecid.hku.hk/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"> <Newly created message id>
+   <message_id xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" 
+               ns0:type="xsd:string"
+               xmlns="http://service.as2.edi.cecid.hku.hk/"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"> [Newly_created_message_Id]
    </message_id>
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
@@ -485,7 +488,7 @@ The Receiver List Web Service is for the application of the receiving party to r
 
 **-- SOAP Request Message --**
 
-The Receiver List Web Service requires elements with namespace URI **http://service.as2.edi.cecid.hku.hk/** and namespace prefix **tns**.
+The Receiver List Web Service requires elements with namespace URI http://service.as2.edi.cecid.hku.hk/ and namespace prefix :code:`tns`.
 
 A sample SOAP request for the Receiver List Web Service is shown below:
 
@@ -494,13 +497,11 @@ A sample SOAP request for the Receiver List Web Service is shown below:
    <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
    <SOAP-ENV:Header/>
    <SOAP-ENV:Body>
-   <tns:as2_from xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <as2_from> </tns:as2_from>
-   <tns:as2_to xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <as2_to> </tns:as2_to>
-   <tns:numOfMessages xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <numOfMessages> </tns:numOfMessages>
+   <tns:as2_from xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [as2_from] </tns:as2_from>
+   <tns:as2_to xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [as2_to] </tns:as2_to>
+   <tns:numOfMessages xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [numOfMessages] </tns:numOfMessages>
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
-
-
 
 The meanings of the elements in the SOAP Body in the above request message are as follows:
 
@@ -526,9 +527,12 @@ A sample SOAP response for the Receiver List Web Service is shown below:
    <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
    <SOAP-ENV:Header/>
    <SOAP-ENV:Body>
-   <messageIds xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:type="MessageIDs" xmlns="http://service.as2.edi.cecid.hku.hk/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <messageId ns0:type="xsd:string"> <downloadable message id> </messageId>
-   <messageId ns0:type="xsd:string"> <downloadable message id> </messageId>
+   <messageIds xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" 
+               ns0:type="MessageIDs"
+               xmlns="http://service.as2.edi.cecid.hku.hk/"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <messageId ns0:type="xsd:string"> [downloadable_message_id] </messageId>
+   <messageId ns0:type="xsd:string"> [downloadable_message_id] </messageId>
    </messageIds>
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
@@ -550,7 +554,7 @@ The Receiver Web Service is for the application of the receiving party to retrie
 
 **-- SOAP Request Message --**
 
-The Receiver Web Service requires only one element with namespace URI **http://service.as2.edi.cecid.hku.hk/** and namespace prefix **tns**.
+The Receiver Web Service requires only one element with namespace URI http://service.as2.edi.cecid.hku.hk/ and namespace prefix :code:`tns`.
 
 A sample SOAP request for the Receiver Web Service is shown below:
 
@@ -559,7 +563,7 @@ A sample SOAP request for the Receiver Web Service is shown below:
    <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
    <SOAP-ENV:Header/>
    <SOAP-ENV:Body>
-   <tns:messageId xmlns:tns="http://service.as2.edi.cecid.hku.hk/"> <messageId> <The message id you want to download> </tns:messageId>
+   <tns:messageId xmlns:tns="http://service.as2.edi.cecid.hku.hk/"> [messageId] [The_message_id_you_want_to_download] </tns:messageId>
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
@@ -577,7 +581,6 @@ A sample SOAP response for the Receiver Web Service is shown below:
    <hasMessage xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:type="xsd:string" xmlns="http://service.as2.edi.cecid.hku.hk/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"> true if payload in message </hasMessage>
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
-
    .
    .
    .
@@ -591,13 +594,13 @@ If the received AS2 message has payloads, the response message will have one or 
 AS2 Status Web Service
 ----------------------
 
-Service Endpoint: :samp:`http://<OST>:<PORT>/corvus/httpd/as2/status.`
+Service Endpoint: :samp:`http://{<OST>}:{<PORT>}/corvus/httpd/as2/status.`
 
 The Status Web Service is for the application of the sending or receiving party to retrieve the message status of a sent or received AS2 message.
 
 **-- SOAP Request Message --**
 
-The Status Web Service requires only one element with namespace URI **http://service.as2.edi.cecid.hku.hk/** and namespace prefix **tns**.
+The Status Web Service requires only one element with namespace URI http://service.as2.edi.cecid.hku.hk/ and namespace prefix :code:`tns`.
 
 A sample SOAP request for the Status Web Service is shown below:
 
@@ -606,7 +609,7 @@ A sample SOAP request for the Status Web Service is shown below:
    <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
    <SOAP-ENV:Header/>
    <SOAP-ENV:Body>
-   <tns:messageId xmlns:tns="http://service.as2.edi.cecid.hku.hk/"> <messageId> <The message id you want to download> </tns:messageId>
+   <tns:messageId xmlns:tns="http://service.as2.edi.cecid.hku.hk/"> [messageId] [The_message_id_you_want_to_download] </tns:messageId>
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
@@ -621,12 +624,15 @@ A sample SOAP response for the Status Web Service is shown below:
    <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
    <SOAP-ENV:Header/>
    <SOAP-ENV:Body>
-   <messageInfo xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:type="MessageInfo" xmlns="http://service.as2.edi.cecid.hku.hk/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <status ns0:type="xsd:string"> <status> </status>
-   <statusDescription ns0:type="xsd:string"> <statusDescription> </statusDescription>
-   <mdnMessageId ns0:type="xsd:string" > <mdnMessageId> </mdnMessageId>
-   <mdnStatus ns0:type="xsd:string" > <mdnStatus> </mdnStatus>
-   <mdnStatusDescription ns0:type="xsd:string" > <mdnStatusDescription> </mdnStatusDescription>
+   <messageInfo xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" 
+                ns0:type="MessageInfo"
+                xmlns="http://service.as2.edi.cecid.hku.hk/"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <status ns0:type="xsd:string"> [status] </status>
+   <statusDescription ns0:type="xsd:string"> [statusDescription] </statusDescription>
+   <mdnMessageId ns0:type="xsd:string" > [mdnMessageId] </mdnMessageId>
+   <mdnStatus ns0:type="xsd:string" > [mdnStatus] </mdnStatus>
+   <mdnStatusDescription ns0:type="xsd:string" > [mdnStatusDescription] </mdnStatusDescription>
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
@@ -659,7 +665,7 @@ The Message History Web Service is for the application of the sending or receivi
 
 **-- SOAP Request Message --**
 
-The Message History Web Service requires only one element with namespace URI **http://service.as2.edi.cecid.hku.hk/** and namespace prefix **tns**.
+The Message History Web Service requires only one element with namespace URI http://service.as2.edi.cecid.hku.hk/ and namespace prefix :code:`tns`.
 
 A sample SOAP request for the Message History Web Service is shown below:
 
@@ -668,11 +674,11 @@ A sample SOAP request for the Message History Web Service is shown below:
    <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
    <SOAP-ENV:Header/>
    <SOAP-ENV:Body>
-   <tns:messageBox xmlns:tns="http://service.as2.edi.cecid.hku.hk/"><Message Box></tns:messageBox>
-   <tns:status xmlns:tns="http://service.as2.edi.cecid.hku.hk/"><Message Status></tns:status>
-   <tns:messageId xmlns:tns="http://service.as2.edi.cecid.hku.hk/"><Message Id></tns:messageId>
-   <tns:as2Fromxmlns:tns="http://service.as2.edi.cecid.hku.hk/"><AS2 From Party></tns:as2From>
-   <tns:as2Toxmlns:tns="http://service.as2.edi.cecid.hku.hk/"><AS2 To Party></tns:as2To>
+   <tns:messageBox xmlns:tns="http://service.as2.edi.cecid.hku.hk/">[Message_Box]</tns:messageBox>
+   <tns:status xmlns:tns="http://service.as2.edi.cecid.hku.hk/">[Message_Status]</tns:status>
+   <tns:messageId xmlns:tns="http://service.as2.edi.cecid.hku.hk/">[Message_Id]</tns:messageId>
+   <tns:as2From xmlns:tns="http://service.as2.edi.cecid.hku.hk/">[AS2_From_Party]</tns:as2From>
+   <tns:as2To xmlns:tns="http://service.as2.edi.cecid.hku.hk/">[AS2_To_Party]</tns:as2To>
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
@@ -719,16 +725,16 @@ The meanings of the elements in the SOAP Body in the above request message are a
 Reference Articles
 ------------------
 
-    The First Step
-    Reference of ebMS 2.0 Partnership Configuration
-    Reference of AS2 Partnership Configuration
+* `The First Step <http://community.cecid.hku.hk/index.php/product/article/the_first_step_you_hermes/>`_
+* `Reference of ebMS 2.0 Partnership Configuration <http://community.cecid.hku.hk/index.php/product/article/reference_of_ebms_2_0_partnership_configuration>`_
+* `Reference of AS2 Partnership Configuration <http://community.cecid.hku.hk/index.php/product/article/reference_of_as2_partnership_configuration>`_
  
 Reference Documentation
 -----------------------
 
-    Hermes 2 Application Development Guide
+Hermes 2 Application Development Guide
 
 What to read next
 -----------------
 
-    Writing Hermes 2 WS Client under JAVA
+`Writing Hermes 2 WS Client under JAVA <http://community.cecid.hku.hk/index.php/product/article/writing_hermes_2_ws_client_under_java>`_
