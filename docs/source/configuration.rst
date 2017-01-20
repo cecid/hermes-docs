@@ -314,29 +314,29 @@ To change the settings of the log written by the core system, you will need to m
 |                                                                                  | reference the ``appender`` configuration element     |
 |                                                                                  | by this name.                                        |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| | :code:`/log4j/appender/param[@name='File']/@value`                             | The path of the core system log from this appender.  |
-| |                                                                                |                                                      |
-| | (i.e. The ``value`` attribute of the ``param`` element                         |                                                      |
-|   under the ``appender`` element, whose ``name`` attribute is ``File``)          |                                                      |
+| :code:`/log4j/appender/param[@name='File']/@value`                               | The path of the core system log from this appender.  |
+|                                                                                  |                                                      |
+| (i.e. The ``value`` attribute of the ``param`` element                           |                                                      |
+| under the ``appender`` element, whose ``name`` attribute is ``File``)            |                                                      |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| | :code:`/log4j/appender/param[@name='Encoding']/@value`                         | The encoding to be used for the log file.            |
-| |                                                                                |                                                      |
-| | (i.e. The ``value`` attribute of the ``param`` element under the               |                                                      |
-|   ``appender`` element, whose ``name`` attribute is ``Encoding``)                |                                                      |
+| :code:`/log4j/appender/param[@name='Encoding']/@value`                           | The encoding to be used for the log file.            |
+|                                                                                  |                                                      |
+| (i.e. The ``value`` attribute of the ``param`` element under the                 |                                                      |
+| ``appender`` element, whose ``name`` attribute is ``Encoding``)                  |                                                      |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| | :code:`/log4j/appender/param[@name='MaxFileSize']/@value`                      | If the size of a log file has grown to exceed this   |
-| |                                                                                | limit, a new log file will be written and the        |
-| | (i.e. The ``value`` attribute of the ``param`` element under the               | old log file will be backed up. An index will be     |
-|   ``appender`` element, whose ``name`` attribute is ``MaxFileSize``)             | appended to the name of the old log file.            |
+| :code:`/log4j/appender/param[@name='MaxFileSize']/@value`                        | If the size of a log file has grown to exceed this   |
+|                                                                                  | limit, a new log file will be written and the        |
+| (i.e. The ``value`` attribute of the ``param`` element under the                 | old log file will be backed up. An index will be     |
+| ``appender`` element, whose ``name`` attribute is ``MaxFileSize``)               | appended to the name of the old log file.            |
 |                                                                                  | (e.g. :file:`corvus.log.1`).                         |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| | :code:`/log4j/appender/param[@name='MaxBackupIndex']/@value`                   | The maximum number of log files that will be backed  |
-| |                                                                                | up. For example, if it is set to 10, the maximum     |
-| | (i.e. The ``value`` attribute of the ``param`` element under the               | number of backed up log files will be 10 and their   |
-|   ``appender`` element, whose ``name`` attribute is ``MaxBackupIndex``)          | filenames will be :file:`{xxx}.log.1`,               |
+| :code:`/log4j/appender/param[@name='MaxBackupIndex']/@value`                     | The maximum number of log files that will be backed  |
+|                                                                                  | up. For example, if it is set to 10, the maximum     |
+| (i.e. The ``value`` attribute of the ``param`` element under the                 | number of backed up log files will be 10 and their   |
+| ``appender`` element, whose ``name`` attribute is ``MaxBackupIndex``)            | filenames will be :file:`{xxx}.log.1`,               |
 |                                                                                  | :file:`{xxx}.log.2`, ..., :file:`{xxx}.log.10`.      |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
@@ -413,27 +413,27 @@ To change the location of the log file, you will need to modify the XML file nam
 |                                                                        | ``appender`` configuration element by this name.                |
 |                                                                        |                                                                 |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
-| | :code:`/log4j/appender/param[@name='File']/@value`                   | The path of the AS2 log of this appender.                       |
-| |                                                                      |                                                                 |
-| | (i.e. The ``value`` attribute of the ``param`` element under the     |                                                                 |
-|   ``appender`` element, whose ``name`` attribute is ``File``)          |                                                                 |
+| :code:`/log4j/appender/param[@name='File']/@value`                     | The path of the AS2 log of this appender.                       |
+|                                                                        |                                                                 |
+| (i.e. The ``value`` attribute of the ``param`` element under the       |                                                                 |
+| ``appender`` element, whose ``name`` attribute is ``File``)            |                                                                 |
 |                                                                        |                                                                 |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
-| | :code:`/log4j/appender/param[@name='Encoding']/@value`               | The encoding to be used for the log file.                       |
-| |                                                                      |                                                                 |
-| | (i.e. The ``value`` attribute of the ``param`` element under the     |                                                                 |
-|   ``appender`` element, whose ``name`` attribute is ``Encoding``)      |                                                                 |
+| :code:`/log4j/appender/param[@name='Encoding']/@value`                 | The encoding to be used for the log file.                       |
+|                                                                        |                                                                 |
+| (i.e. The ``value`` attribute of the ``param`` element under the       |                                                                 |
+| ``appender`` element, whose ``name`` attribute is ``Encoding``)        |                                                                 |
 |                                                                        |                                                                 |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
-| | :code:`/log4j/appender/param[@name='MaxFileSize']/@value`            | If the size of a log file has grown to exceed this limit,       |
-| |                                                                      | another new log file will be written and the old log file       |
-| | (i.e. The ``value`` attribute of the ``param`` element under the     | will be backed up. An index will be appended to the name        |
-|   ``appender`` element, whose ``name`` attribute is ``MaxFileSize``)   | of the old log file (e.g. :file:`as2.log.1`).                   |
+| :code:`/log4j/appender/param[@name='MaxFileSize']/@value`              | If the size of a log file has grown to exceed this limit,       |
+|                                                                        | another new log file will be written and the old log file       |
+| (i.e. The ``value`` attribute of the ``param`` element under the       | will be backed up. An index will be appended to the name        |
+| ``appender`` element, whose ``name`` attribute is ``MaxFileSize``)     | of the old log file (e.g. :file:`as2.log.1`).                   |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
-| | :code:`/log4j/appender/param[@name='MaxBackupIndex]/@value`          | The maximum number of log files that will be backed up.         |
+| :code:`/log4j/appender/param[@name='MaxBackupIndex]/@value`            | The maximum number of log files that will be backed up.         |
 |                                                                        | For example, if it is set to 10, the maximum number of          |
-| | (i.e. The ``value`` attribute of the ``param`` element under the     | backed up log files will be 10 and their filenames will         |
-|   ``appender`` element, whose ``name`` attribute is ``MaxBackupIndex``)| be :file:`{xxx}.log.1`, :file:`{xxx}.log.2`, ...,               |
+| (i.e. The ``value`` attribute of the ``param`` element under the       | backed up log files will be 10 and their filenames will         |
+| ``appender`` element, whose ``name`` attribute is ``MaxBackupIndex``)  | be :file:`{xxx}.log.1`, :file:`{xxx}.log.2`, ...,               |
 |                                                                        | :file:`{xxx}.log.10`.                                           |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
 | :code:`/log4j/appender/layout/param[@name='ConversionPattern']/@value` | The pattern used when writing the log file.                     |
@@ -736,25 +736,25 @@ To change the location of the log file, you will need to modify the XML file nam
 |                                                                        | :file:`/category/appender-ref@ref` should reference            |
 |                                                                        | the ``appender`` configuration element by this name.           |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| | :code:`/log4j/appender/param[@name='File']/@value`                   | The path of the ebMS log of this appender.                     |
-| |                                                                      |                                                                |
-| | (i.e. The ``value`` attribute of the ``param`` element under the     |                                                                |
-|   ``appender`` element, whose ``name`` attribute is ``File``)          |                                                                |
+| :code:`/log4j/appender/param[@name='File']/@value`                     | The path of the ebMS log of this appender.                     |
+|                                                                        |                                                                |
+| (i.e. The ``value`` attribute of the ``param`` element under the       |                                                                |
+| ``appender`` element, whose ``name`` attribute is ``File``)            |                                                                |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| | :code:`/log4j/appender/param[@name='Encoding']/@value`               | The encoding to be used for the log file.                      |
-| |                                                                      |                                                                |
-| | (i.e. The ``value`` attribute of the ``param`` element under the     |                                                                |
-|   ``appender`` element, whose ``name`` attribute is ``Encoding``)      |                                                                |
+| :code:`/log4j/appender/param[@name='Encoding']/@value`                 | The encoding to be used for the log file.                      |
+|                                                                        |                                                                |
+| (i.e. The ``value`` attribute of the ``param`` element under the       |                                                                |
+| ``appender`` element, whose ``name`` attribute is ``Encoding``)        |                                                                |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| | :code:`/log4j/appender/param[@name='MaxFileSize']/@value`            | If the size of a log file has grown to exceed this limit,      |
-| |                                                                      | another log file will be written and the old log file          |
-| | (i.e. The ``value`` attribute of the ``param`` element under the     | will be backed up. An index will be appended to the name of    |
-|   ``appender`` element, whose ``name`` attribute is ``MaxFileSize``)   | the old log file (e.g. :file:`ebms.log.1`).                    |
+| :code:`/log4j/appender/param[@name='MaxFileSize']/@value`              | If the size of a log file has grown to exceed this limit,      |
+|                                                                        | another log file will be written and the old log file          |
+| (i.e. The ``value`` attribute of the ``param`` element under the       | will be backed up. An index will be appended to the name of    |
+| ``appender`` element, whose ``name`` attribute is ``MaxFileSize``)     | the old log file (e.g. :file:`ebms.log.1`).                    |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| | :code:`/log4j/appender/param[@name='MaxBackupIndex']/@value`         | The maximum number of log files that will be backed up.        |
-| |                                                                      | For example, if it is set to 10, the maximum number of         |
-| | (i.e. The ``value`` attribute of the ``param`` element under the     | backed up log files will be 10 and their filenames will        |
-|   ``appender`` element, whose ``name`` attribute is ``MaxBackupIndex``)| be :file:`{xxx}.log.1`, :file:`{xxx}.log.2`, ...,              |
+| :code:`/log4j/appender/param[@name='MaxBackupIndex']/@value`           | The maximum number of log files that will be backed up.        |
+|                                                                        | For example, if it is set to 10, the maximum number of         |
+| (i.e. The ``value`` attribute of the ``param`` element under the       | backed up log files will be 10 and their filenames will        |
+| ``appender`` element, whose ``name`` attribute is ``MaxBackupIndex``)  | be :file:`{xxx}.log.1`, :file:`{xxx}.log.2`, ...,              |
 |                                                                        | :file:`{xxx}.log.10`.                                          |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
 | :code:`/log4j/appender/layout/param[@name='ConversionPattern']/@value` | The pattern used when writing the log file.                    |
@@ -936,5 +936,5 @@ References
 * Hermes 2 Enterprise Edition Installation Guide
 * Hermes 2 GPL Edition Installation Guide
 * Hermes 2 Plug-in Development Guide
-* OASIS ebXML Message Service Specification 2.0
-* MIME-based Secure Peer-to-Peer Business Data Interchange over the Internet Using HTTP AS2 (:file:`draft-ietf-ediint-as2-17.txt`)
+* `OASIS ebXML Message Service Specification 2.0 <https://www.oasis-open.org/committees/download.php/272/ebMS_v2_0.pdf>`_
+* `MIME-based Secure Peer-to-Peer Business Data Interchange over the Internet Using HTTP AS2 <https://tools.ietf.org/html/rfc4130>`_
