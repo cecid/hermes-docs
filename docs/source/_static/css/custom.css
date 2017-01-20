@@ -45,3 +45,7 @@
     background-color: #ffffff;
     margin: unset;
 }
+
+div.wy-menu.rst-pro {
+    display: none;
+}
