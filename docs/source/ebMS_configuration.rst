@@ -1,10 +1,10 @@
-Reference of ebMS 2.0 Partnership configuration
-===============================================
+Reference for ebMS 2.0 Partnership Configuration
+================================================
 
-ebMS 2.0 Partnership parameter
-------------------------------
+ebMS 2.0 Partnership Parameters
+-------------------------------
 
-Here is the summary of the ebMS 2.0 Partnership parameter.
+Here is a summary of the ebMS 2.0 partnership parameters.
 
 1. `Partnership ID`_
 #. `CPA ID`_
@@ -29,100 +29,103 @@ Partnership ID
 ^^^^^^^^^^^^^^
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Description** | The unique identifier of the ebMS 2.0 partnership in local Hermes 2.                                             |
+| **Description** | The unique identifier of an ebMS 2.0 partnership in local Hermes 2.                                              |
 |                 |                                                                                                                  |
-|                 | The value of this field has no restriction but **RECOMMENDED** to be an identifier between sender and recipient. |
+|                 | The value of this field has no restriction but it is **RECOMMENDED** to be unique between sender and recipient.  |
 |                 |                                                                                                                  |
-|                 | It is **mandatory** and it's maximum length of this field is 255.                                                |
+|                 | This field is **mandatory** and its maximum length is 255.                                                       |
 |                 |                                                                                                                  |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
 CPA ID
 ^^^^^^
 
-+-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Description** | The CPA (Collaboration Protocol Agreement) ID. It is a string that identifies the parameters governing the       |
-|                 | exchange of messages between the parties. The recipient of a message **MUST** be able to resolve the CPA ID to   |
-|                 | an individual set of parameters, taking into account the sender of the message.                                  |
-|                 |                                                                                                                  |
-|                 | Simply said, it is just an arbitary and mandatory string that can be used to identify sender and recipient.      |
-|                 |                                                                                                                  |
-|                 | See [OASIS ebXML Messaging Service Spec v2.0] for detail.                                                        |
-+-----------------+------------------------------------------------------------------------------------------------------------------+
++-----------------+-------------------------------------------------------------------------------------------------------------------------------------+
+| **Description** | The Collaboration Protocol Agreement (CPA) ID is a string that identifies the parameters governing the                              |
+|                 | exchange of messages between the parties. The recipient of a message must be able to resolve the CPA ID to                          |
+|                 | an individual set of parameters, taking into account the sender of the message.                                                     |
+|                 |                                                                                                                                     |
+|                 | Simply put, it is an arbitary and **mandatory** string that can be used to identify both sender and recipient.                      |
+|                 |                                                                                                                                     |
+|                 | See [`OASIS ebXML Messaging Service Spec v2.0 <https://www.oasis-open.org/committees/download.php/272/ebMS_v2_0.pdf>`_] for details.|
++-----------------+-------------------------------------------------------------------------------------------------------------------------------------+
 
 Service
 ^^^^^^^
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Description** | In Hermes 2, the Service parameter is used for Partnership mapping between **Sender** and **Recipient**. And it  |
-|                 | should follow URN format (Uniform Resource Naming).                                                              |
+| **Description** | In Hermes 2, this **mandatory** parameter is used for mapping a partnership between **sender** and **recipient**.|
+|                 | It should follow Uniform Resource Naming (URN) format.                                                           |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
 Action
 ^^^^^^
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Description** | It identifies a process within a Service that processes the ebMS message. Action SHALL be unique within the      |
-|                 | Service in which it is defined. The value of the Action element is specified by the designer of the service.     |
-|                 | It is mandatory and it's maximum length of this field is 255.                                                    |
+| **Description** | This identifies a process within a `Service`_ that processes the ebMS message. Action must be unique within the  |
+|                 | Service in which it is defined. The value of the Action element is specified by the designer of the Service.     |
+|                 | This field is **mandatory** and its maximum length is 255 characters.                                            |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
 Disabled
 ^^^^^^^^
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Description** | The boolean option indicates whether the partnership is disabled or not.                                         |
+| **Description** | Theis boolean option indicates whether the partnership is disabled or not.                                       |
 |                 |                                                                                                                  |
-|                 | Disabled partnership does not deliver / receive any outgoing message / incoming respectively.                    |
+|                 | Disabled partnership do not deliver/receive any outgoing/incoming messages.                                      |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Options**     | [ **true** = disabled ], [ **false** = enabled ]                                                                 |
+| **Options**     | [ ``true`` = disabled ], [ ``false`` = enabled ]                                                                 |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
 Transport Endpoint
 ^^^^^^^^^^^^^^^^^^
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Description** | The endpoint URL of the recipient message gateway.                                                               |
+| **Description** | The endpoint URL of the recieving messaging gateway.                                                             |
 |                 |                                                                                                                  |
-|                 | If the recipient message gateway is Hermes 2 and using HTTP/HTTPS as transport protocol, the endpoint URL is     |
-|                 | formatted as http://<RECIPIENT HOST>:<PORT>/corvus/httpd/ebms/inbound.                                           |
+|                 | If the recieving messaging gateway is Hermes 2 and HTTP/HTTPS is the transport protocol, the endpoint URL is     |
+|                 | formatted as :samp:`http://{<RECIPIENT HOST>}:{<PORT>}/corvus/httpd/ebms/inbound`.                               |
 |                 |                                                                                                                  |
-|                 | Otherwise, if the recipient host is SMTP gateway, the endpoint URL is formatted as mailto:<EMAIL ADDRESS>.       |
+|                 | Otherwise, if the recipient host is an SMTP gateway, the endpoint URL is formatted as                            |
+|                 | :samp:`mailto:{<EMAIL ADDRESS>}`.                                                                                |
 |                 |                                                                                                                  |
-|                 | It is **mandatory** and the format MUST be a **HTTP/HTTPS URL/EMAIL ADDRESS**.                                   |
+|                 | This field is **mandatory** and the format must be an **HTTP/HTTPS URL** or **EMAIL ADDRESS**.                   |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
 Hostname Verified in SSL?
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Description** | The boolean flag indicates whether HTTP SSL/TLS protocol is used and required verifying the recipient hostname.  |
+| **Description** | This boolean flag indicates whether HTTP SSL/TLS protocol is used to verify the recipient hostname.              |
 |                 |                                                                                                                  |
-|                 | It is relevant if **HTTPS** transport protocol is set under the Transport Endpoint                               |
+|                 | This is relevant only if **HTTPS** transport protocol is used in `Transport Endpoint`_                           |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Options**     | [ **true** = hostname verified using SSL , **false** = none ]                                                    |
+| **Options**     | [ ``true`` = hostname verified using SSL , ``false`` = no verification using SSL ]                               |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
 Sync Reply Mode
 ^^^^^^^^^^^^^^^
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Description** | Indicates whether the receiver should reply the incoming ebMS message in same HTTP/HTTPS connection the sender   |
-|                 | uses for delivery.                                                                                               |
+| **Description** | Indicates whether the receiver should reply to incoming ebMS messages using the same HTTP/HTTPS connection that  |
+|                 | the sender is using for delivery.                                                                                |
 |                 |                                                                                                                  |
-|                 | This parameter is only applied to HTTP/HTTPS protocol and applicable for sending partnership.                    |
+|                 | This parameter is only applicable to send partnerships using HTTP/HTTPS transport protocol.                      |
 |                 |                                                                                                                  |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Options**     | [ **mshSignalsOnly** = synchronous reply ], [ **none** = asynchronous reply ]                                    |
+| **Options**     | [ ``mshSignalsOnly`` = synchronous reply ], [ ``none`` = asynchronous reply ]                                    |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
-An example of synchronous reply from the recipient:
-ebMS message acknowledgement is included in the HTTP/SOAP response when synchronous reply is applied.
+Synchronous reply
+~~~~~~~~~~~~~~~~~
+ebMS message acknowledgement is included in the HTTP/SOAP response.
 
 .. image:: /_static/images/first_step/ebms-send-sync.png
 
 
-An example of asynchronous reply from the recipient:
+Asynchronous reply
+~~~~~~~~~~~~~~~~~~
 ebMS message acknowledgement will be delivered through another HTTP/SOAP connection from the recipient to the sender.
 
 .. image:: /_static/images/first_step/ebms-send-async.png
@@ -131,183 +134,177 @@ Acknowledgement Requested
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Description** | Indicates whether the recipient is requested to send an ebMS acknowledgment back to the sender.                  |
+| **Description** | Indicates whether the sender has requested the recipient to reply with an ebMS acknowledgement.                  |
+|                 | An acknowledgement is a type of ebMS message which has an ``<acknowledgement>`` element.                         |
 |                 |                                                                                                                  |
-|                 | Both sender and recipient MUST enable this (by setting to **always**) for interoperability of this features,     |
-|                 | otherwise the recipient returns the negative acknowledgment.                                                     |
+|                 | For interoperability of this feature, both sender and recipient must enable it.                                  |
+|                 | Otherwise, the recipient will return a negative acknowledgement.                                                 |
 |                 |                                                                                                                  |
-|                 | An acknowledgment is a kind of ebMS Message which has <acknowledgment> element. It is an receipt that recipient  |
-|                 | sends back to the sender after receiving an ebMS message.                                                        |
-|                 |                                                                                                                  |
-|                 | The mode of acknowledgment sending back depends on the value Sync Reply Mode. If Sync Reply Mode is enabled, the |
-|                 | acknowledgment will return immediately in the same HTTP connection. If the recipient is Hermes 2, the            |
-|                 | acknolwedgment will be put in an outgoing queue and keep waiting until it is delivered to the sender.            |
+|                 | How the acknowledgement is sent depends on the value of `Sync Reply Mode`_. If it is enabled, the                |
+|                 | acknowledgement will be sent immediately using the same HTTP connection as the received message. Otherwise, if   |
+|                 | the recipient is using Hermes 2, the acknowledgement will be placed in an outgoing queue                         |
+|                 | until it is delivered to the sender.                                                                             |
 |                 |                                                                                                                  |
 |                 | It is **RECOMMENDED** to set this parameter to **always** for reliable messaging.                                |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Options**     | [ always = acknowledgment requested ], [ none = acknowledgment does not request ]                                |
+| **Options**     | [ ``always`` = acknowledgement requested ],                                                                      |
+|                 | [ ``none`` = acknowledgement is not requested ]                                                                  |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
 Acknowledgement Signed Requested
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 +------------------+------------------------------------------------------------------------------------------------------------------+
-| **Description**  | Indicates whether the recipient MUST sign the ebMS acknowledgment digitally using its private key before         |
-|                  | delivering back to the sender.                                                                                   |
+| **Description**  | Indicates whether the recipient must sign the ebMS acknowledgement digitally using their private key before      |
+|                  | delivering it to the sender.                                                                                     |
 |                  |                                                                                                                  |
-|                  | Both sender and recipient MUST enable this (by setting to true) for interoperability of this features.           |
+|                  | For interoperability of this feature, both sender and recipient must enable it.                                  |
+|                  | Otherwise, the recipient will return a negative acknowledgement.                                                 |
 |                  |                                                                                                                  |
-|                  | Otherwise the recipient returns negative acknowledgment.                                                         |
+|                  | The format of the private key should be in PKCS12 and the created signatures should conform to W3C XML           |
+|                  | Signatures Specification [`XMLDsig <https://www.w3.org/TR/xmldsig-core/>`_].                                     |
 |                  |                                                                                                                  |
-|                  | The format of the private key **SHOULD BE** in PKCS12 and the signatures created is conformed to W3C XML         |
-|                  | Signatures Specification [XMLDsig].                                                                              |
-|                  |                                                                                                                  |
-|                  | The sender partnership MUST set Acknowledgment Requested always from recipient for running this features         |
+|                  | The send partnership must set `Acknowledgement Requested`_ to  ``always`` for this feature to run                |
 |                  | properly.                                                                                                        |
 |                  |                                                                                                                  |
-|                  | Also, the recipient is required to provide the public certificate for verifying the signature in the             |  
-|                  | acknowledgment.                                                                                                  |
+|                  | The recipient is required to provide a Certificate for Verification so the signature in the                      |
+|                  | acknowledgement can be verified.                                                                                 |
 +------------------+------------------------------------------------------------------------------------------------------------------+
-| **Dependencies** | [ **Acknowledgment Requested** = always ],                                                                       |
+| **Dependencies** | [ `Acknowledgement Requested`_ = ``always`` ],                                                                   |
 |                  |                                                                                                                  |
-|                  | [ **Certificate For Verification REQUIRED** ]                                                                    |
+|                  | [ `Certificate For Verification`_ **REQUIRED** ]                                                                 |
 +------------------+------------------------------------------------------------------------------------------------------------------+
-| **Options**      | [ **true** = acknowledgment MUST be digitally signed ],                                                          |
+| **Options**      | [ ``true`` = acknowledgement must be digitally signed ],                                                         |
 |                  |                                                                                                                  |
-|                  | [ **false** = acknolwedgment MUST not be digitally signed ]                                                      |
+|                  | [ ``false`` = acknolwedgment must not be digitally signed ]                                                      |
 +------------------+------------------------------------------------------------------------------------------------------------------+
                      
 Duplicate Elimination
 ^^^^^^^^^^^^^^^^^^^^^
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Description** | Indicates whether the recipient ignores duplicate message received.                                              |
+| **Description** | Indicates whether the recipient will ignore duplicate messages.                                                  |
 |                 |                                                                                                                  |
-|                 | Both sender and recipient MUST enable this (by setting to **always**) for interoperability of this features.     |
-|                 | Otherwise the recipient returns negative acknowledgment.                                                         |
+|                 | For interoperability of this feature, both sender and recipient must enable it.                                  |
+|                 | Otherwise, the recipient will return a negative acknowledgement.                                                 |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Options**     | [ **always** = ignores duplicate message. ],                                                                     |
+| **Options**     | [ ``always`` = ignores duplicate messages ],                                                                     |
 |                 |                                                                                                                  |
-|                 | [ **never** = delivers duplicate message. ]                                                                      |
+|                 | [ ``never`` = receives duplicate messages ]                                                                      |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
 Message Order
 ^^^^^^^^^^^^^
 
 +------------------+------------------------------------------------------------------------------------------------------------------+
-| **Description**  | Indicates whether the recipient **MUST** receive ebMS messages in the same sequence as external application /    |
-|                  | client first requested Hermes 2 to send through web service.                                                     |
+| **Description**  | Indicates whether the recipient must receive ebMS messages in the same sequence that they were sent.             |
 |                  |                                                                                                                  |
-|                  | Both sender and recipient MUST enable this (by setting to **Guaranteed**) for interoperability of this features. |
-|                  | Otherwise the recipient returns negative acknowledgment.                                                         |
-|                  |                                                                                                                  |
-|                  | For example, if the external application / client has requested sender Hermes 2 to deliver 10 ebMS messages      |
-|                  | in order using **Message Order**. The order of received messages in recipient SHOULD be the same as the          |
-|                  | application / client requested to sender Hermes 2.                                                               |
+|                  | For interoperability of this feature, both sender and recipient must enable it.                                  |
+|                  | Otherwise, the recipient will return a negative acknowledgement.                                                 |
 |                  |                                                                                                                  |
 +------------------+------------------------------------------------------------------------------------------------------------------+
-| **Dependencies** | [ **Sync Reply Mode** = none ],                                                                                  |
+| **Dependencies** | [ `Sync Reply Mode`_ = ``none`` ],                                                                               |
 |                  |                                                                                                                  |
-|                  | [ **Acknowledgment Requested** = always ],                                                                       |
+|                  | [ `Acknowledgement Requested`_ = ``always`` ],                                                                   |
 |                  |                                                                                                                  |
-|                  | [ **Duplicate Elimination** = always ]                                                                           |
+|                  | [ `Duplicate Elimination`_ = ``always`` ]                                                                        |
 +------------------+------------------------------------------------------------------------------------------------------------------+
-| **Options**      | [ **Guaranteed** = The recipient receives ebMS messages in the order of sending. ],                              |
+| **Options**      | [ ``Guaranteed`` = recipient receives ebMS messages in sending order ],                                          |
 |                  |                                                                                                                  |
-|                  | [ **NotGuaranteed** = The recipient receives in best effort behavior. ]                                          |
+|                  | [ ``NotGuaranteed`` = recipient receives ebMS message with best effort behavior ]                                |
 +------------------+------------------------------------------------------------------------------------------------------------------+
                                                                                                                                                                                                                                                                       
 Signing Required?
 ^^^^^^^^^^^^^^^^^
 
 +------------------+------------------------------------------------------------------------------------------------------------------+
-| **Description**  | Indicates whether the sender **MUST** sign the ebMS Message digitally using its private key.                     |
+| **Description**  | Indicates whether the sender must sign ebMS messages digitally using their private key.                          |
 |                  |                                                                                                                  |
-|                  | Both sender and recipient MUST enable this (by setting to **true**) for interoperability of this features,       |
-|                  | otherwise the recipient returns negative acknowledgment.                                                         | 
+|                  | For interoperability of this feature, both sender and recipient must enable this.                                |
+|                  | Otherwise, the recipient will return a negative acknowledgement.                                                 | 
 |                  |                                                                                                                  |
-|                  | The format of the private key **SHOULD BE** in PKCS12 and the signature created is conformed to W3C XML          |
-|                  | Signatures Specification [XMLDsig].                                                                              |
+|                  | The format of the private key should be in PKCS12 and the created signature should conform to W3C XML            |
+|                  | Signatures Specification [`XMLDsig <https://www.w3.org/TR/xmldsig-core/>`_].                                     |
 +------------------+------------------------------------------------------------------------------------------------------------------+
-| **Options**      | [ **true** = The outgoing ebMS message MUST be digitally signed. ],                                              |
+| **Options**      | [ ``true`` = outgoing ebMS messages must be digitally signed ],                                                  |
 |                  |                                                                                                                  |
-|                  | [ **false** = The outgoing ebMS message does not require to sign digitally. ]                                    |
+|                  | [ ``false`` = outgoing ebMS messages are not required to be digitally signed ]                                   |
 +------------------+------------------------------------------------------------------------------------------------------------------+
 
 Encryption Required? (Mail Only)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 +------------------+------------------------------------------------------------------------------------------------------------------+
-| **Description**  | Indicates whether the sender **MUST** encrypt the ebMS Message using recipient's public certificate defined in   |
-|                  | Certificate for Encryption.                                                                                      |
+| **Description**  | Indicates whether the sender must encrypt ebMS messages using the recipient's public certificate defined in      |
+|                  | Certificate For Encryption.                                                                                      |
 |                  |                                                                                                                  |
-|                  | It is applicable only when using **SMTP** protocol, Transport Endpoint started with mailto:                      |
+|                  | This is only applicable when using **SMTP** protocol for Transport Endpoint.                                     |
 |                  |                                                                                                                  |
 |                  | The encryption method is based on S/MIME standard.                                                               |
 +------------------+------------------------------------------------------------------------------------------------------------------+
-| **Dependencies** | [ **Transport Endpoint** = started with mailto: ],                                                               |
+| **Dependencies** | [ `Transport Endpoint`_ = using SMTP protocol ],                                                                 |
 |                  |                                                                                                                  |
-|                  | [ **Sync Reply Mode** = none ],                                                                                  |
+|                  | [ `Sync Reply Mode`_ = ``none`` ],                                                                               |
 |                  |                                                                                                                  |
-|                  | [ **Certificate For Encryption REQUIRED** ]                                                                      |
+|                  | [ `Certificate For Encryption`_ **REQUIRED** ]                                                                   |
 +------------------+------------------------------------------------------------------------------------------------------------------+
-| **Options**      | [ **true** = The outgoing normal/payload ebMS message MUST be encrypted. ],                                      |
+| **Options**      | [ ``true`` = outgoing ebMS messages must be encrypted ],                                                         |
 |                  |                                                                                                                  |
-|                  | [ **false** = The outgoing ebMS message does not require to encrypt. ]                                           |
+|                  | [ ``false`` = outgoing ebMS messages are not required to be encrypted ]                                          |
 +------------------+------------------------------------------------------------------------------------------------------------------+
 
 Certificate For Encryption
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 +------------------+------------------------------------------------------------------------------------------------------------------+
-| **Description**  | The certificate file for encrypting the outgoing ebMS message through SMTP protocol by using the public key      |
-|                  | generated by recipient.                                                                                          |
+| **Description**  | The certificate file for encrypting outgoing ebMS messages using SMTP protocol by using the public key           |
+|                  | generated by the recipient.                                                                                      |
 |                  |                                                                                                                  |
-|                  | For recipient, it should use the keystore in ebMS plugin to export the public certificate for sender.            |
-|                  | ebMS default keystore location: :samp:`{<HERMES2 HOME>}/plugins/hk.hku.cecid.ebms/security`                      |
+|                  | The recipient should use the keystore in the ebMS plugin to export the public certificate for the sender.        |
+|                  | ebMS default keystore location: :file:`{<HERMES2_HOME>}/plugins/hk.hku.cecid.ebms/security`                      |
 |                  |                                                                                                                  |
-|                  | The certificate **MUST** be in X.509 format. See Encryption Required for details.                                |
+|                  | The certificate must be in X.509 format. See `Encryption Required? (Mail Only)`_ for details.                    |
 +------------------+------------------------------------------------------------------------------------------------------------------+
 
 Maximum Retries
 ^^^^^^^^^^^^^^^
 
 +------------------+------------------------------------------------------------------------------------------------------------------+
-| **Description**  | The maximum number of retry that the sender can attempt to deliver the ebMS Message.                             |
+| **Description**  | The maximum number of retries allowed for the sender to attempt delivering an ebMS message.                      |
 |                  |                                                                                                                  |
-|                  | Hermes 2 tries to deliver the ebMS Message again under the features of reliable messaging until meeting the      |
+|                  | Hermes 2 tries to deliver the ebMS message under the features of reliable messaging until exceeding the          |
 |                  | maximum number of retries.                                                                                       |
 |                  |                                                                                                                  |
-|                  | Each retry will be executed after a interval defined in Retry Interval from the last delivery attempt.           |
+|                  | There will be a time interval between each attempt, which is defined in `Retry Interval (ms)`_.                  |
+|                  |                                                                                                                  |
+|                  | It is **recommended** that the value of this field be between ``1-10``.                                          |
 +------------------+------------------------------------------------------------------------------------------------------------------+
-| **Param(s)       | [ **Acknowledgment Requested** = always ]                                                                        |
-| dependencies**   |                                                                                                                  |
-+------------------+------------------------------------------------------------------------------------------------------------------+
-| **Options**      | [ recommended range = 1-10 ]                                                                                     |
+| **Dependencies** | [ `Acknowledgement Requested`_ = ``always`` ]                                                                    |
+|                  |                                                                                                                  |
 +------------------+------------------------------------------------------------------------------------------------------------------+
 
 Retry Interval (ms)
 ^^^^^^^^^^^^^^^^^^^
 
-+-----------------------+--------------------------------------------------------------------+
-| **Description**       | The interval in millesecond between consecutive retry in delivery. |
-+-----------------------+--------------------------------------------------------------------+
-| Param(s) dependencies | [ Acknowledgment Requested = always ]                              |
-+-----------------------+--------------------------------------------------------------------+
-| **Options**           | [ recommended range = 30000 - 300000 ]                             |
-+-----------------------+--------------------------------------------------------------------+
++-----------------------+-----------------------------------------------------------------------------------------------+
+| **Description**       | The time interval (milleseconds) between each consecutive attempt to deliver an ebMS message. |
+|                       |                                                                                               |
+|                       | It is **recommended** that the value of this field be between ``30000-300000``.               |
++-----------------------+-----------------------------------------------------------------------------------------------+
+| **Dependencies**      | [ `Acknowledgement Requested`_ = ``always`` ]                                                 |
++-----------------------+-----------------------------------------------------------------------------------------------+
 
 Certificate For Verification
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 +------------------+------------------------------------------------------------------------------------------------------------------+
-| **Description**  | The certificate (.cer) file for verifying the incoming digitally signed ebMS message by using the public key     |
+| **Description**  | The certificate (``.cer``) file for verifying incoming digitally signed ebMS message by using the public key     |
 |                  | generated by sender.                                                                                             |
 |                  |                                                                                                                  |
-|                  | For sender, it should use the keystore in ebMS plugin to export the public certificate for recipient.            |
-|                  | ebMS default keystore location: :samp:`{<HERMES2 HOME>}/plugins/hk.hku.cecid.ebms/security`                      |
+|                  | The sender should use the keystore in the ebMS plugin to export the public certificate for the recipient.        |
+|                  | ebMS default keystore location: :file:`{<HERMES2_HOME>}/plugins/hk.hku.cecid.ebms/security`                      |
 |                  |                                                                                                                  |
-|                  | The keystore **MUST** be in PKCS12 format.                                                                       |
+|                  | The keystore must be in PKCS12 format.                                                                           |
 |                  |                                                                                                                  |
-|                  | See Signing Required for details.                                                                                |
+|                  | See `Signing Required?`_ for details.                                                                            |
 +------------------+------------------------------------------------------------------------------------------------------------------+
