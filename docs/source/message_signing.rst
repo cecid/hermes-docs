@@ -1,5 +1,5 @@
-Configuration for Message Signing and Secure Channel
-====================================================
+Configuration for Message Signing and Secure Channels
+=====================================================
 Introduction
 ------------
 Under the current implementation, Hermes 2 only supports the PKCS #12 standard. A keystore is needed for Hermes 2 to retrieve a key for message signing.
