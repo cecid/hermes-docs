@@ -1,12 +1,16 @@
+.. _web_service_usage_guide:
+
 Web Service Usage Guide
 =======================
+
+.. _Maintaining-partnerships:
 
 Maintaining partnerships
 ------------------------
 
 A partnership must be registered on Hermes 2 to send messages since partnerships store the information of your trading partner. Hence, Hermes 2 needs partnership information to deliver messages. A separate partnership is required to receive messages.
 
-If you would like more information, please refer to the articles What is an `ebMS 2.0 Partnership? <http://community.cecid.hku.hk/index.php/product/article/the_first_step_you_hermes/#ebms-partnership-overview>`_ and `What is an AS2 Partnership? <http://community.cecid.hku.hk/index.php/product/article/the_first_step_you_hermes/#as2-partnership-overview>`_
+If you would like more information, please refer to the articles :ref:`What is an ebMS 2.0 Partnership? <what-is-an-ebms-2-0-partnership>` and `What is an AS2 Partnership? <what-is-an-as2-partnership>`
 
 Let's take a look at the program parameters.
 
@@ -170,7 +174,7 @@ Sample content is shown below:
 
 .. image:: /_static/images/web_service/ebms-partnership-xml.png
 
-The mandatory elements are necessary to construct a SOAP message according to the WSDL. For more information, please read the article about `ebMS Partnership Configuration <http://community.cecid.hku.hk/index.php/product/article/reference_of_ebms_2_0_partnership_configuration/>`_.
+The mandatory elements are necessary to construct a SOAP message according to the WSDL. For more information, please read the article about :ref:`ebMS Partnership Configuration <ebms_partnership>`.
 
 Once you have configured these parameters correctly, the program can be executed. A message id will be displayed if the program has successfully executed.
 
@@ -241,6 +245,7 @@ The required elements in a SOAP Request are the following:
 
 
 .. code-block:: xml
+
    <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
    <SOAP-ENV:Header/>
    <SOAP-ENV:Body>
@@ -304,7 +309,7 @@ The required elements in a SOAP Request are shown below:
 
 :code:`<as2_from>` and :code:`<as2_to>` contain the partnership information and :code:`<type>` contains the content type of the payload.
 
-Before sending an AS2 message, check that a partnership is registered. Please refer to the section `Partnership Maintenance for more information <http://community.cecid.hku.hk/index.php/product/article/web_service_usage_guide/#partnership>`_.
+Before sending an AS2 message, check that a partnership is registered. Please refer to the section :ref:`Partnership Maintenance for more information <Maintaining-partnerships>`.
 
 Let’s take a look at the program parameters.
 
@@ -467,7 +472,7 @@ The program will display the message status along with a simple description.
 Reference Articles
 ------------------
 
-* The First Step
-* Reference of ebMS 2.0 Partnership Configuration
-* Reference of AS2 Partnership Configuration
-* Communicating with Hermes 2 Using WS
+* :ref:`The First Step <first_step>`
+* :ref:`Reference of ebMS 2.0 Partnership Configuration <ebms_partnership>`
+* :ref:`Reference of AS2 Partnership Configuration <as2_partnership>`
+* :ref:`Communicating with Hermes 2 Using WS <web_service_communication>`

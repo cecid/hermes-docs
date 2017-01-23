@@ -1,3 +1,5 @@
+.. _web_service_communication:
+
 Communicating Hermes 2 through WS
 =================================
 
@@ -9,7 +11,7 @@ This article is purposed to assist developers who want to communicate with Herme
 
 
 
-It assumes you have successfully installed Hermes 2 and know what a partnership is. Please refer to `Hermes 2 Installation Guide <http://community.cecid.hku.hk/index.php/product/download/download_h2o/#>`_ and `The First Step <http://community.cecid.hku.hk/index.php/product/article/the_first_step_you_hermes/>`_ if you don't. 
+It assumes you have successfully installed Hermes 2 and know what a partnership is. Please refer to :ref:`Hermes 2 Installation Guide <installation>` and :ref:`The First Step <first_step>` if you don't. 
 
 .. image:: /_static/images/web_service/h2o-ws-pl-free.png
 
@@ -725,16 +727,16 @@ The meanings of the elements in the SOAP Body in the above request message are a
 Reference Articles
 ------------------
 
-* `The First Step <http://community.cecid.hku.hk/index.php/product/article/the_first_step_you_hermes/>`_
-* `Reference of ebMS 2.0 Partnership Configuration <http://community.cecid.hku.hk/index.php/product/article/reference_of_ebms_2_0_partnership_configuration>`_
-* `Reference of AS2 Partnership Configuration <http://community.cecid.hku.hk/index.php/product/article/reference_of_as2_partnership_configuration>`_
+* :ref:`The First Step <first_step>`
+* :ref:`Reference of ebMS 2.0 Partnership Configuration <ebms_partnership>`
+* :ref:`Reference of AS2 Partnership Configuration <as2_partnership>`
  
 Reference Documentation
 -----------------------
 
-Hermes 2 Application Development Guide
+* :ref:`Hermes 2 Application Development Guide <appliaction>`
 
 What to read next
 -----------------
 
-`Writing Hermes 2 WS Client under JAVA <http://community.cecid.hku.hk/index.php/product/article/writing_hermes_2_ws_client_under_java>`_
+* `Writing Hermes 2 WS Client under JAVA <http://community.cecid.hku.hk/index.php/product/article/writing_hermes_2_ws_client_under_java>`_

@@ -1,3 +1,5 @@
+.. _first_step:
+
 The First Step
 ==============
 
@@ -22,6 +24,8 @@ Currently, Hermes 2 has two types of partnerships you can manage, which are ebMS
 EbMS 2.0 partnership
 --------------------
  
+.. _what-is-an-ebms-2-0-partnership:
+
 What is an ebMS 2.0 partnership?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -125,6 +129,8 @@ How to delete an ebMS 2.0 partnership
  
 AS2 partnership
 ---------------
+
+.. _what-is-an-as2-partnership:
 
 What is an AS2 partnership?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -232,8 +238,8 @@ The main benefit of partnerships is that it provides abstraction on technical pa
 References
 ----------
 
-* `Reference of ebMS 2.0 Partnership Configuration <http://community.cecid.hku.hk/index.php/product/article/reference_of_ebms_2_0_partnership_configuration>`_
-* `Reference of AS2 Partnership Configuration <http://community.cecid.hku.hk/index.php/product/article/reference_of_as2_partnership_configuration>`_
+* :ref:`Reference of ebMS 2.0 Partnership Configuration <ebms_partnership>`
+* :ref:`Reference of AS2 Partnership Configuration <as2_partnership>`
 * `OASIS ebMS 2.0 Specification <http://www.oasis-open.org/committees/ebxml-msg/documents/ebMS_v2_0.pdf>`_
 * `AS2 Specification <http://www.rfc-editor.org/rfc/rfc4130.txt>`_
 

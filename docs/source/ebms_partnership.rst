@@ -1,3 +1,5 @@
+.. _ebms_partnership:
+
 Reference of ebMS 2.0 Partnership configuration
 ===============================================
 

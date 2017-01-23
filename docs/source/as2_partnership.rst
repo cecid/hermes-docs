@@ -1,3 +1,5 @@
+.. _as2_partnership:
+
 Reference of AS2 Partnership Configuration
 ==========================================
 
