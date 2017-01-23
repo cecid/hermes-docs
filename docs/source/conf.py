@@ -431,7 +431,7 @@ html_sidebars = {
     ]
 }
 
-html_style = '_static/css/custom.css'
+html_style = 'css/custom.css'
 
 html_theme_options = {
     'sidebar_collapse': True,
