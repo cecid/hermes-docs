@@ -10,7 +10,7 @@ To learn more about PKI, please refer to the `Wikipedia article <https://en.wiki
 Configuration to enable message signing
 ---------------------------------------
 By default, the Hermes 2 installer creates a keystore for both ebMS and AS2 plugins. You can use the keystores provided, or create your own customized keystore.
-For information about how to create a keystore and generate a public certificate, please refer to the section `How to generate a PCS12 Keystore and Certificate`_.
+For information about how to create a keystore and generate a public certificate, please refer to the section `How to generate a PKCS12 Keystore and Certificate`_.
 
 
 Core module configuration
@@ -52,6 +52,8 @@ The value of :guilabel:`Signing Required` must be set to ``true``. For details o
 .. image:: /_static/images/message_signing/partnership_ssl_setting.png
 
 
+.. _send-message-using-https:
+
 How to send messages using HTTPS
 --------------------------------
 SSL server authentication
@@ -66,7 +68,7 @@ On the receiving side, a keystore is defined in the :file:`server.xml` of Tomcat
 If the keystore is self-signed, the certificate has to be exported, then imported to the trustore of the sending Hermes 2.
 
 The details of this procedure are shown below.
-For information about how to create a keystore and generate a public certificate, please refer to the section `How to generate a PCS12 Keystore and Certificate`_.
+For information about how to create a keystore and generate a public certificate, please refer to the section `How to generate a PKCS12 Keystore and Certificate`_.
 
 
 Receiver configuration
@@ -158,8 +160,10 @@ Here are descriptions of the parameters:
 +--------------------------------------+-------------------------------------------------+
 
 
-How to generate a PCS12 keystore and certificate
-------------------------------------------------
+.. _generate-cert:
+
+How to generate a PKCS12 keystore and certificate
+-------------------------------------------------
 To create a keystore and certificate, :program:`Keytool` or :program:`OpenSSL` can be used.
 
 

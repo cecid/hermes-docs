@@ -652,7 +652,7 @@ In order to store private key for message signing, keystore is needed. Under cur
 Message Signing
 ^^^^^^^^^^^^^^^
 
-To enable message signing, please configure the plugin with corresponding keystore. A default keystore setting are set through the installer. Or make a new customized keystore. To learn more about generating a keystore, please refer to article about :ref:`generate-cert`.
+To enable message signing, please configure the plugin with corresponding keystore. A default keystore setting are set through the installer. Or make a new customized keystore. To learn more about generating a keystore, please refer to :ref:`generate-cert`.
 
 Sender Setting for Message Signing
 """"""""""""""""""""""""""""""""""
@@ -729,7 +729,7 @@ After that, set the value of :guilabel:`Signing Required` to :literal:`true`. Fo
 Message Tranfer with Secure Channel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To further ensure security of message transfer, secure channel is preferable. For more detail on the configuration that have to do, please see the article :ref:`send-message-through-https`.
+To further ensure security of message transfer, secure channel is preferable. For more detail on the configuration that have to do, please see :ref:`send-message-using-https`.
 
 FAQ
 ---
