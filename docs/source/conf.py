@@ -49,7 +49,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Hermes Business Messaging Gatweay Documentation'
-copyright = u'2016, CECID, HKU'
+copyright = u'2016, Center for E-Commerce Infrastructure Development, The University of Hong Kong'
 author = u'CECID'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -424,3 +424,20 @@ epub_exclude_files = ['search.html']
 
 html_logo = '_static/images/hermes-2-plus-logo.png'
 html_favicon = '_static/images/favicon.ico'
+html_sidebars = {
+    '**': [
+        'navigation.html',
+        'searchbox.html',
+    ]
+}
+
+html_theme_options = {
+    'github_user': 'cecid',
+    'github_repo': 'hermes-docs',
+    'github_button': True,
+    'github_type': 'watch',
+    'github_count': True,
+    'sidebar_collapse': True,
+    'show_powered_by': False,
+    'fixed_sidebar': True,
+}
