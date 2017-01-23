@@ -434,5 +434,5 @@ html_sidebars = {
 html_theme_options = {
     'sidebar_collapse': True,
     'show_powered_by': False,
-    'fixed_sidebar': False,
+    'fixed_sidebar': True,
 }
