@@ -137,7 +137,7 @@ Oracle
 
 For Oracle database creation, since it involves a number of steps and custom parameters for different requirement for the database server. We propose the following reference for the guideline of creating an Oracle database for Hermes 2:
 
-http://www.peacetech.com/flipper/oracle9i/901_doc/server.901/a90117/create.htm
+https://docs.oracle.com/cd/E11882_01/server.112/e10897/install.htm#ADMQS0232
 
 Step 3 – Hermes 2 Deployment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
