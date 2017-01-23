@@ -46,7 +46,10 @@ Operations
 
 Security
 --------
-* Configuration for Message Signing and Secure Channel (no rst)
+.. toctree::
+   :titlesonly:
+
+   message_signing
 
 Javadoc
 -------
