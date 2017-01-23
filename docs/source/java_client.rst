@@ -992,13 +992,13 @@ The parameters are ``messageId``, ``messageBox``, ``as2From``, ``as2To``, and ``
    The method ``getElement`` gets the element with the name ``messageList`` and namespace URI equal to ``nsURI``. The ``messageElement`` values will then be extracted from ``messageList``.
    Each ``messageElement`` contains the values of ``messageId`` and ``messageBox``.
 
-Reference Articles
+Reference articles
 ------------------
 * :doc:`the_first_step_you_hermes_2`
 * :doc:`communicating_hermes2_through_web_service`
 * :doc:`ebMS_configuration`
 * :doc:`AS2_configuration`
 
-Reference Program Source
+Reference program source
 ------------------------
 * :download:`Hermes 2 loopback test <_static/hermes2_loopback.zip>`

@@ -1,6 +1,6 @@
 Quickstart
 ==========
-H2O Development Environment
+H2O development environment
 ---------------------------
 #. Install `Vagrant <https://www.vagrantup.com/>`_
 #. Install `Virtualbox <https://www.virtualbox.org/>`_
@@ -21,7 +21,7 @@ H2O Development Environment
 #. Open Hermes admin page at http://localhost:18080/corvus/admin/home. 
    Username and password are both ``corvus``
 
-Create and Run Docker Containers
+Create and run Docker containers
 --------------------------------
 #. Install `Docker`_ and `Docker Compose`_
 
@@ -47,7 +47,7 @@ Create and Run Docker Containers
       cd hermes
       docker-compose -f deploy/docker-compose.yml up -d
 
-Create Docker Container for Hermes Database
+Create Docker container for Hermes database
 -------------------------------------------
 (Optional, should be automatically built if ``docker-compose`` is used)
 
@@ -85,7 +85,7 @@ Create Docker Container for Hermes Database
       docker run -it --link h2o_db:db --rm h2o/db:1.0 mysql -hdb -P3306 -ucorvus -p ebms
       docker run -it --link h2o_db:db --rm h2o/db:1.0 mysql -hdb -P3306 -ucorvus -p as2
 
-Create Docker Container for Hermes Application Server
+Create Docker container for Hermes application server
 -----------------------------------------------------
 (Optional, should be automatically built if ``docker-compose`` is used)
 
@@ -121,7 +121,7 @@ Create Docker Container for Hermes Application Server
       
       docker run --name h2o_app --link h2o_db:db -p 18080:8080 -d h2o/app:1.0
 
-Admin Page and Connect to Hermes API
+Admin page and connect to Hermes API
 ------------------------------------
 #. Once Hermes server is deployed, you should be able to login to Admin page of Hermes and start working with it.
    The URL is at ``http://localhost:18080/corvus/admin/home``
