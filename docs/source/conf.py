@@ -432,12 +432,7 @@ html_sidebars = {
 }
 
 html_theme_options = {
-    'github_user': 'cecid',
-    'github_repo': 'hermes-docs',
-    'github_button': True,
-    'github_type': 'watch',
-    'github_count': True,
     'sidebar_collapse': True,
     'show_powered_by': False,
-    'fixed_sidebar': True,
+    'fixed_sidebar': False,
 }
