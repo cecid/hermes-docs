@@ -9,7 +9,7 @@ This article is purposed to assist developers who want to communicate with Herme
 
 
 
-It assumes you have successfully installed Hermes 2 and know what a partnership is. Please refer to `Hermes 2 Installation Guide <http://community.cecid.hku.hk/index.php/product/download/download_h2o/#>`_ and `The First Step <http://community.cecid.hku.hk/index.php/product/article/the_first_step_you_hermes/>`_ if you don't. 
+It assumes you have successfully installed Hermes 2 and know what a partnership is. Please refer to :doc:`installation` and :doc:`the_first_step_you_hermes_2` if you don't. 
 
 .. image:: /_static/images/web_service/h2o-ws-pl-free.png
 
@@ -49,7 +49,7 @@ ebMS 2.0 Sender Web Service is the web service interface for external sending pa
 
 Instead of requiring sender to compose the entire ebMS message or acquire ebMS knowledge, sender just needed to request Hermes 2 to do so with key identities including CPA-ID, Service, Action. These 3 key parameter identify the sender's partnership in Hermes 2 that will be used to configure the ebMS message.
 
-The sender web service requires elements with namespace URI http://service.ebms.edi.cecid.hku.hk/ and namespace prefix :code:`tns`. The sample SOAP request for sender web service is shown below.
+The sender web service requires elements with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix :code:`tns`. The sample SOAP request for sender web service is shown below.
 
 .. code-block:: xml
 
@@ -116,7 +116,7 @@ The meaning of the elements under SOAP Body in the above request message is as f
 
 **-- SOAP Response Message --**
 
-The element inside SOAP Body is using namespace URI http://service.ebms.edi.cecid.hku.hk/.
+The element inside SOAP Body is using namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
 
 The sample SOAP response for sender web service is shown below:
 
@@ -143,7 +143,7 @@ The Receiver List Service is used by the application of the receiving party to r
 
 **-- SOAP Request Message --**
 
-The Receiver List Web Service requires elements with namespace URI http://service.ebms.edi.cecid.hku.hk/ and namespace prefix :code:`tns`.
+The Receiver List Web Service requires elements with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix :code:`tns`.
 
 A sample SOAP request for the Receiver List Web Service is shown below: 
 
@@ -189,7 +189,7 @@ The meanings of the elements in the SOAP Body are as follows:
 
 **-- SOAP Response Message --**
 
-As with the SOAP request message, the element inside SOAP Body is using namespace URI http://service.ebms.edi.cecid.hku.hk/.
+As with the SOAP request message, the element inside SOAP Body is using namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the Receiver List Web Service is shown below:
 
@@ -222,7 +222,7 @@ The Receiver Web Service is for the application of the receiving party to retrie
 
 **-- SOAP Request Message --**
 
-The Receiver Web Service requires only one element with namespace URI http://service.ebms.edi.cecid.hku.hk/ and namespace prefix :code:`tns`.
+The Receiver Web Service requires only one element with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix :code:`tns`.
 
 A sample SOAP request for the Receiver Web Service is shown below:
 
@@ -241,7 +241,7 @@ The :code:`<messageId>` element contains the message identifiers you can obtain 
 
 **-- SOAP Response Message --**
 
-The element inside the SOAP body is using namespace URI http://service.ebms.edi.cecid.hku.hk/.
+The element inside the SOAP body is using namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the Receiver Web Service is shown below:
 
@@ -272,7 +272,7 @@ The message status is a two-character code indicating the progress of an ebMS me
 
 **-- SOAP Request Message --**
 
-The Status Web Service requires only one element with namespace URI http://service.ebms.edi.cecid.hku.hk/ and namespace prefix :code:`tns`.
+The Status Web Service requires only one element with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix :code:`tns`.
 
 A sample SOAP request for the Status Web Service is shown below:
 
@@ -290,7 +290,7 @@ The :code:`<messageId>` element contains the message identifiers you can obtain 
 
 **-- SOAP Response Message --**
 
-The element inside the SOAP Body is using namespace URI http://service.ebms.edi.cecid.hku.hk/.
+The element inside the SOAP Body is using namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the Status Web Service is shown below:
 
@@ -355,11 +355,11 @@ A sample SOAP request for the Message History Web Service is shown below:
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-In the above example, the receiver list web service requires only one elements with namespace URI http://service.ebms.edi.cecid.hku.hk/ and namespace prefix **tns**.
+In the above example, the receiver list web service requires only one elements with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 **-- SOAP Response Message --**
 
-The element :code:`<messageList>` inside the SOAP Body is using namespace URI http://service.ebms.edi.cecid.hku.hk/.
+The element :code:`<messageList>` inside the SOAP Body is using namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the Message History Web Service is shown below:
 
@@ -413,7 +413,7 @@ The Sender Web Service is for the application of the sending party to request He
 
 **-- SOAP Request Message --**
 
-The Sender Web Service requires elements with namespace URI http://service.as2.edi.cecid.hku.hk/ and namespace prefix :code:`tns`.
+The Sender Web Service requires elements with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix :code:`tns`.
 
 The sample SOAP request for sender web service is shown below:
 
@@ -459,7 +459,7 @@ The meanings of the elements in the SOAP Body in the above request message are a
 
 **-- SOAP Response Message --**
 
-The element inside the SOAP Body is using namespace URI http://service.as2.edi.cecid.hku.hk/.
+The element inside the SOAP Body is using namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the Sender Web Service is shown below:
 
@@ -488,7 +488,7 @@ The Receiver List Web Service is for the application of the receiving party to r
 
 **-- SOAP Request Message --**
 
-The Receiver List Web Service requires elements with namespace URI http://service.as2.edi.cecid.hku.hk/ and namespace prefix :code:`tns`.
+The Receiver List Web Service requires elements with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix :code:`tns`.
 
 A sample SOAP request for the Receiver List Web Service is shown below:
 
@@ -518,7 +518,7 @@ The meanings of the elements in the SOAP Body in the above request message are a
 
 -- SOAP Response Message --
 
-The element inside the SOAP Body is using namespace URI http://service.as2.edi.cecid.hku.hk/.
+The element inside the SOAP Body is using namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the Receiver List Web Service is shown below:
 
@@ -554,7 +554,7 @@ The Receiver Web Service is for the application of the receiving party to retrie
 
 **-- SOAP Request Message --**
 
-The Receiver Web Service requires only one element with namespace URI http://service.as2.edi.cecid.hku.hk/ and namespace prefix :code:`tns`.
+The Receiver Web Service requires only one element with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix :code:`tns`.
 
 A sample SOAP request for the Receiver Web Service is shown below:
 
@@ -569,7 +569,7 @@ A sample SOAP request for the Receiver Web Service is shown below:
 
 **-- SOAP Response Message --**
 
-The element inside the SOAP body is using namespace URI http://service.as2.edi.cecid.hku.hk/.
+The element inside the SOAP body is using namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the Receiver Web Service is shown below:
 
@@ -600,7 +600,7 @@ The Status Web Service is for the application of the sending or receiving party 
 
 **-- SOAP Request Message --**
 
-The Status Web Service requires only one element with namespace URI http://service.as2.edi.cecid.hku.hk/ and namespace prefix :code:`tns`.
+The Status Web Service requires only one element with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix :code:`tns`.
 
 A sample SOAP request for the Status Web Service is shown below:
 
@@ -615,7 +615,7 @@ A sample SOAP request for the Status Web Service is shown below:
 
 **-- SOAP Response Message --**
 
-The element :code:`<messageInfo>` inside the SOAP body is using namespace URI http://service.as2.edi.cecid.hku.hk/.
+The element :code:`<messageInfo>` inside the SOAP body is using namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the Status Web Service is shown below:
 
@@ -665,7 +665,7 @@ The Message History Web Service is for the application of the sending or receivi
 
 **-- SOAP Request Message --**
 
-The Message History Web Service requires only one element with namespace URI http://service.as2.edi.cecid.hku.hk/ and namespace prefix :code:`tns`.
+The Message History Web Service requires only one element with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix :code:`tns`.
 
 A sample SOAP request for the Message History Web Service is shown below:
 
@@ -684,7 +684,7 @@ A sample SOAP request for the Message History Web Service is shown below:
 
 **-- SOAP Response Message --**
 
-The element <messageList> in the SOAP Body is using the namespace URI http://service.as2.edi.cecid.hku.hk/.
+The element <messageList> in the SOAP Body is using the namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the Message History Web Service is shown below:
 
@@ -725,16 +725,11 @@ The meanings of the elements in the SOAP Body in the above request message are a
 Reference Articles
 ------------------
 
-* `The First Step <http://community.cecid.hku.hk/index.php/product/article/the_first_step_you_hermes/>`_
-* `Reference of ebMS 2.0 Partnership Configuration <http://community.cecid.hku.hk/index.php/product/article/reference_of_ebms_2_0_partnership_configuration>`_
-* `Reference of AS2 Partnership Configuration <http://community.cecid.hku.hk/index.php/product/article/reference_of_as2_partnership_configuration>`_
- 
-Reference Documentation
------------------------
-
-Hermes 2 Application Development Guide
+* :doc:`the_first_step_you_hermes_2`
+* :doc:`ebMS_configuration`
+* :doc:`AS2_configuration`
 
 What to read next
 -----------------
 
-`Writing Hermes 2 WS Client under JAVA <http://community.cecid.hku.hk/index.php/product/article/writing_hermes_2_ws_client_under_java>`_
+* :doc:`java_client`

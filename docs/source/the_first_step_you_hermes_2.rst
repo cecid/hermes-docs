@@ -4,7 +4,7 @@ The First Step
 Introduction
 ----------------
 
-One of the most common difficulties in using Hermes 2 for new developers / users is managing (creating) a partnership and programming the web service requester before they are able to deliver messages to their partner. This article is purposed to assist the user to create and maintain partnerships in Hermes 2. It assumes you have successfully installed Hermes 2 and are able to browse the Hermes 2 administration console. Please refer to `Hermes 2 Installation Guide <http://community.cecid.hku.hk/index.php/product/download/download_h2o/>`_ if you have not.
+One of the most common difficulties in using Hermes 2 for new developers / users is managing (creating) a partnership and programming the web service requester before they are able to deliver messages to their partner. This article is purposed to assist the user to create and maintain partnerships in Hermes 2. It assumes you have successfully installed Hermes 2 and are able to browse the Hermes 2 administration console. Please refer to :doc:`installation` if you have not.
 
 What is a partnership?
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -19,7 +19,7 @@ Existing partnership types
 Currently, Hermes 2 has two types of partnerships you can manage, which are ebMS and AS2. They represent the communication agreement with your partner to use ebMS protocol and AS2 protocol respectively.
 
 
-EbMS 2.0 partnership
+ebMS 2.0 partnership
 --------------------
  
 What is an ebMS 2.0 partnership?
@@ -232,13 +232,13 @@ The main benefit of partnerships is that it provides abstraction on technical pa
 References
 ----------
 
-* `Reference of ebMS 2.0 Partnership Configuration <http://community.cecid.hku.hk/index.php/product/article/reference_of_ebms_2_0_partnership_configuration>`_
-* `Reference of AS2 Partnership Configuration <http://community.cecid.hku.hk/index.php/product/article/reference_of_as2_partnership_configuration>`_
+* :doc:`ebMS_configuration`
+* :doc:`AS2_configuration`
 * `OASIS ebMS 2.0 Specification <http://www.oasis-open.org/committees/ebxml-msg/documents/ebMS_v2_0.pdf>`_
-* `AS2 Specification <http://www.rfc-editor.org/rfc/rfc4130.txt>`_
+* `AS2 Specification <https://tools.ietf.org/html/rfc4130>`_
 
  
 What to read next
 -----------------
 
-* `Communicating with Hermes 2 Using WS <http://community.cecid.hku.hk/index.php/product/article/communicating_hermes_2_through_ws/>`_
+* :doc:`communicating_hermes2_through_web_service`

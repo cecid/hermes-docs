@@ -31,7 +31,7 @@ mainstream business-to-business (B2B) transport protocols, such as
 `ebXML Message Service 2.0 (ebMS 2.0)
 <https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=ebxml-msg>`_
 and `Applicability Statement 2 (AS2)
-<http://www.ietf.org/rfc/rfc4130.txt>`_. (The `ebMS 3.0 / AS4
+<https://tools.ietf.org/html/rfc4130>`_. (The `ebMS 3.0 / AS4
 <https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=ebxml-msg>`_
 support is currently under development.).
 
@@ -53,6 +53,4 @@ Technical documents
    :maxdepth: 1
 
    quickstart
-   installation
-   configuration
-   application
+   documentation

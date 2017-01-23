@@ -1,5 +1,3 @@
-.. _installation:
-
 Hermes 2 Installation Guide
 ===========================
 
@@ -654,9 +652,7 @@ In order to store private key for message signing, keystore is needed. Under cur
 Message Signing
 ^^^^^^^^^^^^^^^
 
-To enable message signing, please configure the plugin with corresponding keystore. A default keystore setting are set through the installer. Or make a new customized keystore. To learn more about generating a keystore, please refer to article about `Generate Certificate`__.
-
-__ http://community.cecid.hku.hk/index.php/product/article/configuration_for_message_signning_and_secure_channel/#generate_cert
+To enable message signing, please configure the plugin with corresponding keystore. A default keystore setting are set through the installer. Or make a new customized keystore. To learn more about generating a keystore, please refer to article about :ref:`generate-cert`.
 
 Sender Setting for Message Signing
 """"""""""""""""""""""""""""""""""
@@ -726,20 +722,14 @@ For receiver to verify the signature, a public certificate should be provided by
 
   .. image:: _static/images/5-1-2-1.png
 
-After that, set the value of :guilabel:`Signing Required` to :literal:`true`. For detail setting of the partnership, please refer to `as2 partnership reference`__ or `ebMS partnership reference`__.
-
-__ http://community.cecid.hku.hk/index.php/product/article/reference_of_as2_partnership_configuration/
-
-__ http://community.cecid.hku.hk/index.php/product/article/reference_of_ebms_2_0_partnership_configuration/
+After that, set the value of :guilabel:`Signing Required` to :literal:`true`. For detail setting of the partnership, please refer to :doc:`AS2_configuration` or :doc:`ebMS_configuration`.
 
   .. image:: _static/images/5-1-2-2.png
 
 Message Tranfer with Secure Channel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To further ensure security of message transfer, secure channel is preferable. For more detail on the configuration that have to do, please visit our community site for the article `Configuration for Message Signning and Secure Channel`__.
-
-__ http://community.cecid.hku.hk/index.php/product/article/configuration_for_message_signning_and_secure_channel/#send_msg_thur_https
+To further ensure security of message transfer, secure channel is preferable. For more detail on the configuration that have to do, please see the article :ref:`send-message-through-https`.
 
 FAQ
 ---
