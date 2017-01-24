@@ -1,4 +1,10 @@
 @import url("theme.css");
+/*
+code, .rst-content tt, .rst-content code {
+    white-space: normal;
+    word-break: break-all;
+}*/
+
 .guilabel {
     font-family: monospace;
     font-weight: bold;
@@ -48,6 +54,7 @@
 .wy-nav-content {
     background-color: #ffffff;
     margin: unset;
+    max-width: 1024px;
 }
 
 .wy-breadcrumbs li.wy-breadcrumbs-aside {
@@ -66,11 +73,22 @@ footer .commit {
     display: none;
 }
 
+.wy-table-responsive table, 
+.wy-table-responsive table,
 .rst-content table.docutils {
-    table-layout: fixed;
+    table-layout: auto;
     width: 100%;
 }
 
+.wy-table-responsive table td, 
+.wy-table-responsive table th,
+.rst-content table th, 
+.rst-content table td {
+    min-width: 80px;
+    white-space: normal;
+    /*word-wrap: break-word;*/
+    /*word-break: break-all;*/
+}
 .rst-content table.docutils td p {
     font-size: inherit;
 }
