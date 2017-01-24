@@ -31,7 +31,7 @@ There are two loading mechanisms, one for the core system and one for the plugin
 
 Let's take a look at how the core system modules are loaded. 
 
-.. image:: _static/images/2-overview-1.jpeg
+.. image:: /_static/images/2-overview-1.jpeg
 
 For the core system, Hermes 2 will look for the existence of a file named :file:`sys.properties` from the classpath which contains the location of the module-group definition file. E.g.,
 
@@ -53,7 +53,7 @@ From there, the system will look for the specified XML file and load up the modu
 
 For the plugins, instead of looking for a file named :file:`sys.properties`, Hermes 2 will look for a file named :file:`plugin.xml` instead. 
 
-.. image:: _static/images/2-overview-2.jpeg
+.. image:: /_static/images/2-overview-2.jpeg
 
 From within, a parameter with the value :literal:`module-group-descriptor` will define the location of the module-group definition.
 

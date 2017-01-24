@@ -114,7 +114,7 @@ How to update an ebMS 2.0 partnership
 #. Click the :guilabel:`Change` button.
 #. Now you should able to see a module called :guilabel:`Selected Partnership` that contains the information of selected partnership from the previous step like here.
 
-   .. image:: _static/images/first_step/CreateEbMS_Partnership_S9.png
+   .. image:: /_static/images/first_step/CreateEbMS_Partnership_S9.png
 
 #. Change the desired parameters/fields and click :guilabel:`Update` when you are done.
 #. A dialog box will prompt you to confirm the updates. Click :guilabel:`Ok`.

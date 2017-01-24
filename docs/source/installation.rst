@@ -218,8 +218,8 @@ Step 3 – Hermes 2 Deployment
 
   #. Step 3 - Configure Database for AS2 Plugin (Optional)
 
-     .. image:: _static/images/3-4-1-step-3-configure-database-for-as2-plugin.png
-     .. image:: _static/images/3-4-1-step-3-h2o-installer.png
+     .. image:: /_static/images/3-4-1-step-3-configure-database-for-as2-plugin.png
+     .. image:: /_static/images/3-4-1-step-3-h2o-installer.png
 
      Descriptions of the settings:
 
@@ -278,7 +278,7 @@ Step 4 – Start Hermes 2
 
 #. Once you have gained access to the admin page, you should see the Hermes 2 Administration Console page:
 
-   .. image:: _static/images/3-5-step-4-administration-console-page.png
+   .. image:: /_static/images/3-5-step-4-administration-console-page.png
 
 That's it! Your Hermes 2 should now be up and running. You can test your setup by running our web service usage sample in next section.
 
@@ -355,7 +355,7 @@ To create the partnership required to perform the AS2 messaging loopback test us
 
 Access http://localhost:8080/corvus/admin/as2/partnership to configure the partnership manually. Below is a simple loopback configuration sample:
 
-.. image:: _static/images/4-3-1-create-as2-partnership.png
+.. image:: /_static/images/4-3-1-create-as2-partnership.png
 
 
 +-------------------------------+------------------------------------------------+
@@ -420,7 +420,7 @@ To create the partnership required to perform the ebMS messaging loopback test u
 
 Access http://localhost:8080/corvus/admin/ebms/partnership to configure the partnership manually. Below is a simple loop-back configuration sample:
 
-  .. image:: _static/images/4-3-3-ebms-plugin.png
+  .. image:: /_static/images/4-3-3-ebms-plugin.png
 
 +----------------------------------+-------------------------------------------------+
 | Partnership ID                   | :literal:`ebms-loopback`                        |
@@ -553,7 +553,7 @@ Before executing the following AS2 web service usage sample, the partnership fro
 
    From the select message screen of :program:`as2-history`, enter 1 to select the inbox message and it will display ``Please provide the folder to store the payload(s):``. Press enter to save the payload in the current folder. A file named :file:`as2.{<timestamp>}@127.0.1.1.Payload.0` will be downloaded, where :file:`{<timestamp>}` is the time :program:`as2-send` was executed. Open that file and you will see the follow content:
 
-   .. image:: _static/images/4-4-1-smaple-message.png
+   .. image:: /_static/images/4-4-1-smaple-message.png
 
 ebMS Web Service Usage Sample
 """""""""""""""""""""""""""""
@@ -629,7 +629,7 @@ Before executing the following ebMS web service usage sample, the partnership fr
 
    From the select message screen of :program:`ebms-history`, enter :literal:`1` to select the inbox message and it will display ``Please provide the folder to store the payload(s):``. Press enter to save the payload in the current folder. A file named :file:`ebms.{<timestamp>}@127.0.1.1.Payload.0` will be downloaded, where :file:`{<timestamp>}` is the time :program:`ebms-send` was executed. Open that file and you will see the following content:
 
-   .. image:: _static/images/4-4-1-smaple-message.png
+   .. image:: /_static/images/4-4-1-smaple-message.png
 
 
 Configuration for Secure Messaging & Secure Channels
@@ -708,11 +708,11 @@ Receiver Settings for Message Signing
 
 For a receiver to verify the signature, a public certificate should be provided by the sender through the partnership maintenance page.
 
-  .. image:: _static/images/5-1-2-1.png
+  .. image:: /_static/images/5-1-2-1.png
 
 Set the value of :guilabel:`Signing Required` to :literal:`true`. For detailed settings of the partnership, please refer to :doc:`as2_partnership` or :doc:`ebms_partnership`.
 
-  .. image:: _static/images/5-1-2-2.png
+  .. image:: /_static/images/5-1-2-2.png
 
 Message Tranfer with Secure Channels
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
