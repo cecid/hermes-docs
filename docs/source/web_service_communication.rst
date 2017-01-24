@@ -739,4 +739,4 @@ Reference Documentation
 What to read next
 -----------------
 
-* `Writing Hermes 2 WS Client under JAVA <http://community.cecid.hku.hk/index.php/product/article/writing_hermes_2_ws_client_under_java>`_
+* :ref:`Writing Hermes 2 WS Client under JAVA <java_client>`

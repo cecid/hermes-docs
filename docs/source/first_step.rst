@@ -247,4 +247,4 @@ References
 What to read next
 -----------------
 
-* `Communicating with Hermes 2 Using WS <http://community.cecid.hku.hk/index.php/product/article/communicating_hermes_2_through_ws/>`_
+* :ref:`Communicating with Hermes 2 Using WS <web_service_communication>`

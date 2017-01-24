@@ -61,4 +61,4 @@ Technical documents
    ebms_partnership
    web_service_communication
    web_service_usage_guide
-
+   java_client

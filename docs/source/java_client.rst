@@ -1,10 +1,12 @@
+.. _java_client:
+
 Writing Hermes 2 WS Clients Using Java
 ======================================
 
 Introduction
 ------------
 This article is purposed to assist developers who want to write a Hermes 2 web service client using **Java**.
-For information about installing Hermes 2 and communicating with Hermes 2 using an external application, please refer to :doc:`installation` and :doc:`communicating_hermes2_through_web_service`.
+For information about installing Hermes 2 and communicating with Hermes 2 using an external application, please refer to :doc:`installation` and :doc:`web_service_communication`.
 
 The source code shown below is originally from the :download:`Hermes 2 loopback test <_static/hermes2_loopback.zip>`. Please refer to it for more details.
 The sample code assumes that Hermes 2 is using ``localhost`` with port ``8080`` (the default port of Tomcat).
@@ -994,10 +996,10 @@ The parameters are ``messageId``, ``messageBox``, ``as2From``, ``as2To``, and ``
 
 Reference Articles
 ------------------
-* :doc:`the_first_step_you_hermes_2`
-* :doc:`communicating_hermes2_through_web_service`
-* :doc:`ebMS_configuration`
-* :doc:`AS2_configuration`
+* :doc:`first_step`
+* :doc:`web_service_communication`
+* :doc:`ebms_partnership`
+* :doc:`as2_partnership`
 
 Reference Program Source
 ------------------------
