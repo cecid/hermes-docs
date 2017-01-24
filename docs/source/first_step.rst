@@ -1,5 +1,3 @@
-.. _first_step:
-
 The First Step
 ==============
 

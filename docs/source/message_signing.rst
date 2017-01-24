@@ -47,7 +47,7 @@ The receiver needs to upload the public certificate provided by the sender in or
 
 .. image:: /_static/images/message_signing/partnership_cert_upload.png
 
-The value of :guilabel:`Signing Required` must be set to ``true``. For details on partnership settings, please see :doc:`ebMS_configuration` or :doc:`AS2_configuration`.
+The value of :guilabel:`Signing Required` must be set to ``true``. For details on partnership settings, please see :doc:`ebms_partnership` or :doc:`as2_partnership`.
 
 .. image:: /_static/images/message_signing/partnership_ssl_setting.png
 

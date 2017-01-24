@@ -1,9 +1,5 @@
-.. _web_service_usage_guide:
-
 Web Service Usage Guide
 =======================
-
-.. _Maintaining-partnerships:
 
 Maintaining partnerships
 ------------------------
@@ -51,7 +47,7 @@ config-xml
 
 Here is sample content of the config-xml files. These files are named :file:`ebms-request.xml` and :file:`as2-request.xml`, and placed under :file:`{<HERMES2_HOME>}/config/ebms-partnership` and :samp:`{<HERMES2_HOME>}/config/as2-partnership` respectively. 
 
-Configuration File for EbMS
+Configuration File for ebMS
 
 .. image:: /_static/images/web_service/ebms-partnership-request.png
 
@@ -309,7 +305,7 @@ The required elements in a SOAP Request are shown below:
 
 :code:`<as2_from>` and :code:`<as2_to>` contain the partnership information and :code:`<type>` contains the content type of the payload.
 
-Before sending an AS2 message, check that a partnership is registered. Please refer to the section :ref:`Partnership Maintenance for more information <Maintaining-partnerships>`.
+Before sending an AS2 message, check that a partnership is registered. Please refer to the section `Maintaining Partnerships`_ for more information.
 
 Let’s take a look at the program parameters.
 

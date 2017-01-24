@@ -6,16 +6,16 @@ Getting Started
    :titlesonly:
 
    installation
-   the_first_step_you_hermes_2
-   ebMS_configuration
-   AS2_configuration
+   first_step
+   ebms_partnership
+   as2_partnership
 
 APIs
 ----
 .. toctree::
    :titlesonly:
 
-   communicating_hermes2_through_web_service
+   web_service_communication
 
 Configuration
 -------------
@@ -41,7 +41,11 @@ Client Development
 
 Operations
 ----------
-* :doc:`Web Service Usage Guide` (no rst)
+.. toctree::
+   :titlesonly:
+
+   web_service_usage_guide
+   
 * Hermes 2 Administration Tool User Guide.doc
 
 Security

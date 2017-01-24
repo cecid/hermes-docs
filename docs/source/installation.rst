@@ -710,7 +710,7 @@ For a receiver to verify the signature, a public certificate should be provided 
 
   .. image:: _static/images/5-1-2-1.png
 
-Set the value of :guilabel:`Signing Required` to :literal:`true`. For detailed settings of the partnership, please refer to :doc:`AS2_configuration` or :doc:`ebMS_configuration`.
+Set the value of :guilabel:`Signing Required` to :literal:`true`. For detailed settings of the partnership, please refer to :doc:`as2_partnership` or :doc:`ebms_partnership`.
 
   .. image:: _static/images/5-1-2-2.png
 

@@ -1,5 +1,3 @@
-.. _web_service_communication:
-
 Communicating Hermes 2 through WS
 =================================
 
@@ -9,7 +7,7 @@ Hermes 2 has implemented SOAP messaging framework to communicate with external a
 
 This article is purposed to assist developers who want to write a web service call client to communicate with Hermes 2 using SOAP web services. 
 
-For more information on the installation and partnerships of Hermes 2, please refer to :doc:`installation` and :doc:`the_first_step_you_hermes_2`.
+For more information on the installation and partnerships of Hermes 2, please refer to :doc:`installation` and :doc:`first_step`.
 
 .. image:: /_static/images/web_service/h2o-ws-pl-free.png
 

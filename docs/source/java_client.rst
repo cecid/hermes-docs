@@ -1,5 +1,3 @@
-.. _java_client:
-
 Writing Hermes 2 WS Clients Using Java
 ======================================
 
