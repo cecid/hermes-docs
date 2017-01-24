@@ -39,13 +39,13 @@ Prerequisite
 
    #. Unzip the downloaded file
 
-      .. code:: sh
+      .. code-block:: sh
 
          unzip jce_policy-8.zip
       
    #. Replace the two jar files :file:`local_policy.jar` and :file:`US_export_policy.jar` in the directory :file:`/usr/lib/jvm/java-8-oracle/jre/lib/security` with the corresponding jar file unzipped in the previous step.
 
-      .. code:: sh
+      .. code-block:: sh
 
          cd UnlimitedJCEPolicyJDK8
          sudo cp local_policy.jar /usr/lib/jvm/java-8-oracle/jre/lib/security/local_policy.jar
@@ -55,7 +55,7 @@ Prerequisite
 
    a. Change the access permissions, the owner and the group of :file:`{<TOMCAT_HOME>}/webapps` after Tomcat is installed.
 
-      .. code:: sh
+      .. code-block:: sh
 
          sudo chmod 775 <TOMCAT_HOME>/webapps
          sudo chown tomcat:cecid <TOMCAT_HOME>/webapps
@@ -145,113 +145,126 @@ https://docs.oracle.com/cd/E11882_01/server.112/e10897/install.htm#ADMQS0232
 Step 3 – Hermes 2 Deployment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  1. Execute the installer.
+1. Execute the installer
 
-     * For Windows, open a command prompt and type :samp:`java –jar hermes2_installer.jar` or if :program:`java` is not set in your environment path, specify the full path.
-     * For Unix/Linux, open :program:`xterm` and follow the same procedure as above.
+   * For Windows, open a command prompt and type :samp:`java –jar hermes2_installer.jar` or if :program:`java` is not set in your environment path, specify the full path.
+   * For Unix/Linux, open :program:`xterm` and follow the same procedure as above.
 
-     **Or:**
+   **Or:**
 
-     * For Windows, you can execute the installer by double-clicking on the :file:`.jar` file or right-clicking and selecting :menuselection:`open with --> javaw` (located where you installed java, in the :file:`bin` folder).
+   * For Windows, you can execute the installer by double-clicking on the :file:`.jar` file or right-clicking and selecting :menuselection:`open with --> javaw` (located where you installed java, in the :file:`bin` folder).
      
-     .. image:: /_static/images/3-4-1-hermes-2-0-text-installer.png
-     .. image:: /_static/images/3-4-1-hermes-2-0-opensource-installer.png
+   .. image:: /_static/images/3-4-1-hermes-2-0-text-installer.png
+   .. image:: /_static/images/3-4-1-hermes-2-0-opensource-installer.png
 
-     Click :guilabel:`Next` until you get to Step 1 of the installation.
-  #. Step 1 - Configure Hermes 2 Core:
+   Click :guilabel:`Next` until you get to Step 1 of the installation.
 
-     .. image:: /_static/images/3-4-1-step-1-configure-hermes-2-core.png
-     .. image:: /_static/images/3-4-1-step-1-h2o-installer.png
+#. Step 1 - Configure Hermes 2 Core
 
-     Descriptions of the settings:
+   .. image:: /_static/images/3-4-1-step-1-configure-hermes-2-core.png
+   .. image:: /_static/images/3-4-1-step-1-h2o-installer.png
 
-     +-----------------------------------+---------------------------------------------------------------------+
-     | Web Application Folder            | Folder to place the web application (e.g :file:`webapps`) in Tomcat.|
-     +-----------------------------------+---------------------------------------------------------------------+
-     | Hermes 2 Home                     | Location to place the Hermes 2 core library and some related files. |
-     +-----------------------------------+---------------------------------------------------------------------+
-     | JDBC Driver                       | Specify which database vendor to connect to.                        |
-     |                                   | One of the following 3 database vendors can be selected:            |
-     |                                   |                                                                     | 
-     |                                   |   * Postgres                                                        |
-     |                                   |   * Oracle                                                          |
-     |                                   |   * MySQL                                                           |
-     +-----------------------------------+---------------------------------------------------------------------+
-     | Hermes 2 ebMS Plugin              | Optional. Install the ebMS component.                               |
-     +-----------------------------------+---------------------------------------------------------------------+
-     | Hermes 2 AS2 Plugin               | Optional. Install the AS2 component.                                |
-     +-----------------------------------+---------------------------------------------------------------------+
-     | Web Service Usage Sample          | Optional. Install the sample program of web service client.         |
-     +-----------------------------------+---------------------------------------------------------------------+
+   Descriptions of the settings:
 
-     Click :guilabel:`Next` and press :guilabel:`Yes` if the installer prompts you to create a new directory.
+   +-----------------------------------+---------------------------------------------------------------------+
+   | Web Application Folder            | Folder to place the web application (e.g :file:`webapps`) in Tomcat.|
+   +-----------------------------------+---------------------------------------------------------------------+
+   | Hermes 2 Home                     | Location to place the Hermes 2 core library and some related files. |
+   +-----------------------------------+---------------------------------------------------------------------+
+   | JDBC Driver                       | Specify which database vendor to connect to.                        |
+   |                                   | One of the following 3 database vendors can be selected:            |
+   |                                   |                                                                     | 
+   |                                   |   * Postgres                                                        |
+   |                                   |   * Oracle                                                          |
+   |                                   |   * MySQL                                                           |
+   +-----------------------------------+---------------------------------------------------------------------+
+   | Hermes 2 ebMS Plugin              | Optional. Install the ebMS component.                               |
+   +-----------------------------------+---------------------------------------------------------------------+
+   | Hermes 2 AS2 Plugin               | Optional. Install the AS2 component.                                |
+   +-----------------------------------+---------------------------------------------------------------------+
+   | Web Service Usage Sample          | Optional. Install the sample program of web service client.         |
+   +-----------------------------------+---------------------------------------------------------------------+
 
-  #. Step 2 - Configure Database for ebMS Plugin (Optional)
+   Click :guilabel:`Next` and press :guilabel:`Yes` if the installer prompts you to create a new directory.
+
+#. Step 1.1 - Configure Database Driver
+   
+   Oracle and MySQL drivers need to be downloaded manually. Once this is done, specify the location of the driver:
+   
+   .. image:: /_static/images/3-4-1-step-1-1-configure-database-driver.png
+   .. image:: /_static/images/3-4-1-step-1-1-h2o-installer.png
+
+   Descriptions of the settings:
+   
+   +-----------------------------+----------------------------------------------------+
+   | JDBC Driver Folder (.jar)   | Directory of the downloaded JDBC driver.           |
+   +-----------------------------+----------------------------------------------------+
+
+#. Step 2 - Configure Database for ebMS Plugin (Optional)
   
-     .. image:: /_static/images/3-4-1-step-2-configure-database-for-ebms-plugin.png
-     .. image:: /_static/images/3-4-1-step-2-h2o-installer.png
+   .. image:: /_static/images/3-4-1-step-2-configure-database-for-ebms-plugin.png
+   .. image:: /_static/images/3-4-1-step-2-h2o-installer.png
 
-
-     Descriptions of the settings:
+   Descriptions of the settings:
      
-     +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-     | Database URL      | The URL address of the database server. Port number may be attached to the address with the format :samp:`{<HOST_ADDRESS>}:{<PORT>}` where            |
-     |                   | :samp:`{<HOST_ADDRESS>}` is the address of the database server and :samp:`{<PORT>}` is the port number of the database server address.                |
-     +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-     | Database Name/SID | For Postgres and MySQL, please specify the name of the database. For Oracle, please specify the Oracle System ID (SID).                               |
-     +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-     | Username          | Username to access the database.                                                                                                                      |
-     +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-     | Password          | Password to access the database.                                                                                                                      |
-     +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-     | Re-create Tables  | Optional. Re-create all the tables in the specified database.                                                                                         |
-     |                   |                                                                                                                                                       |
-     |                   | **Important Notes:**                                                                                                                                  |
-     |                   |                                                                                                                                                       |
-     |                   | * If this is your **first time** installing Hermes 2, please check this option.                                                                       |
-     |                   |                                                                                                                                                       |
-     |                   | * If you choose to re-create the tables, all of the existing data in the specified database will be removed during installation.                      |
-     |                   |   Please backup all the data in the selected database before choosing to re-create the tables.                                                        |
-     +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | Database URL      | The URL address of the database server. Port number may be attached to the address with the format :samp:`{<HOST_ADDRESS>}:{<PORT>}` where            |
+   |                   | :samp:`{<HOST_ADDRESS>}` is the address of the database server and :samp:`{<PORT>}` is the port number of the database server address.                |
+   +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | Database Name/SID | For Postgres and MySQL, please specify the name of the database. For Oracle, please specify the Oracle System ID (SID).                               |
+   +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | Username          | Username to access the database.                                                                                                                      |
+   +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | Password          | Password to access the database.                                                                                                                      |
+   +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | Re-create Tables  | Optional. Re-create all the tables in the specified database.                                                                                         |
+   |                   |                                                                                                                                                       |
+   |                   | **Important Notes:**                                                                                                                                  |
+   |                   |                                                                                                                                                       |
+   |                   | * If this is your **first time** installing Hermes 2, please check this option.                                                                       |
+   |                   |                                                                                                                                                       |
+   |                   | * If you choose to re-create the tables, all of the existing data in the specified database will be removed during installation.                      |
+   |                   |   Please backup all the data in the selected database before choosing to re-create the tables.                                                        |
+   +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-     If you followed the prerequisite installation procedures above, you can just leave it as the default. Click :guilabel:`Next` when you have finished the configuration.
+   If you followed the prerequisite installation procedures above, you can just leave it as the default. Click :guilabel:`Next` when you have finished the configuration.
 
-  #. Step 3 - Configure Database for AS2 Plugin (Optional)
+#. Step 3 - Configure Database for AS2 Plugin (Optional)
 
-     .. image:: /_static/images/3-4-1-step-3-configure-database-for-as2-plugin.png
-     .. image:: /_static/images/3-4-1-step-3-h2o-installer.png
+   .. image:: /_static/images/3-4-1-step-3-configure-database-for-as2-plugin.png
+   .. image:: /_static/images/3-4-1-step-3-h2o-installer.png
 
-     Descriptions of the settings:
+   Descriptions of the settings:
 
-     +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-     | Database URL      | The URL address of the database server. Port number may be attached to the address with the format :samp:`{<HOST_ADDRESS>}:{<PORT>}` where            |
-     |                   | :samp:`{<HOST_ADDRESS>}` is the address of the database server and :samp:`{<PORT>}` is the port number of the database server address.                |
-     +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-     | Database Name/SID | For Postgres and MySQL, please specify the name of the database. For Oracle, please specify the Oracle System ID (SID).                               |
-     +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-     | Username          | Username to access the database.                                                                                                                      |
-     +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-     | Password          | Password to access the database.                                                                                                                      |
-     +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-     | AS2 Plugin        | **AS2:** Original AS2 plugin certified by Drummond Group Inc.                                                                                         |
-     |                   |                                                                                                                                                       |
-     |                   | **AS2 Plus:** Built based on AS2 plugin with new/enhanced features.                                                                                   |
-     +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-     | Re-create Tables  | Optional. Re-create all the tables in the specified database.                                                                                         |
-     |                   |                                                                                                                                                       |
-     |                   | **Important Notes:**                                                                                                                                  |
-     |                   |                                                                                                                                                       |
-     |                   | * If this is your **first time** installing Hermes 2, please check this option.                                                                       |
-     |                   |                                                                                                                                                       |
-     |                   | * If you are switching from AS2 to AS2 Plus or vice versa, we highly recommend you check this option.                                                 |
-     |                   |                                                                                                                                                       |
-     |                   | * If you choose to re-create the tables, all of the existing data in the specified database will be removed during installation.                      |
-     |                   |   Please backup all the data in the selected database before choosing to re-create the tables.                                                        |
-     +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
+   +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | Database URL      | The URL address of the database server. Port number may be attached to the address with the format :samp:`{<HOST_ADDRESS>}:{<PORT>}` where            |
+   |                   | :samp:`{<HOST_ADDRESS>}` is the address of the database server and :samp:`{<PORT>}` is the port number of the database server address.                |
+   +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | Database Name/SID | For Postgres and MySQL, please specify the name of the database. For Oracle, please specify the Oracle System ID (SID).                               |
+   +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | Username          | Username to access the database.                                                                                                                      |
+   +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | Password          | Password to access the database.                                                                                                                      |
+   +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | AS2 Plugin        | **AS2:** Original AS2 plugin certified by Drummond Group Inc.                                                                                         |
+   |                   |                                                                                                                                                       |
+   |                   | **AS2 Plus:** Built based on AS2 plugin with new/enhanced features.                                                                                   |
+   +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | Re-create Tables  | Optional. Re-create all the tables in the specified database.                                                                                         |
+   |                   |                                                                                                                                                       |
+   |                   | **Important Notes:**                                                                                                                                  |
+   |                   |                                                                                                                                                       |
+   |                   | * If this is your **first time** installing Hermes 2, please check this option.                                                                       |
+   |                   |                                                                                                                                                       |
+   |                   | * If you are switching from AS2 to AS2 Plus or vice versa, we highly recommend you check this option.                                                 |
+   |                   |                                                                                                                                                       |
+   |                   | * If you choose to re-create the tables, all of the existing data in the specified database will be removed during installation.                      |
+   |                   |   Please backup all the data in the selected database before choosing to re-create the tables.                                                        |
+   +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-     If you followed the prerequisite installation procedures above, you can just leave it as the default. Click :guilabel:`Next` when you have finished the configuration.
+   If you followed the prerequisite installation procedures above, you can just leave it as the default. Click :guilabel:`Next` when you have finished the configuration.
 
-  #. Click on :guilabel:`Install` and you're done!
+#. Click on :guilabel:`Install` and you're done!
 
 Step 4 – Start Hermes 2
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -321,13 +334,13 @@ UNIX environment
 1. Set environment variable :envvar:`JAVA_HOME` to the directory where Java is located.
 #. Change the permissions of all shell-script files to :literal:`755` with the following command:
    
-   .. code:: sh
+   .. code-block:: sh
 
       sudo chmod 755 *.sh
 
 #. Change the owner and the group of :file:`{<HERMES2_HOME>}` and :file:`{<TOMCAT_HOME>}/webapps/corvus` with the following commands:
 
-   .. code:: sh
+   .. code-block:: sh
 
       sudo chown -R tomcat:cecid <HERMES2_HOME>
       sudo chown -R tomcat:cecid <TOMCAT_HOME>/webapps/corvus
