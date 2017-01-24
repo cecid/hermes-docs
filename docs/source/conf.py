@@ -148,17 +148,20 @@ html_theme_options = {
 # of the sidebar.
 #
 # html_logo = None
+html_logo = '_static/images/hermes-2-plus-logo.png'
 
 # The name of an image file (relative to this directory) to use as a favicon of
 # the docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
 #
 # html_favicon = None
+html_favicon = '_static/images/favicon.ico'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_style = 'css/custom.css'
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -426,7 +429,3 @@ epub_exclude_files = ['search.html']
 # If false, no index is generated.
 #
 # epub_use_index = True
-
-html_logo = '_static/images/hermes-2-plus-logo.png'
-html_favicon = '_static/images/favicon.ico'
-html_style = 'css/custom.css'
