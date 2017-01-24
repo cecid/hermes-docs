@@ -1,4 +1,8 @@
 @import url("theme.css");
+.guilabel {
+    font-family: monospace;
+    font-weight: bold;
+}
 
 .wy-nav-content-wrap {
     background-color: #fafafa;
@@ -46,6 +50,10 @@
     margin: unset;
 }
 
+.wy-breadcrumbs li.wy-breadcrumbs-aside {
+    font-size: 0.9em;
+}
+
 div.wy-menu.rst-pro {
     display: none !important;
 }
@@ -56,4 +64,71 @@ footer, footer p {
 
 footer .commit {
     display: none;
+}
+
+.rst-content table.docutils {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.rst-content table.docutils td p {
+    font-size: inherit;
+}
+
+@media screen and (max-width: 768px) {
+    .wy-nav-side.shift { 
+        width: 50%;
+        left: 0;
+    }
+    .wy-side-scroll {
+        width: auto;
+    }
+    .wy-side-nav-search {
+        width: auto;
+    }
+    .wy-menu.wy-menu-vertical{
+        width: auto;
+    }
+    .wy-nav-content-wrap { 
+        margin-left: 0;
+    }
+    .wy-nav-content-wrap .wy-nav-content { 
+        padding: 1.618em;
+    }
+    .wy-nav-content-wrap.shift { 
+        left: 50%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .wy-nav-side.shift { 
+        width: 75%;
+        left: 0;
+    }
+
+    .wy-nav-content-wrap.shift { 
+        left: 75%;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .wy-nav-side.shift { 
+        width: 85%;
+        left: 0;
+    }
+
+    .wy-nav-content-wrap.shift { 
+        left: 85%;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .wy-nav-side.shift { 
+        width: 100%;
+        left: 0;
+    }
+
+    .wy-nav-content-wrap.shift { 
+        left: 100%;
+    }
 }
