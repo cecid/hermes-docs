@@ -48,7 +48,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Hermes Business Messaging Gatweay Documentation'
+project = u'Hermes Business Messaging Gateway Documentation'
 copyright = u'2016, Center for E-Commerce Infrastructure Development, The University of Hong Kong'
 author = u'CECID'
 
@@ -119,13 +119,18 @@ todo_include_todos = False
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+# html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
 # html_theme_options = {}
+html_theme_options = {
+    'logo_only': True,
+    'display_version': False,
+}
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []
@@ -143,17 +148,20 @@ html_theme = 'alabaster'
 # of the sidebar.
 #
 # html_logo = None
+html_logo = '_static/images/hermes-2-plus-logo.png'
 
 # The name of an image file (relative to this directory) to use as a favicon of
 # the docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
 #
 # html_favicon = None
+html_favicon = '_static/images/favicon.ico'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_style = 'css/custom.css'
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -421,18 +429,3 @@ epub_exclude_files = ['search.html']
 # If false, no index is generated.
 #
 # epub_use_index = True
-
-html_logo = '_static/images/hermes-2-plus-logo.png'
-html_favicon = '_static/images/favicon.ico'
-html_sidebars = {
-    '**': [
-        'navigation.html',
-        'searchbox.html',
-    ]
-}
-
-html_theme_options = {
-    'sidebar_collapse': True,
-    'show_powered_by': False,
-    'fixed_sidebar': True,
-}
