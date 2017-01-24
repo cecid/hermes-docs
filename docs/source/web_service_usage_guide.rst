@@ -10,7 +10,7 @@ Maintaining partnerships
 
 A partnership must be registered on Hermes 2 to send messages since partnerships store the information of your trading partner. Hence, Hermes 2 needs partnership information to deliver messages. A separate partnership is required to receive messages.
 
-If you would like more information, please refer to the articles :ref:`What is an ebMS 2.0 Partnership? <what-is-an-ebms-2-0-partnership>` and `What is an AS2 Partnership? <what-is-an-as2-partnership>`
+If you would like more information, please refer to the articles :ref:`What is an ebMS 2.0 Partnership? <what-is-an-ebms-2-0-partnership>` and :ref:`What is an AS2 Partnership? <what-is-an-as2-partnership>`
 
 Let's take a look at the program parameters.
 
@@ -174,7 +174,7 @@ Sample content is shown below:
 
 .. image:: /_static/images/web_service/ebms-partnership-xml.png
 
-The mandatory elements are necessary to construct a SOAP message according to the WSDL. For more information, please read the article about :ref:`ebMS Partnership Configuration <ebms_partnership>`.
+The mandatory elements are necessary to construct a SOAP message according to the WSDL. For more information, please read the article about :doc:`ebms_partnership`.
 
 Once you have configured these parameters correctly, the program can be executed. A message id will be displayed if the program has successfully executed.
 
@@ -472,7 +472,7 @@ The program will display the message status along with a simple description.
 Reference Articles
 ------------------
 
-* :ref:`The First Step <first_step>`
-* :ref:`Reference of ebMS 2.0 Partnership Configuration <ebms_partnership>`
-* :ref:`Reference of AS2 Partnership Configuration <as2_partnership>`
-* :ref:`Communicating with Hermes 2 Using WS <web_service_communication>`
+* :doc:`first_step`
+* :doc:`ebms_partnership`
+* :doc:`as2_partnership`
+* :doc:`web_service_communication`

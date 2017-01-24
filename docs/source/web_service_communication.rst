@@ -11,7 +11,7 @@ This article is purposed to assist developers who want to communicate with Herme
 
 
 
-It assumes you have successfully installed Hermes 2 and know what a partnership is. Please refer to :ref:`Hermes 2 Installation Guide <installation>` and :ref:`The First Step <first_step>` if you don't. 
+It assumes you have successfully installed Hermes 2 and know what a partnership is. Please refer to :doc:`installation` and :doc:`first_step` if you don't. 
 
 .. image:: /_static/images/web_service/h2o-ws-pl-free.png
 
@@ -447,13 +447,13 @@ The meanings of the elements in the SOAP Body in the above request message are a
 +----------------------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | :code:`<type>`       | Yes       | A three-character code indicating the content type of the sent payload. The available codes are:                                                          |
 |                      |           |                                                                                                                                                           |
-|                      |           |  * "edi", for the content type "application/EDIFACT".                                                                                                     |
-|                      |           |  * "x12", for the content type "application/EDI-X12".                                                                                                     |
-|                      |           |  * "eco", for the content type "application/edi-consent".                                                                                                 |
-|                      |           |  * "xml", for the content type "application/XML".                                                                                                         |
-|                      |           |  * "bin", for the content type "application/ octet-stream".                                                                                               |
+|                      |           |  * :code:`edi`, for the content type :code:`application/EDIFACT`.                                                                                         |
+|                      |           |  * :code:`x12`, for the content type :code:`application/EDI-X12`.                                                                                         |
+|                      |           |  * :code:`eco`, for the content type :code:`application/edi-consent`.                                                                                     |
+|                      |           |  * :code:`xml`, for the content type :code:`application/XML`.                                                                                             |
+|                      |           |  * :code:`bin`, for the content type :code:`application/ octet-stream`.                                                                                   |
 |                      |           |                                                                                                                                                           |
-|                      |           | For other values, Hermes 2 will assume the content type of the payload is "application/deflate", which means that the payload is compressed by Zip.       |
+|                      |           | For other values, Hermes 2 will assume the content type of the payload is :code:`application/deflate`, which means that the payload is compressed by Zip. |
 +----------------------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
@@ -686,7 +686,7 @@ A sample SOAP request for the Message History Web Service is shown below:
 
 **-- SOAP Response Message --**
 
-The element <messageList> in the SOAP Body is using the namespace URI http://service.as2.edi.cecid.hku.hk/.
+The element :code:`<messageList>` in the SOAP Body is using the namespace URI http://service.as2.edi.cecid.hku.hk/.
 
 A sample SOAP response for the Message History Web Service is shown below:
 
@@ -727,16 +727,16 @@ The meanings of the elements in the SOAP Body in the above request message are a
 Reference Articles
 ------------------
 
-* :ref:`The First Step <first_step>`
-* :ref:`Reference of ebMS 2.0 Partnership Configuration <ebms_partnership>`
-* :ref:`Reference of AS2 Partnership Configuration <as2_partnership>`
+* :doc:`first_step`
+* :doc:`ebms_partnership`
+* :doc:`as2_partnership`
  
 Reference Documentation
 -----------------------
 
-* :ref:`Hermes 2 Application Development Guide <appliaction>`
+* :doc:`application`
 
 What to read next
 -----------------
 
-* :ref:`Writing Hermes 2 WS Client under JAVA <java_client>`
+* :doc:`java_client`

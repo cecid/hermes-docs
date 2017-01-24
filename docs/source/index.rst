@@ -57,8 +57,8 @@ Technical documents
    configuration
    application
    first_step
-   as2_partnership
    ebms_partnership
+   as2_partnership
    web_service_communication
    web_service_usage_guide
    java_client

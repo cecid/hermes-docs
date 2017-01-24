@@ -9,7 +9,7 @@ This article is purposed to assist developers who want to write a Hermes 2 web s
 For information about installing Hermes 2 and communicating with Hermes 2 using an external application, please refer to :doc:`installation` and :doc:`web_service_communication`.
 
 The source code shown below is originally from the :download:`Hermes 2 loopback test <_static/hermes2_loopback.zip>`. Please refer to it for more details.
-The sample code assumes that Hermes 2 is using ``localhost`` with port ``8080`` (the default port of Tomcat).
+The sample code assumes that Hermes 2 is using :literal:`localhost` with port :literal:`8080` (the default port of Tomcat).
 
 Prerequisite
 ------------
@@ -43,7 +43,7 @@ Each web service sample code requires at **least** the imports shown below to ru
 Writing an ebMS 2.0 sender web service client
 ---------------------------------------------
 We need to create a SOAP message with 10 paremeters and send it to Hermes 2 as the web service request.
-The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId``, ``fromPartyType``, ``toPartyId``, ``toPartyType``, ``refToMessageId`` and ``serviceType``.
+The parameters are :literal:`cpaId,` :literal:`service,` :literal:`action,` :literal:`convId,` :literal:`fromPartyId,` :literal:`fromPartyType,` :literal:`toPartyId,` :literal:`toPartyType,` :literal:`refToMessageId` and :literal:`serviceType`.
 
 #. Define a namespace URI and prefix conforming to WSDL, and define the endpoint URL of the ebMS sender web service.
    
@@ -90,7 +90,7 @@ The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId
       soapBody.addChildElement(createElement("refToMessageId", nsPrefix, nsURI, refToMessageId));
       soapBody.addChildElement(createElement("serviceType", nsPrefix, nsURI, serviceType));
    
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method :code:`createElement` creates a SOAP element with namespace prefix equal to :literal:`nsPrefix,` namespace URL equal to :literal:`nsURI` and textual value equal to the last arguments of the method.
    
    The implementation of ``createElement`` is shown below:
    
@@ -100,7 +100,7 @@ The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId
       soapElement.addTextNode(value);
       return soapElement;
 
-#. Attach a payload if necessary. The example here uses a purchase order XML as the payload of the ebMS message, so the associated content type is ``application/xml``.
+#. Attach a payload if necessary. The example here uses a purchase order XML as the payload of the ebMS message, so the associated content type is :code:`application/xml`.
 
    .. code-block:: java
 
@@ -134,16 +134,16 @@ The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId
           throw new SOAPException(responseBody.getFault().getFaultString());
       }
 
-   The method ``getFirstChild`` gets the first element with the name ``message_id`` and namespace URI equal to ``nsURI``.
-   An existing ``message_id`` signifies that the message has been successfully sent to Hermes 2 and has a registered identifier.
+   The method :code:`getFirstChild` gets the first element with the name :code:`message_id` and namespace URI equal to :literal:`nsURI`.
+   An existing :code:`message_id` signifies that the message has been successfully sent to Hermes 2 and has a registered identifier.
 
    The SOAP request is now transformed into an ebMS message and saved in persistent storage.
-   Hermes 2 will deliver the ebMS message to the partner specified in the SOAP request parameters (``cpaId``, ``service`` and ``action`` identify the partnership).
+   Hermes 2 will deliver the ebMS message to the partner specified in the SOAP request parameters (:literal:`cpaId`, :literal:`service` and :literal:`action` identify the partnership).
 
 Writing an ebMS 2.0 receiver list web service client
 ----------------------------------------------------
 We need to create a SOAP message with 9 parameters and send it to Hermes 2 as the web service request.
-The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId``, ``fromPartyType``, ``toPartyId``, ``toPartyType`` and ``numOfMessages``.
+The parameters are :literal:`cpaId`, :literal:`service`, :literal:`action`, :literal:`convId`, :literal:`fromPartyId`, :literal:`fromPartyType`, :literal:`toPartyId`, :literal:`toPartyType` and :literal:`numOfMessages`.
 
 #. Define a namespace URI and prefix conforming to WSDL.
 
@@ -188,9 +188,9 @@ The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId
       soapBody.addChildElement(createElement("toPartyType", nsPrefix, nsURI, toPartyType));
       soapBody.addChildElement(createElement("numOfMessages", nsPrefix, nsURI, numOfMessages));
       
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method :code:`createElement` creates a SOAP element with namespace prefix equal to :literal:`nsPrefix`, namespace URL equal to :literal:`nsURI` and textual value equal to the last arguments of the method.
    
-   The implementation of ``createElement`` is shown below:
+   The implementation of :code:`createElement` is shown below:
 
    .. code-block:: java
 
@@ -240,8 +240,8 @@ The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId
           throw new SOAPException(responseBody.getFault().getFaultString());
       }
 
-   The method ``getFirstChild`` gets the first element with the name ``messageIds`` and namespace URI equal to ``nsURI``.
-   It then extracts every ``messageId`` which each represent an available message awaiting further action.
+   The method :code:`getFirstChild` gets the first element with the name :literal:`messageIds` and namespace URI equal to :literal:`nsURI`.
+   It then extracts every :literal:`messageId` which each represent an available message awaiting further action.
 
 Writing an ebMS 2.0 receiver web service client
 -----------------------------------------------
@@ -274,9 +274,9 @@ We need to create a SOAP message with the identifier of the target message and s
       SOAPBody soapBody = request.getSOAPBody();
       soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));
 
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method :code:`createElement` creates a SOAP element with namespace prefix equal to :literal:`nsPrefix`, namespace URL equal to :literal:`nsURI` and textual value equal to the last arguments of the method.
    
-   The implementation of ``createElement`` is shown below:
+   The implementation of :code:`createElement` is shown below:
    
    .. code-block:: java
       
@@ -327,8 +327,8 @@ We need to create a SOAP message with the identifier of the target message and s
           throw new SOAPException(responseBody.getFault().getFaultString());
       }
 
-   The method ``getFirstChild`` gets the first element with the name ``hasMessage`` and namespace URI equal to ``nsURI``.
-   The boolean value of ``hasMessage`` represents the existence of a payload in this message.
+   The method :code:`getFirstChild` gets the first element with the name :literal:`hasMessage` and namespace URI equal to :literal:`nsURI`.
+   The boolean value of :literal:`hasMessage` represents the existence of a payload in this message.
 
    The payload is extracted from the attachment part to the input stream and can be saved by I/O pipelining to a physical file or another business operation.
 
@@ -363,9 +363,9 @@ We need to create a SOAP message with the identifier of the target message and s
       SOAPBody soapBody = request.getSOAPBody();
       soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));
 
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method :code:`createElement` creates a SOAP element with namespace prefix equal to :literal:`nsPrefix`, namespace URL equal to :literal:`nsURI` and textual value equal to the last arguments of the method.
    
-   The implementation of ``createElement`` is shown below:
+   The implementation of :code:`createElement` is shown below:
 
    .. code-block:: java
 
@@ -415,12 +415,12 @@ We need to create a SOAP message with the identifier of the target message and s
           throw new SOAPException(responseBody.getFault().getFaultString());
       }
 
-   The method ``getFirstChild`` gets the first element with the name ``messageInfo`` and namespace URI equal to ``nsURI``. It then retrieves the status value from that element.
+   The method :code:`getFirstChild` gets the first element with the name :literal:`messageInfo` and namespace URI equal to :literal:`nsURI`. It then retrieves the status value from that element.
 
 Writing an ebMS 2.0 message history web service client
 ------------------------------------------------------
 We need to create a SOAP message with 7 parameters and send it to Hermes 2 as the web service request.
-The parameters are ``messageId``, ``messageBox``, ``conversationId``, ``cpaId``, ``status``, ``action`` and ``service``.
+The parameters are :literal:`messageId`, :literal:`messageBox`, :literal:`conversationId`, :literal:`cpaId`, :literal:`status`, :literal:`action` and :literal:`service`.
 
 #. Define a namespace URI and prefix conforming to WSDL.
 
@@ -462,9 +462,9 @@ The parameters are ``messageId``, ``messageBox``, ``conversationId``, ``cpaId``,
       soapBody.addChildElement(createElement("action", nsPrefix, nsURI, action));
       soapBody.addChildElement(createElement("status", nsPrefix, nsURI, status));
 
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method :code:`createElement` creates a SOAP element with namespace prefix equal to :literal:`nsPrefix`, namespace URL equal to :literal:`nsURI` and textual value equal to the last arguments of the method.
    
-   The implementation of ``createElement`` is shown below:
+   The implementation of :code:`createElement` is shown below:
 
    .. code-block:: java
       
@@ -530,12 +530,12 @@ The parameters are ``messageId``, ``messageBox``, ``conversationId``, ``cpaId``,
           } 
       }
    
-   The method ``getElement`` gets the element with the name ``messageList`` and namespace URI equal to ``nsURI``. Then, a list of ``messageElement`` values will be extracted from ``messageList``.
-   Each ``messageElement`` contains the values of ``messageId`` and ``messageBox``.
+   The method :code:`getElement` gets the element with the name :literal:`messageList` and namespace URI equal to :literal:`nsURI`. Then, a list of :literal:`messageElement` values will be extracted from :literal:`messageList`.
+   Each :code:`messageElement` contains the values of :literal:`messageId` and :literal:`messageBox`.
 
 Writing an AS2 sender web service client
 ----------------------------------------
-We need to create a SOAP message with 3 parameters and send it to Hermes 2 as the web service request. The parameters are ``as2_from``, ``as2_to`` and ``type``.
+We need to create a SOAP message with 3 parameters and send it to Hermes 2 as the web service request. The parameters are :literal:`as2_from`, :literal:`as2_to` and :literal:`type`.
 
 #. Define a namespace URI and prefix conforming to WSDL and define the AS2 sender web service for Hermes 2.
    
@@ -568,9 +568,9 @@ We need to create a SOAP message with 3 parameters and send it to Hermes 2 as th
       soapBody.addChildElement(createElement("as2_to" , nsPrefix, nsURI, this.as2To)); 
       soapBody.addChildElement(createElement("type" , nsPrefix, nsURI, this.type));
 
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method :code:`createElement` creates a SOAP element with namespace prefix equal to :literal:`nsPrefix`, namespace URL equal to :literal:`nsURI` and textual value equal to the last arguments of the method.
    
-   The implementation of ``createElement`` is shown below:
+   The implementation of :code:`createElement` is shown below:
 
    .. code-block:: java
       
@@ -578,7 +578,7 @@ We need to create a SOAP message with 3 parameters and send it to Hermes 2 as th
       soapElement.addTextNode(value); 
       return soapElement;
 
-#. Attach a payload if necessary. The example here uses a purchase order XML as the payload of the AS2 message, so the associated content type is ``application/xml``.
+#. Attach a payload if necessary. The example here uses a purchase order XML as the payload of the AS2 message, so the associated content type is :code:`application/xml`.
    
    **NOTE:** Only ONE payload is allowed in a SOAP request for the AS2 sender web service.
 
@@ -614,14 +614,14 @@ We need to create a SOAP message with 3 parameters and send it to Hermes 2 as th
           throw new SOAPException(responseBody.getFault().getFaultString()); 
       }
    
-   The method ``getFirstChild`` gets the first element with the name ``message_id`` and namespace URI equal to ``nsURI``.
+   The method :code:`getFirstChild` gets the first element with the name :literal:`message_id` and namespace URI equal to :literal:`nsURI`.
 
    The SOAP request is now transformed into an AS2 message stored in the file system.
-   Hermes 2 will deliver the AS2 message to the partner specified in the SOAP request parameters (``AS2From`` and ``AS2To`` identify the partnership).
+   Hermes 2 will deliver the AS2 message to the partner specified in the SOAP request parameters (:literal:`AS2From` and :literal:`AS2To` identify the partnership).
 
 Writing an AS2 receiver list web service client
 -----------------------------------------------
-We need to create a SOAP message with 3 parameters and send it to Hermes 2 as the web service request. The parameters are ``as2From``, ``as2To`` and ``numOfMessages``.
+We need to create a SOAP message with 3 parameters and send it to Hermes 2 as the web service request. The parameters are :literal:`as2From`, :literal:`as2To` and :literal:`numOfMessages`.
 
 #. Define a namespace URi and prefix conforming to WSDL and define the AS2 receiver list web service for Hermes 2.
 
@@ -654,9 +654,9 @@ We need to create a SOAP message with 3 parameters and send it to Hermes 2 as th
       soapBody.addChildElement(createElement("as2To" , nsPrefix, nsURI, this.as2To));
       soapBody.addChildElement(createElement("numOfMessages", nsPrefix, nsURI, this.numOfMessages + ""));
 
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method :code:`createElement` creates a SOAP element with namespace prefix equal to :literal:`nsPrefix`, namespace URL equal to :literal:`nsURI` and textual value equal to the last arguments of the method.
    
-   The implementation of ``createElement`` is shown below: 
+   The implementation of :code:`createElement` is shown below: 
    
    .. code-block:: java
       
@@ -706,8 +706,8 @@ We need to create a SOAP message with 3 parameters and send it to Hermes 2 as th
           throw new SOAPException(responseBody.getFault().getFaultString());
       }
    
-   The method ``getFirstChild`` gets the first element with the name ``messageIds`` and namespace URI equal to ``nsURI``.
-   All children with the name ``messageId`` and namespace URI equal to ``nsURI`` are then extracted.
+   The method :code:`getFirstChild` gets the first element with the name :literal:`messageIds` and namespace URI equal to :literal:`nsURI`.
+   All children with the name :literal:`messageId` and namespace URI equal to :literal:`nsURI` are then extracted.
 
 Writing an AS2 receiver web service client
 ------------------------------------------
@@ -740,9 +740,9 @@ We need to create a SOAP message with the identifier of the target message and s
       SOAPBody soapBody = request.getSOAPBody();
       soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));
 
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method :code:`createElement` creates a SOAP element with namespace prefix equal to :literal:`nsPrefix`, namespace URL equal to :literal:`nsURI` and textual value equal to the last arguments of the method.
    
-   The implementation of ``createElement`` is shown below:
+   The implementation of :code:`createElement` is shown below:
    
    .. code-block:: java
       
@@ -793,8 +793,8 @@ We need to create a SOAP message with the identifier of the target message and s
           throw new SOAPException(responseBody.getFault().getFaultString());
       }
 
-   The method ``getFirstChild`` gets the first element with the name ``hasMessage`` and namespace URI equal to ``nsURI``.
-   The boolean value of ``hasMessage`` represents the existence of a payload in this message.
+   The method :code:`getFirstChild` gets the first element with the name :literal:`hasMessage` and namespace URI equal to :literal:`nsURI`.
+   The boolean value of :code:`hasMessage` represents the existence of a payload in this message.
 
    The payload is extracted from the attachment part to the input stream and can be saved by I/O pipelining to a physical file or another business operation.
 
@@ -829,9 +829,9 @@ We need to create a SOAP message with the identifier of the target message and s
       SOAPBody soapBody = request.getSOAPBody();
       soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));
 
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method :code:`createElement` creates a SOAP element with namespace prefix equal to :literal:`nsPrefix`, namespace URL equal to :literal:`nsURI` and textual value equal to the last arguments of the method.
    
-   The implementation of ``createElement`` is shown below:
+   The implementation of :code:`createElement` is shown below:
 
    .. code-block:: java
       
@@ -881,12 +881,12 @@ We need to create a SOAP message with the identifier of the target message and s
           throw new SOAPException(responseBody.getFault().getFaultString());
       }
 
-   The method ``getFirstChild`` gets the first element with the name ``MessageInfo`` and namespace URI equal to ``nsURI``.
+   The method :code:`getFirstChild` gets the first element with the name :literal:`MessageInfo` and namespace URI equal to :literal:`nsURI`.
 
 Writing an AS2 message history web service client
 -------------------------------------------------
 We need to create a SOAP message with 5 parameters and send it to Hermes 2 as the web service request.
-The parameters are ``messageId``, ``messageBox``, ``as2From``, ``as2To``, and ``status``.
+The parameters are :literal:`messageId`, :literal:`messageBox`, :literal:`as2From`, :literal:`as2To`, and :literal:`status`.
 
 #. Define the namespace URI and prefix conforming to WSDL.
    
@@ -923,9 +923,9 @@ The parameters are ``messageId``, ``messageBox``, ``as2From``, ``as2To``, and ``
       soapBody.addChildElement(createElement("as2To", nsPrefix, nsURI, service));
       soapBody.addChildElement(createElement("status", nsPrefix, nsURI, status));
 
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method :code:`createElement` creates a SOAP element with namespace prefix equal to :literal:`nsPrefix`, namespace URL equal to :literal:`nsURI` and textual value equal to the last arguments of the method.
    
-   The implementation of ``createElement`` is shown below:
+   The implementation of :code:`createElement` is shown below:
 
    .. code-block:: java
       
@@ -991,8 +991,8 @@ The parameters are ``messageId``, ``messageBox``, ``as2From``, ``as2To``, and ``
           }
       }
 
-   The method ``getElement`` gets the element with the name ``messageList`` and namespace URI equal to ``nsURI``. The ``messageElement`` values will then be extracted from ``messageList``.
-   Each ``messageElement`` contains the values of ``messageId`` and ``messageBox``.
+   The method :code:`getElement` gets the element with the name :literal:`messageList` and namespace URI equal to :literal:`nsURI`. The :code:`messageElement` values will then be extracted from :code:`messageList`.
+   Each :code:`messageElement` contains the values of :literal:`messageId` and :literal:`messageBox`.
 
 Reference Articles
 ------------------

@@ -152,7 +152,7 @@ How to create your first AS2 partnership
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1. Open a Web browser.
-#. Go to Hermes 2 Administration Console at :samp:`http://{<H2 INSTALLED HOST>}:{<PORT>/}}corvus/admin/home`.
+#. Go to Hermes 2 Administration Console at :samp:`http://{<H2 INSTALLED HOST>}:{<PORT>}/corvus/admin/home`.
 #. Enter the administrator user name and password for Hermes 2.
 #. Click the :guilabel:`AS2 Plugin` in the module tab located on the left hand side.
 #. Click the :guilabel:`Partnership` tab on the central horizontal tabbed bar to display the partnership creation page.
@@ -238,8 +238,8 @@ The main benefit of partnerships is that it provides abstraction on technical pa
 References
 ----------
 
-* :ref:`Reference of ebMS 2.0 Partnership Configuration <ebms_partnership>`
-* :ref:`Reference of AS2 Partnership Configuration <as2_partnership>`
+* :doc:`ebms_partnership`
+* :doc:`as2_partnership`
 * `OASIS ebMS 2.0 Specification <http://www.oasis-open.org/committees/ebxml-msg/documents/ebMS_v2_0.pdf>`_
 * `AS2 Specification <http://www.rfc-editor.org/rfc/rfc4130.txt>`_
 

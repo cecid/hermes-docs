@@ -49,7 +49,8 @@ CPA ID
 |                 |                                                                                                                  |
 |                 | Simply said, it is just an arbitary and mandatory string that can be used to identify sender and recipient.      |
 |                 |                                                                                                                  |
-|                 | See [OASIS ebXML Messaging Service Spec v2.0] for detail.                                                        |
+|                 | See `[OASIS ebXML Messaging Service Spec v2.0] <https://d9db56472fd41226d193-1e5e0d4b7948acaf6080b0dce0b35ed5.ss |
+|                 | l.cf1.rackcdn.com/committees/ebxml-msg/documents/ebMS_v2_0.pdf>`_ for detail.                                    |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
 Service
@@ -87,7 +88,7 @@ Transport Endpoint
 | **Description** | The endpoint URL of the recipient message gateway.                                                               |
 |                 |                                                                                                                  |
 |                 | If the recipient message gateway is Hermes 2 and using HTTP/HTTPS as transport protocol, the endpoint URL is     |
-|                 | formatted as http://<RECIPIENT HOST>:<PORT>/corvus/httpd/ebms/inbound.                                           |
+|                 | formatted as :samp:`http://{<RECIPIENT HOST>}:{<PORT>}/corvus/httpd/ebms/inbound`.                               |
 |                 |                                                                                                                  |
 |                 | Otherwise, if the recipient host is SMTP gateway, the endpoint URL is formatted as mailto:<EMAIL ADDRESS>.       |
 |                 |                                                                                                                  |

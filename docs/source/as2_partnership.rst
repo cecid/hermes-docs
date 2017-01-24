@@ -321,7 +321,7 @@ Certificate for Encryption
 |                 |                                                                                                                    |
 |                 | For recipient, it should use the keystore in AS2 plugin to export the public certificate for sender.               |
 |                 |                                                                                                                    |
-|                 | AS2 default keystore location: <HERMES2 HOME>/plugins/hk.hku.cecid.edi.as2/security                                |
+|                 | AS2 default keystore location: :file:`{<HERMES2 HOME>}/plugins/hk.hku.cecid.edi.as2/security`                      |
 |                 |                                                                                                                    |
 |                 | The keystore **MUST** be in PKCS12 format.                                                                         |
 |                 |                                                                                                                    |
