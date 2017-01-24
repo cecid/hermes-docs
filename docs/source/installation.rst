@@ -33,7 +33,7 @@ Prerequisite
 1. Java SE Development Kit 8
 #. Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files 
 
-   i. Download the JCE Unlimited Strength Jurisdiction Policy Files for JDK 8 from 
+   a. Download the JCE Unlimited Strength Jurisdiction Policy Files for JDK 8 from 
 
       http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html
 
@@ -53,7 +53,7 @@ Prerequisite
 
 #. Tomcat 5.5 or above with port :literal:`8080` 
 
-   i. Change the access permissions, the owner and the group of :file:`{<TOMCAT_HOME>}/webapps` after Tomcat is installed.
+   a. Change the access permissions, the owner and the group of :file:`{<TOMCAT_HOME>}/webapps` after Tomcat is installed.
 
       .. code:: sh
 
@@ -98,7 +98,7 @@ Postgres
 
 #. Create a database user with username :literal:`corvus` and password :literal:`corvus`.
 
-   i. Open a command prompt
+   a. Open a command prompt
    #. Go to :file:`{<POSTGRES_HOME>}/bin`
    #. Type :samp:`createuser -A -d -P -U {<POSTGRES_ADMIN>} corvus` where :samp:`{<POSTGRES_ADMIN>}` represents the name of an administrator/super-user in the PostgreSQL database. This value is :literal:`postgres` if not specified. This may require a super user or Postgres owner to execute in Linux.
    #. Enter the password :literal:`corvus`
@@ -107,7 +107,7 @@ Postgres
 
 #. Create two databases named :literal:`as2` and :literal:`ebms` with the :literal:`corvus` user
 
-  i. Open a command prompt
+  a. Open a command prompt
   #. Go to :file:`{<POSTGRES_HOME>}/bin`
   #. Type :samp:`createdb –U corvus –W as2`
   #. Enter the password :literal:`corvus`
@@ -118,7 +118,7 @@ MySQL
 
 1. Create two databases named :literal:`as2` and :literal:`ebms` with username :literal:`corvus` and password :literal:`corvus`.
 
-  i. Open a command prompt
+  a. Open a command prompt
   #. Go to :file:`{<MYSQL_HOME>}/bin`
   #. Type :samp:`mysql –u {<MYSQL_ADMIN>} -p` where :samp:`{<MYSQL_ADMIN>}` represents the name of an administrator/super-user in the MySQL database. This is ``root`` by default. This may require super user or MySQL owner to execute in Linux.
   #. Enter the command below to create the :literal:`as2` database. Note that specifying collate to :literal:`latin1_general_cs` is essential.
