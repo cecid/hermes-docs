@@ -33,6 +33,7 @@ By default, the ebMS 2.0 and AS2 plugins each have 5 registered web services in 
 
 .. image:: /_static/images/web_service/ws-archtecture.png
 
+.. _ebms-2-0-sender-web-service:
 
 ebMS 2.0 sender web service
 ---------------------------
