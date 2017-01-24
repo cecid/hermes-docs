@@ -1,3 +1,5 @@
+.. _web_service_communication:
+
 Communicating Hermes 2 through WS
 =================================
 
@@ -7,7 +9,7 @@ Hermes 2 has implemented SOAP messaging framework to communicate with external a
 
 This article is purposed to assist developers who want to write a web service call client to communicate with Hermes 2 using SOAP web services. 
 
-For more information on the installation and partnerships of Hermes 2, please refer to :doc:`installation` and :doc:`the_first_step_you_hermes_2`. 
+For more information on the installation and partnerships of Hermes 2, please refer to :doc:`installation` and :doc:`the_first_step_you_hermes_2`.
 
 .. image:: /_static/images/web_service/h2o-ws-pl-free.png
 
@@ -447,13 +449,13 @@ Descriptions of the elements in the SOAP body are as follows:
 +----------------------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | :code:`<type>`       | Yes       | A three-character code indicating the content type of the sent payload. The available codes are:                                                          |
 |                      |           |                                                                                                                                                           |
-|                      |           |  * "edi", for the content type "application/EDIFACT".                                                                                                     |
-|                      |           |  * "x12", for the content type "application/EDI-X12".                                                                                                     |
-|                      |           |  * "eco", for the content type "application/edi-consent".                                                                                                 |
-|                      |           |  * "xml", for the content type "application/XML".                                                                                                         |
-|                      |           |  * "bin", for the content type "application/ octet-stream".                                                                                               |
+|                      |           |  * :code:`edi`, for the content type :code:`application/EDIFACT`.                                                                                         |
+|                      |           |  * :code:`x12`, for the content type :code:`application/EDI-X12`.                                                                                         |
+|                      |           |  * :code:`eco`, for the content type :code:`application/edi-consent`.                                                                                     |
+|                      |           |  * :code:`xml`, for the content type :code:`application/XML`.                                                                                             |
+|                      |           |  * :code:`bin`, for the content type :code:`application/ octet-stream`.                                                                                   |
 |                      |           |                                                                                                                                                           |
-|                      |           | For other values, Hermes 2 will assume the content type of the payload is "application/deflate", which means that the payload is compressed by Zip.       |
+|                      |           | For other values, Hermes 2 will assume the content type of the payload is :code:`application/deflate`, which means that the payload is compressed by Zip. |
 +----------------------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
@@ -727,12 +729,10 @@ Descriptions of the elements in the SOAP body are as follows:
  
 Reference articles
 ------------------
-
-* :doc:`the_first_step_you_hermes_2`
-* :doc:`ebMS_configuration`
-* :doc:`AS2_configuration`
+* :doc:`first_step`
+* :doc:`ebms_partnership`
+* :doc:`as2_partnership`
 
 What to read next
 -----------------
-
 * :doc:`java_client`

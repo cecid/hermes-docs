@@ -1,3 +1,5 @@
+.. _first_step:
+
 The First Step
 ==============
 
@@ -22,6 +24,8 @@ Currently, Hermes 2 has two types of partnerships you can manage, which are ebMS
 ebMS 2.0 partnership
 --------------------
  
+.. _what-is-an-ebms-2-0-partnership:
+
 What is an ebMS 2.0 partnership?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -126,6 +130,8 @@ How to delete an ebMS 2.0 partnership
 AS2 partnership
 ---------------
 
+.. _what-is-an-as2-partnership:
+
 What is an AS2 partnership?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -146,7 +152,7 @@ How to create your first AS2 partnership
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1. Open a Web browser.
-#. Go to Hermes 2 Administration Console at :samp:`http://{<H2 INSTALLED HOST>}:{<PORT>/}}corvus/admin/home`.
+#. Go to Hermes 2 Administration Console at :samp:`http://{<H2 INSTALLED HOST>}:{<PORT>}/corvus/admin/home`.
 #. Enter the administrator user name and password for Hermes 2.
 #. Click the :guilabel:`AS2 Plugin` in the module tab located on the left hand side.
 #. Click the :guilabel:`Partnership` tab on the central horizontal tabbed bar to display the partnership creation page.
@@ -231,14 +237,12 @@ The main benefit of partnerships is that it provides abstraction on technical pa
  
 References
 ----------
-
-* :doc:`ebMS_configuration`
-* :doc:`AS2_configuration`
+* :doc:`ebms_partnership`
+* :doc:`as2_partnership`
 * `OASIS ebMS 2.0 Specification <http://www.oasis-open.org/committees/ebxml-msg/documents/ebMS_v2_0.pdf>`_
 * `AS2 Specification <https://tools.ietf.org/html/rfc4130>`_
 
  
 What to read next
 -----------------
-
-* :doc:`communicating_hermes2_through_web_service`
+* :doc:`web_service_communication`
