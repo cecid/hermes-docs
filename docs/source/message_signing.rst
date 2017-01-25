@@ -260,3 +260,91 @@ Invoke ``openssl`` to enter the :program:`OpenSSL` environment, then execute the
    pkcs12 -name {key-alias} -export -in {filepath-and-name-of-certificate} -inkey {filepath-and-name-of-key} -out {filepath-and-name-of-keystore}
 
 .. image:: /_static/images/message_signing/openssl_pkcs12.png
+
+
+
+.. _support-params:
+
+Supported Parameters
+--------------------
+The following key pair algorithms and signature algorithms have been tested:
+
+Key pair algorithm (``keyalg``)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
++-------------+-------------------------------------------------------------+
+|``DSA``      | Generates keypairs for the Digital Signature Algorithm      |
++-------------+-------------------------------------------------------------+
+|``RSA`` [1]_ | Generates keypairs for the RSA algorithm (Signature/Cipher) |
++-------------+-------------------------------------------------------------+
+
+.. [1] ``RSA`` has been test with ``keysize=`` 1024, 2048, 4096.
+
+Signature algorithm (``sigalg``)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
++------------------+---------------------------------------------------------------+
+|``SHA1withRSA``   | The signature algorithm with SHA-* and the RSA encryption     |
++------------------+ algorithm as defined in the OSI Interoperability Workship,    |
+|``SHA256withRSA`` | using the padding conversions described in PKCS1.             |
++------------------+                                                               |
+|``SHA512withRSA`` |                                                               |
++------------------+---------------------------------------------------------------+
+|``MD5withRSA``    | The MD2/MD5 with RSA encryption algorithm which users the     |
++------------------+ MD2/MD5 digest algorithm and RSA to cread and verify RSA      |
+|``MD2withRSA``    | digital signatures as defined in PKCS1.                       |
++------------------+---------------------------------------------------------------+
+|``SHA1withDSA``   | The DSA with SHA-1 signature algorithm which uses the         |
+|                  | SHA-1 digest algorithm and DSA to create and verify DSA       |
+|             	   | digital signatures as defined in FIPS PUB 186.                |
++------------------+---------------------------------------------------------------+
+
+
+Parameter combinations
+^^^^^^^^^^^^^^^^^^^^^^
+The following combinations of algorithms and parameters have been tested with ebMS and AS2:
+
+ebMS
+""""
+
++------------------------+-----------------------------------------------+-----------------------------------------------+
+| tool                   | Keytool                                       | OpenSSL                                       |
++------------------------+---------------+---------------+---------------+---------------+---------------+---------------+
+| keysize                | 1024          | 2048          | 4096          | 1024          | 2048          | 4096          |
++===========+============+===============+===============+===============+===============+===============+===============+
+| ``RSA``   | ``SHA1``   | ok            | ok            | ok            | ok            | ok            | ok            |
+|           +------------+---------------+---------------+---------------+---------------+---------------+---------------+
+|           | ``SHA256`` | ok            | ok            | ok            | ok            | ok            | ok            |
+|           +------------+---------------+---------------+---------------+---------------+---------------+---------------+
+|           | ``MD5``    | ok            | ok            | ok            | ok            | ok            | ok            |
+|           +------------+---------------+---------------+---------------+---------------+---------------+---------------+
+|           | ``SHA512`` | not supported | ok            | not supported | not supported | ok            | not supported |
+|           +------------+---------------+---------------+---------------+---------------+---------------+---------------+
+|           | ``MD2``    | not supported | ok            | not supported | not supported | not supported | not supported |
++-----------+------------+---------------+---------------+---------------+---------------+---------------+---------------+
+| ``DSA``   | ``SHA1``   | ok            | not supported | not supported | ok            | not supported | not supported |
++-----------+------------+---------------+---------------+---------------+---------------+---------------+---------------+
+
+AS2
+"""
+
++------------------------+-----------------------------------------------+-----------------------------------------------+
+| tool                   | Keytool                                       | OpenSSL                                       |
++------------------------+---------------+---------------+---------------+---------------+---------------+---------------+
+| keysize                | 1024          | 2048          | 4096          | 1024          | 2048          | 4096          |
++===========+============+===============+===============+===============+===============+===============+===============+
+| ``RSA``   | ``SHA1``   | ok            | ok            | ok            | ok            | ok            | ok            |
+|           +------------+---------------+---------------+---------------+---------------+---------------+---------------+
+|           | ``SHA256`` | ok            | ok            | ok            | ok            | ok            | ok            |
+|           +------------+---------------+---------------+---------------+---------------+---------------+---------------+
+|           | ``MD5``    | ok            | ok            | ok            | ok            | ok            | not supported |
+|           +------------+---------------+---------------+---------------+---------------+---------------+---------------+
+|           | ``SHA512`` | not supported | ok            | not supported | not supported | ok            | not supported |
+|           +------------+---------------+---------------+---------------+---------------+---------------+---------------+
+|           | ``MD2``    | not supported | ok            | not supported | not supported | not supported | not supported |
++-----------+------------+---------------+---------------+---------------+---------------+---------------+---------------+
+| ``DSA``   | ``SHA1``   | not supported | not supported | not supported | not supported | not supported | not supported |
++-----------+------------+---------------+---------------+---------------+---------------+---------------+---------------+
+
+
+
