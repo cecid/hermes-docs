@@ -57,3 +57,7 @@ Security
 
 Javadoc
 -------
+.. toctree::
+   :titlesonly:
+
+   packages.rst
