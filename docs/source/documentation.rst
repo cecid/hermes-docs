@@ -44,3 +44,10 @@ Security
    :titlesonly:
 
    message_signing
+
+Javadoc
+-------
+.. toctree::
+   :titlesonly:
+
+   packages.rst
