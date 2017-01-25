@@ -24,14 +24,6 @@ Configuration
 
    configuration
 
-Architecture and Design
------------------------
-* Hermes 2 Architecture Overview.doc
-
-Plugin Development
-------------------   
-* Hermes 2 Plugin Development Guide.doc
-
 Client Development
 ------------------
 .. toctree::
@@ -45,8 +37,6 @@ Operations
    :titlesonly:
 
    web_service_usage_guide
-   
-* Hermes 2 Administration Tool User Guide.doc
 
 Security
 --------
@@ -54,6 +44,3 @@ Security
    :titlesonly:
 
    message_signing
-
-Javadoc
--------

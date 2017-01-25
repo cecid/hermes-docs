@@ -48,7 +48,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Hermes Business Messaging Gateway Documentation'
+project = u'Hermes Business Messaging Gateway'
 copyright = u'2016, Center for E-Commerce Infrastructure Development, The University of Hong Kong'
 author = u'CECID'
 
