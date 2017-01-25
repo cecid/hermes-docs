@@ -105,7 +105,7 @@ Before sending an ebMS message, make sure that a partnership is registered. Plea
 
 Let’s take a look at the program parameters.
 
-:samp:`ebms-send [partnership-xml] [config-xml] [log-path] [payload-path].`
+:samp:`ebms-send [partnership-xml] [config-xml] [log-path] [payload-path]`
 
 +--------------------+------------------------------------------------------------------------+
 | partnership-xml    | The filepath of the partnership configuration file.                    |

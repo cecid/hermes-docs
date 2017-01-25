@@ -154,7 +154,7 @@ A sample SOAP request for the receiver list web service is shown below:
    <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
    <SOAP-ENV:Header/>
    <SOAP-ENV:Body>
-   <tns:cpaId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> <CPA-id> </tns:cpaId>
+   <tns:cpaId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [CPA_Id] </tns:cpaId>
    <tns:service xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [Service] </tns:service>
    <tns:action xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [Action] </tns:action>
    <tns:convId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [Conversation_Id] </tns:convId>

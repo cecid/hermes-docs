@@ -147,7 +147,7 @@ footer .commit {
     }
 }
 
-@media screen and (max-width: 300px) {
+@media screen and (min-width: 200px) and (max-width: 300px) {
     .wy-nav-side.shift { 
         width: 100%;
         left: 0;
