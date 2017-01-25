@@ -1,9 +1,4 @@
 @import url("theme.css");
-/*
-code, .rst-content tt, .rst-content code {
-    white-space: normal;
-    word-break: break-all;
-}*/
 
 .guilabel {
     font-family: monospace;
@@ -86,8 +81,6 @@ footer .commit {
 .rst-content table td {
     min-width: 80px;
     white-space: normal;
-    /*word-wrap: break-word;*/
-    /*word-break: break-all;*/
 }
 .rst-content table.docutils td p {
     font-size: inherit;
