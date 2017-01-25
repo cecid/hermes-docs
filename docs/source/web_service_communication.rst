@@ -441,20 +441,20 @@ Descriptions of the elements in the SOAP body are as follows:
 +----------------------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Element              | Mandatory | Description                                                                                                                                               |
 +======================+===========+===========================================================================================================================================================+
-| ``<as2_from>``,       | Yes       | The values of the ``From`` and ``To`` fields in AS2 messages sent through the                                                                             |
+| ``<as2_from>``,      | Yes       | The values of the ``From`` and ``To`` fields in AS2 messages sent through the                                                                             |
 | ``<as2_to>``         |           | partnership by Hermes 2. These fields are used to identify the sending partnership.                                                                       |
 |                      |           |                                                                                                                                                           |
 |                      |           | **These are required to identify the message destination.**                                                                                               |
 +----------------------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``<type>``           | Yes       | A three-character code indicating the content type of the sent payload. The available codes are:                                                          |
 |                      |           |                                                                                                                                                           |
-|                      |           |  * ``edi``, for the content type ``application/EDIFACT``.                                                                                         |
-|                      |           |  * ``x12``, for the content type ``application/EDI-X12``.                                                                                         |
-|                      |           |  * ``eco``, for the content type ``application/edi-consent``.                                                                                     |
-|                      |           |  * ``xml``, for the content type ``application/XML``.                                                                                             |
-|                      |           |  * ``bin``, for the content type ``application/ octet-stream``.                                                                                   |
+|                      |           |  * ``edi``, for the content type ``application/EDIFACT``.                                                                                                 |
+|                      |           |  * ``x12``, for the content type ``application/EDI-X12``.                                                                                                 |
+|                      |           |  * ``eco``, for the content type ``application/edi-consent``.                                                                                             |
+|                      |           |  * ``xml``, for the content type ``application/XML``.                                                                                                     |
+|                      |           |  * ``bin``, for the content type ``application/ octet-stream``.                                                                                           |
 |                      |           |                                                                                                                                                           |
-|                      |           | For other values, Hermes 2 will assume the content type of the payload is ``application/deflate``, which means that the payload is compressed by Zip. |
+|                      |           | For other values, Hermes 2 will assume the content type of the payload is ``application/deflate``, which means that the payload is compressed by Zip.     |
 +----------------------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
@@ -511,7 +511,7 @@ Descriptions of the elements in the SOAP body are as follows:
 +-------------------------+-----------+---------------------------------------------------------------------------------------------+
 | Element                 | Mandatory | Description                                                                                 |
 +=========================+===========+=============================================================================================+
-| ``<as2_from>``,         | Yes       | The values of the ``From`` and ``To`` fields in AS2 messages sent through the |
+| ``<as2_from>``,         | Yes       | The values of the ``From`` and ``To`` fields in AS2 messages sent through the               |
 | ``<as2_to>``,           |           | partnership by Hermes 2. These fields are used to identify the sending partnership.         |
 | ``<as2_to>``            |           |                                                                                             |
 |                         |           | **These are required to query messages associated with the specified partnership.**         |
