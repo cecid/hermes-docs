@@ -1,9 +1,9 @@
-Writing Hermes 2 WS Clients Using Java
-======================================
+Implementing Hermes Clients
+===========================
 
 Introduction
 ------------
-This article is purposed to assist developers who want to write a Hermes 2 web service client using **Java**.
+This article is purposed to assist developers who want to write a Hermes 2 web service client using :program:`Java`.
 For information about installing Hermes 2 and communicating with Hermes 2 using an external application, please refer to :doc:`installation` and :doc:`web_service_communication`.
 
 The source code shown below is originally from the :download:`Hermes 2 loopback test <_static/hermes2_loopback.zip>`. Please refer to it for more details.

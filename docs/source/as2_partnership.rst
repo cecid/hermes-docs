@@ -1,5 +1,5 @@
-Reference for AS2 Partnership Configuration
-===========================================
+Setting Up AS2 Partnership
+==========================
 
 AS2 Partnership Parameters
 --------------------------

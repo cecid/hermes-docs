@@ -1,5 +1,5 @@
-Hermes 2 Installation Guide
-===========================
+Installing Hermes
+=================
 
 © CECID
 

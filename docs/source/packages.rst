@@ -1,5 +1,5 @@
 Java API Documentation
-===============================
+======================
 
 .. toctree::
    :maxdepth: 2

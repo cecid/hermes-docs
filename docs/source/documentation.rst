@@ -3,51 +3,27 @@ Documentation
 Getting Started
 ---------------
 .. toctree::
-   :titlesonly:
+   :maxdepth: 1
 
    installation
    first_step
    ebms_partnership
    as2_partnership
 
-APIs
-----
+User's Guide
+------------
 .. toctree::
-   :titlesonly:
-
-   web_service_communication
-
-Configuration
--------------
-.. toctree::
-   :titlesonly:
+   :maxdepth: 1
 
    configuration
-
-Client Development
-------------------
-.. toctree::
-   :titlesonly:
-
-   java_client
-
-Operations
-----------
-.. toctree::
-   :titlesonly:
-
+   web_service_communication
    web_service_usage_guide
-
-Security
---------
-.. toctree::
-   :titlesonly:
-
    message_signing
 
-Javadoc
--------
+Developer's Guide
+-----------------
 .. toctree::
-   :titlesonly:
+   :maxdepth: 1
 
-   packages.rst
+   java_client
+   packages

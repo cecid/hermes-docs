@@ -1,5 +1,5 @@
-Communicating Hermes 2 through WS
-=================================
+Using SOAP API
+==============
 
 Introduction
 ------------

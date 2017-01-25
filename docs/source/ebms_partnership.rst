@@ -1,5 +1,5 @@
-Reference for ebMS 2.0 Partnership Configuration
-================================================
+Setting Up ebMS 2.0 Partnership
+===============================
 
 ebMS 2.0 Partnership Parameters
 -------------------------------

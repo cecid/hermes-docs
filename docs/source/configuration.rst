@@ -1,5 +1,5 @@
-Hermes 2 Configuration Guide
-============================
+Configuring Hermes
+==================
 
 Introduction
 ------------

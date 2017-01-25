@@ -1,5 +1,5 @@
-Web Service Usage Guide
-=======================
+Using Sample Clients
+====================
 
 Maintaining partnerships
 ------------------------
