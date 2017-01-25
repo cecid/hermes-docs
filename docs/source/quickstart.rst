@@ -6,13 +6,13 @@ H2O development environment
 #. Install `Virtualbox <https://www.virtualbox.org/>`_
 #. Clone repository (if not already cloned)
 
-   .. code:: sh
+   .. code-block:: sh
 
       git clone git@gitlab.com:cecid/hermes.git
 
 #. Start vagrant box
 
-   .. code:: sh
+   .. code-block:: sh
      
       cd hermes
       vagrant up
@@ -30,19 +30,19 @@ Create and run Docker containers
 
 #. Clone repository (if not already cloned)
 
-   .. code:: sh
+   .. code-block:: sh
 
       git clone git@gitlab.com:cecid/hermes.git
 
 #. Set environment variable
 
-   .. code:: sh
+   .. code-block:: sh
       
       export DOCKER_HOST=unix:///var/run/docker.sock
 
 #. Run
 
-   .. code:: sh
+   .. code-block:: sh
       
       cd hermes
       docker-compose -f deploy/docker-compose.yml up -d
@@ -54,33 +54,33 @@ Create Docker container for Hermes database
 #. Install `Docker <https://www.docker.com/>`_
 #. Clone repository (if not already cloned)
    
-   .. code:: sh
+   .. code-block:: sh
 
       git clone git@gitlab.com:cecid/hermes.git
 
 #. Set environment variable
 
-   .. code:: sh
+   .. code-block:: sh
     
       export DOCKER_HOST=unix:///var/run/docker.sock
 
 #. Build Hermes Database image
 
-   .. code:: sh
+   .. code-block:: sh
       
       cd hermes
       docker build --tag "h2o/db:1.0" -f deploy/db/Dockerfile .
 
 #. Run Docker Container for Hermes Database
 
-   .. code:: sh
+   .. code-block:: sh
 
       docker run --name h2o_db -e MYSQL_ROOT_PASSWORD=<ROOT_PASSWORD> -d h2o/db:1.0
 
    Two databases (``ebms`` and ``as2``) and a user (``corvus`` with password ``corvus``) will be created.
 #. Connect to databases
    
-   .. code:: sh
+   .. code-block:: sh
 
       docker run -it --link h2o_db:db --rm h2o/db:1.0 mysql -hdb -P3306 -ucorvus -p ebms
       docker run -it --link h2o_db:db --rm h2o/db:1.0 mysql -hdb -P3306 -ucorvus -p as2
@@ -92,32 +92,32 @@ Create Docker container for Hermes application server
 #. Install `Docker <https://www.docker.com/>`_
 #. Clone repository (if not already cloned)
    
-   .. code:: sh
+   .. code-block:: sh
 
       git clone git@gitlab.com:cecid/hermes.git
 
 #. Set environment variable
 
-   .. code:: sh
+   .. code-block:: sh
     
       export DOCKER_HOST=unix:///var/run/docker.sock
 
 #. Build Hermes App Server image
 
-   .. code:: sh
+   .. code-block:: sh
       
       cd hermes
       docker build --tag "h2o/app:1.0" -f deploy/app_server/Dockerfile .
 
 #. Run Docker Container for Hermes Database (should be built beforehand)
 
-   .. code:: sh
+   .. code-block:: sh
 
       docker run --name h2o_db -e MYSQL_ROOT_PASSWORD=<ROOT_PASSWORD> -d h2o/db:1.0
 
 #. Run Docker Container for Hermes Application Server
 
-   .. code:: sh
+   .. code-block:: sh
       
       docker run --name h2o_app --link h2o_db:db -p 18080:8080 -d h2o/app:1.0
 
@@ -134,19 +134,19 @@ Admin page and connect to Hermes API
    GUI based client like Postman is a useful tool too.
 #. API for checking Hermes API server status:
    
-   .. code:: sh
+   .. code-block:: sh
       
       $ curl -X GET http://127.0.0.1:18080/corvus/api/status
 
    Response:
 
-   .. code:: sh
+   .. code-block:: sh
       
       {"status":"healthy","server_time":1479185615}
 
 #. API for adding partnership:
    
-   .. code:: sh
+   .. code-block:: sh
       
       $ curl -X POST \
         -- data '{"id":"loopback", "cpa_id":"cpa", "service":"service", "action":"action", "transport-endpoint":"http://127.0.0.1:18080/corvus/httpd/ebms/inbounc"}' \
@@ -154,25 +154,25 @@ Admin page and connect to Hermes API
 
    Response:
 
-   .. code:: sh
+   .. code-block:: sh
 
       {"id":"loopback"}
 
 #. API for querying partnerships:
 
-   .. code:: sh
+   .. code-block:: sh
       
       $ curl -X GET http://127.0.0.1:18080/corvus/api/partnership/ebms
 
    Response:
 
-   .. code:: sh
+   .. code-block:: sh
 
       {"partnerships":[{"id":"loopback","cpa_id":"cpa","service":"service","action":"action","disabled":false,"transport_endpoint":"http://127.0.0.1:8080/corvus/httpd/ebms/inbound","ack_requested":null,"signed_ack_requested":null,"duplicate_elimination":null,"message_order":null,"retries":-2147483648,"retry_interval":-2147483648,"sign_requested":false,"sign_certicate":null}]}
 
 #. API for sending message:
 
-   .. code:: sh
+   .. code-block:: sh
       
       $ curl -X POST \
         --data '{"partnership_id":"loopback", "from_party_id":"from", "to_party_id":"to", "conversation_id":"conv", "payload":"dGhpcyBpcyBhIHRlc3QK"}' \
@@ -180,37 +180,37 @@ Admin page and connect to Hermes API
 
    Response:
 
-   .. code:: sh
+   .. code-block:: sh
 
       {"id":"20161115-053847-08213@127.0.1.1"}
 
 #. API for checking message status:
 
-   .. code:: sh
+   .. code-block:: sh
 
       $ curl -X GET http://127.0.0.1:18080/corvus/api/message/send/ebms?id=20161115-053847-08213@127.0.1.1
    
    Response: 
       
-   .. code:: sh
+   .. code-block:: sh
 
       {"message_id":"20161115-053847-08213@127.0.1.1","status":"DL"}
 
 #. API for receiving message list:
 
-   .. code:: sh
+   .. code-block:: sh
 
       $ curl -X GET http://127.0.0.1:18080/corvus/api/message/receive/ebms?partnership_id=loopback
 
    Response:
 
-   .. code:: sh
+   .. code-block:: sh
 
       {"message_ids":[{"id":"20161115-053847-08213@127.0.1.1","timestamp":1479188327}]}
 
 #. API for receiving a message:
    
-   .. code:: sh
+   .. code-block:: sh
 
       $ curl -X POST \
         --data '{"message_id":"20161115-053847-08213@127.0.1.1"}' \
@@ -218,6 +218,6 @@ Admin page and connect to Hermes API
 
    Response:
 
-   .. code:: sh
+   .. code-block:: sh
 
       {"id":"20161115-053847-08213@127.0.1.1","cpa_id":"cpa","service":"service","action":"action","from_party_id":"from","to_party_id":"to","conversation_id":"conv","timestamp":1479188327,"status":"DL","payloads":[{"payload":"dGhpcyBpcyBhIHRlc3QK"}]}

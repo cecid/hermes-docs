@@ -1,18 +1,27 @@
 @import url("theme.css");
-/*
-code, .rst-content tt, .rst-content code {
-    white-space: normal;
-    word-break: break-all;
-}*/
 
-.guilabel {
+img {
+    padding-bottom: 12px;
+}
+
+.guilabel, .menuselection {
     font-family: monospace;
+    font-size: 16px;
     font-weight: bold;
 }
 
 .wy-nav-content-wrap {
     background-color: #fafafa;
     margin-left: 250px;
+}
+
+.wy-nav-top {
+    line-height: 35px;
+    padding: 15px;
+}
+
+.wy-nav-top i {
+    padding-right: 15px;
 }
 
 .wy-nav-side, .wy-side-nav-search, .wy-menu-vertical {
@@ -86,8 +95,6 @@ footer .commit {
 .rst-content table td {
     min-width: 80px;
     white-space: normal;
-    /*word-wrap: break-word;*/
-    /*word-break: break-all;*/
 }
 .rst-content table.docutils td p {
     font-size: inherit;

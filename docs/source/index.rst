@@ -13,7 +13,7 @@ the sender can automatically retransmit a message when it is dropped
 in the network while the receiver can guarantee every message is
 delivered once and only once, and in the right order.
 
-.. image:: _static/images/hermes_intro.png
+.. image:: /_static/images/hermes_intro.png
 
 EDI over the Internet
 ---------------------
