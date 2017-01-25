@@ -51,7 +51,7 @@ Prerequisite
          sudo cp local_policy.jar /usr/lib/jvm/java-8-oracle/jre/lib/security/local_policy.jar
          sudo cp US_export_policy.jar /usr/lib/jvm/java-8-oracle/jre/lib/security/US_export_policy.jar
 
-#. Tomcat 5.5 or above with port :literal:`8080` 
+#. Tomcat 5.5 or above with port ``8080``
 
    a. Change the access permissions, the owner and the group of :file:`{<TOMCAT_HOME>}/webapps` after Tomcat is installed.
 
@@ -96,44 +96,44 @@ Databases
 Postgres
 ''''''''
 
-#. Create a database user with username :literal:`corvus` and password :literal:`corvus`.
+#. Create a database user with username ``corvus`` and password ``corvus``.
 
    a. Open a command prompt
    #. Go to :file:`{<POSTGRES_HOME>}/bin`
-   #. Type :samp:`createuser -A -d -P -U {<POSTGRES_ADMIN>} corvus` where :samp:`{<POSTGRES_ADMIN>}` represents the name of an administrator/super-user in the PostgreSQL database. This value is :literal:`postgres` if not specified. This may require a super user or Postgres owner to execute in Linux.
-   #. Enter the password :literal:`corvus`
+   #. Type :samp:`createuser -A -d -P -U {<POSTGRES_ADMIN>} corvus` where :samp:`{<POSTGRES_ADMIN>}` represents the name of an administrator/super-user in the PostgreSQL database. This value is ``postgres`` if not specified. This may require a super user or Postgres owner to execute in Linux.
+   #. Enter the password ``corvus``
    #. Enter the password again for confirmation
    #. Enter the PostgreSQL administrator password for creating a new user role.
 
-#. Create two databases named :literal:`as2` and :literal:`ebms` with the :literal:`corvus` user.
+#. Create two databases named ``as2`` and ``ebms`` with the ``corvus`` user.
 
    a. Open a command prompt
    #. Go to :file:`{<POSTGRES_HOME>}/bin`
-   #. Type :samp:`createdb –U corvus –W as2`
-   #. Enter the password :literal:`corvus`
-   #. Repeat steps 2.3 - 2.4 for the :literal:`ebms` database.
+   #. Type ``createdb –U corvus –W as2``
+   #. Enter the password ``corvus``
+   #. Repeat steps 2.3 - 2.4 for the ``ebms`` database.
 
 MySQL
 '''''
 
-1. Create two databases named :literal:`as2` and :literal:`ebms` with username :literal:`corvus` and password :literal:`corvus`.
+1. Create two databases named ``as2`` and ``ebms`` with username ``corvus`` and password ``corvus``.
 
    a. Open a command prompt
    #. Go to :file:`{<MYSQL_HOME>}/bin`
    #. Type :samp:`mysql –u {<MYSQL_ADMIN>} -p` where :samp:`{<MYSQL_ADMIN>}` represents the name of an administrator/super-user in the MySQL database. This is ``root`` by default. This may require super user or MySQL owner to execute in Linux.
-   #. Enter the command below to create the :literal:`as2` database. Note that specifying collate to :literal:`latin1_general_cs` is essential.
+   #. Enter the command below to create the ``as2`` database. Note that specifying collate to ``latin1_general_cs`` is essential.
     
       .. code-block:: sql
 
          create database as2 collate=latin1_general_cs;
      
-   #. Enter the command below to create and assign access privileges to user :literal:`corvus`. 
+   #. Enter the command below to create and assign access privileges to user ``corvus``. 
 
       .. code-block:: sql
 
          grant all on as2.* to 'corvus'@'localhost' identified by 'corvus';
      
-   #. Repeat steps 1.4 – 1.5 for the :literal:`ebms` database.
+   #. Repeat steps 1.4 – 1.5 for the ``ebms`` database.
 
 Oracle
 ''''''
@@ -147,7 +147,7 @@ Step 3 – Hermes 2 Deployment
 
 1. Execute the installer
 
-   * For Windows, open a command prompt and type :samp:`java –jar hermes2_installer.jar` or if :program:`java` is not set in your environment path, specify the full path.
+   * For Windows, open a command prompt and type ``java –jar hermes2_installer.jar`` or if :program:`java` is not set in your environment path, specify the full path.
    * For Unix/Linux, open :program:`xterm` and follow the same procedure as above.
 
    **Or:**
@@ -331,7 +331,7 @@ UNIX environment
 """"""""""""""""
 
 1. Set environment variable :envvar:`JAVA_HOME` to the directory where Java is located.
-#. Change the permissions of all shell-script files to :literal:`755` with the following command:
+#. Change the permissions of all shell-script files to ``755`` with the following command:
    
    .. code-block:: sh
 
@@ -371,11 +371,11 @@ Access http://localhost:8080/corvus/admin/as2/partnership to configure the partn
 
 
 +-------------------------------+------------------------------------------------+
-| Partnership ID                | :literal:`as2-loopback`                        |
+| Partnership ID                | ``as2-loopback``                               |
 +-------------------------------+------------------------------------------------+
-| AS2 From                      | :literal:`as2loopback`                         |
+| AS2 From                      | ``as2loopback``                                |
 +-------------------------------+------------------------------------------------+
-| AS2 To                        | :literal:`as2loopback`                         |
+| AS2 To                        | ``as2loopback``                                |
 +-------------------------------+------------------------------------------------+
 | Disabled                      | :guilabel:`No`                                 |
 +-------------------------------+------------------------------------------------+
@@ -407,9 +407,9 @@ Access http://localhost:8080/corvus/admin/as2/partnership to configure the partn
 +-------------------------------+------------------------------------------------+
 | MIC Algorithm                 | :guilabel:`sha1`                               |
 +-------------------------------+------------------------------------------------+
-| Maximum Retries               | :literal:`1`                                   |
+| Maximum Retries               | ``1``                                          |
 +-------------------------------+------------------------------------------------+
-| Retry Interval (ms)           | :literal:`30000`                               |
+| Retry Interval (ms)           | ``30000``                                      |
 +-------------------------------+------------------------------------------------+
 | Message Signature Enforced?   | :guilabel:`No`                                 |
 +-------------------------------+------------------------------------------------+
@@ -435,13 +435,13 @@ Access http://localhost:8080/corvus/admin/ebms/partnership to configure the part
   .. image:: /_static/images/4-3-3-ebms-plugin.png
 
 +----------------------------------+-------------------------------------------------+
-| Partnership ID                   | :literal:`ebms-loopback`                        |
+| Partnership ID                   | ``ebms-loopback``                               |
 +----------------------------------+-------------------------------------------------+
-| CPA ID                           | :literal:`cpaid`                                |
+| CPA ID                           | ``cpaid``                                       |
 +----------------------------------+-------------------------------------------------+
 | Service                          | http://localhost:8080/corvus/httpd/ebms/inbound |
 +----------------------------------+-------------------------------------------------+
-| Action                           | :literal:`action`                               |
+| Action                           | ``action``                                      |
 +----------------------------------+-------------------------------------------------+
 | Disabled                         | :guilabel:`No`                                  |
 +----------------------------------+-------------------------------------------------+
@@ -465,9 +465,9 @@ Access http://localhost:8080/corvus/admin/ebms/partnership to configure the part
 +----------------------------------+-------------------------------------------------+
 | Certificate For Encryption       | none                                            |
 +----------------------------------+-------------------------------------------------+
-| Maximum Retries                  | :literal:`1`                                    |
+| Maximum Retries                  | ``1``                                           |
 +----------------------------------+-------------------------------------------------+
-| Retry Interval (ms)              | :literal:`30000`                                |
+| Retry Interval (ms)              | ``30000``                                       |
 +----------------------------------+-------------------------------------------------+
 | Certificate For Verification     | none                                            |
 +----------------------------------+-------------------------------------------------+
@@ -549,7 +549,7 @@ Before executing the following AS2 web service usage sample, the partnership fro
       ----------------------------------------------------
       Select message (0 - 1), -1 to exit:
 
-   Enter :literal:`0` to check the sent message. A display similar to the following will appear: 
+   Enter ``0`` to check the sent message. A display similar to the following will appear: 
 
    .. code-block:: none
 
@@ -622,7 +622,7 @@ Before executing the following ebMS web service usage sample, the partnership fr
       ----------------------------------------------------
       Select message (0 - 1), -1 to exit:
 
-   Enter :literal:`0` to check the sent message and a screen similar to the following will be displayed: 
+   Enter ``0`` to check the sent message and a screen similar to the following will be displayed: 
 
    .. code-block:: none
 
@@ -639,7 +639,7 @@ Before executing the following ebMS web service usage sample, the partnership fr
 
 #. Check the received message and download the payload.
 
-   From the select message screen of :program:`ebms-history`, enter :literal:`1` to select the inbox message and it will display ``Please provide the folder to store the payload(s):``. Press enter to save the payload in the current folder. A file named :file:`ebms.{<timestamp>}@127.0.1.1.Payload.0` will be downloaded, where :file:`{<timestamp>}` is the time :program:`ebms-send` was executed. Open that file and you will see the following content:
+   From the select message screen of :program:`ebms-history`, enter ``1`` to select the inbox message and it will display ``Please provide the folder to store the payload(s):``. Press enter to save the payload in the current folder. A file named :file:`ebms.{<timestamp>}@127.0.1.1.Payload.0` will be downloaded, where :file:`{<timestamp>}` is the time :program:`ebms-send` was executed. Open that file and you will see the following content:
 
    .. image:: /_static/images/4-4-1-smaple-message.png
 
@@ -673,13 +673,13 @@ Here are descriptions of the parameters:
 +-------------------+--------------------------------------------------------------------------------------------------------+
 | keystore-type     | The type of the keystore. This must be ``PKCS12``.                                                     |
 +-------------------+--------------------------------------------------------------------------------------------------------+
-| keystore-provider | The class provider to handle the keystore. :code:`org.bouncycastle.jce.provider.BouncyCastleProvider`  |
+| keystore-provider | The class provider to handle the keystore. ``org.bouncycastle.jce.provider.BouncyCastleProvider``      |
 +-------------------+--------------------------------------------------------------------------------------------------------+
 
 ebMS Sender Settings
 ''''''''''''''''''''
 
-Open the configuration file named :file:`ebms.module.xml` that is placed in the :file:`conf` folder of the ebMS plugin. A component named :code:`keystore-manager-for-signature` is defined to manage the keystore.
+Open the configuration file named :file:`ebms.module.xml` that is placed in the :file:`conf` folder of the ebMS plugin. A component named ``keystore-manager-for-signature`` is defined to manage the keystore.
 
 
   .. code-block:: xml
@@ -700,7 +700,7 @@ Open the configuration file named :file:`ebms.module.xml` that is placed in the 
 AS2/AS2 Plus Sender Settings
 ''''''''''''''''''''''''''''
 
-Open the configuration file named :file:`as2.module.core.xml` that is placed in the :file:`conf` folder of the AS2/AS2 Plus plugin. A component named :code:`keystore-manager` is defined to manage the keystore.
+Open the configuration file named :file:`as2.module.core.xml` that is placed in the :file:`conf` folder of the AS2/AS2 Plus plugin. A component named ``keystore-manager`` is defined to manage the keystore.
 
   .. code-block:: xml
 
@@ -722,7 +722,7 @@ For a receiver to verify the signature, a public certificate should be provided 
 
   .. image:: /_static/images/5-1-2-1.png
 
-Set the value of :guilabel:`Signing Required` to :literal:`true`. For detailed settings of the partnership, please refer to :doc:`as2_partnership` or :doc:`ebms_partnership`.
+Set the value of :guilabel:`Signing Required` to ``true``. For detailed settings of the partnership, please refer to :doc:`as2_partnership` or :doc:`ebms_partnership`.
 
   .. image:: /_static/images/5-1-2-2.png
 
@@ -756,11 +756,11 @@ A2. Ensure PostgreSQL/MySQL/Oracle was installed properly and check the followin
 
     For AS2:
 
-    :file:`{<HERMES2_HOME>}/plugins/hk.hku.cecid.edi.as2/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml`. There is a tag in this file named :code:`parameter` with the attribute :code:`name=url`. Check the :code:`value` attribute to see if it references the correct server address. The format of the ``value`` attribute is the same as the JDBC connection string.
+    :file:`{<HERMES2_HOME>}/plugins/hk.hku.cecid.edi.as2/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml`. There is a tag in this file named ``parameter`` with the attribute ``name=url``. Check the ``value`` attribute to see if it references the correct server address. The format of the ``value`` attribute is the same as the JDBC connection string.
 
     For ebMS:
 
-    :file:`{<HERMES2_HOME>}/plugins/hk.hku.cecid.ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml`. There is a tag in this file named:code:`parameter` with the attribute :code:`name=url`. Check the :code:`value` attribute to see if it references the correct server address. The format of the ``value`` attribute is the same as the JDBC connection string.
+    :file:`{<HERMES2_HOME>}/plugins/hk.hku.cecid.ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml`. There is a tag in this file named ``parameter`` with the attribute ``name=url``. Check the ``value`` attribute to see if it references the correct server address. The format of the ``value`` attribute is the same as the JDBC connection string.
 
 Web Service Usage Sample
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -771,7 +771,7 @@ Q1. The following exception is thrown:
        
        Exception in thread "main" java.lang.UnsupportedClassVersionError: xxx (Unsupported major.minor version 49.0)
 
-A1. It is very likely you are using an incompatible Java version. The web service usage sample requires J2SE 5.0 or above to run properly. In the command prompt, enter :samp:`java –version` to check the Java version.
+A1. It is very likely you are using an incompatible Java version. The web service usage sample requires J2SE 5.0 or above to run properly. In the command prompt, enter ``java –version`` to check the Java version.
 
 Q2. The following error occurs:
 

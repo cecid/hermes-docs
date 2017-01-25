@@ -45,7 +45,7 @@ Let's take a look at the program parameters.
 config-xml
 ^^^^^^^^^^
 
-Here is sample content of the config-xml files. These files are named :file:`ebms-request.xml` and :file:`as2-request.xml`, and placed under :file:`{<HERMES2_HOME>}/config/ebms-partnership` and :samp:`{<HERMES2_HOME>}/config/as2-partnership` respectively. 
+Here is sample content of the config-xml files. These files are named :file:`ebms-request.xml` and :file:`as2-request.xml`, and placed under :file:`{<HERMES2_HOME>}/config/ebms-partnership` and :file:`{<HERMES2_HOME>}/config/as2-partnership` respectively. 
 
 **Configuration file for ebMS:**
 
@@ -156,7 +156,7 @@ The following table explains the use of each element:
 | ``<serviceType>``    | A type identifier for the ebXML service defined in the partnership.      |
 +----------------------+--------------------------------------------------------------------------+
 
-You only need to change :code:`<sendEndpoint>` to contain the correct address.
+You only need to change ``<sendEndpoint>`` to contain the correct address.
 
 partnership-xml
 """""""""""""""
@@ -249,7 +249,7 @@ The required elements in a SOAP request are the following:
 
 The message id is the only criteria needed to retrieve the payload of the target message. However, the payload is only available once. If the payload of a message has already been downloaded, the program will not be able to retrieve it again.
 
-The program will ask for a directory to store the payload, which will be stored with the name :literal:`ebms.{<MessageId>}.Payload.{<IndexofPayload>}`.
+The program will ask for a directory to store the payload, which will be stored with the name :file:`ebms.{<MessageId>}.Payload.{<IndexofPayload>}`.
 
 .. image:: /_static/images/web_service/ebms-history-screen2-in.png
 
@@ -301,7 +301,7 @@ The required elements in a SOAP request are shown below:
    .
    Attached Payload
 
-:code:`<as2_from>` and :code:`<as2_to>` contain the partnership information and :code:`<type>` contains the content type of the payload.
+``<as2_from>`` and ``<as2_to>`` contain the partnership information and ``<type>`` contains the content type of the payload.
 
 Before sending an AS2 message, check that a partnership is registered. Please refer to the section `Maintaining Partnerships`_ for more information.
 
@@ -337,13 +337,13 @@ Below is sample content of the config-xml file. This file is named :file:`as2-re
 The elements are explained in the table below:
 
 +------------------------+-----------------------------------------------------------------------------------------+
-| :code:`<sendEndpoint>` | Refers to the address of the AS2 sender web service.                                    |
+| ``<sendEndpoint>`` | Refers to the address of the AS2 sender web service.                                    |
 |                        |                                                                                         |
 |                        | It should be :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/as2/sender`.                  |
 +------------------------+-----------------------------------------------------------------------------------------+
-| :code:`<type>`         | Specify the content type. For more information, please refer to AS2 Sender Web Service. |
+| ``<type>``         | Specify the content type. For more information, please refer to AS2 Sender Web Service. |
 |                        |                                                                                         |
-|                        | Only :code:`<sendEndpoint>` has to be changed to contain the correct address.           |
+|                        | Only ``<sendEndpoint>`` has to be changed to contain the correct address.           |
 +------------------------+-----------------------------------------------------------------------------------------+
 
 partnership-xml
@@ -355,7 +355,7 @@ Sample content is shown below:
 
 .. image:: /_static/images/web_service/as2-partnership-xml.png
 
-:code:`<as2From>` and :code:`<as2To>` are required to construct a SOAP message according to the WSDL. For more information, please refer to AS2 Partnership.
+``<as2From>`` and ``<as2To>`` are required to construct a SOAP message according to the WSDL. For more information, please refer to AS2 Partnership.
 
 Once you have configured these parameters, you can execute the program. A message id will be returned if the program has been successfully executed. Below is sample output from the program.
 
@@ -437,7 +437,7 @@ You can input the id of your target message in the SOAP message to retrieve its 
 
 .. image:: /_static/images/web_service/as2-history-screen2-in.png
 
-As shown above, the program will ask for a directory to store the payload(s). Each payload will be stored with the name :literal:`as2.{<MessageId>}.Payload.{<IndexofPayload>}`.
+As shown above, the program will ask for a directory to store the payload(s). Each payload will be stored with the name :file:`as2.{<MessageId>}.Payload.{<IndexofPayload>}`.
 
 Check outgoing message status
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

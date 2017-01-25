@@ -41,7 +41,7 @@ Let us look at a typical example below, in which two Hermes communicate using eb
 
 .. image:: /_static/images/first_step/EbMS_Partnership_Overview.png
 
-In the above scenario, the Hermes in company A has an IP 1.1.1.1. Its **Service** value for receiving incoming acknowledgements is http://1.1.1.1:8080/corvus/httpd/ebms/inbound, where we suppose the application server is running on port :literal:`8080`. Similarly, the **Service** value for company B is http://1.1.1.2:8080/corvus/httpd/ebms/inbound.
+In the above scenario, the Hermes in company A has an IP 1.1.1.1. Its **Service** value for receiving incoming acknowledgements is http://1.1.1.1:8080/corvus/httpd/ebms/inbound, where we suppose the application server is running on port ``8080``. Similarly, the **Service** value for company B is http://1.1.1.2:8080/corvus/httpd/ebms/inbound.
 
 Since the receiving partnership's **CPA ID**, **Service** and **Action** filter the incoming messages, the values in the receiving partnership of the receiving Hermes should always be the same as the values in the sending partnership of the sending Hermes.
 
@@ -67,20 +67,20 @@ How to create your first ebMS 2.0 partnership
    Partnership ID is the unique identifier of the partnership in the sending Hermes while the three remaining fields (CPA ID, Service and Action) form a composite identifier between sending and receiving systems.
 
    +--------------------+------------------------------------------------------------+
-   | **Partnership ID** | :literal:`MyFirstPartnership`                              |
+   | **Partnership ID** | ``MyFirstPartnership``                                     |
    +--------------------+------------------------------------------------------------+
-   | **CPA ID**         | :literal:`MyFirstCPAID`                                    |
+   | **CPA ID**         | ``MyFirstCPAID``                                           |
    +--------------------+------------------------------------------------------------+
    | **Service**        | http://localhost:8080/corvus/httpd/ebms/inbound            |
    +--------------------+------------------------------------------------------------+
-   | **Action**         | :literal:`MyFirstAction`                                   |
+   | **Action**         | ``MyFirstAction``                                          |
    +--------------------+------------------------------------------------------------+
   
 #. Fill in the **Transport Endpoint** (the receiver's URL) as shown below:
 
    The Transport Endpoint URL should be formatted as :samp:`http://{<RECEIVER_HOST>}:{<PORT>}/corvus/httpd/ebms/inbound`
 
-   where :samp:`corvus/httpd/ebms/inbound` is the context path for accepting and receiving incoming ebXML messages if the receiving system is also using Hermes 2.
+   where ``corvus/httpd/ebms/inbound`` is the context path for accepting and receiving incoming ebXML messages if the receiving system is also using Hermes 2.
 
    Since the receiving host below is the same as the sending host (i.e. the ebMS message loops back to the sender), only **ONE** partnership is required for sending and receiving.
 
@@ -91,9 +91,9 @@ How to create your first ebMS 2.0 partnership
 #. Fill in the number of retries allowed if the message fails to be delivered and the retry interval as shown below:
 
    +-------------------------+------------------+
-   | **Retries**             | :literal:`3`     |
+   | **Retries**             | ``3``            |
    +-------------------------+------------------+
-   | **Retry Interval (ms)** | :literal:`30000` |
+   | **Retry Interval (ms)** | ``30000``        |
    +-------------------------+------------------+
 
 #. Now you have completed all required fields and you should have the same input as the figure shown here.
@@ -171,18 +171,18 @@ How to create your first AS2 partnership
    Partnership ID is the unique identifier of the partnership in the sender Hermes while the two remaining fields (AS2_From, AS2_To) form a composite identifier between sending and receiving systems.
 
    +--------------------+-------------------------------+
-   | **Partnership ID** | :literal:`MyFirstPartnership` |
+   | **Partnership ID** | ``MyFirstPartnership``        |
    +--------------------+-------------------------------+
-   | **AS2 From**       | :literal:`FromMyMachine`      |
+   | **AS2 From**       | ``FromMyMachine``             |
    +--------------------+-------------------------------+
-   | **AS2 To**         | :literal:`ToMyMachine`        |
+   | **AS2 To**         | ``ToMyMachine``               |
    +--------------------+-------------------------------+
 
 #. Fill in the **Subject** and **Transport Endpoint** (the receiver's URL) as shown below:
 
    The Transport Endpoint URL should be formatted as :samp:`http://{<RECEIVER_HOST>}:{<PORT>}/corvus/httpd/as2/inbound`
 
-   where :samp:`corvus/httpd/as2/inbound` is the context path for accepting and receiving incoming AS2 messages if the receiving system is also using Hermes 2.
+   where  ``corvus/httpd/as2/inbound`` is the context path for accepting and receiving incoming AS2 messages if the receiving system is also using Hermes 2.
 
    Since the receiving host below is the same as the sending host (i.e. the AS2 message loops back to the sender), only **ONE** partnership is required for sending and receiving.
 

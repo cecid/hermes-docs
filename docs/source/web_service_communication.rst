@@ -48,7 +48,7 @@ SOAP request message
 ^^^^^^^^^^^^^^^^^^^^
 Instead of requiring the sender to compose entire ebMS messages or acquire ebMS knowledge, the sender simply needs to request Hermes 2 to do so with key identities including ``CPA ID``, ``Service`` and ``Action``. These 3 key parameter identify the sending partnership in Hermes 2 that will be used to configure the ebMS message.
 
-The sender web service requires elements with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix :code:`tns`.
+The sender web service requires elements with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the sender web service is shown below.
 
@@ -79,41 +79,41 @@ Descriptions of the elements in the SOAP body are as follows:
 +--------------------------+-----------+----------------------------------------------------------------------------------------------+
 | Element                  | Mandatory | Description                                                                                  |
 +==========================+===========+==============================================================================================+
-| :code:`<cpaId>`,         | Yes       | They are the ``CPA Id``, ``Service`` and ``Action`` elements in the ebMS messages sent by    |
-| :code:`<service>`        |           | Hermes.                                                                                      |
-| and :code:`<action>`     |           |                                                                                              |
+| ``<cpaId>``,             | Yes       | They are the ``CPA Id``, ``Service`` and ``Action`` elements in the ebMS messages sent by    |
+| ``<service>``,           |           | Hermes.                                                                                      |
+| ``<action>``             |           |                                                                                              |
 |                          |           | These three fields are used to identify the partnership used to send and receive the ebMS    |
 |                          |           | messages by the sending and receiving parties respectively.                                  |
 |                          |           |                                                                                              |
 |                          |           | **These are required to identify a registered partnership in Hermes 2.**                     |
 +--------------------------+-----------+----------------------------------------------------------------------------------------------+
-| :code:`<convId>`         | Yes       | This corresponds to the ``conversation id`` element in the ebMS messages sent by Hermes.     |
+| ``<convId>``             | Yes       | This corresponds to the ``conversation id`` element in the ebMS messages sent by Hermes.     |
 +--------------------------+-----------+----------------------------------------------------------------------------------------------+
-| :code:`<fromPartyId>`    | Yes       | This identifies the sender.                                                                  |
+| ``<fromPartyId>``        | Yes       | This identifies the sender.                                                                  |
 |                          |           | [`ebMS v2_0 3.1.1 <https://www.oasis-open.org/committees/download.php/272/ebMS_v2_0.pdf>`_]  |
 |                          |           |                                                                                              |
-|                          |           | It corresponds to the :literal:`PartyId` element in :literal:`From` element of ebMS          |
+|                          |           | It corresponds to the ``PartyId`` element in ``From`` element of ebMS                        |
 |                          |           | messages sent by Hermes.                                                                     |
 +--------------------------+-----------+----------------------------------------------------------------------------------------------+
-| :code:`<fromPartyType>`  | Yes       | This identifies the domain of the sender.                                                    |
+| ``<fromPartyType>``      | Yes       | This identifies the domain of the sender.                                                    |
 |                          |           |                                                                                              |
-|                          |           | It corresponds to the :literal:`type` attribute of :literal:`PartyId` in the :literal:`From` |
+|                          |           | It corresponds to the ``type`` attribute of ``PartyId`` in the ``From``                      |
 |                          |           | element of ebMS messages sent by Hermes.                                                     |
 +--------------------------+-----------+----------------------------------------------------------------------------------------------+
-| :code:`<toPartyId>`      | Yes       | This identifies the receiver.                                                                |
+| ``<toPartyId>``          | Yes       | This identifies the receiver.                                                                |
 |                          |           | [`ebMS v2_0 3.1.1 <https://www.oasis-open.org/committees/download.php/272/ebMS_v2_0.pdf>`_]  |
 |                          |           |                                                                                              |
-|                          |           | It corresponds to the :literal:`PartyId` element in :literal:`To` element of ebMS            |
+|                          |           | It corresponds to the ``PartyId`` element in ``To`` element of ebMS                          |
 |                          |           | messages sent by Hermes.                                                                     |
 +--------------------------+-----------+----------------------------------------------------------------------------------------------+
-| :code:`<toPartyType>`    | Yes       | This identifies the domain of the receiver.                                                  |
+| ``<toPartyType>``        | Yes       | This identifies the domain of the receiver.                                                  |
 |                          |           |                                                                                              |
-|                          |           | It corresponds to the :literal:`type` attribute of :literal:`PartyId` in the :literal:`From` |
+|                          |           | It corresponds to the ``type`` attribute of ``PartyId`` in the ``From``                      |
 |                          |           | element of ebMS messages sent by Hermes.                                                     |
 +--------------------------+-----------+----------------------------------------------------------------------------------------------+
-| :code:`<refToMessageId>` | No        | This corresponds to the ``RefToMessageId`` of ebMS messages sent by Hermes.                  |
+| ``<refToMessageId>``     | No        | This corresponds to the ``RefToMessageId`` of ebMS messages sent by Hermes.                  |
 +--------------------------+-----------+----------------------------------------------------------------------------------------------+
-| :code:`<serviceType>`    | No        | A type identifier for the ebXML service defined in the partnership.                          |
+| ``<serviceType>``        | No        | A type identifier for the ebXML service defined in the partnership.                          |
 +--------------------------+-----------+----------------------------------------------------------------------------------------------+
 
 SOAP response message
@@ -134,7 +134,7 @@ A sample SOAP response for sender web service is shown below:
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-As with the SOAP request message, the :code:`<message_id>` element is the :literal:`message identifier` assigned by Hermes 2 in the sending party. The sending application can use it for later reference and status tracking with the status web service. 
+As with the SOAP request message, the ``<message_id>`` element is the ``message identifier`` assigned by Hermes 2 in the sending party. The sending application can use it for later reference and status tracking with the status web service. 
 
 ebMS 2.0 receiver list web service
 ----------------------------------
@@ -145,7 +145,7 @@ The ebMS receiver list web service is used by the application of the receiving p
 
 SOAP request message
 ^^^^^^^^^^^^^^^^^^^^
-The receiver list web service requires elements with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix :code:`tns`.
+The receiver list web service requires elements with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the receiver list web service is shown below: 
 
@@ -171,22 +171,22 @@ Descriptions of the elements in the SOAP body are as follows:
 +-------------------------+-----------+---------------------------------------------------------------------------------------------------+
 | Element                 | Mandatory | Description                                                                                       |
 +=========================+===========+===================================================================================================+
-| :code:`<cpaId>`,        | Yes       | The ``CPA Id``, ``Service`` and ``Action`` elements in ebMS messages sent by Hermes 2.            |
-| :code:`<service>`       |           | These three fields identify the partnership used to send ebMS messages.                           |
-| and :code:`<action>`    |           |                                                                                                   |
+| ``<cpaId>``,            | Yes       | The ``CPA Id``, ``Service`` and ``Action`` elements in ebMS messages sent by Hermes 2.            |
+| ``<service>``,          |           | These three fields identify the partnership used to send ebMS messages.                           |
+| ``<action>``            |           |                                                                                                   |
 |                         |           | **These are required to query the list of available messages**.                                   |
 +-------------------------+-----------+---------------------------------------------------------------------------------------------------+
-| :code:`<convId>`        | No        | Only the identifiers of messages with a matching ``Conversation Id`` will be retrieved.           |
+| ``<convId>``            | No        | Only the identifiers of messages with a matching ``Conversation Id`` will be retrieved.           |
 +-------------------------+-----------+---------------------------------------------------------------------------------------------------+
-| :code:`<fromPartyId>`   | No        | Only the identifiers of messages with a matching ``From Party Id`` will be retrieved.             |
+| ``<fromPartyId>``       | No        | Only the identifiers of messages with a matching ``From Party Id`` will be retrieved.             |
 +-------------------------+-----------+---------------------------------------------------------------------------------------------------+
-| :code:`<fromPartyType>` | No        | Only the identifiers of messages with a matching ``From Party Type`` will be retrieved.           |
+| ``<fromPartyType>``     | No        | Only the identifiers of messages with a matching ``From Party Type`` will be retrieved.           |
 +-------------------------+-----------+---------------------------------------------------------------------------------------------------+
-| :code:`<toPartyId>`     | No        | Only the identifiers of messages with a matching ``To Party Id`` will be retrieved.               |
+| ``<toPartyId>``         | No        | Only the identifiers of messages with a matching ``To Party Id`` will be retrieved.               |
 +-------------------------+-----------+---------------------------------------------------------------------------------------------------+
-| :code:`<toPartyType>`   | No        | Only the identifiers of messages with a matching ``To Party Type`` will be retrieved.             |
+| ``<toPartyType>``       | No        | Only the identifiers of messages with a matching ``To Party Type`` will be retrieved.             |
 +-------------------------+-----------+---------------------------------------------------------------------------------------------------+
-| :code:`<numOfMessages>` | No        | The maximum number of message identifiers retrieved by this request.                              |
+| ``<numOfMessages>``     | No        | The maximum number of message identifiers retrieved by this request.                              |
 +-------------------------+-----------+---------------------------------------------------------------------------------------------------+
 
 
@@ -224,7 +224,7 @@ The ebMS receiver web service is used by the application of the receiving party 
 
 SOAP request message
 ^^^^^^^^^^^^^^^^^^^^
-The ebMS receiver web service requires only one element with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix :code:`tns`.
+The ebMS receiver web service requires only one element with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the receiver web service is shown below:
 
@@ -238,7 +238,7 @@ A sample SOAP request for the receiver web service is shown below:
    </SOAP-ENV:Envelope>
 
 
-The :code:`<messageId>` element contains a message identifier obtained from the ebMS receiver list web service.
+The ``<messageId>`` element contains a message identifier obtained from the ebMS receiver list web service.
 
 
 SOAP response message
@@ -261,7 +261,7 @@ A sample SOAP response for the receiver web service is shown below:
    .
    Attached Payload
 
-If a payload is associated with the message identifier, the :code:`<hasMessage>` element will have the value ``true``.
+If a payload is associated with the message identifier, the ``<hasMessage>`` element will have the value ``true``.
 If the received ebMS message has payloads, the response message will have one or more SOAP attachments. Each SOAP attachment has a content type, which is set by the sending application. 
 
 ebMS 2.0 status web service
@@ -275,7 +275,7 @@ The message status is a two-character code indicating the progress of an ebMS me
 
 SOAP request message
 ^^^^^^^^^^^^^^^^^^^^
-The ebMS status web service requires only one element with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix :code:`tns`.
+The ebMS status web service requires only one element with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the status web service is shown below:
 
@@ -289,7 +289,7 @@ A sample SOAP request for the status web service is shown below:
    </SOAP-ENV:Envelope>
 
 
-The :code:`<messageId>` element contains a message identifier obtained from the ebMS sender web service response or the ebMS receiver list web service.
+The ``<messageId>`` element contains a message identifier obtained from the ebMS sender web service response or the ebMS receiver list web service.
 
 SOAP response message
 ^^^^^^^^^^^^^^^^^^^^^
@@ -318,15 +318,15 @@ Descriptions of the elements in the SOAP body are as follows:
 +-----------------------------------+--------------------------------------------------------------------+
 | Element                           | Description                                                        |
 +===================================+====================================================================+
-| :code:`<status>`                  | The current status of the ebMS message.                            |
+| ``<status>``                      | The current status of the ebMS message.                            |
 +-----------------------------------+--------------------------------------------------------------------+
-| :code:`<statusDescription>`       | A text description of the current status.                          |
+| ``<statusDescription>``           | A text description of the current status.                          |
 +-----------------------------------+--------------------------------------------------------------------+
-| :code:`<ackMessageId>`            | The message identifier of the associated acknowledgment (if any).  |
+| ``<ackMessageId>``                | The message identifier of the associated acknowledgment (if any).  |
 +-----------------------------------+--------------------------------------------------------------------+
-| :code:`<ackStatus>`               | The current status of the associated acknowledgment (if any).      |
+| ``<ackStatus>``                   | The current status of the associated acknowledgment (if any).      |
 +-----------------------------------+--------------------------------------------------------------------+
-| :code:`<ackStatusDescription>`    | A text description of the associated acknowledgment (if any).      |
+| ``<ackStatusDescription>``        | A text description of the associated acknowledgment (if any).      |
 +-----------------------------------+--------------------------------------------------------------------+
 
 
@@ -362,7 +362,7 @@ A sample SOAP request for the message history web service is shown below:
 
 SOAP response message
 ^^^^^^^^^^^^^^^^^^^^^
-The element :code:`<messageList>` inside the SOAP body is using namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
+The element ``<messageList>`` inside the SOAP body is using namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the message history web service is shown below:
 
@@ -395,13 +395,13 @@ Descriptions of the elements in the SOAP body are as follows:
 +--------------------------+----------------------------------------------------------------------------------------------+
 | Element                  | Description                                                                                  |
 +==========================+==============================================================================================+
-| :code:`<messageList>`    | A list of retrieved message elements (if any).                                               |
+| ``<messageList>``        | A list of retrieved message elements (if any).                                               |
 +--------------------------+----------------------------------------------------------------------------------------------+
-| :code:`<messageElement>` | A complex element containing ``messageId`` and ``messageBox`` values of a retrieved message. |
+| ``<messageElement>``     | A complex element containing ``messageId`` and ``messageBox`` values of a retrieved message. |
 +--------------------------+----------------------------------------------------------------------------------------------+
-| :code:`<messageId>`      | The message identifier of a retrieved message.                                               |
+| ``<messageId>``          | The message identifier of a retrieved message.                                               |
 +--------------------------+----------------------------------------------------------------------------------------------+
-| :code:`<messageBox>`     | The message box of a retrieved message.                                                      |
+| ``<messageBox>``         | The message box of a retrieved message.                                                      |
 +--------------------------+----------------------------------------------------------------------------------------------+
 
 
@@ -416,7 +416,7 @@ The AS2 sender web service is used by the application of the sending party to re
 
 SOAP request message
 ^^^^^^^^^^^^^^^^^^^^
-The sender web service requires elements with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix :code:`tns`.
+The sender web service requires elements with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the sender web service is shown below:
 
@@ -441,20 +441,20 @@ Descriptions of the elements in the SOAP body are as follows:
 +----------------------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Element              | Mandatory | Description                                                                                                                                               |
 +======================+===========+===========================================================================================================================================================+
-| :code:`<as2_from>`   | Yes       | The values of the ``From`` and ``To`` fields in AS2 messages sent through the                                                                             |
-| and :code:`<as2_to>` |           | partnership by Hermes 2. These fields are used to identify the sending partnership.                                                                       |
+| ``<as2_from>``,       | Yes       | The values of the ``From`` and ``To`` fields in AS2 messages sent through the                                                                             |
+| ``<as2_to>``         |           | partnership by Hermes 2. These fields are used to identify the sending partnership.                                                                       |
 |                      |           |                                                                                                                                                           |
 |                      |           | **These are required to identify the message destination.**                                                                                               |
 +----------------------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :code:`<type>`       | Yes       | A three-character code indicating the content type of the sent payload. The available codes are:                                                          |
+| ``<type>``           | Yes       | A three-character code indicating the content type of the sent payload. The available codes are:                                                          |
 |                      |           |                                                                                                                                                           |
-|                      |           |  * :code:`edi`, for the content type :code:`application/EDIFACT`.                                                                                         |
-|                      |           |  * :code:`x12`, for the content type :code:`application/EDI-X12`.                                                                                         |
-|                      |           |  * :code:`eco`, for the content type :code:`application/edi-consent`.                                                                                     |
-|                      |           |  * :code:`xml`, for the content type :code:`application/XML`.                                                                                             |
-|                      |           |  * :code:`bin`, for the content type :code:`application/ octet-stream`.                                                                                   |
+|                      |           |  * ``edi``, for the content type ``application/EDIFACT``.                                                                                         |
+|                      |           |  * ``x12``, for the content type ``application/EDI-X12``.                                                                                         |
+|                      |           |  * ``eco``, for the content type ``application/edi-consent``.                                                                                     |
+|                      |           |  * ``xml``, for the content type ``application/XML``.                                                                                             |
+|                      |           |  * ``bin``, for the content type ``application/ octet-stream``.                                                                                   |
 |                      |           |                                                                                                                                                           |
-|                      |           | For other values, Hermes 2 will assume the content type of the payload is :code:`application/deflate`, which means that the payload is compressed by Zip. |
+|                      |           | For other values, Hermes 2 will assume the content type of the payload is ``application/deflate``, which means that the payload is compressed by Zip. |
 +----------------------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
@@ -479,7 +479,7 @@ A sample SOAP response for the sender web service is shown below:
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-The :code:`<message_id>` element is the identifier of the sent message that can be used for later reference and status tracking with the AS2 status web service. 
+The ``<message_id>`` element is the identifier of the sent message that can be used for later reference and status tracking with the AS2 status web service. 
 
 
 AS2 receiver list web service
@@ -491,7 +491,7 @@ The AS2 receiver list web service is used by the application of the receiving pa
 
 SOAP request message
 ^^^^^^^^^^^^^^^^^^^^
-The receiver list web service requires elements with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix :code:`tns`.
+The receiver list web service requires elements with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the receiver list web service is shown below:
 
@@ -511,12 +511,12 @@ Descriptions of the elements in the SOAP body are as follows:
 +-------------------------+-----------+---------------------------------------------------------------------------------------------+
 | Element                 | Mandatory | Description                                                                                 |
 +=========================+===========+=============================================================================================+
-| :code:`<as2_from>`      | Yes       | The values of the :literal:`From` and :literal:`To` fields in AS2 messages sent through the |
-| and :code:`<as2_to>`    |           | partnership by Hermes 2. These fields are used to identify the sending partnership.         |
-| and :code:`<as2_to>`    |           |                                                                                             |
+| ``<as2_from>``,         | Yes       | The values of the ``From`` and ``To`` fields in AS2 messages sent through the |
+| ``<as2_to>``,           |           | partnership by Hermes 2. These fields are used to identify the sending partnership.         |
+| ``<as2_to>``            |           |                                                                                             |
 |                         |           | **These are required to query messages associated with the specified partnership.**         |
 +-------------------------+-----------+---------------------------------------------------------------------------------------------+
-| :code:`<numOfMessages>` | No        | The maximum number of message identifiers retrieved by this request.                        |
+| ``<numOfMessages>``     | No        | The maximum number of message identifiers retrieved by this request.                        |
 +-------------------------+-----------+---------------------------------------------------------------------------------------------+
 
 SOAP response message
@@ -541,7 +541,7 @@ A sample SOAP response for the receiver list web service is shown below:
    </SOAP-ENV:Envelope>
 
 
-Each :code:`<message_id>` element in the response message represents the identifier of an AS2 message received by Hermes 2.
+Each ``<message_id>`` element in the response message represents the identifier of an AS2 message received by Hermes 2.
 
 Note that a message is considered downloaded only when the message body has been downloaded by the AS2 receiver web service. If your application never calls the receiver web service to download the messages, the same set of message identifiers will always be retrieved.
 
@@ -557,7 +557,7 @@ The AS2 receiver web service is used by the application of the receiving party t
 
 SOAP request message
 ^^^^^^^^^^^^^^^^^^^^
-The receiver web service requires only one element with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix :code:`tns`.
+The receiver web service requires only one element with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the receiver web service is shown below:
 
@@ -590,7 +590,7 @@ A sample SOAP response for the receiver web service is shown below:
    Attached Payload
 
 
-If a payload is associated with the message identifier, then :code:`<hasMessage>` will have the value ``true``.
+If a payload is associated with the message identifier, then ``<hasMessage>`` will have the value ``true``.
 If the received AS2 message has payloads, the response message will have one or more SOAP attachments. Each SOAP attachment has a content type, which is set by the sender application. 
 
 
@@ -603,7 +603,7 @@ The AS2 status web service is used by the application of the sending or receivin
 
 SOAP request message
 ^^^^^^^^^^^^^^^^^^^^
-The status web service requires only one element with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix :code:`tns`.
+The status web service requires only one element with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the status web service is shown below:
 
@@ -618,7 +618,7 @@ A sample SOAP request for the status web service is shown below:
 
 SOAP response message
 ^^^^^^^^^^^^^^^^^^^^^
-The element :code:`<messageInfo>` inside the SOAP body is using namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
+The element ``<messageInfo>`` inside the SOAP body is using namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the status web service is shown below:
 
@@ -646,15 +646,15 @@ Descriptions of the elements in the SOAP body are as follows:
 +--------------------------------+------------------------------------------------------------+
 | Element                        | Description                                                |
 +================================+============================================================+
-| :code:`<status>`               | The current status of the AS2 message.                     |
+| ``<status>``                   | The current status of the AS2 message.                     |
 +--------------------------------+------------------------------------------------------------+
-| :code:`<statusDescription>`    | A text description of the current status.                  |
+| ``<statusDescription>``        | A text description of the current status.                  |
 +--------------------------------+------------------------------------------------------------+
-| :code:`<mdnMessageId>`         | The message identifier of the associated receipt (if any). |
+| ``<mdnMessageId>``             | The message identifier of the associated receipt (if any). |
 +--------------------------------+------------------------------------------------------------+
-| :code:`<mdnStatus>`            | The current status of the associated receipt.              |
+| ``<mdnStatus>``                | The current status of the associated receipt.              |
 +--------------------------------+------------------------------------------------------------+
-| :code:`<mdnStatusDescription>` | A text description of the associated receipt.              |
+| ``<mdnStatusDescription>``     | A text description of the associated receipt.              |
 +--------------------------------+------------------------------------------------------------+
 
 
@@ -669,7 +669,7 @@ The AS2 message history web service is used by the application of the sending or
 
 SOAP request message
 ^^^^^^^^^^^^^^^^^^^^
-The message history web service requires elements with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix :code:`tns`.
+The message history web service requires elements with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the message history web service is shown below:
 
@@ -717,13 +717,13 @@ Descriptions of the elements in the SOAP body are as follows:
 +--------------------------+----------------------------------------------------------------------------------------------------+
 | Element                  | Description                                                                                        |
 +==========================+====================================================================================================+
-| :code:`<messageList>`    | The list of retrieved message elements.                                                            |
+| ``<messageList>``        | The list of retrieved message elements.                                                            |
 +--------------------------+----------------------------------------------------------------------------------------------------+
-| :code:`<messageElement>` | A complex element containing the ``messageId`` and ``messageBox`` values of the retrieved message. |
+| ``<messageElement>``     | A complex element containing the ``messageId`` and ``messageBox`` values of the retrieved message. |
 +--------------------------+----------------------------------------------------------------------------------------------------+
-| :code:`<messageId>`      | The message identifier of the retrieved message.                                                   |
+| ``<messageId>``          | The message identifier of the retrieved message.                                                   |
 +--------------------------+----------------------------------------------------------------------------------------------------+
-| :code:`<messageBox>`     | The message box of the retrieved message.                                                          |
+| ``<messageBox>``         | The message box of the retrieved message.                                                          |
 +--------------------------+----------------------------------------------------------------------------------------------------+
  
 Reference articles
