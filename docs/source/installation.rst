@@ -105,35 +105,35 @@ Postgres
    #. Enter the password again for confirmation
    #. Enter the PostgreSQL administrator password for creating a new user role.
 
-#. Create two databases named :literal:`as2` and :literal:`ebms` with the :literal:`corvus` user
+#. Create two databases named :literal:`as2` and :literal:`ebms` with the :literal:`corvus` user.
 
-  a. Open a command prompt
-  #. Go to :file:`{<POSTGRES_HOME>}/bin`
-  #. Type :samp:`createdb –U corvus –W as2`
-  #. Enter the password :literal:`corvus`
-  #. Repeat steps 2.3 - 2.4 for the :literal:`ebms` database.
+   a. Open a command prompt
+   #. Go to :file:`{<POSTGRES_HOME>}/bin`
+   #. Type :samp:`createdb –U corvus –W as2`
+   #. Enter the password :literal:`corvus`
+   #. Repeat steps 2.3 - 2.4 for the :literal:`ebms` database.
 
 MySQL
 '''''
 
 1. Create two databases named :literal:`as2` and :literal:`ebms` with username :literal:`corvus` and password :literal:`corvus`.
 
-  a. Open a command prompt
-  #. Go to :file:`{<MYSQL_HOME>}/bin`
-  #. Type :samp:`mysql –u {<MYSQL_ADMIN>} -p` where :samp:`{<MYSQL_ADMIN>}` represents the name of an administrator/super-user in the MySQL database. This is ``root`` by default. This may require super user or MySQL owner to execute in Linux.
-  #. Enter the command below to create the :literal:`as2` database. Note that specifying collate to :literal:`latin1_general_cs` is essential.
+   a. Open a command prompt
+   #. Go to :file:`{<MYSQL_HOME>}/bin`
+   #. Type :samp:`mysql –u {<MYSQL_ADMIN>} -p` where :samp:`{<MYSQL_ADMIN>}` represents the name of an administrator/super-user in the MySQL database. This is ``root`` by default. This may require super user or MySQL owner to execute in Linux.
+   #. Enter the command below to create the :literal:`as2` database. Note that specifying collate to :literal:`latin1_general_cs` is essential.
     
-     .. code-block:: sql
+      .. code-block:: sql
 
-        create database as2 collate=latin1_general_cs;
+         create database as2 collate=latin1_general_cs;
      
-  #. Enter the command below to create and assign access privileges to user :literal:`corvus`. 
+   #. Enter the command below to create and assign access privileges to user :literal:`corvus`. 
 
-     .. code-block:: sql
+      .. code-block:: sql
 
-        grant all on as2.* to 'corvus'@'localhost' identified by 'corvus';
+         grant all on as2.* to 'corvus'@'localhost' identified by 'corvus';
      
-  #. Repeat steps 1.4 – 1.5 for the :literal:`ebms` database.
+   #. Repeat steps 1.4 – 1.5 for the :literal:`ebms` database.
 
 Oracle
 ''''''
@@ -152,11 +152,11 @@ Step 3 – Hermes 2 Deployment
 
    **Or:**
 
-   * For Windows, you can execute the installer by double-clicking on the :file:`.jar` file or right-clicking and selecting :menuselection:`open with --> javaw` (located where you installed java, in the :file:`bin` folder).
+   * :guilabel:`Test` For Windows, you can execute the installer by double-clicking on the :file:`.jar` file or right-clicking and selecting :menuselection:`open with --> javaw` (located where you installed java, in the :file:`bin` folder).
      
    .. image:: /_static/images/3-4-1-hermes-2-0-text-installer.png
    .. image:: /_static/images/3-4-1-hermes-2-0-opensource-installer.png
-
+   
    Click :guilabel:`Next` until you get to Step 1 of the installation.
 
 #. Step 1 - Configure Hermes 2 Core
@@ -293,7 +293,7 @@ Step 4 – Start Hermes 2
 
    .. image:: /_static/images/3-5-step-4-administration-console-page.png
 
-That's it! Your Hermes 2 should now be up and running. You can test your setup by running our web service usage sample in next section.
+That's it! Hermes 2 should now be up and running. You can test your setup by running our web service usage sample in next section.
 
 
 Partnership Maintenance and Web Service Usage Sample
@@ -310,7 +310,6 @@ Directory Organization
 | :file:`config/*`                      | Contains the configuration file for the sample programs. The folders inside this directory contain related files for specific sample programs.      |
 +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
 | :file:`config/ebms-partnership.xml`   | These two files contain partnership settings for ebMS and AS2 that are used by the sample programs.                                                 |
-| and                                   |                                                                                                                                                     |
 | :file:`config/as2-partnership.xml`    |                                                                                                                                                     |
 +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
 | :file:`logs/*`                        | A set of logs that contain the output from each sample program.                                                                                     |

@@ -47,13 +47,11 @@ config-xml
 
 Here is sample content of the config-xml files. These files are named :file:`ebms-request.xml` and :file:`as2-request.xml`, and placed under :file:`{<HERMES2_HOME>}/config/ebms-partnership` and :samp:`{<HERMES2_HOME>}/config/as2-partnership` respectively. 
 
-Configuration file for ebMS
-"""""""""""""""""""""""""""
+**Configuration file for ebMS:**
 
 .. image:: /_static/images/web_service/ebms-partnership-request.png
 
-Configuration file for AS2
-""""""""""""""""""""""""""
+**Configuration file for AS2:**
 
 .. image:: /_static/images/web_service/as2-partnership-request.png
 
@@ -63,13 +61,11 @@ partnership-xml
 
 Sample content of the partnership-xml files are shown below. For more details, please refer to the articles :doc:`ebms_partnership` and :doc:`as2_partnership`. 
 
-Sample ebMS partnership
-"""""""""""""""""""""""
+**Sample ebMS partnership:**
 
 .. image:: /_static/images/web_service/ebms-partnership-xml.png
 
-Sample AS2 partnership
-""""""""""""""""""""""
+**Sample AS2 partnership:**
 
 .. image:: /_static/images/web_service/as2-partnership-xml.png
 
