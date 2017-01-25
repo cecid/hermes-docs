@@ -7,7 +7,7 @@ docutils==0.13.1
 future==0.16.0
 imagesize==0.7.1
 javalang==0.10.1
-javasphinx==0.9.15
+javasphinx==0.9.1+
 Jinja2==2.9.4
 livereload==2.5.1
 lxml==3.7.2
