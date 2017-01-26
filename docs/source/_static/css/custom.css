@@ -51,6 +51,11 @@ img {
     background-color: #f3f3f3;
 }
 
+.wy-menu-vertical p.caption {
+    height: 42px;
+    padding-top: 15px;
+}
+
 .wy-side-nav-search {
     background-color: transparent;
 }
@@ -58,6 +63,11 @@ img {
 .wy-side-nav-search>a {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
+}
+
+.toctree-expand {
+    font-size: inherit !important;
+    line-height: 1.35em !important;
 }
 
 .wy-nav-content {
@@ -98,6 +108,12 @@ footer .commit {
 }
 .rst-content table.docutils td p {
     font-size: inherit;
+}
+
+.rst-content table.docutils td,
+.rst-content table.docutils thead th {
+    border-bottom: 1px solid #e1e4e5;
+    border-left: 1px solid #e1e4e5 !important;
 }
 
 @media screen and (max-width: 768px) {

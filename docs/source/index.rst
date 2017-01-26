@@ -47,10 +47,42 @@ developers to implement new messaging protocols as plug-ins. Most
 importantly, Hermes is open-source; you can freely extend Hermes and
 integrate it with other systems to meet your own business needs.
 
-Technical documents
--------------------
 .. toctree::
    :maxdepth: 1
+   :hidden:
 
    quickstart
-   documentation
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Overview
+   :hidden:
+
+   installation
+   first_step
+   ebms_partnership
+   as2_partnership
+
+.. toctree::
+   :maxdepth: 1
+   :caption: User's Guide
+   :hidden:
+
+   configuration
+   web_service_communication
+   web_service_usage_guide
+   message_signing
+
+.. 2. Using Web Admin Console <- Hermes 2 Administration Tool User Guide.doc
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Developer's Guide
+   :hidden:
+
+   java_client
+   packages
+   Java API Documentation <http://javadoc.hermes.cecid.org/>
+
+.. 1. Hermes System Architecture <- Hermes2 Technical Guide.doc
+   2. Developing Hermes Plugins <- Hermes 2 Plugin Development Guide.doc   
