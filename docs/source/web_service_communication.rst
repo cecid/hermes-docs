@@ -44,8 +44,8 @@ The ebMS 2.0 sender web service is a web service interface for external parties 
 
 .. image:: /_static/images/web_service/h2o-ws-sender-ebms.png
 
-SOAP request message
-^^^^^^^^^^^^^^^^^^^^
+**SOAP request message**
+
 Instead of requiring the sender to compose entire ebMS messages or acquire ebMS knowledge, the sender simply needs to request Hermes 2 to do so with key identities including ``CPA ID``, ``Service`` and ``Action``. These 3 key parameter identify the sending partnership in Hermes 2 that will be used to configure the ebMS message.
 
 The sender web service requires elements with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
@@ -116,8 +116,8 @@ Descriptions of the elements in the SOAP body are as follows:
 | ``<serviceType>``        | No        | A type identifier for the ebXML service defined in the partnership.                          |
 +--------------------------+-----------+----------------------------------------------------------------------------------------------+
 
-SOAP response message
-^^^^^^^^^^^^^^^^^^^^^
+**SOAP response message**
+
 The element inside the SOAP body is using namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
 
 A sample SOAP response for sender web service is shown below:
@@ -143,8 +143,8 @@ Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/ebms/receiver_lis
 
 The ebMS receiver list web service is used by the application of the receiving party to retrieve message identifiers of received and processed ebMS messages that have not been downloaded. These message identifiers will be used to retrieve message payloads with the receiver web service.
 
-SOAP request message
-^^^^^^^^^^^^^^^^^^^^
+**SOAP request message**
+
 The receiver list web service requires elements with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the receiver list web service is shown below: 
@@ -190,8 +190,8 @@ Descriptions of the elements in the SOAP body are as follows:
 +-------------------------+-----------+---------------------------------------------------------------------------------------------------+
 
 
-SOAP response message
-^^^^^^^^^^^^^^^^^^^^^
+**SOAP response message**
+
 The element inside the SOAP body is using namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the receiver list web service is shown below:
@@ -222,8 +222,8 @@ The ebMS receiver web service is used by the application of the receiving party 
 
 .. image:: /_static/images/web_service/h2o-ws-recv.png
 
-SOAP request message
-^^^^^^^^^^^^^^^^^^^^
+**SOAP request message**
+
 The ebMS receiver web service requires only one element with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the receiver web service is shown below:
@@ -241,8 +241,8 @@ A sample SOAP request for the receiver web service is shown below:
 The ``<messageId>`` element contains a message identifier obtained from the ebMS receiver list web service.
 
 
-SOAP response message
-^^^^^^^^^^^^^^^^^^^^^
+**SOAP response message**
+
 The element inside the SOAP body is using namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the receiver web service is shown below:
@@ -273,8 +273,8 @@ The ebMS status web service is used by the application of the sending or receivi
 
 The message status is a two-character code indicating the progress of an ebMS message. The ebMS status web service provides a tracking service to monitor ebMS messages requested from Hermes 2.
 
-SOAP request message
-^^^^^^^^^^^^^^^^^^^^
+**SOAP request message**
+
 The ebMS status web service requires only one element with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the status web service is shown below:
@@ -291,8 +291,8 @@ A sample SOAP request for the status web service is shown below:
 
 The ``<messageId>`` element contains a message identifier obtained from the ebMS sender web service response or the ebMS receiver list web service.
 
-SOAP response message
-^^^^^^^^^^^^^^^^^^^^^
+**SOAP response message**
+
 The element inside the SOAP body is using namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the status web service is shown below:
@@ -339,8 +339,8 @@ The ebMS message history web service is used by the application of the sending o
 
 .. image:: /_static/images/web_service/MessageHistory.png
 
-SOAP request message
-^^^^^^^^^^^^^^^^^^^^
+**SOAP request message**
+
 The ebMS message history web service requires elements with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the message history web service is shown below:
@@ -360,8 +360,8 @@ A sample SOAP request for the message history web service is shown below:
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-SOAP response message
-^^^^^^^^^^^^^^^^^^^^^
+**SOAP response message**
+
 The element ``<messageList>`` inside the SOAP body is using namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the message history web service is shown below:
@@ -414,8 +414,8 @@ The AS2 sender web service is used by the application of the sending party to re
 
 .. image:: /_static/images/web_service/h2o-ws-sender-as2.png
 
-SOAP request message
-^^^^^^^^^^^^^^^^^^^^
+**SOAP request message**
+
 The sender web service requires elements with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the sender web service is shown below:
@@ -460,8 +460,8 @@ Descriptions of the elements in the SOAP body are as follows:
 
 
 
-SOAP response message
-^^^^^^^^^^^^^^^^^^^^^
+**SOAP response message**
+
 The element inside the SOAP body is using namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the sender web service is shown below:
@@ -489,8 +489,8 @@ Service endpoint: :samp:`http://{<HERMES_HOST>}:{<HERMES_PORT>}/corvus/httpd/as2
 
 The AS2 receiver list web service is used by the application of the receiving party to retrieve message identifiers of received AS2 messages which have not been downloaded by the application. The message identifiers will be used to retrieve message payloads using the AS2 receiver web service.
 
-SOAP request message
-^^^^^^^^^^^^^^^^^^^^
+**SOAP request message**
+
 The receiver list web service requires elements with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the receiver list web service is shown below:
@@ -519,8 +519,8 @@ Descriptions of the elements in the SOAP body are as follows:
 | ``<numOfMessages>``     | No        | The maximum number of message identifiers retrieved by this request.                        |
 +-------------------------+-----------+---------------------------------------------------------------------------------------------+
 
-SOAP response message
-^^^^^^^^^^^^^^^^^^^^^
+**SOAP response message**
+
 The element inside the SOAP body is using namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the receiver list web service is shown below:
@@ -555,8 +555,8 @@ The AS2 receiver web service is used by the application of the receiving party t
  
 .. image:: /_static/images/web_service/h2o-ws-recv.png
 
-SOAP request message
-^^^^^^^^^^^^^^^^^^^^
+**SOAP request message**
+
 The receiver web service requires only one element with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the receiver web service is shown below:
@@ -570,8 +570,8 @@ A sample SOAP request for the receiver web service is shown below:
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-SOAP response message
-^^^^^^^^^^^^^^^^^^^^^
+**SOAP response message**
+
 The element inside the SOAP body is using namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the receiver web service is shown below:
@@ -601,8 +601,8 @@ Service endpoint: :samp:`http://{<OST>}:{<PORT>}/corvus/httpd/as2/status.`
 
 The AS2 status web service is used by the application of the sending or receiving party to retrieve the message status of a sent or received AS2 message respectively.
 
-SOAP request message
-^^^^^^^^^^^^^^^^^^^^
+**SOAP request message**
+
 The status web service requires only one element with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the status web service is shown below:
@@ -616,8 +616,8 @@ A sample SOAP request for the status web service is shown below:
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-SOAP response message
-^^^^^^^^^^^^^^^^^^^^^
+**SOAP response message**
+
 The element ``<messageInfo>`` inside the SOAP body is using namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the status web service is shown below:
@@ -667,8 +667,8 @@ The AS2 message history web service is used by the application of the sending or
 
 .. image:: /_static/images/web_service/MessageHistory.png
 
-SOAP request message
-^^^^^^^^^^^^^^^^^^^^
+**SOAP request message**
+
 The message history web service requires elements with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the message history web service is shown below:
@@ -686,8 +686,8 @@ A sample SOAP request for the message history web service is shown below:
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-SOAP response message
-^^^^^^^^^^^^^^^^^^^^^
+**SOAP response message**
+
 The element ``<messageList>`` in the SOAP body is using the namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
 
 A sample SOAP response for the message history web service is shown below:

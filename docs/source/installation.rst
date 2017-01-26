@@ -89,13 +89,10 @@ Step 1 – Environment setup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 Install all the prerequisite items. The rest of this guide assumes that they are all running on the same machine.
 
-Step 2 – Configuration
-^^^^^^^^^^^^^^^^^^^^^^
-Databases
-"""""""""
+Step 2 – Database Configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Postgres
-''''''''
+**Postgres**
 
 #. Create a database user with username ``corvus`` and password ``corvus``.
 
@@ -114,8 +111,7 @@ Postgres
    #. Enter the password ``corvus``
    #. Repeat steps 2.3 - 2.4 for the ``ebms`` database.
 
-MySQL
-'''''
+**MySQL**
 
 1. Create two databases named ``as2`` and ``ebms`` with username ``corvus`` and password ``corvus``.
 
@@ -136,8 +132,7 @@ MySQL
      
    #. Repeat steps 1.4 – 1.5 for the ``ebms`` database.
 
-Oracle
-''''''
+**Oracle**
 
 Oracle database creation involves a number of steps and custom parameters for different requirements for the database server. We propose the following reference as a guideline for creating an Oracle database for Hermes 2:
 
@@ -735,8 +730,7 @@ To further ensure the security of message transfers, secure channels are prefera
 FAQ
 ---
 
-Hermes 2 Deployment
-^^^^^^^^^^^^^^^^^^^
+**Hermes 2 Deployment**
 
 Q1. The :file:`corvus.log` shows:
 
@@ -763,8 +757,7 @@ A2. Ensure PostgreSQL/MySQL/Oracle was installed properly and check the followin
 
     :file:`{<HERMES2_HOME>}/plugins/hk.hku.cecid.ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml`. There is a tag in this file named ``parameter`` with the attribute ``name=url``. Check the ``value`` attribute to see if it references the correct server address. The format of the ``value`` attribute is the same as the JDBC connection string.
 
-Web Service Usage Sample
-^^^^^^^^^^^^^^^^^^^^^^^^
+**Web Service Usage Sample**
 
 Q1. The following exception is thrown:
     

@@ -172,51 +172,51 @@ Using Keytool
 :program:`Keytool` is provided with Java SDK.
 
 
-1. Invoke ``keytool`` with parameters
-"""""""""""""""""""""""""""""""""""""
-.. code-block:: sh
+1. Invoke ``keytool`` with parameters.
+
+   .. code-block:: sh
       
-   keytool -genkey -alias {key-alias} -keyalg RSA -keystore {filepath-and-name-of-keystore} -storetype pkcs12 -storepass {password} -keypass {password}
+      keytool -genkey -alias {key-alias} -keyalg RSA -keystore {filepath-and-name-of-keystore} -storetype pkcs12 -storepass {password} -keypass {password}
    
-The same password value is used for ``keypass`` and ``storepass`` in this command.
+   The same password value is used for ``keypass`` and ``storepass`` in this command.
 
-.. image:: /_static/images/message_signing/keytool_command.png
+   .. image:: /_static/images/message_signing/keytool_command.png
 
 
-2. Input more detailed information
-""""""""""""""""""""""""""""""""""
-.. image:: /_static/images/message_signing/keytool_command_detail.png
+#. Input more detailed information.
 
-After entering the information, a keystore will be created. It can be verified using :program:`Keytool`.
+   .. image:: /_static/images/message_signing/keytool_command_detail.png
 
-.. code-block:: sh
+   After entering the information, a keystore will be created. It can be verified using :program:`Keytool`.
+
+   .. code-block:: sh
    
-   keytool -list -keystore {filepath-and-name-of-keystore} -storetype pkcs12
+      keytool -list -keystore {filepath-and-name-of-keystore} -storetype pkcs12
 
-The password specified in the ``storepass`` attribute is needed to access the keystore.
+   The password specified in the ``storepass`` attribute is needed to access the keystore.
 
-.. image:: /_static/images/message_signing/keytool_list_keystore.png
+   .. image:: /_static/images/message_signing/keytool_list_keystore.png
 
 
-3. Export certificate
-"""""""""""""""""""""
-The private key has been generated and stored in the keystore, but a public certificate is still needed for the receiver to verify signatures.
+#. Export certificate.
 
-.. code-block:: sh
+   The private key has been generated and stored in the keystore, but a public certificate is still needed for the receiver to verify signatures.
+
+   .. code-block:: sh
    
-   keytool -exportcert -alias {key-alias} -keystore {filepath-and-name-of-keystore} -storetype pkcs12 -file {filepath-and-name-of-certificate}
+      keytool -exportcert -alias {key-alias} -keystore {filepath-and-name-of-keystore} -storetype pkcs12 -file {filepath-and-name-of-certificate}
 
-Enter the password specified in the ``storepass`` attribute to access the keystore.
+   Enter the password specified in the ``storepass`` attribute to access the keystore.
 
-.. image:: /_static/images/message_signing/keytool_generate_certificate.png
+   .. image:: /_static/images/message_signing/keytool_generate_certificate.png
 
-The certificate can be verified with the following command:
+   The certificate can be verified with the following command:
 
-.. code-block:: sh
+   .. code-block:: sh
    
-   keytool -printcert -file {filepath-and-name-of-certificate}
+      keytool -printcert -file {filepath-and-name-of-certificate}
 
-.. image:: /_static/images/message_signing/keytool_printcert.png
+   .. image:: /_static/images/message_signing/keytool_printcert.png
 
 
 Using OpenSSL
@@ -224,42 +224,42 @@ Using OpenSSL
 :program:`OpenSSL` can be found `here <https://www.openssl.org/>`_.
 
 
-1. Generate private key
-"""""""""""""""""""""""
-Invoke ``openssl`` to enter the :program:`OpenSSL` environment, then execute the following:
+1. Generate private key.
 
-.. code-block:: sh
+   Invoke ``openssl`` to enter the :program:`OpenSSL` environment, then execute the following:
+
+   .. code-block:: sh
    
-   genrsa -out {filepath-and-name-of-key} {length-in-bits}
+      genrsa -out {filepath-and-name-of-key} {length-in-bits}
 
-.. image:: /_static/images/message_signing/openssl_genrsa_1024.png
+   .. image:: /_static/images/message_signing/openssl_genrsa_1024.png
 
 
-2. Generate certificate signing request
-"""""""""""""""""""""""""""""""""""""""
-.. code-block:: sh
+#. Generate certificate signing request.
+
+   .. code-block:: sh
    
-   req -new -key {filepath-and-name-of-key} -out {filepath-and-name-of-signing-request}
+      req -new -key {filepath-and-name-of-key} -out {filepath-and-name-of-signing-request}
 
-.. image:: /_static/images/message_signing/openssl_create_csr.png
+   .. image:: /_static/images/message_signing/openssl_create_csr.png
 
 
-3. Generate self-signed certificate
-"""""""""""""""""""""""""""""""""""
-.. code-block:: sh
+#. Generate self-signed certificate.
+
+   .. code-block:: sh
    
-   x509 -req -days {number-of-days-valid} -in {filepath-and-name-of-signing-request} -signkey {filepath-and-name-of-key} -sha1 -out {filepath-and-name-of-certificate}
+      x509 -req -days {number-of-days-valid} -in {filepath-and-name-of-signing-request} -signkey {filepath-and-name-of-key} -sha1 -out {filepath-and-name-of-certificate}
 
-.. image:: /_static/images/message_signing/openssl_gen_cert.png
+   .. image:: /_static/images/message_signing/openssl_gen_cert.png
 
 
-4. Export to keystore in PKCS12 format
-""""""""""""""""""""""""""""""""""""""
-.. code-block:: sh
+#. Export to keystore in PKCS12 format.
+
+   .. code-block:: sh
    
-   pkcs12 -name {key-alias} -export -in {filepath-and-name-of-certificate} -inkey {filepath-and-name-of-key} -out {filepath-and-name-of-keystore}
+      pkcs12 -name {key-alias} -export -in {filepath-and-name-of-certificate} -inkey {filepath-and-name-of-key} -out {filepath-and-name-of-keystore}
 
-.. image:: /_static/images/message_signing/openssl_pkcs12.png
+   .. image:: /_static/images/message_signing/openssl_pkcs12.png
 
 
 
