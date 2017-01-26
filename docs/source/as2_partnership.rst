@@ -1,5 +1,5 @@
-Setting Up AS2 Partnership
-==========================
+Setting Up AS2 Partnerships
+===========================
 
 AS2 Partnership Parameters
 --------------------------

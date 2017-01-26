@@ -928,10 +928,10 @@ Location of keystore for S/MIME decryption (incoming messages)
 
 References
 ----------
-
-* Hermes 2 Application Development Guide
-* Hermes 2 Technical Guide
-* Hermes 2 Administration Tool User Guide
-* Hermes 2 Plug-in Development Guide
+.. Hermes 2 Application Development Guide
+   Hermes 2 Technical Guide
+   Hermes 2 Administration Tool User Guide
+   Hermes 2 Plug-in Development Guide
+   
 * `OASIS ebXML Message Service Specification 2.0 <https://www.oasis-open.org/committees/download.php/272/ebMS_v2_0.pdf>`_
 * `MIME-based Secure Peer-to-Peer Business Data Interchange over the Internet Using HTTP AS2 <https://tools.ietf.org/html/rfc4130>`_

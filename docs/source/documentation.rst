@@ -20,6 +20,8 @@ User's Guide
    web_service_usage_guide
    message_signing
 
+.. 2. Using Web Admin Console <- Hermes 2 Administration Tool User Guide.doc
+
 Developer's Guide
 -----------------
 .. toctree::
@@ -27,3 +29,6 @@ Developer's Guide
 
    java_client
    packages
+
+.. 1. Hermes System Architecture <- Hermes2 Technical Guide.doc
+   2. Developing Hermes Plugins <- Hermes 2 Plugin Development Guide.doc
