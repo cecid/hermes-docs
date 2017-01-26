@@ -1,38 +1,8 @@
 Setting Up AS2 Partnerships
 ===========================
 
-AS2 Partnership Parameters
---------------------------
-
-Here is a summary of the AS2 partnership parameters.
-
-1. `Partnership ID`_
-#. `AS2 From`_
-#. `AS2 To`_
-#. `Disabled`_
-#. `Subject`_
-#. `Recipient Address`_
-#. `Hostname Verified in SSL?`_
-#. `Request Receipt`_
-#. `Signed Receipt`_
-#. `Asynchronous Receipt`_
-#. `Receipt Return URL`_
-#. `Message Compression Required`_
-#. `Message Signing Required`_
-#. `Signing Algorithm`_
-#. `Message Encryption Required`_
-#. `Encryption Algorithm`_
-#. `Certificate For Encryption`_
-#. `MIC Algorithm`_
-#. `Maximum Retries`_
-#. `Retry Interval (ms)`_
-#. `Message Signature Enforced`_
-#. `Message Encryption Enforced`_
-#. `Certificate For Verification`_
-
-
 Partnership ID
-^^^^^^^^^^^^^^
+--------------
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | The unique identifier of an AS2 partnership in Hermes 2.                                                         |
@@ -45,7 +15,7 @@ Partnership ID
 
 
 AS2 From
-^^^^^^^^
+--------
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | Identifier of the sending party in a data exchange. The values may be company specific, such as Data Universal   |
@@ -60,7 +30,7 @@ AS2 From
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
 AS2 To
-^^^^^^
+------
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | Identifier of the receiving party in a data exchange. The values may be company specific, such as Data Universal |
@@ -82,7 +52,7 @@ AS2 To
    **Send**: [``CompanyA``, ``CompanyB``] --> **Receive**: [``CompanyB``, ``CompanyA``].
 
 Disabled
-^^^^^^^^
+--------
 
 +-----------------+-----------------------------------------------------------------------------------------------+
 | **Description** | This boolean option indicates whether the partnership is disabled or not.                     |
@@ -95,7 +65,7 @@ Disabled
 
 
 Subject
-^^^^^^^
+-------
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | The subject of the partnership.                                                                                  |
@@ -108,7 +78,7 @@ Subject
 
 
 Recipient Address
-^^^^^^^^^^^^^^^^^
+-----------------
 
 +-----------------+--------------------------------------------------------------------------------------+
 | **Description** | The endpoint URL of the receiving messaging gateway.                                 |
@@ -122,7 +92,7 @@ Recipient Address
 
 
 Hostname Verified in SSL?
-^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | This boolean flag indicates whether HTTP SSL/TLS protocol is used to verify the recipient hostname.              |
@@ -137,7 +107,7 @@ Hostname Verified in SSL?
 
 
 Request Receipt
-^^^^^^^^^^^^^^^
+---------------
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | Indicates whether the sender has requested the recipient to reply with an AS2 receipt (acknowledgement).         |
@@ -155,7 +125,7 @@ Request Receipt
 
 
 Signed Receipt
-^^^^^^^^^^^^^^
+--------------
 
 +------------------+-----------------------------------------------------------------------------------------------------------------+
 | **Description**  | Indicates whether the sender has requested the recipient to digitally sign the AS2 receipt with their private   |
@@ -180,7 +150,7 @@ Signed Receipt
 
 
 Asynchronous Receipt
-^^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 +------------------+-----------------------------------------------------------------------------------------------------------------+
 | **Description**  | Indicates whether the recipient should reply to incoming AS2 messages using the same HTTP/HTTPS connection      |
@@ -205,8 +175,9 @@ AS2 message receipts will be delivered through another HTTP connection from reci
 
 .. image:: /_static/images/first_step/as2-send-async.png
 
+
 Receipt Return URL
-^^^^^^^^^^^^^^^^^^
+------------------
 
 +------------------+-----------------------------------------------------------------------------------------------------------------+
 | **Description**  | This is the endpoint URL of Hermes 2 or another compatible messaging gateway for receiving receipts. It is      |
@@ -228,7 +199,7 @@ Receipt Return URL
 
 
 Message Compression Required
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------
 
 +-----------------+---------------------------------------------------------------------------------------------------------+
 | **Description** | Indicates whether the sender must compress outgoing AS2 messages in this partnership.                   |
@@ -243,7 +214,7 @@ Message Compression Required
 
 
 Message Signing Required
-^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------
 
 +-----------------+---------------------------------------------------------------------------------------------+
 | **Description** | Indicates whether the sender must digitally sign AS2 messages using their private key.      |
@@ -256,7 +227,7 @@ Message Signing Required
 +-----------------+---------------------------------------------------------------------------------------------+
 
 Signing Algorithm
-^^^^^^^^^^^^^^^^^
+-----------------
 
 +-----------------+-----------------------------------------------------------------------------------------------+
 | **Description** | The algorithm used to digitally sign outgoing AS2 messages in this partnership.               |
@@ -267,7 +238,7 @@ Signing Algorithm
 
 
 Message Encryption Required
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------
 
 +------------------+----------------------------------------------------------------------------------------+
 | **Description**  | Indicates whether the sender must encrypt AS2 messages using the recipient's public    |
@@ -287,7 +258,7 @@ Message Encryption Required
 
 
 Encryption Algorithm
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 +-----------------+----------------------------------------------------------------------------------------+
 | **Description** | The algorithm used to encrypt outgoing AS2 messages in this partnership.               |
@@ -298,7 +269,7 @@ Encryption Algorithm
 
 
 Certificate for Encryption
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------
 
 +-----------------+---------------------------------------------------------------------------------------------------------------------+
 | **Description** | The certificate (``.cer``) file for encrypting outgoing AS2 messages using the public key exported by the recipient.|
@@ -315,7 +286,7 @@ Certificate for Encryption
 
 
 MIC Algorithm
-^^^^^^^^^^^^^
+-------------
 
 +-----------------+----------------------------------------------------------------------------------------------------------+
 | **Description** | The algorithm used to create message digests/hashes for outgoing AS2 messages in this partnership.       |
@@ -326,7 +297,7 @@ MIC Algorithm
 
 
 Maximum Retries
-^^^^^^^^^^^^^^^
+---------------
 
 +-----------------+-------------------------------------------------------------------------------------------------------------------+
 | **Description** | The maximum number of retries allowed for the sender to attempt delivering an AS2 message.                        |
@@ -342,7 +313,7 @@ Maximum Retries
 
 
 Retry Interval (ms)
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 +-----------------+----------------------------------------------------------------------------------------------+
 | **Description** | The time interval (milleseconds) between each consecutive attempt to deliver an AS2 message. |
@@ -353,7 +324,7 @@ Retry Interval (ms)
 
 
 Message Signature Enforced
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------
 
 +-----------------+--------------------------------------------------------------------------------------------------------------------+
 | **Description** | Indicates whether incoming AS2 messages must be digitally signed.                                                  |
@@ -371,7 +342,7 @@ Message Signature Enforced
 
 
 Message Encryption Enforced
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------
 
 +-----------------+-------------------------------------------------------------------------------------------------------------------+
 | **Description** | Indicates whether incoming AS2 messages must be encrypted.                                                        |
@@ -390,7 +361,7 @@ Message Encryption Enforced
 
 
 Certificate for Verification
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------
 
 +-----------------+-------------------------------------------------------------------------------------------------------------------+
 | **Description** | The certificate (``.cer``) file for verifying incoming digitally signed AS2 messages using the public key         |

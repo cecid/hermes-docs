@@ -1,32 +1,8 @@
 Setting Up ebMS 2.0 Partnerships
 ================================
 
-ebMS 2.0 Partnership Parameters
--------------------------------
-
-Here is a summary of the ebMS 2.0 partnership parameters.
-
-1. `Partnership ID`_
-#. `CPA ID`_
-#. `Service`_
-#. `Action`_
-#. `Disabled`_
-#. `Transport Endpoint`_
-#. `Hostname Verified in SSL?`_
-#. `Sync Reply Mode`_
-#. `Acknowledgement Requested`_
-#. `Acknowledgement Signed Requested`_
-#. `Duplicate Elimination`_
-#. `Message Order`_
-#. `Signing Required?`_
-#. `Encryption Required? (Mail Only)`_
-#. `Certificate For Encryption`_
-#. `Maximum Retries`_
-#. `Retry Interval (ms)`_
-#. `Certificate For Verification`_
-
 Partnership ID
-^^^^^^^^^^^^^^
+--------------
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | The unique identifier of an ebMS 2.0 partnership in local Hermes 2.                                              |
@@ -37,8 +13,9 @@ Partnership ID
 |                 |                                                                                                                  |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
+
 CPA ID
-^^^^^^
+------
 
 +-----------------+-------------------------------------------------------------------------------------------------------------------------------------+
 | **Description** | The Collaboration Protocol Agreement (CPA) ID is a string that identifies the parameters governing the                              |
@@ -50,16 +27,18 @@ CPA ID
 |                 | See [`OASIS ebXML Messaging Service Spec v2.0 <https://www.oasis-open.org/committees/download.php/272/ebMS_v2_0.pdf>`_] for details.|
 +-----------------+-------------------------------------------------------------------------------------------------------------------------------------+
 
+
 Service
-^^^^^^^
+-------
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | In Hermes 2, this **mandatory** parameter is used for mapping a partnership between **sender** and **recipient**.|
 |                 | It should follow Uniform Resource Naming (URN) format.                                                           |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
+
 Action
-^^^^^^
+------
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | This identifies a process within a `Service`_ that processes the ebMS message. Action must be unique within the  |
@@ -67,8 +46,9 @@ Action
 |                 | This field is **mandatory** and its maximum length is 255 characters.                                            |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
+
 Disabled
-^^^^^^^^
+--------
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | Theis boolean option indicates whether the partnership is disabled or not.                                       |
@@ -78,8 +58,9 @@ Disabled
 | **Options**     | [ ``true`` = disabled ], [ ``false`` = enabled ]                                                                 |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
+
 Transport Endpoint
-^^^^^^^^^^^^^^^^^^
+------------------
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | The endpoint URL of the recieving messaging gateway.                                                             |
@@ -93,8 +74,9 @@ Transport Endpoint
 |                 | This field is **mandatory** and the format must be an **HTTP/HTTPS URL** or **EMAIL ADDRESS**.                   |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
+
 Hostname Verified in SSL?
-^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | This boolean flag indicates whether HTTP SSL/TLS protocol is used to verify the recipient hostname.              |
@@ -104,8 +86,9 @@ Hostname Verified in SSL?
 | **Options**     | [ ``true`` = hostname verified using SSL , ``false`` = no verification using SSL ]                               |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
+
 Sync Reply Mode
-^^^^^^^^^^^^^^^
+---------------
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | Indicates whether the receiver should reply to incoming ebMS messages using the same HTTP/HTTPS connection that  |
@@ -130,8 +113,9 @@ ebMS message acknowledgement will be delivered through another HTTP/SOAP connect
 
 .. image:: /_static/images/first_step/ebms-send-async.png
 
+
 Acknowledgement Requested
-^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | Indicates whether the sender has requested the recipient to reply with an ebMS acknowledgement.                  |
@@ -151,8 +135,9 @@ Acknowledgement Requested
 |                 | [ ``none`` = acknowledgement is not requested ]                                                                  |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
+
 Acknowledgement Signed Requested
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------
 
 +------------------+------------------------------------------------------------------------------------------------------------------+
 | **Description**  | Indicates whether the recipient must sign the ebMS acknowledgement digitally using their private key before      |
@@ -178,9 +163,10 @@ Acknowledgement Signed Requested
 |                  |                                                                                                                  |
 |                  | [ ``false`` = acknolwedgment must not be digitally signed ]                                                      |
 +------------------+------------------------------------------------------------------------------------------------------------------+
-                     
+
+
 Duplicate Elimination
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | Indicates whether the recipient will ignore duplicate messages.                                                  |
@@ -193,8 +179,9 @@ Duplicate Elimination
 |                 | [ ``never`` = receives duplicate messages ]                                                                      |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
+
 Message Order
-^^^^^^^^^^^^^
+-------------
 
 +------------------+------------------------------------------------------------------------------------------------------------------+
 | **Description**  | Indicates whether the recipient must receive ebMS messages in the same sequence that they were sent.             |
@@ -213,9 +200,10 @@ Message Order
 |                  |                                                                                                                  |
 |                  | [ ``NotGuaranteed`` = recipient receives ebMS message with best effort behavior ]                                |
 +------------------+------------------------------------------------------------------------------------------------------------------+
-                                                                                                                                                                                                                                                                      
+
+
 Signing Required?
-^^^^^^^^^^^^^^^^^
+-----------------
 
 +------------------+------------------------------------------------------------------------------------------------------------------+
 | **Description**  | Indicates whether the sender must sign ebMS messages digitally using their private key.                          |
@@ -231,8 +219,9 @@ Signing Required?
 |                  | [ ``false`` = outgoing ebMS messages are not required to be digitally signed ]                                   |
 +------------------+------------------------------------------------------------------------------------------------------------------+
 
+
 Encryption Required? (Mail Only)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------
 
 +------------------+------------------------------------------------------------------------------------------------------------------+
 | **Description**  | Indicates whether the sender must encrypt ebMS messages using the recipient's public certificate defined in      |
@@ -253,8 +242,9 @@ Encryption Required? (Mail Only)
 |                  | [ ``false`` = outgoing ebMS messages are not required to be encrypted ]                                          |
 +------------------+------------------------------------------------------------------------------------------------------------------+
 
+
 Certificate For Encryption
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------
 
 +------------------+------------------------------------------------------------------------------------------------------------------+
 | **Description**  | The certificate file for encrypting outgoing ebMS messages using SMTP protocol by using the public key           |
@@ -266,8 +256,9 @@ Certificate For Encryption
 |                  | The certificate must be in X.509 format. See `Encryption Required? (Mail Only)`_ for details.                    |
 +------------------+------------------------------------------------------------------------------------------------------------------+
 
+
 Maximum Retries
-^^^^^^^^^^^^^^^
+---------------
 
 +------------------+------------------------------------------------------------------------------------------------------------------+
 | **Description**  | The maximum number of retries allowed for the sender to attempt delivering an ebMS message.                      |
@@ -283,8 +274,9 @@ Maximum Retries
 |                  |                                                                                                                  |
 +------------------+------------------------------------------------------------------------------------------------------------------+
 
+
 Retry Interval (ms)
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 +-----------------------+-----------------------------------------------------------------------------------------------+
 | **Description**       | The time interval (milleseconds) between each consecutive attempt to deliver an ebMS message. |
@@ -294,8 +286,9 @@ Retry Interval (ms)
 | **Dependencies**      | [ `Acknowledgement Requested`_ = ``always`` ]                                                 |
 +-----------------------+-----------------------------------------------------------------------------------------------+
 
+
 Certificate For Verification
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------
 
 +------------------+------------------------------------------------------------------------------------------------------------------+
 | **Description**  | The certificate (``.cer``) file for verifying incoming digitally signed ebMS message by using the public key     |

@@ -726,12 +726,8 @@ Descriptions of the elements in the SOAP body are as follows:
 | ``<messageBox>``         | The message box of the retrieved message.                                                          |
 +--------------------------+----------------------------------------------------------------------------------------------------+
  
-Reference articles
-------------------
+See also
+--------
 * :doc:`first_step`
 * :doc:`ebms_partnership`
 * :doc:`as2_partnership`
-
-What to read next
------------------
-* :doc:`java_client`

@@ -926,8 +926,8 @@ Location of keystore for S/MIME decryption (incoming messages)
 +-----------------------------------------------------------------------------------------------+-----------------------------------------+
 
 
-References
-----------
+See also
+--------
 .. Hermes 2 Application Development Guide
    Hermes 2 Technical Guide
    Hermes 2 Administration Tool User Guide

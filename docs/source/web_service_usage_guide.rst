@@ -473,8 +473,8 @@ Here is sample output from the program:
 
 The program will display the message status along with a simple description.
 
-Reference articles
-------------------
+See also
+--------
 
 * :doc:`first_step`
 * :doc:`ebms_partnership`

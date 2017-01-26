@@ -993,8 +993,8 @@ The parameters are ``messageId``, ``messageBox``, ``as2From``, ``as2To``, and ``
    The method ``getElement`` gets the element with the name ``messageList`` and namespace URI equal to ``nsURI``. The ``messageElement`` values will then be extracted from ``messageList``.
    Each ``messageElement`` contains the values of ``messageId`` and ``messageBox``.
 
-Reference articles
-------------------
+See also
+--------
 * :doc:`first_step`
 * :doc:`web_service_communication`
 * :doc:`ebms_partnership`

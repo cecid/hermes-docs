@@ -240,14 +240,9 @@ The main benefit of partnerships is that it provides abstraction on technical pa
 #. The application only needs to submit payloads. It does not contain any code that is specific to the communication protocol between messaging gateways.
 #. The application does not need to handle the raw and cryptic ebMS / AS2 messages. Therefore, developers only need to focus on business logic and integration with the backend systems.
  
-References
-----------
+See also
+--------
 * :doc:`ebms_partnership`
 * :doc:`as2_partnership`
 * `OASIS ebMS 2.0 Specification <http://www.oasis-open.org/committees/ebxml-msg/documents/ebMS_v2_0.pdf>`_
 * `AS2 Specification <https://tools.ietf.org/html/rfc4130>`_
-
- 
-What to read next
------------------
-* :doc:`web_service_communication`
