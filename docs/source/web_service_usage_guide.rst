@@ -337,13 +337,13 @@ Below is sample content of the config-xml file. This file is named :file:`as2-re
 The elements are explained in the table below:
 
 +------------------------+-----------------------------------------------------------------------------------------+
-| ``<sendEndpoint>`` | Refers to the address of the AS2 sender web service.                                    |
+| ``<sendEndpoint>``     | Refers to the address of the AS2 sender web service.                                    |
 |                        |                                                                                         |
 |                        | It should be :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/as2/sender`.                  |
 +------------------------+-----------------------------------------------------------------------------------------+
-| ``<type>``         | Specify the content type. For more information, please refer to AS2 Sender Web Service. |
+| ``<type>``             | Specify the content type. For more information, please refer to AS2 Sender Web Service. |
 |                        |                                                                                         |
-|                        | Only ``<sendEndpoint>`` has to be changed to contain the correct address.           |
+|                        | Only ``<sendEndpoint>`` has to be changed to contain the correct address.               |
 +------------------------+-----------------------------------------------------------------------------------------+
 
 partnership-xml
