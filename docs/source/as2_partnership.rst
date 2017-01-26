@@ -56,7 +56,7 @@ AS2 From
 |                 |                                                                                                                  |
 |                 | This field is **mandatory** and it is **RECOMMENDED** that the length of this value be less than 255 characters. |
 |                 |                                                                                                                  |
-|                 | See :ref:`note <note>` below.                                                                                    |
+|                 | See note below.                                                                                                  |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
 AS2 To
@@ -71,17 +71,15 @@ AS2 To
 |                 |                                                                                                                  |
 |                 | This field is **mandatory** and it is **RECOMMENDED** that the length of this value be less than 255 characters. |
 |                 |                                                                                                                  |
-|                 | See :ref:`note <note>` below.                                                                                    |
+|                 | See note below.                                                                                                  |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
-.. _note:
+.. note::
+   `AS2 From`_ and `AS2 To`_ form a pair that identify the **send** and **recieve** partnerships (i.e. they form a composite key that identifies the parties involved in the data exchange).
 
-| **NOTE**:
-| `AS2 From`_ and `AS2 To`_ form a pair that identify the **send** and **recieve** partnerships (i.e. they form a composite key that identifies the parties involved in the data exchange).
-
-The values of [``AS2 From``, ``AS2 To``] are reversed in the **receive** partnership with respect to the **send** partnership. For example:
+   The values of [``AS2 From``, ``AS2 To``] are reversed in the **receive** partnership with respect to the **send** partnership. For example:
   
-  **Send**: [``CompanyA``, ``CompanyB``] --> **Receive**: [``CompanyB``, ``CompanyA``].
+   **Send**: [``CompanyA``, ``CompanyB``] --> **Receive**: [``CompanyB``, ``CompanyA``].
 
 Disabled
 ^^^^^^^^
@@ -195,14 +193,14 @@ Asynchronous Receipt
 | **Options**      | [ ``true`` = asynchronous reply ], [ ``false`` = synchronous reply ]                                            |
 +------------------+-----------------------------------------------------------------------------------------------------------------+
 
-Synchronous reply
-~~~~~~~~~~~~~~~~~~~~~~
+**Synchronous reply**
+
 AS2 message receipts are encapsulated in the HTTP response.
 
 .. image:: /_static/images/first_step/as2-send-sync.png
      
-Asynchronous reply
-~~~~~~~~~~~~~~~~~~
+**Asynchronous reply**
+
 AS2 message receipts will be delivered through another HTTP connection from recipient to sender.
 
 .. image:: /_static/images/first_step/as2-send-async.png

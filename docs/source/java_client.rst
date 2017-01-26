@@ -578,7 +578,8 @@ We need to create a SOAP message with 3 parameters and send it to Hermes 2 as th
 
 #. Attach a payload if necessary. The example here uses a purchase order XML as the payload of the AS2 message, so the associated content type is ``application/xml``.
    
-   **NOTE:** Only ONE payload is allowed in a SOAP request for the AS2 sender web service.
+   .. note::
+      Only **ONE** payload is allowed in a SOAP request for the AS2 sender web service.
 
    .. code-block:: java
       

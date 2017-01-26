@@ -63,7 +63,8 @@ Prerequisite
    #. Edit :file:`/etc/systemd/system/tomcat.service`. Change :envvar:`Environment=JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre` to :envvar:`Environment=JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre`
    #. Restart Tomcat
 
-   **Note:**  To access the admin page, you will need to have a Tomcat user with an admin role.  One way to do this is to define the user in :file:`tomcat-users.xml`.  Please refer to the Realm Configuration section in the Tomcat documentation for more details.
+   .. note::
+      To access the admin page, you will need to have a Tomcat user with an admin role.  One way to do this is to define the user in :file:`tomcat-users.xml`.  Please refer to the Realm Configuration section in the Tomcat documentation for more details.
 
    Sample of :file:`tomcat-user.xml`:
 

@@ -117,15 +117,15 @@ Sync Reply Mode
 | **Options**     | [ ``mshSignalsOnly`` = synchronous reply ], [ ``none`` = asynchronous reply ]                                    |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
-Synchronous reply
-~~~~~~~~~~~~~~~~~
+**Synchronous reply**
+
 ebMS message acknowledgement is included in the HTTP/SOAP response.
 
 .. image:: /_static/images/first_step/ebms-send-sync.png
 
 
-Asynchronous reply
-~~~~~~~~~~~~~~~~~~
+**Asynchronous reply**
+
 ebMS message acknowledgement will be delivered through another HTTP/SOAP connection from the recipient to the sender.
 
 .. image:: /_static/images/first_step/ebms-send-async.png

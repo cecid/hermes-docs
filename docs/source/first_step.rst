@@ -141,7 +141,8 @@ For an AS2 partnership, the **AS2 From** and **AS2 To** fields in a partnership 
 * In a sending partnership, these values are taken as the values in the headers of outgoing messages.
 * In a receiving partnership, these values are taken as filtering criteria. If Hermes 2 receives an AS2 message whose **AS2 From** and **AS2 To** values do not have a matching partnership, the incoming message is rejected/ignored and no application can retrieve the message on the receiving side.
 
-  **NOTE**: The values of **AS2 From** and **AS2 To** in the incoming AS2 message are interchanged before finding the matching partnership (i.e. the filtering criteria [AS2 From, AS2 To] = [Incoming AS2 To, Incoming AS2 From] in the AS2 message).
+  .. note::
+     The values of **AS2 From** and **AS2 To** in the incoming AS2 message are interchanged before finding the matching partnership (i.e. the filtering criteria **[AS2 From, AS2 To] = [Incoming AS2 To, Incoming AS2 From]** in the AS2 message).
 
 Although the values of **AS2 From** and **AS2 To** have no constraints, it is highly recommended that they be company specific, such as Data Universal Numbering System (DUNS) numbers, or simply identification strings agreed upon between trading partners.
 
