@@ -10,7 +10,9 @@ If you would like more information, please refer to the articles :ref:`what-is-a
 
 Let's take a look at the program parameters.
 
-:samp:`as2-partnership [partnership-xml] [config-xml] [log-path]`
+.. code-block:: sh
+   
+   as2-partnership [partnership-xml] [config-xml] [log-path]
 
 +-----------------+-----------------------------------------------------------------------------+
 | partnership-xml | The filepath of the partnership configuration file.                         |
@@ -26,7 +28,9 @@ Let's take a look at the program parameters.
 |                 | Default is :file:`{<HERMES2_HOME>}/logs/as2-partnership.log`.               |
 +-----------------+-----------------------------------------------------------------------------+
 
-:samp:`ebms-partnership [partnership-xml] [config-xml] [log-path]`
+.. code-block:: sh
+
+   ebms-partnership [partnership-xml] [config-xml] [log-path]
 
 +-----------------+-------------------------------------------------------------------------------+
 | partnership-xml | The filepath of the partnership configuration file.                           |
@@ -42,9 +46,8 @@ Let's take a look at the program parameters.
 |                 | Default is :file:`{<HERMES2_HOME>}/logs/ebms-partnership.log`.                |
 +-----------------+-------------------------------------------------------------------------------+
 
-config-xml
+config-xml 
 ^^^^^^^^^^
-
 Here is sample content of the config-xml files. These files are named :file:`ebms-request.xml` and :file:`as2-request.xml`, and placed under :file:`{<HERMES2_HOME>}/config/ebms-partnership` and :file:`{<HERMES2_HOME>}/config/as2-partnership` respectively. 
 
 **Configuration file for ebMS:**
@@ -105,7 +108,9 @@ Before sending an ebMS message, make sure that a partnership is registered. Plea
 
 Let’s take a look at the program parameters.
 
-:samp:`ebms-send [partnership-xml] [config-xml] [log-path] [payload-path]`
+.. code-block:: sh
+
+   ebms-send [partnership-xml] [config-xml] [log-path] [payload-path]
 
 +--------------------+------------------------------------------------------------------------+
 | partnership-xml    | The filepath of the partnership configuration file.                    |
@@ -201,8 +206,9 @@ The required elements in a SOAP request are as follows:
 
 Let’s take a look at the program parameters.
 
+.. code-block:: sh
 
-:samp:`ebms-history [config-xml] [log-path]`
+   ebms-history [config-xml] [log-path]
 
 +------------+------------------------------------------------------------+
 | config-xml | The filepath of the message configuration file.            |
@@ -307,7 +313,9 @@ Before sending an AS2 message, check that a partnership is registered. Please re
 
 Let’s take a look at the program parameters.
 
-:samp:`as2-send [partnership-xml] [config-xml] [log-path] [payload-path]`.
+.. code-block:: sh
+
+   as2-send [partnership-xml] [config-xml] [log-path] [payload-path]
 
 +--------------------+----------------------------------------------------------------------+
 | partnership-xml    | The filepath of the partnership configuration file.                  |
@@ -388,7 +396,9 @@ Using this service, you can search for messages using message properties as well
 
 Let’s take a look at the program parameters.
 
-:samp:`as2-history [config-xml] [log-path]`
+.. code-block:: sh
+
+   as2-history [config-xml] [log-path]
 
 +------------+-------------------------------------------------------------------------+
 | config-xml | The filepath of the message configuration file.                         |
