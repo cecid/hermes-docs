@@ -81,7 +81,6 @@ integrate it with other systems to meet your own business needs.
    :hidden:
 
    java_client
-   packages
    Java API Documentation <http://javadoc.hermes.cecid.org/>
 
 .. 1. Hermes System Architecture <- Hermes2 Technical Guide.doc
