@@ -276,7 +276,7 @@ Certificate for Encryption
 |                 |                                                                                                                     |
 |                 | The recipient should use the keystore in the AS2 plugin to export the public certificate for the sender.            |
 |                 |                                                                                                                     |
-|                 | AS2 default keystore location: :file:`{<HERMES2_HOME>}/plugins/hk.hku.cecid.edi.as2/security`                       |
+|                 | AS2 default keystore location: :file:`{<HERMES2_HOME>}/plugins/corvus-as2/security`                                 |
 |                 |                                                                                                                     |
 |                 | The keystore must be in PKCS12 format.                                                                              |
 |                 |                                                                                                                     |
@@ -369,7 +369,7 @@ Certificate for Verification
 |                 |                                                                                                                   |
 |                 | The sender should use the keystore in the AS2 plugin to export the public certificate for the recipient.          |
 |                 |                                                                                                                   |
-|                 | AS2 default keystore location: :file:`{<HERMES2_HOME>}/plugins/hk.hku.cecid.edi.as2/security`                     |
+|                 | AS2 default keystore location: :file:`{<HERMES2_HOME>}/plugins/corvus-as2/security`                               |
 |                 |                                                                                                                   |
 |                 | The keystore must be in PKCS12 format.                                                                            |
 |                 |                                                                                                                   |
