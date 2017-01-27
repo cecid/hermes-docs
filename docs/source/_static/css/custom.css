@@ -10,6 +10,16 @@ img {
     font-weight: bold;
 }
 
+.wy-body-for-nav {
+    background-image: none;
+}
+
+.wy-grid-for-nav {
+    position: relative;
+    max-width: 1274px;
+    margin: 0 auto;
+}
+
 .wy-nav-content-wrap {
     background-color: #fafafa;
     margin-left: 250px;
@@ -73,7 +83,7 @@ img {
 .wy-nav-content {
     background-color: #ffffff;
     margin: unset;
-    max-width: 1024px;
+    max-width: 100%;
 }
 
 .wy-breadcrumbs li.wy-breadcrumbs-aside {
@@ -114,6 +124,12 @@ footer .commit {
 .rst-content table.docutils thead th {
     border-bottom: 1px solid #e1e4e5;
     border-left: 1px solid #e1e4e5 !important;
+}
+
+@media screen and (min-width:769px) {
+    .wy-nav-side {
+        left: unset;
+    }
 }
 
 @media screen and (max-width: 768px) {
