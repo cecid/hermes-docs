@@ -149,7 +149,7 @@ Admin page and connect to Hermes API
    .. code-block:: sh
       
       $ curl -X POST \
-        -- data '{"id":"loopback", "cpa_id":"cpa", "service":"service", "action":"action", "transport-endpoint":"http://127.0.0.1:18080/corvus/httpd/ebms/inbounc"}' \
+        -- data '{"id":"loopback", "cpa_id":"cpa", "service":"service", "action":"action", "transport-endpoint":"http://127.0.0.1:18080/corvus/httpd/ebms/inbound"}' \
         http://127.0.0.1:18080/corvus/api/partnership/ebms
 
    Response:
