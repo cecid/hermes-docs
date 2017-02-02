@@ -1,10 +1,12 @@
 Using Sample Clients
 ====================
 
+ These sample Java clients demonstrate Hermes messaging flow. They provide a set of sample code for writing web service client applications connecting to Hermes.
+
 Maintaining partnerships
 ------------------------
 
-A partnership must be registered on Hermes 2 to send messages since partnerships contain information about your trading partner. A separate partnership is required to receive messages.
+A partnership must be registered on Hermes to send messages since partnerships contain information about your trading partner. A separate partnership is required to receive messages.
 
 If you would like more information, please refer to the articles :ref:`what-is-an-ebms-2-0-partnership` and :ref:`what-is-an-as2-partnership`.
 
@@ -75,12 +77,12 @@ Sample content of the partnership-xml files are shown below. For more details, p
 ebMS
 ----
 
-We have created two sample programs, :program:`ebms-send` and :program:`ebms-history`, to demonstrate how to communicate with Hermes 2 web services.
+We have created two sample programs, :program:`ebms-send` and :program:`ebms-history`, to demonstrate how to communicate with Hermes web services.
 
 Sending an ebMS message
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-:program:`ebms-send` is a sample program to demonstrate how to upload an ebMS message to Hermes 2 using the sender web service in the ebMS plugin. You can pack your payload as a SOAP message and send it to this service at the endpoint :samp:`http://{<HOST>}:<PORT>/corvus/httpd/ebms/sender`.
+:program:`ebms-send` is a sample program to demonstrate how to upload an ebMS message to Hermes using the sender web service in the ebMS plugin. You can pack your payload as a SOAP message and send it to this service at the endpoint :samp:`http://{<HOST>}:<PORT>/corvus/httpd/ebms/sender`.
 
 The elements in a SOAP request are shown below:
 
@@ -146,11 +148,11 @@ The following table explains the use of each element:
 +----------------------+--------------------------------------------------------------------------+
 | ``<conversationId>`` | Identifies which conversation this message belongs to.                   |
 |                      |                                                                          |
-|                      | **This is required for Hermes 2 to create a valid message.**             |
+|                      | **This is required for Hermes to create a valid message.**             |
 +----------------------+--------------------------------------------------------------------------+
 | ``<fromPartyId>``    | Identifies the sender and receiver.                                      |
 |                      |                                                                          |
-| ``<fromPartyType>``  | **These are required for Hermes 2 to retrieve the message destination.** |
+| ``<fromPartyType>``  | **These are required for Hermes to retrieve the message destination.** |
 |                      |                                                                          |
 | ``<toPartyId>``      |                                                                          |
 |                      |                                                                          |
@@ -183,7 +185,7 @@ Here is sample output from the program:
 ebMS history query
 ^^^^^^^^^^^^^^^^^^
 
-:program:`ebms-history` demonstrates the use of the message history web service (:program:`msg-history`) in the ebMS plugin. There are several criteria defined for message history queries. By passing these criteria to Hermes 2 through SOAP messages, the target results can be retrieved.
+:program:`ebms-history` demonstrates the use of the message history web service (:program:`msg-history`) in the ebMS plugin. There are several criteria defined for message history queries. By passing these criteria to Hermes through SOAP messages, the target results can be retrieved.
 
 The message history service endpoint is :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/msg_history`.
 
@@ -282,13 +284,13 @@ The program lists the message status along with a simple description:
 AS2
 ---
 
-We created similar sample programs for AS2 as well. The programs :program:`as2-send` and :program:`as2-history` are used to demonstrate how to communicate with Hermes 2 web services through AS2 SOAP messages.
+We created similar sample programs for AS2 as well. The programs :program:`as2-send` and :program:`as2-history` are used to demonstrate how to communicate with Hermes web services through AS2 SOAP messages.
 
 
 Sending an AS2 message
 ^^^^^^^^^^^^^^^^^^^^^^
 
-:program:`as2-send` is a sample program to demonstrate how to upload a message to Hermes 2 using the sender web service in the AS2 plugin. You can pack your payload as a SOAP message and send it to this service with the endpoint :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/as2/sender`.
+:program:`as2-send` is a sample program to demonstrate how to upload a message to Hermes using the sender web service in the AS2 plugin. You can pack your payload as a SOAP message and send it to this service with the endpoint :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/as2/sender`.
 
 The required elements in a SOAP request are shown below:
 

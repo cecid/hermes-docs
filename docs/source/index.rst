@@ -80,7 +80,7 @@ integrate it with other systems to meet your own business needs.
    :caption: Developer's Guide
    :hidden:
 
-   java_client
+   application.rst
    Java API Documentation <http://javadoc.hermes.cecid.org/>
 
 .. 1. Hermes System Architecture <- Hermes2 Technical Guide.doc

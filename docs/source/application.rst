@@ -1,773 +1,1035 @@
-.. _appliaction:
+.. _application:
 
-Hermes 2 Application Development Guide
+Implementing Hermes Applications
 ======================================
 
 Introduction
 ------------
 
-Purpose of This Document
-^^^^^^^^^^^^^^^^^^^^^^^^
+This is the guidelines for developing messaging applications, whose messages are transferred by Hermes reliably and securely. 
+Hermes provides web services for the application to communicate with Hermes. These web services allow the application to:
 
-This document is to provide guidelines for developing messaging applications, whose messages are transferred by Hermes 2 reliably and securely. 
-Hermes 2 provides web services for the application to communicate with Hermes 2. These web services allow the application to:
-
-*  	Request Hermes 2 to send a payload to the Hermes 2 or a compatible messaging gateway on the receiver party;
+*  	Request Hermes to send a payload to the Hermes or a compatible messaging gateway on the receiver party;
 *  	Retrieve the message identifiers of the received messages which have not received yet;
 *  	Retrieve the payloads of a particular message which is identified by a message identifier; and
 *  	Obtain the message status of outgoing and incoming messages.
-    
-Intended Audience
-^^^^^^^^^^^^^^^^^
 
-The intended audience of this document includes the application architect and developers who intend to design or implement a B-to-B application, whose business messages are transferred by Hermes 2 through ebMS 2.0 or AS2 protocol.
+For information about installing Hermes and communicating with Hermes using an external application, please refer to :doc:`installation` and :doc:`web_service_communication`.  
 
 General Integration Architecture
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. image:: _static/images/application/3_general_integration_architecture.png
 
-Figure 1 - Typical Integration Architecture
 
-The above figure shows a typical application integration architecture in which there are two parties exchange business messages with the assistance of Hermes 2 through ebMS 2.0 or AS2 over various transport protocols, such as HTTP, HTTPS or SMTP.
+The above figure shows a typical application integration architecture in which there are two parties exchange business messages with the assistance of Hermes through ebMS 2.0 or AS2 over various transport protocols, such as HTTP, HTTPS or SMTP.
 
-On the sending side, there is a backend system, which contains some business data to be transferred to the receiver party. The developers on the sender side need to develop an application, which extract the backend system and submits the data to Hermes 2 through web services. After submitting the payloads to Hermes 2, the application can also invoke a web service to check whether the delivery is successful.
+On the sending side, there is a backend system, which contains some business data to be transferred to the receiver party. The developers on the sender side need to develop an application, which extract the backend system and submits the data to Hermes through web services. After submitting the payloads to Hermes, the application can also invoke a web service to check whether the delivery is successful.
 
-On the receiver side, there is a backend system, which is responsible for storing the incoming business data, received from its business partner. The developers on the sender side need to develop an application, which invokes a web service provided by Hermes 2, to receive the business messages and payloads and persists them into the backend systems. In some cases, this receiving party may reply the sending party.
+On the receiver side, there is a backend system, which is responsible for storing the incoming business data, received from its business partner. The developers on the sender side need to develop an application, which invokes a web service provided by Hermes, to receive the business messages and payloads and persists them into the backend systems. In some cases, this receiving party may reply the sending party.
 
-The application interfaces with Hermes 2 using web services. So, the benefits of web services generally apply. For example,
+The application interfaces with Hermes using web services. So, the benefits of web services generally apply. For example,
 
-*  	Implementation independent. Since the application interfaces with Hermes 2 using web services, the application can be implemented in any programming languages, as long as the web service library is supported.
-*  	Firewall friendly. The web services provided by Hermes 2 use HTTP as the transport protocol. The application needs to invoke the web services over HTTP but the Hermes 2 does not need to connect to the application. Therefore, even if there is a firewall between Hermes 2 and the application, the firewall is only required to allow HTTP connections from the application to Hermes 2. 
+*  	Implementation independent. Since the application interfaces with Hermes using web services, the application can be implemented in any programming languages, as long as the web service library is supported.
+*  	Firewall friendly. The web services provided by Hermes use HTTP as the transport protocol. The application needs to invoke the web services over HTTP but the Hermes does not need to connect to the application. Therefore, even if there is a firewall between Hermes and the application, the firewall is only required to allow HTTP connections from the application to Hermes. 
 
-Partnerships
-------------
+Prerequisite
+^^^^^^^^^^^^
 
-Before deploying an application, we need to define a :literal:`partnership` in Hermes 2 that defines a channel to your business partner. A partnership is a **simplex** communication channel to your business partner. In a typical two-ways business document exchange, the Hermes 2 in each party should have two partnerships. One is for sending, another is for receiving. After the partnerships have been defined, the application can reference the partnerships to send or receive business messages.
+The source code shown below is originally from the :download:`Hermes loopback test <_static/hermes2_loopback.zip>`. Please refer to it for more details.
+The sample code assumes that Hermes is using ``localhost`` with port ``8080`` (the default port of Tomcat).
 
-The main benefit of partnerships is that it provides abstraction on technical parameters. The abstraction is beneficial because:
+The sample code requires the libraries shown below:
 
-*	Since all the technical parameters, such as the communication protocols between the messaging gateways, endpoint URL, are contained in the partnership, the application does not need changes if your business partner changes the parameters.
-*	The application only needs to submit the payloads. It does not contain any code that is specific to communication protocol between the messaging gateways. 
-*	The application does not need to handle the raw and cryptic ebMS or AS2 messages. Therefore, the developers should only focus on business logic and integration with the backend systems.
+* :file:`activation.jar`
+* :file:`mail.jar`
 
-Partnership for ebMS 2.0 
-^^^^^^^^^^^^^^^^^^^^^^^^
+Global import for web service sample code
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Each web service sample code requires at **least** the imports shown below to run properly:
 
-If the communication protocol with your business partner's messaging gateway is ebMS, CPA (Collaboration Protocol Agreement) ID, Service and Action are used to uniquely identify a partnership. Actually, these parameters are protocol parameters in ebMS protocol and their values appear in an ebMS message header. The meanings of these parameters for Send Partnership (the partnership for sending) and Receive Partnership (the partnership for receiving) are different:
+.. code-block:: java
 
-*	The values of CPA ID, Service and Action in Send Partnership are taken as the values in the ebMS header of the outgoing messages sent by the Send Partnership. 
-*	The values of CPA ID, Service and Action in Receive Partnership are taken as filtering criteria. If Hermes 2 receives an ebMS message whose CPA ID, Service and Action values do not have a matching partnership, a negative acknowledgement will be sent back to the sender and no application can retrieve the message on the receiver side.
+   import java.net.URL;
+   import java.net.MalformedURLException;
+   import javax.activation.DataHandler;
+   import javax.activation.FileDataSource;
+   import javax.xml.soap.AttachmentPart;
+   import javax.xml.soap.MessageFactory;
+   import javax.xml.soap.Name;
+   import javax.xml.soap.SOAPBody;
+   import javax.xml.soap.SOAPConnection;
+   import javax.xml.soap.SOAPConnectionFactory;
+   import javax.xml.soap.SOAPElement;
+   import javax.xml.soap.SOAPException;
+   import javax.xml.soap.SOAPFactory;
+   import javax.xml.soap.SOAPMessage;
 
-For Hermes 2, the Service parameter for Send Partnership and Receive Partnership has to be HTTP URL (Universal Resource Locator) even though ebMS protocol allows a Service value that is not HTTP URL. The Service has different meanings in Send Partnership and Receive Partnership:
+Writing an ebMS 2.0 sender web service client
+---------------------------------------------
+We need to create a SOAP message with 10 paremeters and send it to Hermes as the web service request.
+The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId``, ``fromPartyType``, ``toPartyId``, ``toPartyType``, ``refToMessageId`` and ``serviceType``.
 
-*	For Send Partnership, the Service acts as the endpoint URL of the sending Hermes to which the acknowledgement is sent by the receiver. That is, this should be the endpoint URL of the sending Hermes for receiving ebMS messages.
-*	For Receive Partnership, since the Service is a filtering criterion for the incoming messages, it should be the endpoint URL of the sending Hermes.
-	Let us look at a typical example below, in which two Hermes communicate in ebMS protocol and two partnerships are setup in each of them:
+#. Define a namespace URI and prefix conforming to WSDL, and define the endpoint URL of the ebMS sender web service.
+   
+   .. code-block:: java
+      
+      private String nsURI = "http://service.ebms.edi.cecid.hku.hk/";
+      private String nsPrefix = "tns";
+      private URL senderWSURL = "http://localhost:8080/corvus/httpd/ebms/sender";
 
-.. image:: _static/images/application/4_1_partnership_for_ebms.png
+#. Create a SOAP message factory and SOAP message object.
+   
+   .. code-block:: java
 
-Figure 2 - Partnerships Example
+      SOAPMessage request = MessageFactory.newInstance().createMessage(); 
 
-In the above scenario, the Hermes in company A has an IP 1.1.1.1. So, its endpoint URL for receiving incoming ebMS messages is http://1.1.1.1:8080/corvus/httpd/ebms/inbound, where we suppose the application server is running on port 8080. Similarly, the endpoint URL for receiving ebMS messages of the Hermes in company B is http://1.1.1.2:8080/corvus/httpd/ebms/inbound.
-
-Since a partnership is a simplex channel, each Hermes should have a pair of partnership, one for sending and another for receiving. The partnerships are identified by CPA ID, Service and Action. Their values should be negotiated between the two parties. 
-
-The Service of the Send Partnership in the Hermes of company A should be the endpoint URL for receiving incoming ebMS messages or acknowledgements. Therefore, the Service should be http://1.1.1.1:8080/corvus/httpd/ebms/inbound. The messages sent by this Send Partnership will contain this Service value in the header, so the receiver Hermes will know where the acknowledgement should be sent to.
-
-The Receive Partnership's CPA ID, Service and Action form a filtering criterion for the incoming messages. Therefore, these values in the Receive Partnership in the receiving Hermes should be always the same as the Send Partnership in the sending Hermes.
-
-In the above scenario, we assume that company B will reply a business message after it has receives a message. So, the Hermes in company B also has a Send Partnership and the Hermes in company A has a Receive Partnership. 
-
-A partnership for ebMS has the following properties:
-
-+-------------------------+-----------------------------------------------------------------------+-----------------------------------+
-| Properties              | Meaning for Send Partnership                                          | Meaning for Receiving Partnership |
-+=========================+=======================================================================+===================================+
-| :code:`Transport        | The endpoint URL of the receiving Hermes to which the message is sent | Ignored                           |
-| Endpoint`               |                                                                       |                                   |
-+-------------------------+-----------------------------------------------------------------------+-----------------------------------+
-| :code:`Hostname         | * Relevant if the transport endpoint is HTTPS.                        | Ignored                           |
-| Verified in SSL`        |                                                                       |                                   |
-|                         | * Check the HTTPS URL's hostname matches the certificate.             |                                   |
-|                         |   Delivery will be failed if the checking fails.                      |                                   |  
-|                         |                                                                       |                                   |
-|                         | * Recommended to set it to :literal:`Yes`.                            |                                   |
-+-------------------------+-----------------------------------------------------------------------+-----------------------------------+
-| :code:`Sync Reply Mode` | * Only :literal:`mshSignalOnly` supported                             | Ignored                           |
-|                         |                                                                       |                                   |
-|                         | * Recommended to set to :literal:`none` because it has no effect      |                                   |
-|                         |   from the view of the sending application                            |                                   |
-+-------------------------+-----------------------------------------------------------------------+-----------------------------------+
-| :code:`Acknowledgement  | * If it is set to :literal:`always`, the receiving Hermes will be     | The receiving Hermes will send    |
-| Requested`              |   requested to send an acknowledgement message.                       | negative acknowledgement to the   |
-|                         |                                                                       | sender if the Receive Partnership |
-|                         | * The corresponding Receive Partnership in the receiving Hermes       | has not enabled this.             |
-|                         |   should also enable this. Otherwise the receiving Hermes will        |                                   |
-|                         |   return negative acknowledgement.                                    |                                   |
-|                         |                                                                       |                                   |
-|                         | * Recommended to set to :literal:`always`.                            |                                   |
-+-------------------------+-----------------------------------------------------------------------+-----------------------------------+
-| :code:`Acknowledgement  | * Request the acknowledgement sent by the receiving Hermes returns    |                                   |
-| Signed Requested`       |   a signed acknowledgement.                                           |                                   |
-|                         |                                                                       |                                   |
-|                         | * Recommended to set it to :literal:`true` if the receiver can for    | Ignored.                          |
-|                         |   non-repudiation purpose.                                            |                                   |
-+-------------------------+-----------------------------------------------------------------------+-----------------------------------+
-| :code:`Duplicate        | * Request the receiver to eliminate duplicated messages.              | In order to enable duplicate      |
-| Elimination`            |                                                                       | elimination, both Send Partnership|
-|                         |                                                                       | and Receive Partnership should    |
-|                         | * Both Send Partnership of the sender and Receive                     | both enable it.                   |
-|                         |   Partnership of the receiver must enable it in order to enable       |                                   |
-|                         |   duplicate elimination. Otherwise, the sender will receive           |                                   |
-|                         |   negative acknowledgment.                                            |                                   |
-|                         |                                                                       |                                   |
-|                         | * Recommended to set it to :literal:`always`.                         |                                   |
-+-------------------------+-----------------------------------------------------------------------+-----------------------------------+
-| :code:`Message          | * If it is enabled, the receiver application will receive messages    | In order to enable message order, |
-| Order`                  |   in the order of sending.                                            | both Send Partnership and Receive |
-|                         |                                                                       | Partnership should both enable it.|
-|                         | * Both Send Partnership of the sender and Receive Partnership of      |                                   |
-|                         |   the receiver must enable it in order to enable message order.       |                                   |
-|                         |   Otherwise, the sender will receive negative acknowledgment.         |                                   |
-+-------------------------+-----------------------------------------------------------------------+-----------------------------------+
-| :code:`Signing          | * Request the sending Hermes to sign outgoing messages using XML      | In order to enable digital        |
-| Required`               |   signature                                                           | signatures, both Send Partnership |
-|                         |                                                                       | and Receive Partnership should    |
-|                         | * Both Send Partnership of the sender and Receive Partnership of      | both enable it.                   |
-|                         |   the receiver must enable it in order to enable digital signature.   |                                   |
-|                         |   Otherwise, the sender will receive negative acknowledgment.         |                                   |
-|                         |                                                                       |                                   |
-|                         | * Receive negative acknowledgment if the message's signature cannot   |                                   |
-|                         |   be verified.                                                        |                                   |
-|                         |                                                                       |                                   |
-|                         | * The keystore (PKCS12 file) must be in the file system of the        |                                   |
-|                         |   sending Hermes and configured properly.                             |                                   |
-+-------------------------+-----------------------------------------------------------------------+-----------------------------------+
-| :code:`Encryption       | Request Hermes to encrypt outgoing message sent via SMTP protocol.    | Ignored.                          |
-| Required`               |                                                                       |                                   |
-+-------------------------+-----------------------------------------------------------------------+-----------------------------------+
-| :code:`Certificate      | The public key certificate (.cer file) of the receiver.               | Ignored.                          |
-| for Encryption`         |                                                                       |                                   |
-+-------------------------+-----------------------------------------------------------------------+-----------------------------------+
-| :code:`Maximum          | The maximum number of retries after the first failed delivery.        | Ignored.                          |
-| Retries`                |                                                                       |                                   |
-+-------------------------+-----------------------------------------------------------------------+-----------------------------------+
-| :code:`Retry            | The interval in milliseconds between retries                          | Ignored.                          |
-| Interval`               |                                                                       |                                   |
-+-------------------------+-----------------------------------------------------------------------+-----------------------------------+
-| :code:`Certificate      | Ignored.                                                              | * The public key certificate      |
-| for Verification`       |                                                                       |   (.cer) to verify the signature  |
-|                         |                                                                       |   of incoming messages            |
-|                         |                                                                       |                                   |
-|                         |                                                                       | * This cert is the certificate    |
-|                         |                                                                       |   for the subject, not the        |
-|                         |                                                                       |   certificate of its certificate  |
-|                         |                                                                       |   of its certificate authority.   |
-|                         |                                                                       |                                   |
-|                         |                                                                       | * Signature cannot be verified    |
-|                         |                                                                       |   if the certificate has not      |
-|                         |                                                                       |   been uploaded.                  |
-+-------------------------+-----------------------------------------------------------------------+-----------------------------------+
-| :code:`Partnership ID`  | Unique identifier of each partnership.                                | Unique identifier of each         |
-|                         |                                                                       | partnership.                      |
-+-------------------------+-----------------------------------------------------------------------+-----------------------------------+
-| :code:`Disabled`        | If the partnership is disabled,                                       | If the partnership is disabled,   |
-|                         | the Send Partnership will not deliver any message.                    | the Receive Partnership will not  |
-|                         |                                                                       | receive any message.              |
-+-------------------------+-----------------------------------------------------------------------+-----------------------------------+
-
-Partnerships can be managed by the Administration Console. For details of how to manage partnerships through the Administration Console, please refer the Hermes 2 Administration Tool User Guide. 
-
-Partnership for AS2
-^^^^^^^^^^^^^^^^^^^
-
-If the communication protocol with your business partner's messaging gateway is AS2, the AS2 From and AS2 To field in a partnership are used to uniquely identify a partnership. Actually, these parameters are protocol parameters in AS2 protocol and their values appear in an AS2 message header. 
-
-A partnership for AS2 has the following properties:
-
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| Properties             | Meaning for Send Partnership                                                       | Meaning for             |
-|                        |                                                                                    | Receiving Partnership   |
-+========================+====================================================================================+=========================+
-| :code:`AS2 From`,      | * The outgoing messages sent by the Send Partnership                               | This pair is for the    |
-| :code:`AS2 To`         |   will have the :literal:`From` and :literal:`To` values in the header.            | application for         |
-|                        |                                                                                    | identifying the Receive |
-|                        | * This pair is for the application for identifying the Send Partnership.           | Partnership.            |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Disabled`       | Whether the Send Partnership is disabled.                                          | Whether the             |
-|                        |                                                                                    | Receive Partnership     |
-|                        |                                                                                    | is disabled.            |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Subject`        | The :literal:`Subject` field in the outgoing AS2 messages sent                     | Ignored.                |
-|                        | by the Send Partnership.                                                           |                         |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Recipient       | The receiving URL of the receiving Hermes or compatible messaging gateway.         | Ignored.                |
-| Address`               |                                                                                    |                         |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Hostname        | * Relevant if the transport endpoint is HTTPS.                                     | Ignored.                |
-| Verified in SSL`       |                                                                                    |                         |
-|                        | * Check the HTTPS URL's hostname matches the certificate. Delivery will be failed  |                         |
-|                        |   if the checking fails.                                                           |                         |
-|                        |                                                                                    |                         |
-|                        | * Recommended to set it to :literal:`Yes`.                                         |                         |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Request         | Request the receiving Hermes or the compatible messaging gateway to send           | Ignored.                |
-| Receipt`               | receipt message upon receiving the incoming messages.                              |                         |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Signed          | Request the receiving Hermes or the compatible messaging gateway to send           | Ignored.                |
-| Receipt`               | digitally signed receipt message upon receiving the incoming messages.             |                         |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Asynchronous    | Request the receiving Hermes or the compatible messaging gateway to send           | Ignored.                |
-| Receipt`               | asynchronous receipt message upon receiving the incoming messages.                 |                         |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Receipt         | The URL of the Hermes or the compatible messaging gateway for receiving receipts.  | Ignored.                |
-| Return URL`            | It should be always the receiving URL for the sending Hermes.                      |                         |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Message         | Whether the outgoing messages sent by the Send Partnership should be compressed.   | Ignored.                |
-| Compression Required`  |                                                                                    |                         |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Message         | Whether the outgoing messages sent by the Send Partnership should be signed.       | Ignored.                |
-| Signing Required`      |                                                                                    |                         |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Signing         | The signing algorithm for the outgoing messages sent by the Send Partnership.      | Ignored.                |
-| Algorithm`             | It may be either :literal:`sha1` or :literal:`md5`.                                |                         |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Message         | Whether the outgoing messages should be encrypted with S/MIME encryption.          | Ignored.                |
-| Encryption Required`   |                                                                                    |                         |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Encryption      | The algorithm used to encrypt the outgoing messages. It may be either              | Ignored.                |
-| Algorithm`             | :literal:`3des` or :literal:`rc2`.                                                 |                         |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Certificate     | The public key certificate of the receiver for encryption on the outgoing messages.| Ignored.                |
-| For Encryption`        |                                                                                    |                         |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`MIC Algorithm`  | The MIC algorithm for outgoing messages. It may be either                          | Ignored.                |
-|                        | :literal:`sha1` or :literal:`md5`.                                                 |                         |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Maximum Retries`| The maximum number of retries after the first failed delivery.                     | Ignored.                |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Retry Interval  | The interval in milliseconds between retries.                                      | Ignored.                |
-| (ms)`                  |                                                                                    |                         |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Message         | N/A                                                                                | Whether the             |
-| Signature Enforced`    |                                                                                    | incoming messages       |
-|                        |                                                                                    | have to be signed.      |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Message         | N/A                                                                                | Whether the             |
-| Encryption Enforced`   |                                                                                    | incoming messages       |
-|                        |                                                                                    | have to be encrypted.   |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-| :code:`Certificate     | N/A                                                                                | The certificate of      |
-| for Verification`      |                                                                                    | the trusted party       |
-|                        |                                                                                    | which sends signed      |
-|                        |                                                                                    | messages to the         |
-|                        |                                                                                    | receiving Hermes.       |
-+------------------------+------------------------------------------------------------------------------------+-------------------------+
-
-Let us look at a typical example below, in which two Hermes communicate with AS2 protocol in two-way manner. Company A sends a message Company B, and then Company B sends back a message to Company A. Therefore, each Hermes has two partnerships:
-
-.. image:: _static/images/application/4_2_partnership_for_as2.png
-
-In the above scenario, the Hermes in company A has an IP address 1.1.1.1. So the receiving URL of the Hermes in company A is http://1.1.1.1:8080/corvus/httpd/as2/inbound. Similarly, the receiving URL of the Hermes in company B has an IP address 1.1.1.2. So the receiving URL is http://1.1.1.2:8080/corvus/httpd/as2/inbound.
-
-Company A needs to send messages to and receive messages from company B. So it has two partnerships, one for sending and another for receiving. Similarly company B needs to send messages to and receive messages from company A as well. So it also has another pair of partnership.
-
-Developing ebMS Applications
-----------------------------
-
-Sender Service
-^^^^^^^^^^^^^^
-
-The Sender Service is for the application of the sending party to request Hermes to send an ebMS message to the Hermes or any other compatible messaging gateway of the receiving party. The service returns the message identifier to the application for reference purpose.
-
-The endpoint of this Web Service is:
-
-:samp:`http://{<HERMES_HOST>}:{<HERMES_PORT>}/corvus/httpd/ebms/sender`
-
-where :samp:`<HERMES_HOST>` is the IP address or host name of the Hermes at the sending party.
-
-Request Message
-"""""""""""""""
-
-The SOAP Body of the request message has the following form. In the following request SOAP message, we assume that the content elements under SOAP Body have the namespace URI http://service.ebms.edi.cecid.hku.hk/:
-
-.. code-block:: xml
-
-   <SOAP-ENV:Body>
-   <cpaId>...</cpaId>
-   <service>...<service >
-   <action>...</action>
-   <convId>...<convId>
-   <fromPartyId>...</fromPartyId>
-   <fromPartyType>...</fromPartyType>
-   <toPartyId>...</toPartyId>
-   <toPartyType>...</toPartyType>
-   <refToMessageId>...</refToMessageId>
-   </ SOAP-ENV:Body>
-
-The meanings of the elements under SOAP Body in the above request message are as follows:
+#. Populate the SOAP body by filling in the required parameters. For example:
+   
+   .. code-block:: xml
+      
+      <cpaId> ebmscpaid </cpaId>
+      <service> http://localhost:8080/corvus/httpd/ebms/inbound <service>
+      <action> action </action>
+      <convId> convId </convId>
+      <fromPartyId> fromPartyId </fromPartyId>
+      <fromPartyType> fromPartyType </fromPartyType>
+      <toPartyId> toPartyId </toPartyId>
+      <toPartyType> toPartyType </toPartyType>
+      <refToMessageId> </refToMessageId>
+      <serviceType> </serviceType>
     
-+---------------------------------------------------------+---------------------------------------------------------------------------+
-| Elements                                                | Descriptions                                                              |
-+=========================================================+===========================================================================+
-| :code:`<cpaId>`, :code:`<service>` and :code:`<action>` | They are the CPA Id, service and action elements in the ebMS messages     |
-|                                                         | sent by Hermes. These three fields are used to identify the partnership   |
-|                                                         | used to send the ebMS messages.                                           |
-+---------------------------------------------------------+---------------------------------------------------------------------------+
-| :code:`<convId>`                                        | It corresponds to the conversation id of the ebMS messages sent by Hermes.|
-+---------------------------------------------------------+---------------------------------------------------------------------------+
-| :code:`<fromPartyId>`                                   | It corresponds to the From Party Id of the ebMS messages sent by Hermes.  |
-+---------------------------------------------------------+---------------------------------------------------------------------------+
-| :code:`<fromPartyType>`                                 | It corresponds to the type attribute of the From Party Id of the ebMS     |
-|                                                         | messages sent by Hermes.                                                  |
-+---------------------------------------------------------+---------------------------------------------------------------------------+
-| :code:`<toPartyId>`                                     | It corresponds to the To Party Id of the ebMS messages sent by Hermes.    |
-+---------------------------------------------------------+---------------------------------------------------------------------------+
-| :code:`<toPartyIdType>`                                 | It corresponds to the type attribute of the To Party Id of the ebMS       |
-|                                                         | messages sent by Hermes.                                                  |
-+---------------------------------------------------------+---------------------------------------------------------------------------+
-| :code:`<refToMessageId>`                                | It corresponds to the RefToMessageId of the ebMS messages sent by Hermes. |
-+---------------------------------------------------------+---------------------------------------------------------------------------+
-
-To request Hermes to send payloads to the Hermes or compatible messaging gateway of the receiving party, your application should add SOAP Attachment to the request message. The content type (e.g. :code:`text/plain`, :code:`text/xml`) of each attachment part should be set.
-
-Response Message
-""""""""""""""""
-
-The SOAP Body of the response message has the following form. In the following response SOAP message, we assume that the content elements under SOAP Body have the namespace URI http://service.ebms.edi.cecid.hku.hk/:
-
-.. code-block:: xml
-
-   <SOAP-ENV:Body>
-      <message_id>...</message_id>
-   </SOAP-ENV:Body>
-
-The :code:`<message_id>` element is the message identifier assigned by the Hermes of the sending party. The sending application can use it for later reference purpose and status tracking through Status Service.
+   Sample WSDL request for the ebMS sender web service:
+   
+   .. code-block:: java
+      
+      SOAPBody soapBody = request.getSOAPBody();
+      soapBody.addChildElement(createElement("cpaId", nsPrefix, nsURI, cpaId));
+      soapBody.addChildElement(createElement("service", nsPrefix, nsURI, service));
+      soapBody.addChildElement(createElement("action", nsPrefix, nsURI, action));
+      soapBody.addChildElement(createElement("convId", nsPrefix, nsURI, conversationId));
+      soapBody.addChildElement(createElement("fromPartyId", nsPrefix, nsURI, fromPartyId));
+      soapBody.addChildElement(createElement("fromPartyType", nsPrefix, nsURI, fromPartyType));
+      soapBody.addChildElement(createElement("toPartyId", nsPrefix, nsURI, toPartyId));
+      soapBody.addChildElement(createElement("toPartyType", nsPrefix, nsURI, toPartyType));
+      soapBody.addChildElement(createElement("refToMessageId", nsPrefix, nsURI, refToMessageId));
+      soapBody.addChildElement(createElement("serviceType", nsPrefix, nsURI, serviceType));
+   
+   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   
+   The implementation of ``createElement`` is shown below:
+   
+   .. code-block:: java
+   
+      SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI); 
+      soapElement.addTextNode(value);
+      return soapElement;
+
+#. Attach a payload if necessary. The example here uses a purchase order XML as the payload of the ebMS message, so the associated content type is ``application/xml``.
+
+   .. code-block:: java
+
+      AttachmentPart attachmentPart = request.createAttachmentPart();
+      FileDataSource fileDS = new FileDataSource(new File("purchase_order.xml"));
+      attachmentPart.setDataHandler(new DataHandler(fileDS));
+      attachmentPart.setContentType("application/xml");
+      request.addAttachmentPart(attachmentPart); 
+
+#. Save changes to the SOAP message.
+
+   .. code-block:: java
+      
+      request.saveChange();
+
+#. Send the SOAP request to Hermes ebMS sender web service and get a SOAP response.
+   
+   .. code-block:: java
+      
+      SOAPMessage response = soapConn.call(request, senderWSURL);
+      SOAPBody responseBody = response.getSOAPBody();
+
+#. Process the SOAP response and extract the identifier of the requested ebMS message to ``System.out`` if there is no SOAP fault.
+   
+   .. code-block:: java
+      
+      if (!responseBody.hasFault()){
+          SOAPElement messageIdElement = getFirstChild(responseBody, "message_id", nsURI);
+          System.out.println(messageIdElement == null ? null : messageIdElement.getValue());
+      } else {
+          throw new SOAPException(responseBody.getFault().getFaultString());
+      }
+
+   The method ``getFirstChild`` gets the first element with the name ``message_id`` and namespace URI equal to ``nsURI``.
+   An existing ``message_id`` signifies that the message has been successfully sent to Hermes and has a registered identifier.
+
+   The SOAP request is now transformed into an ebMS message and saved in persistent storage.
+   Hermes will deliver the ebMS message to the partner specified in the SOAP request parameters (``cpaId``, ``service`` and ``action`` identify the partnership).
+
+Writing an ebMS 2.0 receiver list web service client
+----------------------------------------------------
+We need to create a SOAP message with 9 parameters and send it to Hermes as the web service request.
+The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId``, ``fromPartyType``, ``toPartyId``, ``toPartyType`` and ``numOfMessages``.
+
+#. Define a namespace URI and prefix conforming to WSDL.
+
+   .. code-block:: java
+
+      private String nsURI = "http://service.ebms.edi.cecid.hku.hk/";
+      private String nsPrefix = "tns"; 
+      private String URL receiverListWSURL = "http://localhost:8080/corvus/httpd/ebms/receiver_list";
+
+#. Create a SOAP message factory and SOAP message object.
+
+   .. code-block:: java
+
+      SOAPMessage request = MessageFactory.newInstance().createMessage();
+
+#. Populate the SOAP body by filling in the required parameters. For example:
+
+   .. code-block:: xml
+
+      <cpaId> ebmscpaid </cpaId>
+      <service> http://localhost:8080/corvus/httpd/ebms/inbound <service>
+      <action> action </action>
+      <convId> convId </convId>
+      <fromPartyId> fromPartyId </fromPartyId>
+      <fromPartyType> fromPartyType </fromPartyType>
+      <toPartyId> toPartyId </toPartyId>
+      <toPartyType> toPartyType </toPartyType>
+      <numOfMessages> 100 </numOfMessages>
+
+   Sample WSDL request for the ebMS receiver list web service:
+
+   .. code-block:: java
+
+      SOAPBody soapBody = request.getSOAPBody();
+      soapBody.addChildElement(createElement("cpaId", nsPrefix, nsURI, cpaId));
+      soapBody.addChildElement(createElement("service", nsPrefix, nsURI, service));
+      soapBody.addChildElement(createElement("action", nsPrefix, nsURI, action));
+      soapBody.addChildElement(createElement("convId", nsPrefix, nsURI, conversationId));
+      soapBody.addChildElement(createElement("fromPartyId", nsPrefix, nsURI, fromPartyId));
+      soapBody.addChildElement(createElement("fromPartyType", nsPrefix, nsURI, fromPartyType));
+      soapBody.addChildElement(createElement("toPartyId", nsPrefix, nsURI, toPartyId));
+      soapBody.addChildElement(createElement("toPartyType", nsPrefix, nsURI, toPartyType));
+      soapBody.addChildElement(createElement("numOfMessages", nsPrefix, nsURI, numOfMessages));
+      
+   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   
+   The implementation of ``createElement`` is shown below:
+
+   .. code-block:: java
 
-Receiver List Service
-^^^^^^^^^^^^^^^^^^^^^
+      SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI); 
+      soapElement.addTextNode(value);
+      return soapElement;
 
-The Receiver List Service is for the application of the receiving party to retrieve the message identifiers of the received ebMS messages which have not been downloaded by the application. The message identifiers will be used to retrieve the message payloads with the Receiver Service.
-
-The endpoint of this Web Service is:
-
-:samp:`http://{<HERMES_HOST>}:{<HERMES_PORT>}/corvus/httpd/ebms/receiver_list`
-
-where :samp:`<HERMES_HOST>` is the IP address or host name of the Hermes at the receiving party.
-
-Request Message
-"""""""""""""""
-
-	The SOAP Body of the request message has the following form. In the following request SOAP message, we assume that the content elements under SOAP Body have the namespace URI http://service.ebms.edi.cecid.hku.hk/:
-
-.. code-block:: xml
-
-   <SOAP-ENV:Body>
-   <cpaId>...</cpaId>
-   <service>...<service >
-   <action>...</action>
-   <convId>...<convId>
-   <fromPartyId>...</fromPartyId>
-   <fromPartyType>...</fromPartyType>
-   <toPartyId>...</toPartyId>
-   <toPartyType>...</toPartyType>
-   <numOfMessages>...</numOfMessages >
-   </SOAP-ENV:Body>
-
-The meanings of the elements under SOAP Body in the above request message are as follows:
-
-+------------------------------------+-----------------------------------------------------------------------------+
-| Elements                           | Descriptions                                                                |
-+====================================+=============================================================================+
-| :code:`<cpaId>`, :code:`<service>` | They are the CPA Id, service and action elements in the ebMS messages       |
-| and :code:`<action>`               | received by Hermes. These three fields are used to identify the partnership |
-|                                    | used to receive the ebMS messages.                                          |
-+------------------------------------+-----------------------------------------------------------------------------+
-| :code:`<convId>`                   | Only the message identifiers of those messages with Conversation Id matching|
-|                                    | the value of :code:`<convId>` will be retrieved.                            |
-+------------------------------------+-----------------------------------------------------------------------------+
-| :code:`<fromPartyId>`              | Only the message identifiers of those messages with From Party Id matching  |
-|                                    | the value of :code:`<fromPartyId>` will be retrieved.                       |
-+------------------------------------+-----------------------------------------------------------------------------+
-| :code:`<fromPartyType>`            | Only the message identifiers of those messages with From Party Type matching|
-|                                    | the value of :code:`<fromPartyType>` will be retrieved.                     |
-+------------------------------------+-----------------------------------------------------------------------------+
-| :code:`<toPartyId>`                | Only the message identifiers of those messages with To Party Id matching the|
-|                                    | value of :code:`<ToPartyId>` will be retrieved.                             |
-+------------------------------------+-----------------------------------------------------------------------------+
-| :code:`<toPartyIdType>`            | Only the message identifiers of those messages with To Party Type matching  |
-|                                    | the value of :code:`<ToPartyType>` will be retrieved.                       |
-+------------------------------------+-----------------------------------------------------------------------------+
-| :code:`<numOfMessages>`            | The maximum number of message identifiers retrieved by this request.        |
-+------------------------------------+-----------------------------------------------------------------------------+
-
-
-Note that a message is considered as already downloaded by an application only when the message body has been downloaded by the Receiver Service. If your application never calls the Receiver Service to download the message body and payloads, the same set of message identifiers will always be retrieved because they are never marked as downloaded.
-
-Response Message
-""""""""""""""""
-
-The SOAP Body of the response message has the following form. In the following response SOAP message, we assume that the content elements under SOAP Body have the namespace URI http://service.ebms.edi.cecid.hku.hk/:
-
-.. code-block:: xml
-
-   <SOAP-ENV:Body>
-       <message_id>...</message_id>
-       <message_id>...</message_id>
-                   ...
-       <message_id>...</message_id>
-   </SOAP-ENV:Body>
-
-In the response message, each <message_id> element represents the message identifier of a ebMS message received by Hermes in the receiving party. 
-
-Receiver Service
-^^^^^^^^^^^^^^^^
-
-The Receiver Service is for the application of the receiving party to retrieve the message payloads of the received ebMS messages. After the message payloads have been downloaded, the message will be marked as already received by the application, and the message identifier of the message will no longer be retrieved by the Receiver List Service.
-
-The endpoint of this Web Service is:
-
-:samp:`http://{<HERMES_HOST>}:{<HERMES_PORT>}/corvus/httpd/ebms/receiver`
-
-where :samp:`<HERMES_HOST>` is the IP address or host name of the Hermes at the receiving party.
-
-Request Message
-"""""""""""""""
-
-The SOAP Body of the request message has the following form. In the following request SOAP message, we assume that the content elements under SOAP Body have the namespace URI http://service.ebms.edi.cecid.hku.hk/:
-
-.. code-block:: xml
-
-   <SOAP-ENV:Body>
-     <messageId>...</messageId>
-   </SOAP-ENV:Body>
-
-The :code:`<messageId>` is the message identifier of which the message payloads are downloaded.
-
-Response Message
-""""""""""""""""
-The SOAP Body of the response message has the following form. In the following response SOAP message, we assume that the content elements under SOAP Body have the namespace URI http://service.ebms.edi.cecid.hku.hk/:
-
-.. code-block:: xml
-
-   <SOAP-ENV:Body>
-   <!-has this element and equal to "TRUE" only when the ebMS message exists>
-     <hasMessage>TRUE</hasMessage> 
-   </SOAP-ENV:Body>
-
-If the message of the message identifier exists, the :code:`<hasMessage>` element exists and it has the value :literal:`TRUE`.
-
-If the received ebMS message has payloads, the response message will have one or more SOAP attachments. Each SOAP attachment has a content type, which is set by the sender application.
-
-Status Service 
-^^^^^^^^^^^^^^
-
-The Status Service is for the application of the sending or receiving party to retrieve the message status of a sent or received ebMS message. 
-
-The endpoint of this Web Service is:
-
-:samp:`http://{<HERMES_HOST>}:{<HERMES_PORT>}/corvus/httpd/ebms/status`
-
-where <HERMES_HOST> is the IP address or host name of the Hermes at the receiving party.
-
-Request Message
-"""""""""""""""
-The SOAP Body of the request message has the following form. In the following request SOAP message, we assume that the content elements under SOAP Body have the namespace URI http://service.ebms.edi.cecid.hku.hk/:
-
-.. code-block:: xml
-
-   <SOAP-Env:Body>
-   <messageId>...</messageId>
-   </ SOAP-Env:Body>
-
-The :code:`<messageId>` specifies the message identifier.
-
-Response Message
-""""""""""""""""
-
-The SOAP Body of the response message has the following form. In the following response SOAP message, we assume that the content elements under SOAP Body have the namespace URI http://service.ebms.edi.cecid.hku.hk/:
-
-.. code-block:: xml
-
-   <SOAP-ENV:Body>
-   <messageInfo>
-       <status>...</status>
-       <statusDescription>...</statusDescription>
-       <ackMessageId>...</ackMessageId>
-       <ackStatus>...</ackStatus>
-       <ackStatusDescription>...</ackStatusDescription>
-   </messageInfo>
-   </SOAP-ENV:Body>
-
-The :code:`<status>` is a 2-character status code indicating the status of an outgoing and incoming ebMS message. Please reference section 8.5, "Life Cycle of ebMS Message" of Hermes 2 Technical Guide for the meanings of each message status.
-
-Developing AS2 Applications
----------------------------
-
-Sender Service
-^^^^^^^^^^^^^^
-
-The Sender Service is for the application of the sending party to request Hermes to send a AS2 message to the Hermes or any other compatible messaging gateway of the receiving party. The service returns the message identifier to the application for reference purpose.
-
-The endpoint of this Web Service is:
-
-:samp:`http://{<HERMES_HOST>}:{<HERMES_PORT>}/corvus/httpd/as2/sender`
-
-where :samp:`<HERMES_HOST>` is the IP address or host name of the Hermes at the sending party.
-
-Request Message
-"""""""""""""""
-
-The SOAP Body of the request message has the following form. In the following request SOAP message, we assume that the content elements under SOAP Body have the namespace URI http://service.as2.edi.cecid.hku.hk/:
-
-
-.. code-block:: xml
-
-   <SOAP-ENV:Body>
-   <as2_from>...</as2_from>
-   <as2_to>...</as2_to>
-   <type>...</type>
-   </ SOAP-ENV:Body>
-
-The meanings of the elements under SOAP Body in the above request message are as follows:
-
-+-------------------------------------------+-----------------------------------------------------------------------------------------+
-| Elements                                  | Descriptions                                                                            |
-+===========================================+=========================================================================================+
-| :code:`<as2_from>`, :code:`<as2_to>`      | They are the values of the :literal:`from` and :literal:`to` fields in                  |
-|                                           | the AS2 messages sent through the partnership by Hermes. These two fields               |
-|                                           | are used to identify the partnership used to send the AS2 messages.                     |
-+-------------------------------------------+-----------------------------------------------------------------------------------------+
-| :code:`<type>` The three-character        | * :literal:`edi`, for the content type :literal:`application/EDIFACT`.                  |
-| code indicating the content type of       |                                                                                         |
-| the sent payload. The available codes are:| * :literal:`x12`, for the content type :literal:`application/EDI-X12`.                  |
-|                                           |                                                                                         |
-|                                           | * :literal:`eco`, for the content type :literal:`application/edi-consent`.              |
-|                                           |                                                                                         |
-|                                           | * :literal:`xml`, for the content type :literal:`application/XML`.                      |
-|                                           |                                                                                         |
-|                                           | * :literal:`bin`, for the content type :literal:`application/ octet-stream`.            |
-|                                           |                                                                                         |
-|                                           | * For other values, Hermes will assume the content type of the payload is               |
-|                                           |   :literal:`application/deflate`, which means that the payload is compressed by Zip.    |
-+-------------------------------------------+-----------------------------------------------------------------------------------------+
-
-The application can request Hermes to send exactly one payload in an AS2 message. To do so, your application should add SOAP Attachment to the request message and set the "type" element properly in the SOAP request of the Sender Service.
-
-Response Message
-""""""""""""""""
-
-The SOAP Body of the response message has the following form. In the following response SOAP message, we assume that the content elements under SOAP Body have the namespace URI http://service.as2.edi.cecid.hku.hk/:
-
-.. code-block:: xml
-
-   <SOAP-ENV:Body>
-      <message_id>...</message_id>
-   </SOAP-ENV:Body>
-
-The <message_id> element is the message identifier assigned by the Hermes of the sending party. The sending application should keep it for later reference purpose and status tracking through Status Service.
-
-Receiver List Service
-^^^^^^^^^^^^^^^^^^^^^
-
-The Receiver List Service is for the application of the receiving party to retrieve the message identifiers of the received AS2 messages which have not been downloaded by the application. The message identifiers will be used to retrieve the message payloads with the Receiver Service.
-
-The endpoint of this Web Service is:
-
-:samp:`http://{<HERMES_HOST>}:{<HERMES_PORT>}/corvus/httpd/as2/receiver_list`
-
-where :samp:`<HERMES_HOST>` is the IP address or host name of the Hermes at the receiving party.
-
-Request Message
-"""""""""""""""
-
-The SOAP Body of the request message has the following form. In the following request SOAP message, we assume that the content elements under SOAP Body have the namespace URI http://service.as2.edi.cecid.hku.hk/:
-
-.. code-block:: xml
-
-   <SOAP-ENV:Body>
-   <as2From>...</as2From>
-   <as2To>...</as2To>
-   <numOfMessages>...</numOfMessages>
-   </SOAP-ENV:Body>
-
-The meanings of the elements under SOAP Body in the above request message are as follows:
-
-+------------------------------------+----------------------------------------------------------------------------------------+
-| Elements                           | Descriptions                                                                           |
-+====================================+========================================================================================+
-| :code:`<as2From>`, :code:`<as2To>` | They are the values of the :literal:`from` and :literal:`to` fields in the AS2 messages|
-|                                    | received through the partnership by Hermes. These two fields are used to identify the  |
-|                                    | partnership used to receive the AS2 messages.                                          |
-+------------------------------------+----------------------------------------------------------------------------------------+
-| :code:`<numOfMessages>`            | The maximum number of message identifiers retrieved by this request.                   |
-+------------------------------------+----------------------------------------------------------------------------------------+
-
-Note that a message is considered as already downloaded by an application only when the message body has been downloaded by the Receiver Service. If your application never calls the Receiver Service to download the message body and payloads, the same set of message identifiers will always be retrieved because they are never marked as downloaded.
-
-Response Message
-""""""""""""""""
-
-The SOAP Body of the response message has the following form. In the following response SOAP message, we assume that the content elements under SOAP Body have the namespace URI http://service.as2.edi.cecid.hku.hk/:
-
-.. code-block:: xml
-
-   <SOAP-ENV:Body>
-     <message_id>...</message_id>
-     <message_id>...</message_id>
-                 ...
-     <message_id>...</message_id>
-   </SOAP-ENV:Body>
-
-In the response message, each :code:`<message_id>` element represents the message identifier of an AS2 message received by Hermes in the receiving party. 
-
-Receiver Service
-^^^^^^^^^^^^^^^^
-
-The Receiver Service is for the application of the receiving party to retrieve the message payloads of the received AS2 messages. After the message payloads have been downloaded, the message will be marked as already received by the application, and the message identifier of the message will no longer be retrieved by the Receiver List Service.
-
-The endpoint of this Web Service is:
-
-:samp:`http://{<HERMES_HOST>}:{<HERMES_PORT>}/corvus/httpd/as2/receiver`
-
-where :samp:`<HERMES_HOST>` is the IP address or host name of the Hermes at the receiving party.
-
-Request Message
-"""""""""""""""
-
-The SOAP Body of the request message has the following form. In the following request SOAP message, we assume that the content elements under SOAP Body have the namespace URI http://service.as2.edi.cecid.hku.hk/:
-
-.. code-block:: xml
-
-   <SOAP-ENV:Body>
-     <messageId>...</messageId>
-   </SOAP-ENV:Body>
-
-The :code:`<messageId>` is the message identifier of which the message payloads are downloaded.
-
-Response Message
-""""""""""""""""
-
-The SOAP Body of the response message has the following form. In the following response SOAP message, we assume that the content elements under SOAP Body have the namespace URI http://service.as2.edi.cecid.hku.hk/:
-
-
-.. code-block:: xml
-
-   <SOAP-ENV:Body>
-   <!-has this element and equal to "TRUE" only when the AS2 message exists>
-     <hasMessage>TRUE</hasMessage> 
-   </SOAP-ENV:Body>
-
-If the message of the message identifier exists, the <hasMessage> element exists and it has the value :literal:`TRUE`.
-
-If the received AS2 message has a payload, the response message will have a SOAP attachment. Each SOAP attachment has a content type, which is set by the sender application.
-
-Status Service 
-^^^^^^^^^^^^^^
-
-The Status Service is for the application of the sending or receiving party to retrieve the message status of a sent or received AS2 message. 
-
-The endpoint of this Web Service is:
-
-:samp:`http://{<HERMES_HOST>}:{<HERMES_PORT>}/corvus/httpd/as2/status`
-
-where :samp:`<HERMES_HOST>` is the IP address or host name of the Hermes at the receiving party.
-
-Request Message
-"""""""""""""""
-
-The SOAP Body of the request message has the following form. In the following request SOAP message, we assume that the content elements under SOAP Body have the namespace URI http://service.as2.edi.cecid.hku.hk/:
-
-.. code-block:: xml
-
-   <SOAP-Env:Body>
-   <messageId>...</messageId>
-   </ SOAP-Env:Body>
-
-The :code:`<messageId>` specifies the message identifier.
-
-Response Message
-""""""""""""""""
-
-The SOAP Body of the response message has the following form. In the following response SOAP message, we assume that the content elements under SOAP Body have the namespace URI http://service.as2.edi.cecid.hku.hk/:
-
-.. code-block:: xml
-
-   <SOAP-ENV:Body>
-   <messageInfo>
-   <status>...</status>
-   <statusDescription>...</statusDescription>
-   <mdnMessageId>...<mdnMessageId>
-   <mdnStatus>...</mdnStatus>
-   <mdnStatusDescription>...</mdnStatusDescription>
-   </messageInfo>
-   </SOAP-ENV:Body>
-
-The meanings of the elements in the request message:
-
-+----------------------+----------------------------------------------------------------------------------------------------+
-| Elements             | Meanings                                                                                           |
-+======================+====================================================================================================+
-| status               | The :code:`<status>` is a 2-character status code indicating the status of                         |
-|                      | an outgoing and incoming AS2 message. Please reference section 9.5,                                |
-|                      | "Life Cycle of AS2 Message" of Hermes 2 Technical Guide for the meanings of each message status.   |
-+----------------------+----------------------------------------------------------------------------------------------------+
-| statusDescription    | A free text description of the message status.                                                     |
-+----------------------+----------------------------------------------------------------------------------------------------+
-| mdnMessageId         | The message identifier of the associated MDN.                                                      |
-+----------------------+----------------------------------------------------------------------------------------------------+
-| mdnStatus            | The message status of the associated MDN. Please reference section 9.5, "Life Cycle of AS2 Message"|
-|                      | of Hermes 2 Technical Guide for the meanings of each message status.                               |
-+----------------------+----------------------------------------------------------------------------------------------------+
-| mdnStatusDescription | A free text description of the message status of the associated MDN.                               |
-+----------------------+----------------------------------------------------------------------------------------------------+
-
-Glossary
+#. Save changes to the SOAP message.
+
+   .. code-block:: java
+      
+      request.saveChange();
+
+#. Send the SOAP request to Hermes ebMS receiver list web service and get a SOAP response.
+
+   .. code-block:: java
+      
+      SOAPMessage response = soapConn.call(request, receiverListWSURL);
+      SOAPBody responseBody = response.getSOAPBody();
+
+#. SOAP response:
+
+   .. code-block:: xml
+
+      <soap-body>
+          <messageIds>
+              <messageId> .. </messageId>
+              <messageId> .. </messageId>
+              <messageId> .. </messageId>
+              <messageId> .. </messageId>
+          </messageIds>
+      </soap-body>
+
+   Process the SOAP response and extract the identifiers of the requested ebMS messages to ``System.out`` if there is no SOAP fault.
+   
+   .. code-block:: java
+
+      if (!responseBody.hasFault()){
+          SOAPElement messageIdsElement = getFirstChild(responseBody, "messageIds", nsURI);
+          Iterator messageIdElementIter = getChildren(messageIdsElement, "messageId", nsURI); 
+      
+          while(messageIdElementIter.hasNext()) {
+              SOAPElement messageIdElement = (SOAPElement)messageIdElementIter.next();
+              System.out.println(messageIdElement.getValue());
+          }
+      } else {
+          throw new SOAPException(responseBody.getFault().getFaultString());
+      }
+
+   The method ``getFirstChild`` gets the first element with the name ``messageIds`` and namespace URI equal to ``nsURI``.
+   It then extracts every ``messageId`` which each represent an available message awaiting further action.
+
+Writing an ebMS 2.0 receiver web service client
+-----------------------------------------------
+We need to create a SOAP message with the identifier of the target message and send it to Hermes as the web service request.
+
+#. Define a namespace URI and prefix conforming to WSDL.
+
+   .. code-block:: java
+
+      private String nsURI = "http://service.ebms.edi.cecid.hku.hk/";
+      private String nsPrefix = "tns";
+      private URL receiverWSURL = "http://localhost:8080/corvus/httpd/ebms/receiver";
+
+#. Create a SOAP message factory and SOAP message object.
+   
+   .. code-block:: java
+
+      SOAPMessage request = MessageFactory.newInstance().createMessage();
+
+#. Populate the SOAP body by filling in the required parameters.
+
+   .. code-block:: xml
+      
+      <messageId> messageId </messageId>
+
+   Sample WSDL request for the ebMS receiver web service:
+
+   .. code-block:: java
+      
+      SOAPBody soapBody = request.getSOAPBody();
+      soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));
+
+   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   
+   The implementation of ``createElement`` is shown below:
+   
+   .. code-block:: java
+      
+      SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI); 
+      soapElement.addTextNode(value);
+      return soapElement;
+
+#. Save changes to the SOAP message.
+
+   .. code-block:: java
+
+      request.saveChange();
+
+#. Send the SOAP request to Hermes ebMS receiver web service and get a SOAP response.
+
+   .. code-block:: java
+      
+      SOAPMessage response = soapConn.call(request, receiverWSURL);
+      SOAPBody responseBody = response.getSOAPBody();
+
+#. SOAP response:
+   
+   .. code-block:: xml
+      
+      <soap-body>
+          <hasMessage> .. </hasMessage>
+      </soap-body>
+            .
+            .
+      Attachment as a MIME part.
+
+   Process the SOAP response and extract the payload from the received ebMS message if available.
+
+   .. code-block:: java
+
+      if (!responseBody.hasFault()){
+          SOAPElement hasMessageElement = getFirstChild(responseBody, "hasMessage", nsURI);
+          ArrayList payloadsList = new ArrayList();
+          if (hasMessageElement != null){ 
+              Iterator attachmentPartIter = response.getAttachments();
+              while(attachmentPartIter.hasNext()) {
+                  AttachmentPart attachmentPart = (AttachmentPart) attachmentPartIter.next();
+                  InputStream ins = attachmentPart.getDataHandler().getInputStream();
+                  // Do something I/O to extract the payload to physical file.
+              }
+          }
+      } else {
+          throw new SOAPException(responseBody.getFault().getFaultString());
+      }
+
+   The method ``getFirstChild`` gets the first element with the name ``hasMessage`` and namespace URI equal to ``nsURI``.
+   The boolean value of ``hasMessage`` represents the existence of a payload in this message.
+
+   The payload is extracted from the attachment part to the input stream and can be saved by I/O pipelining to a physical file or another business operation.
+
+Writing an ebMS 2.0 status web service client
+---------------------------------------------
+We need to create a SOAP message with the identifier of the target message and send it to Hermes as the web service request.
+
+#. Define a namespace URI and prefix conforming to WSDL.
+   
+   .. code-block:: java
+      
+      private String nsURI = "http://service.ebms.edi.cecid.hku.hk/";
+      private String nsPrefix = "tns";
+      private URL statusQueryWSURL = "http://localhost:8080/corvus/httpd/ebms/status";
+
+#. Create a SOAP message factory and SOAP message object.
+   
+   .. code-block:: java
+      
+      SOAPMessage request = MessageFactory.newInstance().createMessage();
+
+#. Populate the SOAP body by filling in the required parameters.
+   
+   .. code-block:: xml
+      
+      <messageId> messageId </messageId>
+
+   Sample WSDL request for the ebMS status web service:
+
+   .. code-block:: java
+      
+      SOAPBody soapBody = request.getSOAPBody();
+      soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));
+
+   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   
+   The implementation of ``createElement`` is shown below:
+
+   .. code-block:: java
+
+      SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI); 
+      soapElement.addTextNode(value);
+      return soapElement;
+
+#. Save changes to the SOAP message.
+   
+   .. code-block:: java
+
+      request.saveChange();
+
+#. Send the SOAP request to Hermes ebMS status web service and get a SOAP response.
+
+   .. code-block:: java
+
+      SOAPMessage response = soapConn.call(request, statusQueryWSURL);
+      SOAPBody responseBody = response.getSOAPBody();
+
+#. SOAP response:
+   
+   .. code-block:: xml
+      
+      <soap-body>
+          <MessageInfo>
+              <status> The current status of message </status>
+              <statusDescription> The current status description of message </statusDescription>
+              <ackMessageId> The message id of acknowledgment / receipt if any </ackMessageId>
+              <ackStatus> The status of acknowledgment / receipt if any </ackStatus>
+              <ackStatusDescription> The status description of acknowledgment / receipt if any </ackStatusDescription> 
+          </MessageInfo>
+      </soap-body> 
+   
+   Process the SOAP response and extract the status information of the ebMS message if there is no SOAP fault.
+
+   .. code-block:: java
+      
+      if (!responseBody.hasFault()){ 
+          SOAPElement messageInfoElement = getFirstChild(responseBody, "messageInfo", nsURI);
+          System.out.println("Message Status : " + getFirstChild(messageInfoElement, "status", nsURI);
+          System.out.println("Message Status Desc : " + getFirstChild(messageInfoElement, "statusDescription", nsURI);
+          System.out.println("Ack Message Identifiers : " + getFirstChild(messageInfoElement, "ackMessageId", nsURI);
+          System.out.println("Ack Status : " + getFirstChild(messageInfoElement, "ackStatus", nsURI);
+          System.out.println("Ack Status Desc : " + getFirstChild(messageInfoElement, "ackStatusDescription", nsURI); 
+      } else {
+          throw new SOAPException(responseBody.getFault().getFaultString());
+      }
+
+   The method ``getFirstChild`` gets the first element with the name ``messageInfo`` and namespace URI equal to ``nsURI``. It then retrieves the status value from that element.
+
+Writing an ebMS 2.0 message history web service client
+------------------------------------------------------
+We need to create a SOAP message with 7 parameters and send it to Hermes as the web service request.
+The parameters are ``messageId``, ``messageBox``, ``conversationId``, ``cpaId``, ``status``, ``action`` and ``service``.
+
+#. Define a namespace URI and prefix conforming to WSDL.
+
+   .. code-block:: java
+         
+      private String nsURI = "http://service.ebms.edi.cecid.hku.hk/";
+      private String nsPrefix = "tns";
+      private URL msgHistoryWSURL = "http://localhost:8080/corvus/httpd/ebms/msg_history";
+
+#. Create a SOAP message factory and SOAP message object.
+   
+   .. code-block:: java
+      
+      SOAPMessage request = MessageFactory.newInstance().createMessage();
+
+#. Populate the SOAP body by filling in the required parameters.
+   
+   .. code-block:: xml
+      
+      <messageId> messageId </messageId>
+      <messageBox> messageBox </messageBox>
+      <conversationId> conversationId </conversationId>
+      <cpaId> cpaId </cpaId>
+      <service> service </service>
+      <action> action </action>
+      <status> status </status>
+
+   Sample WSDL request for the ebMS message history web service:
+
+   .. code-block:: java
+      
+      SOAPBody soapBody = request.getSOAPBody();
+      soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));
+      soapBody.addChildElement(createElement("messageBox", nsPrefix, nsURI, messageBox));
+      soapBody.addChildElement(createElement("conversationId", nsPrefix, nsURI, conversationId));
+      soapBody.addChildElement(createElement("cpaId", nsPrefix, nsURI, cpaId));
+      soapBody.addChildElement(createElement("service", nsPrefix, nsURI, service));
+      soapBody.addChildElement(createElement("fromPartyType", nsPrefix, nsURI, fromPartyType));
+      soapBody.addChildElement(createElement("action", nsPrefix, nsURI, action));
+      soapBody.addChildElement(createElement("status", nsPrefix, nsURI, status));
+
+   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   
+   The implementation of ``createElement`` is shown below:
+
+   .. code-block:: java
+      
+      SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI);
+      soapElement.addTextNode(value);
+      return soapElement;
+
+#. Save changes to the SOAP message.
+
+   .. code-block:: java
+      
+      request.saveChange();
+
+#. Send the SOAP request to Hermes ebMS message history service and get a SOAP response.
+   
+   .. code-block:: java
+
+      SOAPMessage response = soapConn.call(request, msgHistoryWSURL);
+      SOAPBody responseBody = response.getSOAPBody(); 
+
+#. SOAP response:
+   
+   .. code-block:: xml
+      
+      <soap-body> 
+          <messageList>
+              <messageElement>
+                  <messageId> Message ID of this message </messageId>
+                  <messageBox> Message Box containing this message </messageBox>
+              </messageElement>
+              <messageElement>
+                  <messageId> Message ID of this message </messageId>
+                  <messageBox> Message Box containing this message </messageBox>
+              </messageElement> 
+              <messageElement> .. </messageElement> 
+              <messageElement> .. </messageElement> 
+          </messageList> 
+      </soap-body>
+
+   Process the SOAP response and extract the ebMS message information if there is no SOAP fault.
+
+   .. code-block:: java
+
+      if (!responseBody.hasFault()){ 
+          SOAPElement msgList = SOAPUtilities.getElement(responseBody, "messageList", nsURI, 0); 
+
+          Iterator msgIterator = msgList.getChildElements(); 
+          while(msgIterator.hasNext()){ 
+
+              List elementList = new ArrayList(); 
+
+              SOAPElement messageElement = (SOAPElement)msgIterator.next(); 
+
+              Iterator elements = messageElement.getChildElements(); 
+
+              // MessageId 
+              SOAPElement msgId = (SOAPElement)(elements.next()); 
+
+              // MessageBox 
+              SOAPElement msgBox = (SOAPElement)(elements.next()); 
+
+              System.out.println("Message ID: " + (String)msgId.get(0) + "\t" + "Message Box: " + msgBox.get(0)); 
+          } 
+      }
+   
+   The method ``getElement`` gets the element with the name ``messageList`` and namespace URI equal to ``nsURI``. Then, a list of ``messageElement`` values will be extracted from ``messageList``.
+   Each ``messageElement`` contains the values of ``messageId`` and ``messageBox``.
+
+Writing an AS2 sender web service client
+----------------------------------------
+We need to create a SOAP message with 3 parameters and send it to Hermes as the web service request. The parameters are ``as2_from``, ``as2_to`` and ``type``.
+
+#. Define a namespace URI and prefix conforming to WSDL and define the AS2 sender web service for Hermes.
+   
+   .. code-block:: java
+      
+      private String nsURI = "http://service.as2.edi.cecid.hku.hk/"; 
+      private String nsPrefix = "tns"; 
+      private URL senderWSURL = "http://localhost:8080/corvus/httpd/as2/sender";
+
+#. Create a SOAP message factor and SOAP message object.
+   
+   .. code-block:: java
+      
+      SOAPMessage request = MessageFactory.newInstance().createMessage();
+
+#. Populate the SOAP body by filling in the required parameters.
+   
+   .. code-block:: xml
+      
+      <as2_from> as2from </as2_from>
+      <as2_to> as2to <as2_to>
+      <type> type </type>
+
+   Sample WSDL request for the AS2 sender web service:
+
+   .. code-block:: java
+      
+      SOAPBody soapBody = request.getSOAPBody(); 
+      soapBody.addChildElement(createElement("as2_from", nsPrefix, nsURI, this.as2From)); 
+      soapBody.addChildElement(createElement("as2_to" , nsPrefix, nsURI, this.as2To)); 
+      soapBody.addChildElement(createElement("type" , nsPrefix, nsURI, this.type));
+
+   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   
+   The implementation of ``createElement`` is shown below:
+
+   .. code-block:: java
+      
+      SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI); 
+      soapElement.addTextNode(value); 
+      return soapElement;
+
+#. Attach a payload if necessary. The example here uses a purchase order XML as the payload of the AS2 message, so the associated content type is ``application/xml``.
+   
+   .. note::
+      Only **ONE** payload is allowed in a SOAP request for the AS2 sender web service.
+
+   .. code-block:: java
+      
+      AttachmentPart attachmentPart = request.createAttachmentPart(); 
+      FileDataSource fileDS = new FileDataSource(new File("purchase_order.xml")); 
+      attachmentPart.setDataHandler(new DataHandler(fileDS)); 
+      attachmentPart.setContentType("application/xml"); 
+      request.addAttachmentPart(attachmentPart);
+
+#. Save changes to the SOAP message.
+
+   .. code-block:: java
+      
+      request.saveChange();
+
+#. Send the SOAP request to Hermes AS2 sender web service and get a SOAP response.
+   
+   .. code-block:: java
+      
+      SOAPMessage response = soapConn.call(request, senderWSURL); 
+      SOAPBody responseBody = response.getSOAPBody();
+
+#. Process the SOAP response and extract the identifier of the AS2 message to ``System.out`` if there is no SOAP fault.
+
+   .. code-block:: java
+      
+      if (!responseBody.hasFault()){ 
+          SOAPElement messageIdElement = getFirstChild(responseBody, "message_id", nsURI); 
+          System.out.println(messageIdElement == null ? null : messageIdElement.getValue()); 
+      } else { 
+          throw new SOAPException(responseBody.getFault().getFaultString()); 
+      }
+   
+   The method ``getFirstChild`` gets the first element with the name ``message_id`` and namespace URI equal to ``nsURI``.
+
+   The SOAP request is now transformed into an AS2 message stored in the file system.
+   Hermes will deliver the AS2 message to the partner specified in the SOAP request parameters (``AS2From`` and ``AS2To`` identify the partnership).
+
+Writing an AS2 receiver list web service client
+-----------------------------------------------
+We need to create a SOAP message with 3 parameters and send it to Hermes as the web service request. The parameters are ``as2From``, ``as2To`` and ``numOfMessages``.
+
+#. Define a namespace URi and prefix conforming to WSDL and define the AS2 receiver list web service for Hermes.
+
+   .. code-block:: java
+      
+      private String nsURI = "http://service.as2.edi.cecid.hku.hk/";
+      private String nsPrefix = "tns";
+      private URL receiverListWSURL = "http://localhost:8080/corvus/httpd/as2/receiver_list";
+
+#. Create a SOAP message factory and SOAP message object.
+   
+   .. code-block:: java
+      
+      SOAPMessage request = MessageFactory.newInstance().createMessage();
+
+#. Populate the SOAP body by filling in the required parameters.
+
+   .. code-block:: xml
+      
+      <as2_from> as2from </as2_from>
+      <as2_to> as2to <as2_to>
+      <numOfMessages> 100 </numOfMessages>
+   
+   Sample WSDL request for the AS2 receiver list web service:
+
+   .. code-block:: java
+      
+      SOAPBody soapBody = request.getSOAPBody();
+      soapBody.addChildElement(createElement("as2From" , nsPrefix, nsURI, this.as2From));
+      soapBody.addChildElement(createElement("as2To" , nsPrefix, nsURI, this.as2To));
+      soapBody.addChildElement(createElement("numOfMessages", nsPrefix, nsURI, this.numOfMessages + ""));
+
+   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   
+   The implementation of ``createElement`` is shown below: 
+   
+   .. code-block:: java
+      
+      SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI); 
+      soapElement.addTextNode(value);
+      return soapElement;
+
+#. Save changes to the SOAP message.
+
+   .. code-block:: java
+      
+      request.saveChange();
+
+#. Send the SOAP request to Hermes AS2 receiver list web service and get a SOAP response.
+
+   .. code-block:: java
+      
+      SOAPMessage response = soapConn.call(request, senderWSURL);
+      SOAPBody responseBody = response.getSOAPBody();
+
+#. SOAP response:
+   
+   .. code-block:: xml
+      
+      <soap-body>
+          <messageIds>
+              <messageId> .. </messageId>
+              <messageId> .. </messageId>
+              <messageId> .. </messageId>
+              <messageId> .. </messageId>
+          </messageIds>
+      </soap-body> 
+   
+   Process the SOAP response and extract identifiers of the requested AS2 messages to ``System.out`` if there is no SOAP fault.
+   
+   .. code-block:: java
+      
+      if (!responseBody.hasFault()){
+          SOAPElement messageIdsElement = getFirstChild(responseBody, "messageIds", nsURI);
+          Iterator messageIdElementIter = getChildren(messageIdsElement, "messageId", nsURI); 
+
+          while(messageIdElementIter.hasNext()) {
+              SOAPElement messageIdElement = (SOAPElement)messageIdElementIter.next();
+              System.out.println(messageIdElement.getValue());
+          }
+      } else {
+          throw new SOAPException(responseBody.getFault().getFaultString());
+      }
+   
+   The method ``getFirstChild`` gets the first element with the name ``messageIds`` and namespace URI equal to ``nsURI``.
+   All children with the name ``messageId`` and namespace URI equal to ``nsURI`` are then extracted.
+
+Writing an AS2 receiver web service client
+------------------------------------------
+We need to create a SOAP message with the identifier of the target message and send it to Hermes as the web service request.
+
+#. Define a namespace URI and prefix conforming to WSDL.
+
+   .. code-block:: java
+
+      private String nsURI = "http://service.as2.edi.cecid.hku.hk/";
+      private String nsPrefix = "tns";
+      private URL receiverWSURL = "http://localhost:8080/corvus/httpd/as2/receiver";
+
+#. Create a SOAP message factory and SOAP message object.
+   
+   .. code-block:: java
+
+      SOAPMessage request = MessageFactory.newInstance().createMessage();
+
+#. Populate the SOAP body by filling in the required parameters.
+
+   .. code-block:: xml
+      
+      <messageId> messageId </messageId>
+
+   Sample WSDL request for the AS2 receiver web service:
+
+   .. code-block:: java
+      
+      SOAPBody soapBody = request.getSOAPBody();
+      soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));
+
+   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   
+   The implementation of ``createElement`` is shown below:
+   
+   .. code-block:: java
+      
+      SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI); 
+      soapElement.addTextNode(value);
+      return soapElement;
+
+#. Save changes to the SOAP message.
+
+   .. code-block:: java
+
+      request.saveChange();
+
+#. Send the SOAP request to Hermes AS2 receiver web service and get a SOAP response.
+
+   .. code-block:: java
+      
+      SOAPMessage response = soapConn.call(request, receiverWSURL);
+      SOAPBody responseBody = response.getSOAPBody();
+
+#. SOAP response:
+   
+   .. code-block:: xml
+      
+      <soap-body>
+          <hasMessage> .. </hasMessage>
+      </soap-body>
+            .
+            .
+      Attachment as a MIME part.
+
+   Process the SOAP response and extract the payload from the received AS2 message if available.
+
+   .. code-block:: java
+
+      if (!responseBody.hasFault()){
+          SOAPElement hasMessageElement = getFirstChild(responseBody, "hasMessage", nsURI);
+          ArrayList payloadsList = new ArrayList();
+          if (hasMessageElement != null){ 
+              Iterator attachmentPartIter = response.getAttachments();
+              while(attachmentPartIter.hasNext()) {
+                  AttachmentPart attachmentPart = (AttachmentPart) attachmentPartIter.next();
+                  InputStream ins = attachmentPart.getDataHandler().getInputStream();
+                  // Do something I/O to extract the payload to physical file.
+              }
+          }
+      } else {
+          throw new SOAPException(responseBody.getFault().getFaultString());
+      }
+
+   The method ``getFirstChild`` gets the first element with the name ``hasMessage`` and namespace URI equal to ``nsURI``.
+   The boolean value of ``hasMessage`` represents the existence of a payload in this message.
+
+   The payload is extracted from the attachment part to the input stream and can be saved by I/O pipelining to a physical file or another business operation.
+
+Writing an AS2 status web service client
+----------------------------------------
+We need to create a SOAP message with the identifier of the target message and send it to Hermes as the web service request.
+
+#. Define a namespace URI and prefix conforming to WSDL.
+   
+   .. code-block:: java
+      
+      private String nsURI = "http://service.as2.edi.cecid.hku.hk/";
+      private String nsPrefix = "tns";
+      private URL statusQueryWSURL = "http://localhost:8080/corvus/httpd/as2/status";
+
+#. Create a SOAP message factory and SOAP message object.
+   
+   .. code-block:: java
+      
+      SOAPMessage request = MessageFactory.newInstance().createMessage();
+
+#. Populate the SOAP body by filling in the required parameters.
+   
+   .. code-block:: xml
+      
+      <messageId> messageId </messageId>
+
+   Sample WSDL request for the AS2 status web service:
+
+   .. code-block:: java
+      
+      SOAPBody soapBody = request.getSOAPBody();
+      soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));
+
+   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   
+   The implementation of ``createElement`` is shown below:
+
+   .. code-block:: java
+      
+      SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI); 
+      soapElement.addTextNode(value);
+      return soapElement;
+
+#. Save changes to the SOAP message.
+   
+   .. code-block:: java
+      
+      request.saveChange();
+
+#. Send the SOAP request to Hermes AS2 status web service and get a SOAP response.
+   
+   .. code-block:: java
+
+      SOAPMessage response = soapConn.call(request, statusQueryWSURL);
+      SOAPBody responseBody = response.getSOAPBody();
+
+#. SOAP response:
+   
+   .. code-block:: xml
+      
+      <soap-body>
+          <MessageInfo>
+              <status> The current status of message </status>
+              <statusDescription> The current status description of message </statusDescription>
+              <mdnMessageId> The message id of acknowledgment / receipt if any </mdnMessageId>
+              <mdnStatus> The status of acknowledgment / receipt if any </mdnStatus>
+              <mdnStatusDescription> The status description of acknowledgment / receipt if any </mdnStatusDescription> 
+          </MessageInfo> 
+      </soap-body>
+   
+   Process the SOAP response and extract the status information of the AS2 message if there is no SOAP fault.
+
+   .. code-block:: java
+      
+      if (!responseBody.hasFault()){
+          SOAPElement messageInfoElement = getFirstChild(responseBody, "MessageInfo", nsURI);
+          System.out.println("Message Status : " + getFirstChild(messageInfoElement, "status", nsURI);
+          System.out.println("Message Status Desc : " + getFirstChild(messageInfoElement, "statusDescription", nsURI);
+          System.out.println("Ack Message Identifiers : " + getFirstChild(messageInfoElement, "mdnMessageId", nsURI);
+          System.out.println("Ack Status : " + getFirstChild(messageInfoElement, "mdnStatus", nsURI);
+          System.out.println("Ack Status Desc : " + getFirstChild(messageInfoElement, "mdnStatusDescription", nsURI); 
+      } else { 
+          throw new SOAPException(responseBody.getFault().getFaultString());
+      }
+
+   The method ``getFirstChild`` gets the first element with the name ``MessageInfo`` and namespace URI equal to ``nsURI``.
+
+Writing an AS2 message history web service client
+-------------------------------------------------
+We need to create a SOAP message with 5 parameters and send it to Hermes as the web service request.
+The parameters are ``messageId``, ``messageBox``, ``as2From``, ``as2To``, and ``status``.
+
+#. Define the namespace URI and prefix conforming to WSDL.
+   
+   .. code-block:: java
+      
+      private String nsURI = "http://service.as2.edi.cecid.hku.hk/";
+      private String nsPrefix = "tns";
+      private URL msgHistoryWSURL = "http://localhost:8080/corvus/httpd/as2/msg_history";
+
+#. Create a SOAP message factory and SOAP message object.
+
+   .. code-block:: java
+      
+      SOAPMessage request = MessageFactory.newInstance().createMessage();
+
+#. Populate the SOAP body by filling in the required parameters.
+   
+   .. code-block:: xml
+      
+      <messageId> messageId </messageId>
+      <messageBox> messageBox </messageBox>
+      <as2From> as2From </as2From>
+      <as2To> as2To </as2To>
+      <status> status </status>
+
+   Sample WSDL request for the message history web service:
+
+   .. code-block:: java
+      
+      SOAPBody soapBody = request.getSOAPBody();
+      soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));
+      soapBody.addChildElement(createElement("messageBox", nsPrefix, nsURI, messageBox));
+      soapBody.addChildElement(createElement("as2From", nsPrefix, nsURI, cpaId));
+      soapBody.addChildElement(createElement("as2To", nsPrefix, nsURI, service));
+      soapBody.addChildElement(createElement("status", nsPrefix, nsURI, status));
+
+   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   
+   The implementation of ``createElement`` is shown below:
+
+   .. code-block:: java
+      
+      SOAPElement soapElement = SOAPFactory.newInstance().createElement(localName, nsPrefix, nsURI); 
+      soapElement.addTextNode(value);
+      return soapElement;
+
+#. Save changes to the SOAP message. 
+   
+   .. code-block:: java
+      
+      request.saveChange();
+
+#. Send the SOAP request to Hermes AS2 message history web service and get a SOAP response.
+   
+   .. code-block:: java
+      
+      SOAPMessage response = soapConn.call(request, receiverListWSURL);
+      SOAPBody responseBody = response.getSOAPBody();
+
+#. SOAP response:
+   
+   .. code-block:: xml
+      
+      <soap-body>
+          <messageList>
+              <messageElement>
+                  <messageId> Message ID of this message </messageId>
+                  <messageBox> Message Box containing this message </messageBox>
+              </messageElement>
+              <messageElement>
+                  <messageId> Message ID of this message </messageId>
+                  <messageBox> Message Box containing this message </messageBox>
+              </messageElement> 
+              <messageElement> .. </messageElement> 
+              <messageElement> .. </messageElement> 
+          </messageList> 
+      </soap-body>
+   
+   Process the SOAP response and extract the AS2 message information if there is no SOAP fault.
+   
+   .. code-block:: java
+      
+      if (!responseBody.hasFault()){
+          SOAPElement msgList = SOAPUtilities.getElement(responseBody, "messageList", nsURI, 0); 
+
+          Iterator msgIterator = msgList.getChildElements();
+          while(msgIterator.hasNext()){ 
+
+              List elementList = new ArrayList(); 
+
+              SOAPElement messageElement = (SOAPElement)msgIterator.next(); 
+
+              Iterator elements = messageElement.getChildElements(); 
+
+              // MessageId
+              SOAPElement msgId = (SOAPElement)(elements.next()); 
+
+              // MessageBox
+              SOAPElement msgBox = (SOAPElement)(elements.next()); 
+
+              System.out.println("Message ID: " + (String)msgId.get(0) + "\t" + "Message Box: " + msgBox.get(0));
+          }
+      }
+
+   The method ``getElement`` gets the element with the name ``messageList`` and namespace URI equal to ``nsURI``. The ``messageElement`` values will then be extracted from ``messageList``.
+   Each ``messageElement`` contains the values of ``messageId`` and ``messageBox``.
+
+See also
 --------
-.. glossary::
+* :doc:`first_step`
+* :doc:`installation`
+* :doc:`web_service_communication`
+* :doc:`ebms_partnership`
+* :doc:`as2_partnership`
+* `OASIS ebMS 2.0 Specification <http://www.oasis-open.org/committees/ebxml-msg/documents/ebMS_v2_0.pdf>`_
+* `AS2 Specification <https://tools.ietf.org/html/rfc4130>`_
 
-  Administration Console
-    The Administration Console allows you to manage the partnerships, check the message histories, check the healthiess, and configure some of the properties.
-
-  AS2
-    Applicability Statement 2 is a draft standard from the Internet Engineering Task Force for securely exchanging business documents over the Internet.
-
-  ebXML
-    Electronic Business XML. A international standard for electronic B2B messaging and process made by OASIS.
-
-  ebMS
-    The messaging standard, in the ebXML standard suite.
-
-  MDN
-    Message Dispensation Notification, the acknowledgement message in the AS2 protocol.
-
-  Plugin
-    Corvus is a messaging gateway framework. Each plugin is an extension of such framework to handle a communication protocol. Currently, two protocols are supported, namely, ebMS and AS2.
-
-  Partnership
-    A simplex communication channel, which abstracts the technical parameters of the channel. Since it is simplex, in a typical two-way commnunication, two partnerships should be created. One is for sending, another one is for receiving.
-
-  SOAP
-    SOAP stands for Simple Object Access Protocol, which is a simple XML-based protocol to let applications exchange information over HTTP.
-
-  Web Service
-    Web services are web-based enterprise applications that use open, XML-based standards and transport protocols to exchange data with calling clients.
-
-  URL
-    Universal Resource Locator.
-
-References
-----------
-
-*	Hermes 2 Technical Guide
-*	Hermes 2 Administration Tool User Guide
-*	Hermes 2 Installation Guide
-*	Hermes 2 Plug-in Development Guide
-*	OASIS ebXML Message Service Specification 2.0
-
-www.oasis-open.org/committees/ebxml-msg/documents/ebMS_v2_0.pdf
-
-*	MIME-based Secure Peer-to-Peer Business Data Interchange over the Internet Using HTTP AS2 (:file:`draft-ietf-ediint-as2-17.txt`)
-  
-http://www.ietf.org/rfc/rfc4130.txt
+Reference program source
+------------------------
+* :download:`Hermes loopback test <_static/hermes2_loopback.zip>`

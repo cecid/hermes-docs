@@ -3,22 +3,22 @@ Using SOAP API
 
 Introduction
 ------------
-Hermes 2 has implemented SOAP messaging framework to communicate with external applications instead of using the JAVA-based callback registry mechanisms from Hermes 1. The main advantages of using SOAP web services are reducing coupling between external applications and Hermes 2, and allowing external applications to integrate Hermes 2 seamlessly using any programming language that supports SOAP and SOAP Messages with Attachments. 
+Hermes has implemented SOAP messaging framework to communicate with external applications instead of using the JAVA-based callback registry mechanisms from Hermes 1. The main advantages of using SOAP web services are reducing coupling between external applications and Hermes, and allowing external applications to integrate Hermes seamlessly using any programming language that supports SOAP and SOAP Messages with Attachments. 
 
-This article is purposed to assist developers who want to write a web service call client to communicate with Hermes 2 using SOAP web services. 
+This article is purposed to assist developers who want to write a web service call client to communicate with Hermes using SOAP web services. 
 
-For more information on the installation and partnerships of Hermes 2, please refer to :doc:`installation` and :doc:`first_step`.
+For more information on the installation and partnerships of Hermes, please refer to :doc:`installation` and :doc:`first_step`.
 
 .. image:: /_static/images/web_service/h2o-ws-pl-free.png
 
 Overview
 --------
 
-Here is a brief summary about the communication port architecture between Hermes 2 and external applications. The core of Hermes 2 can attach to any J2EE compliant web server as a kind of servlet. The core itself does not provide any SOAP web services or HTTP listeners, nor does it have any functionality related to messaging. All features in Hermes 2 are derived from the core using SPA (simple plugin architecture).
+Here is a brief summary about the communication port architecture between Hermes and external applications. The core of Hermes can attach to any J2EE compliant web server as a kind of servlet. The core itself does not provide any SOAP web services or HTTP listeners, nor does it have any functionality related to messaging. All features in Hermes are derived from the core using SPA (simple plugin architecture).
 
 One of the core SPAs, called Main Plugin (shown below in the core SPA layer), provides an HTTP context listener that accepts HTTP requests at the specified context path (extension point) for external invocation. The protocol-specific SPA ebMS and AS2 plugins (shown below in the external SPA layer) make use of this listener to provide all SOAP web services.
 
-By default, the ebMS 2.0 and AS2 plugins each have 5 registered web services in Hermes 2:
+By default, the ebMS 2.0 and AS2 plugins each have 5 registered web services in Hermes:
 
 1. `ebMS 2.0 sender web service`_
 #. `ebMS 2.0 receiver list web service`_
@@ -40,13 +40,13 @@ ebMS 2.0 sender web service
 
 Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/ebms/sender`
 
-The ebMS 2.0 sender web service is a web service interface for external parties to request Hermes 2 to send an ebMS message to another Hermes 2 or an ebMS compliant messaging gateway. The service provides a message identifier to the sender for future reference. This is the main channel for external applications to deliver ebMS messages using Hermes 2. 
+The ebMS 2.0 sender web service is a web service interface for external parties to request Hermes to send an ebMS message to another Hermes or an ebMS compliant messaging gateway. The service provides a message identifier to the sender for future reference. This is the main channel for external applications to deliver ebMS messages using Hermes. 
 
 .. image:: /_static/images/web_service/h2o-ws-sender-ebms.png
 
 **SOAP request message**
 
-Instead of requiring the sender to compose entire ebMS messages or acquire ebMS knowledge, the sender simply needs to request Hermes 2 to do so with key identities including ``CPA ID``, ``Service`` and ``Action``. These 3 key parameter identify the sending partnership in Hermes 2 that will be used to configure the ebMS message.
+Instead of requiring the sender to compose entire ebMS messages or acquire ebMS knowledge, the sender simply needs to request Hermes to do so with key identities including ``CPA ID``, ``Service`` and ``Action``. These 3 key parameter identify the sending partnership in Hermes that will be used to configure the ebMS message.
 
 The sender web service requires elements with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
@@ -85,7 +85,7 @@ Descriptions of the elements in the SOAP body are as follows:
 |                          |           | These three fields are used to identify the partnership used to send and receive the ebMS    |
 |                          |           | messages by the sending and receiving parties respectively.                                  |
 |                          |           |                                                                                              |
-|                          |           | **These are required to identify a registered partnership in Hermes 2.**                     |
+|                          |           | **These are required to identify a registered partnership in Hermes.**                     |
 +--------------------------+-----------+----------------------------------------------------------------------------------------------+
 | ``<convId>``             | Yes       | This corresponds to the ``conversation id`` element in the ebMS messages sent by Hermes.     |
 +--------------------------+-----------+----------------------------------------------------------------------------------------------+
@@ -134,7 +134,7 @@ A sample SOAP response for sender web service is shown below:
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-As with the SOAP request message, the ``<message_id>`` element is the ``message identifier`` assigned by Hermes 2 in the sending party. The sending application can use it for later reference and status tracking with the status web service. 
+As with the SOAP request message, the ``<message_id>`` element is the ``message identifier`` assigned by Hermes in the sending party. The sending application can use it for later reference and status tracking with the status web service. 
 
 ebMS 2.0 receiver list web service
 ----------------------------------
@@ -171,7 +171,7 @@ Descriptions of the elements in the SOAP body are as follows:
 +-------------------------+-----------+---------------------------------------------------------------------------------------------------+
 | Element                 | Mandatory | Description                                                                                       |
 +=========================+===========+===================================================================================================+
-| ``<cpaId>``,            | Yes       | The ``CPA Id``, ``Service`` and ``Action`` elements in ebMS messages sent by Hermes 2.            |
+| ``<cpaId>``,            | Yes       | The ``CPA Id``, ``Service`` and ``Action`` elements in ebMS messages sent by Hermes.            |
 | ``<service>``,          |           | These three fields identify the partnership used to send ebMS messages.                           |
 | ``<action>``            |           |                                                                                                   |
 |                         |           | **These are required to query the list of available messages**.                                   |
@@ -208,7 +208,7 @@ A sample SOAP response for the receiver list web service is shown below:
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-Each element in the ``messageIds`` represents the message identifier of an ebMS message received by Hermes 2.
+Each element in the ``messageIds`` represents the message identifier of an ebMS message received by Hermes.
 
 Note that a message is considered downloaded only when the message body has been downloaded by the ebMS receiver web service. If your application never calls the receiver web service to download the messages, the same set of message identifiers will always be retrieved.
 
@@ -271,7 +271,7 @@ Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/ebms/status`
 
 The ebMS status web service is used by the application of the sending or receiving party to retrieve the status of a sent or received ebMS message respectively.
 
-The message status is a two-character code indicating the progress of an ebMS message. The ebMS status web service provides a tracking service to monitor ebMS messages requested from Hermes 2.
+The message status is a two-character code indicating the progress of an ebMS message. The ebMS status web service provides a tracking service to monitor ebMS messages requested from Hermes.
 
 **SOAP request message**
 
@@ -410,7 +410,7 @@ AS2 sender web service
 
 Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/as2/sender`
 
-The AS2 sender web service is used by the application of the sending party to request Hermes 2 to send an AS2 message to another Hermes 2 or a compatible messaging gateway. The service returns a message identifier to the application for future reference.
+The AS2 sender web service is used by the application of the sending party to request Hermes to send an AS2 message to another Hermes or a compatible messaging gateway. The service returns a message identifier to the application for future reference.
 
 .. image:: /_static/images/web_service/h2o-ws-sender-as2.png
 
@@ -442,7 +442,7 @@ Descriptions of the elements in the SOAP body are as follows:
 | Element              | Mandatory | Description                                                                                                                                               |
 +======================+===========+===========================================================================================================================================================+
 | ``<as2_from>``,      | Yes       | The values of the ``From`` and ``To`` fields in AS2 messages sent through the                                                                             |
-| ``<as2_to>``         |           | partnership by Hermes 2. These fields are used to identify the sending partnership.                                                                       |
+| ``<as2_to>``         |           | partnership by Hermes. These fields are used to identify the sending partnership.                                                                       |
 |                      |           |                                                                                                                                                           |
 |                      |           | **These are required to identify the message destination.**                                                                                               |
 +----------------------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -454,7 +454,7 @@ Descriptions of the elements in the SOAP body are as follows:
 |                      |           |  * ``xml``, for the content type ``application/XML``.                                                                                                     |
 |                      |           |  * ``bin``, for the content type ``application/ octet-stream``.                                                                                           |
 |                      |           |                                                                                                                                                           |
-|                      |           | For other values, Hermes 2 will assume the content type of the payload is ``application/deflate``, which means that the payload is compressed by Zip.     |
+|                      |           | For other values, Hermes will assume the content type of the payload is ``application/deflate``, which means that the payload is compressed by Zip.     |
 +----------------------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
@@ -512,7 +512,7 @@ Descriptions of the elements in the SOAP body are as follows:
 | Element                 | Mandatory | Description                                                                                 |
 +=========================+===========+=============================================================================================+
 | ``<as2_from>``,         | Yes       | The values of the ``From`` and ``To`` fields in AS2 messages sent through the               |
-| ``<as2_to>``,           |           | partnership by Hermes 2. These fields are used to identify the sending partnership.         |
+| ``<as2_to>``,           |           | partnership by Hermes. These fields are used to identify the sending partnership.         |
 | ``<as2_to>``            |           |                                                                                             |
 |                         |           | **These are required to query messages associated with the specified partnership.**         |
 +-------------------------+-----------+---------------------------------------------------------------------------------------------+
@@ -541,7 +541,7 @@ A sample SOAP response for the receiver list web service is shown below:
    </SOAP-ENV:Envelope>
 
 
-Each ``<message_id>`` element in the response message represents the identifier of an AS2 message received by Hermes 2.
+Each ``<message_id>`` element in the response message represents the identifier of an AS2 message received by Hermes.
 
 Note that a message is considered downloaded only when the message body has been downloaded by the AS2 receiver web service. If your application never calls the receiver web service to download the messages, the same set of message identifiers will always be retrieved.
 

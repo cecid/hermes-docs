@@ -1,29 +1,18 @@
 Installing Hermes
 =================
 
-© CECID
-
-Produced by the Center for E-Commerce Infrastructure Development at The University of Hong Kong.
-
-The contents of this document remain the property of and may not be reproduced in whole or in part without the express permission of CECID.
-
-
-Objectives of the Document
---------------------------
-This document describes how to install and run the open source business-to-business messaging gateway Hermes 2.0 (codenamed Corvus).
-
 Introduction
 ------------
 
-The application is packaged in the form of a self-extracted java archive (JAR). Upon proper invocation, you will see an installation wizard, either in graphical or text format. Following the steps will install the following components:
+The Hermes installer is packaged in the form of a self-extracted java archive (JAR). Upon proper invocation, you will see an installation wizard, either in graphical or text format. Following the steps will install the following components:
 
-* Hermes 2 core
-* Hermes 2 plugins
-* Database tables of Hermes 2 plugins for one of the following database:
+* Hermes core
+* Hermes plugins (AS2 / AS2 Plus / ebMS)
+* Database tables of Hermes plugins for one of the following database:
   
-  * Postgres 8.0 or later
-  * Oracle 9i or later
-  * MySQL 5.0 or later with InnoDB storage engine supported
+  * Postgres 9.2 or later
+  * Oracle 11gR2 or later
+  * MySQL 5.5 or later with InnoDB storage engine supported
 
 * Web service usage sample
 
@@ -51,7 +40,7 @@ Prerequisite
          sudo cp local_policy.jar /usr/lib/jvm/java-8-oracle/jre/lib/security/local_policy.jar
          sudo cp US_export_policy.jar /usr/lib/jvm/java-8-oracle/jre/lib/security/US_export_policy.jar
 
-#. Tomcat 5.5 or above with port ``8080``
+#. Tomcat 8.5 or above with port ``8080``
 
    a. Change the access permissions, the owner and the group of :file:`{<TOMCAT_HOME>}/webapps` after Tomcat is installed.
 
@@ -60,7 +49,9 @@ Prerequisite
          sudo chmod 775 <TOMCAT_HOME>/webapps
          sudo chown tomcat:cecid <TOMCAT_HOME>/webapps
 
-   #. Edit :file:`/etc/systemd/system/tomcat.service`. Change :envvar:`Environment=JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre` to :envvar:`Environment=JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre`
+   #. Edit :file:`/etc/systemd/system/tomcat.service`. 
+      Change :envvar:`Environment=JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre` to :envvar:`Environment=JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre`
+      
    #. Restart Tomcat
 
    .. note::
@@ -79,9 +70,9 @@ Prerequisite
 
 #. One of the following databases installed on any server:
 
-   * PostgreSQL 8.0 or later. :file:`{<POSTGRES_HOME>}` is referring to the home directory of PostgreSQL in the remaining parts of the document.
-   * MySQL 5.0 or later. :file:`{<MYSQL_HOME>}` is referring to the home directory of MySQL in the remaining parts of the document.
-   * Oracle 9i or later. :file:`{<ORACLE_HOME>}` is referring to the home directory of Oracle in the remaining parts of the document.
+   * PostgreSQL 9.2 or later. :file:`{<POSTGRES_HOME>}` is referring to the home directory of PostgreSQL in the remaining parts of the document.
+   * MySQL 5.5 or later. :file:`{<MYSQL_HOME>}` is referring to the home directory of MySQL in the remaining parts of the document.
+   * Oracle 11gR2 or later. :file:`{<ORACLE_HOME>}` is referring to the home directory of Oracle in the remaining parts of the document.
 
 Installation
 ------------
@@ -134,11 +125,11 @@ Step 2 – Database Configuration
 
 **Oracle**
 
-Oracle database creation involves a number of steps and custom parameters for different requirements for the database server. We propose the following reference as a guideline for creating an Oracle database for Hermes 2:
+Oracle database creation involves a number of steps and custom parameters for different requirements for the database server. We propose the following reference as a guideline for creating an Oracle database for Hermes:
 
 https://docs.oracle.com/cd/E11882_01/server.112/e10897/install.htm#ADMQS0232
 
-Step 3 – Hermes 2 Deployment
+Step 3 – Hermes Deployment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1. Execute the installer
@@ -155,7 +146,7 @@ Step 3 – Hermes 2 Deployment
    
    Click :guilabel:`Next` until you get to Step 1 of the installation.
 
-#. Step 1 - Configure Hermes 2 Core
+#. Step 1 - Configure Hermes Core
 
    .. image:: /_static/images/3-4-1-step-1-configure-hermes-2-core.png
    .. image:: /_static/images/3-4-1-step-1-h2o-installer.png
@@ -165,7 +156,7 @@ Step 3 – Hermes 2 Deployment
    +-----------------------------------+---------------------------------------------------------------------+
    | Web Application Folder            | Folder to place the web application (e.g :file:`webapps`) in Tomcat.|
    +-----------------------------------+---------------------------------------------------------------------+
-   | Hermes 2 Home                     | Location to place the Hermes 2 core library and some related files. |
+   | Hermes Home                       | Location to place the Hermes core library and some related files.   |
    +-----------------------------------+---------------------------------------------------------------------+
    | JDBC Driver                       | Specify which database vendor to connect to.                        |
    |                                   | One of the following 3 database vendors can be selected:            |
@@ -174,9 +165,9 @@ Step 3 – Hermes 2 Deployment
    |                                   |   * Oracle                                                          |
    |                                   |   * MySQL                                                           |
    +-----------------------------------+---------------------------------------------------------------------+
-   | Hermes 2 ebMS Plugin              | Optional. Install the ebMS component.                               |
+   | Hermes ebMS Plugin                | Optional. Install the ebMS component.                               |
    +-----------------------------------+---------------------------------------------------------------------+
-   | Hermes 2 AS2 Plugin               | Optional. Install the AS2 component.                                |
+   | Hermes AS2 Plugin                 | Optional. Install the AS2 component.                                |
    +-----------------------------------+---------------------------------------------------------------------+
    | Web Service Usage Sample          | Optional. Install the sample program of web service client.         |
    +-----------------------------------+---------------------------------------------------------------------+
@@ -217,7 +208,7 @@ Step 3 – Hermes 2 Deployment
    |                   |                                                                                                                                                       |
    |                   | **Important Notes:**                                                                                                                                  |
    |                   |                                                                                                                                                       |
-   |                   | * If this is your **first time** installing Hermes 2, please check this option.                                                                       |
+   |                   | * If this is your **first time** installing Hermes, please check this option.                                                                         |
    |                   |                                                                                                                                                       |
    |                   | * If you choose to re-create the tables, all of the existing data in the specified database will be removed during installation.                      |
    |                   |   Please backup all the data in the selected database before choosing to re-create the tables.                                                        |
@@ -250,7 +241,7 @@ Step 3 – Hermes 2 Deployment
    |                   |                                                                                                                                                       |
    |                   | **Important Notes:**                                                                                                                                  |
    |                   |                                                                                                                                                       |
-   |                   | * If this is your **first time** installing Hermes 2, please check this option.                                                                       |
+   |                   | * If this is your **first time** installing Hermes, please check this option.                                                                         |
    |                   |                                                                                                                                                       |
    |                   | * If you are switching from AS2 to AS2 Plus or vice versa, we highly recommend you check this option.                                                 |
    |                   |                                                                                                                                                       |
@@ -262,18 +253,18 @@ Step 3 – Hermes 2 Deployment
 
 #. Click on :guilabel:`Install` and you're done!
 
-Step 4 – Start Hermes 2
+Step 4 – Start Hermes2
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 #. Checklist:
 
-   * Java 2 SDK 5.0 or above with Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files 5.0.
-   * Apache Tomcat 5.5 or above Servlet/JSP Container.
+   * Java JDK 8 or above with Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files 7.
+   * Apache Tomcat 8.5 or above Servlet/JSP Container.
    * Database server is running with ebMS and/or AS2 database instances and the tables are created.
    * If you are running Unix/Linux, make sure that at least read permissions are set to the core directory and read/write for the AS2 repository directory in :file:`{<HERMES2_HOME>}`.
    * Start Tomcat.
 
-#. To verify that Hermes 2 is running, access the following URL from a web browser:
+#. To verify that Hermes is running, access the following URL from a web browser:
 
      http://localhost:8080/corvus/home
 
@@ -285,17 +276,17 @@ Step 4 – Start Hermes 2
 
     http://localhost:8080/corvus/admin/home
 
-#. Once you have gained access to the admin page, you should see the Hermes 2 Administration Console page:
+#. Once you have gained access to the admin page, you should see the Hermes Administration Console page:
 
    .. image:: /_static/images/3-5-step-4-administration-console-page.png
 
-That's it! Hermes 2 should now be up and running. You can test your setup by running our web service usage sample in next section.
+That's it! Hermes should now be up and running. You can test your setup by running our web service usage sample in next section.
 
 
 Partnership Maintenance and Web Service Usage Sample
 -------------------------------------------------------
 
-A tool kit called :program:`Web Service Usage Sample` was installed under the :file:`{<HERMES2_HOME>}/sample` folder. It contains tools to test the installed Hermes 2 and demonstrate messaging flow. It provides a set of sample code for writing web service client applications and connect them to Hermes 2.
+A tool kit called :program:`Web Service Usage Sample` was installed under the :file:`{<HERMES2_HOME>}/sample` folder. It contains tools to test the installed Hermes.
 
 Directory Organization
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -350,7 +341,7 @@ A web service sample program is provided to manage partnerships (add, update or 
 +------------------------------+----------------------------------------------------------+
 | Program                      | Purpose                                                  |
 +==============================+==========================================================+
-| :program:`as2-partnership` / | Maintains a specified AS2/ebMS partnership in Hermes 2.  |
+| :program:`as2-partnership` / | Maintains a specified AS2/ebMS partnership in Hermes.    |
 | :program:`ebms-partnership`  |                                                          |
 +------------------------------+----------------------------------------------------------+
 
@@ -417,7 +408,7 @@ Access http://localhost:8080/corvus/admin/as2/partnership to configure the partn
 Creating an AS2 Plus Partnership
 """"""""""""""""""""""""""""""""
 
-Please follow the procedure in `Creating an AS2 Partnership`_ to create an AS2 Plus partnership.
+Please follow the same procedure listed in `Creating an AS2 Partnership`_ .
 
 Creating an ebMS Partnership
 """"""""""""""""""""""""""""
@@ -471,21 +462,21 @@ Access http://localhost:8080/corvus/admin/ebms/partnership to configure the part
 Web Service Usage Sample Flow
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In order to validate the installation of Hermes 2, a web service usage sample program is provided. It can be executed by running the following scripts in a command prompt.
+In order to validate the installation of Hermes, a web service usage sample program is provided. It can be executed by running the following scripts in a command prompt.
 
 +--------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Program                  | Purpose                                                                                                                                                        |
 +==========================+================================================================================================================================================================+
-| :program:`as2-send` /    | Send an AS2/ebMS message to the installed Hermes 2.                                                                                                            |
+| :program:`as2-send` /    | Send an AS2/ebMS message to the installed Hermes.                                                                                                              |
 | :program:`ebms-send`     |                                                                                                                                                                |
 +--------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :program:`as2-history` / | Show the message history of Hermes 2. This program will list the inbox and outbox messages in the data storage of Hermes 2.                                    |
-| :program:`ebms-history`  | The user can view the details of the inbox and outbox. For inbox messages, the user can also download the payload in the repository of Hermes 2, if available. |
+| :program:`as2-history` / | Show the message history of Hermes. This program will list the inbox and outbox messages in the data storage of Hermes.                                        |
+| :program:`ebms-history`  | The user can view the details of the inbox and outbox. For inbox messages, the user can also download the payload in the repository of Hermes, if available.   |
 +--------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-In order to test whether Hermes 2 has installed successfully or not, we suggest running the sample programs in the following steps:
+In order to test whether Hermes has been installed successfully or not, we suggest running the sample programs in the following steps:
 
-#. Send a message to the local Hermes 2 by running :program:`ebms-send`/:program:`as2-send`.
+#. Send a message to the local Hermes by running :program:`ebms-send`/:program:`as2-send`.
 
 #. Check the status of the sent message by running :program:`ebms-history`/:program:`as2-history` and select the message from the outbox.
 
@@ -496,9 +487,9 @@ AS2 Web Service Usage Sample
 
 Before executing the following AS2 web service usage sample, the partnership from `Creating an AS2 Partnership`_ must be created.
 
-#. Send a message to the local Hermes 2 using the script :program:`as2-send`.
+#. Send a message to the local Hermes using the script :program:`as2-send`.
 
-   This program creates and sends a request attached with the payload named :file:`testpayload` under the directory :file:`{<HERMES2_HOME>}/sample/config/as2-send` to Hermes 2.
+   This program creates and sends a request attached with the payload named :file:`testpayload` under the directory :file:`{<HERMES2_HOME>}/sample/config/as2-send` to Hermes.
    
    Upon successful execution, you should be able to see the similar output shown as follow:
    
@@ -521,7 +512,7 @@ Before executing the following AS2 web service usage sample, the partnership fro
 
 #. Check the sent message using the script :program:`as2-history`.
 
-   This program retrieves the list of sent/received message from Hermes 2. 
+   This program retrieves the list of sent/received message from Hermes. 
 
    .. code-block:: none
 
@@ -568,9 +559,9 @@ ebMS Web Service Usage Sample
 
 Before executing the following ebMS web service usage sample, the partnership from `Creating an ebMS Partnership`_ must be created.
 
-#. Send a message to the local Hermes 2 server using the script :program:`ebms-send`.
+#. Send a message to the local Hermes server using the script :program:`ebms-send`.
 
-   This program creates and sends a request attached with the payload named :file:`testpayload` under the directory :file:`{<HERMES2_HOME>}/sample/config/ebms-send` to Hermes 2.
+   This program creates and sends a request attached with the payload named :file:`testpayload` under the directory :file:`{<HERMES2_HOME>}/sample/config/ebms-send` to Hermes.
 
    Upon successful execution, an output similar to the following will be displayed:
 
@@ -597,7 +588,7 @@ Before executing the following ebMS web service usage sample, the partnership fr
 
 #. Check the sent message using the script :program:`ebms-history`.
 
-   This program retrieves the list of sent/received message from Hermes 2.
+   This program retrieves the list of sent/received message from Hermes.
 
    .. code-block:: none
 
@@ -643,7 +634,7 @@ Before executing the following ebMS web service usage sample, the partnership fr
 Configuration for Secure Messaging & Secure Channels
 ----------------------------------------------------
 
-In order to store a private key for message signing, a keystore is needed. Under current implementation, only PKCS12 keystore is supported. If Hermes 2 was installed using the installer, there are keystore files placed in the folder called :file:`security` under both ebMS and AS2/AS2 Plus plugins.
+In order to store a private key for message signing, a keystore is needed. Under current implementation, only PKCS12 keystore is supported. If Hermes was installed using the installer, there are keystore files placed in the folder called :file:`security` under both ebMS and AS2/AS2 Plus plugins.
 
 Message Signing
 ^^^^^^^^^^^^^^^
@@ -653,7 +644,7 @@ To enable message signing, please configure the plugin with a corresponding keys
 Sender Settings for Message Signing
 """""""""""""""""""""""""""""""""""
 
-To instruct Hermes 2 to perform message signing with the correct private key, the corresponding Keystore Manager should be configured with the correct parameters.
+To instruct Hermes to perform message signing with the correct private key, the corresponding Keystore Manager should be configured with the correct parameters.
 
 Here are descriptions of the parameters:
 
@@ -730,7 +721,7 @@ To further ensure the security of message transfers, secure channels are prefera
 FAQ
 ---
 
-**Hermes 2 Deployment**
+**Hermes Deployment**
 
 Q1. The :file:`corvus.log` shows:
 
