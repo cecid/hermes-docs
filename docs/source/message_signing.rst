@@ -1,57 +1,5 @@
 Configuring Secure Messaging
 ============================
-Introduction
-------------
-Under the current implementation, Hermes 2 only supports the PKCS #12 standard. A keystore is needed for Hermes 2 to retrieve a key for message signing.
-There is a keystore created for both ebMS and AS2 plugins during installation.
-To learn more about PKI, please refer to the `Wikipedia article <https://en.wikipedia.org/wiki/Public_key_infrastructure>`_ or `this article <http://searchsecurity.techtarget.com/definition/PKI>`_.
-
-
-Configuration to enable message signing
----------------------------------------
-By default, the Hermes 2 installer creates a keystore for both ebMS and AS2 plugins. You can use the keystores provided, or create your own customized keystore.
-For information about how to create a keystore and generate a public certificate, please refer to the section `How to generate a PKCS12 Keystore and Certificate`_.
-
-
-Core module configuration
-^^^^^^^^^^^^^^^^^^^^^^^^^
-The configurations for keystores are defined in the system module configuration files. The component named ``keystore-manager`` determines the details of the keystore.
-   
-   * AS2: :file:`as2.module.core.xml`
-   * ebMS: :file:`ebms.module.core.xml`
-
-Here are descriptions of the ``keystore-manager`` parameters:
-
-+------------------------+----------------------------------------------------------------------------------------------+
-| ``keystore-location``  | Where the keystore file can be found. There is a small difference between ebMS and AS2.      |
-|                        | In AS2, the keystore file is located in the :file:`security` folder of the plugin and        |
-|                        | only the filename of the keystore needs to be specified. In ebMS, an absolute path           |
-|                        | is required for this field.                                                                  |
-+------------------------+----------------------------------------------------------------------------------------------+
-| ``keystore-password``  | The password to access the keystore file.                                                    |
-+------------------------+----------------------------------------------------------------------------------------------+
-| ``key-alias``          | This value identifies the key in the keystore that will be used for signing.                 |
-+------------------------+----------------------------------------------------------------------------------------------+
-| ``key-password``       | The password to access the private key (usually the same as the keystore password).          |
-+------------------------+----------------------------------------------------------------------------------------------+
-| ``keystore-type``      | The type of keystore. Currently, Hermes 2 only supports PKCS12.                              |
-+------------------------+----------------------------------------------------------------------------------------------+
-| ``keystore-provider``  | The class provider to handle the keystore. By default, it is                                 |
-|                        | ``org.bouncycastle.jce.provider.BouncyCastleProvider``.                                      |
-+------------------------+----------------------------------------------------------------------------------------------+
-
-
-Partnership settings for receiver
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The receiver needs to upload the public certificate provided by the sender in order to be able to verify the signature. This will be done using the partnership maintenance page.
-
-.. image:: /_static/images/message_signing/partnership_cert_upload.png
-
-The value of :guilabel:`Signing Required` must be set to ``true``. For details on partnership settings, please see :doc:`ebms_partnership` or :doc:`as2_partnership`.
-
-.. image:: /_static/images/message_signing/partnership_ssl_setting.png
-
-
 .. _send-message-using-https:
 
 How to send messages using HTTPS
@@ -346,5 +294,8 @@ AS2
 | ``DSA``   | ``SHA1``   | not supported | not supported | not supported | not supported | not supported | not supported |
 +-----------+------------+---------------+---------------+---------------+---------------+---------------+---------------+
 
-
-
+See also
+--------
+*  :ref:`configuration-for-secure-messaging`
+* `Wiki Public Key Infrastructure (Wiki) <https://en.wikipedia.org/wiki/Public_key_infrastructure>`_
+* `Public Key Infrastructure (FreeMagazine) <http://searchsecurity.techtarget.com/definition/PKI>`_

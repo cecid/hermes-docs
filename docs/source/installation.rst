@@ -51,7 +51,7 @@ Prerequisite
 
    #. Edit :file:`/etc/systemd/system/tomcat.service`. 
       Change :envvar:`Environment=JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre` to :envvar:`Environment=JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre`
-      
+
    #. Restart Tomcat
 
    .. note::
@@ -630,6 +630,7 @@ Before executing the following ebMS web service usage sample, the partnership fr
 
    .. image:: /_static/images/4-4-1-smaple-message.png
 
+.. _configuration-for-secure-messaging:
 
 Configuration for Secure Messaging & Secure Channels
 ----------------------------------------------------
