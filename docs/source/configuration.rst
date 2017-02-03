@@ -106,7 +106,7 @@ You can change the location of Hermes by modifying this element:
 +------------------------+------------------------------------------------------------------------------------------------+
 | XPath                  | Expected information                                                                           |
 +========================+================================================================================================+
-| ``/corvus/home``       | The location in which Hermes is installed. Note that the specified path is an absolute path. |
+| ``/corvus/home``       | The location in which Hermes is installed. Note that the specified path is an absolute path.   |
 +------------------------+------------------------------------------------------------------------------------------------+
  
 Plugin location for Hermes
