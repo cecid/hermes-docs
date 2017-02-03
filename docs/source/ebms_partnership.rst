@@ -5,7 +5,7 @@ Partnership ID
 --------------
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Description** | The unique identifier of an ebMS 2.0 partnership in local Hermes 2.                                              |
+| **Description** | The unique identifier of an ebMS 2.0 partnership in local Hermes.                                                |
 |                 |                                                                                                                  |
 |                 | The value of this field has no restriction but it is **RECOMMENDED** to be unique between sender and recipient.  |
 |                 |                                                                                                                  |
@@ -32,7 +32,7 @@ Service
 -------
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Description** | In Hermes 2, this **mandatory** parameter is used for mapping a partnership between **sender** and **recipient**.|
+| **Description** | In Hermes, this **mandatory** parameter is used for mapping a partnership between **sender** and **recipient**.  |
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 
 
@@ -64,7 +64,7 @@ Transport Endpoint
 +-----------------+------------------------------------------------------------------------------------------------------------------+
 | **Description** | The endpoint URL of the recieving messaging gateway.                                                             |
 |                 |                                                                                                                  |
-|                 | If the recieving messaging gateway is Hermes 2 and HTTP/HTTPS is the transport protocol, the endpoint URL is     |
+|                 | If the recieving messaging gateway is Hermes and HTTP/HTTPS is the transport protocol, the endpoint URL is       |
 |                 | formatted as :samp:`http://{<RECIPIENT_HOST>}:{<PORT>}/corvus/httpd/ebms/inbound`. The recipient should set this |
 |                 | field to :samp:`http://{<SENDER_HOST>}:{<PORT>}/corvus/httpd/ebms/inbound` in order to send acknowledgements     |
 |                 | upon request.                                                                                                    |
@@ -127,7 +127,7 @@ Acknowledgement Requested
 |                 |                                                                                                                  |
 |                 | How the acknowledgement is sent depends on the value of `Sync Reply Mode`_. If it is enabled, the                |
 |                 | acknowledgement will be sent immediately using the same HTTP connection as the received message. Otherwise, if   |
-|                 | the recipient is using Hermes 2, the acknowledgement will be placed in an outgoing queue                         |
+|                 | the recipient is using Hermes, the acknowledgement will be placed in an outgoing queue                           |
 |                 | until it is delivered to the sender.                                                                             |
 |                 |                                                                                                                  |
 |                 | It is **RECOMMENDED** to set this parameter to **always** for reliable messaging.                                |
@@ -264,7 +264,7 @@ Maximum Retries
 +------------------+------------------------------------------------------------------------------------------------------------------+
 | **Description**  | The maximum number of retries allowed for the sender to attempt delivering an ebMS message.                      |
 |                  |                                                                                                                  |
-|                  | Hermes 2 tries to deliver the ebMS message under the features of reliable messaging until exceeding the          |
+|                  | Hermes tries to deliver the ebMS message under the features of reliable messaging until exceeding the            |
 |                  | maximum number of retries.                                                                                       |
 |                  |                                                                                                                  |
 |                  | There will be a time interval between each attempt, which is defined in `Retry Interval (ms)`_.                  |

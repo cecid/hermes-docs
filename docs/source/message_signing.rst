@@ -6,14 +6,14 @@ How to send messages using HTTPS
 --------------------------------
 SSL server authentication
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-To enable server authentication in Tomcat, a truststore and a keystore have to be configured in Hermes 2 and Tomcat respectively.
+To enable server authentication in Tomcat, a truststore and a keystore have to be configured in Hermes and Tomcat respectively.
 
 On the sending side, a truststore is defined in :file:`corvus.properties.xml`, which is where the certificates of trusted servers are stored.
-When the sending Hermes 2 tries to establish a secure connection, the receiving Hermes 2 will provide a public certificate for the sender to identify their identity.
+When the sending Hermes tries to establish a secure connection, the receiving Hermes will provide a public certificate for the sender to identify their identity.
 If this certificate is self-signed, it should be added to the truststore defined on the sending side.
 
 On the receiving side, a keystore is defined in the :file:`server.xml` of Tomcat. The keystore contains its paired private key and public certificate.
-If the keystore is self-signed, the certificate has to be exported, then imported to the trustore of the sending Hermes 2.
+If the keystore is self-signed, the certificate has to be exported, then imported to the trustore of the sending Hermes.
 
 The details of this procedure are shown below.
 For information about how to create a keystore and generate a public certificate, please refer to the section `How to generate a PKCS12 Keystore and Certificate`_.
@@ -65,14 +65,14 @@ Here are descriptions of the parameters:
 | ``trustStoreType``   | The type of the keystore. Both PKCS12 and JKS are supported.    |
 +----------------------+-----------------------------------------------------------------+
 
-If asynchronous replies are enabled for the receiving partnership, the same configuration needs to be made for Hermes 2 on both sides, however the roles are reversed.
+If asynchronous replies are enabled for the receiving partnership, the same configuration needs to be made for Hermes on both sides, however the roles are reversed.
 
 
 SSL client authentication
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-In addition to server authentication, client authentication can also be applied to Hermes 2 to achieve secure connections for message deliveries.
+In addition to server authentication, client authentication can also be applied to Hermes to achieve secure connections for message deliveries.
 
-Once the server authentication is complete, the receiving Hermes 2 will ask for the identity of the sending Hermes 2.
+Once the server authentication is complete, the receiving Hermes will ask for the identity of the sending Hermes.
 The sender will provide a public certificate to the receiver, which will be compared to the trusted certificates in the truststore.
 
 

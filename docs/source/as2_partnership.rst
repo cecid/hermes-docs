@@ -5,7 +5,7 @@ Partnership ID
 --------------
 
 +-----------------+------------------------------------------------------------------------------------------------------------------+
-| **Description** | The unique identifier of an AS2 partnership in Hermes 2.                                                         |
+| **Description** | The unique identifier of an AS2 partnership in Hermes.                                                           |
 |                 |                                                                                                                  |
 |                 | The value of this field has no restrictions but it is **RECOMMENDED** to be unique between sender and recipient. |
 |                 |                                                                                                                  |
@@ -83,7 +83,7 @@ Recipient Address
 +-----------------+--------------------------------------------------------------------------------------+
 | **Description** | The endpoint URL of the receiving messaging gateway.                                 |
 |                 |                                                                                      |
-|                 | If the receiving messaging gateway is Hermes 2, the endpoint URL is                  |
+|                 | If the receiving messaging gateway is Hermes, the endpoint URL is                    |
 |                 | :samp:`http://{<RECIPIENT_HOST>}:{<PORT>}/corvus/httpd/as2/inbound`.                 |
 |                 |                                                                                      |
 |                 | This field is **mandatory** and it must be an **HTTP/HTTPS URL**.                    |
@@ -113,7 +113,7 @@ Request Receipt
 | **Description** | Indicates whether the sender has requested the recipient to reply with an AS2 receipt (acknowledgement).         |
 |                 | How the receipt is sent depends on the value of `Asynchronous Receipt`_. If it is disabled, the receipt will be  |
 |                 | sent immediately using the same HTTP connection as the received message. Otherwise, if the recipient is using    |
-|                 | Hermes 2, the receipt will be placed in an outgoing queue until it is delivered to the sender.                   |
+|                 | Hermes, the receipt will be placed in an outgoing queue until it is delivered to the sender.                     |
 |                 |                                                                                                                  |
 |                 | It is **RECOMMENDED** to set this parameter to ``true`` for reliable messaging.                                  |
 |                 |                                                                                                                  |
@@ -180,7 +180,7 @@ Receipt Return URL
 ------------------
 
 +------------------+-----------------------------------------------------------------------------------------------------------------+
-| **Description**  | This is the endpoint URL of Hermes 2 or another compatible messaging gateway for receiving receipts. It is      |
+| **Description**  | This is the endpoint URL of Hermes or another compatible messaging gateway for receiving receipts. It is        |
 |                  | always the inbound endpoint URL of the **send** partnership. For example:                                       |
 |                  |                                                                                                                 |
 |                  |   | **Sender (A)** IP address: ``1.1.1.1:8080``                                                                 |
@@ -302,7 +302,7 @@ Maximum Retries
 +-----------------+-------------------------------------------------------------------------------------------------------------------+
 | **Description** | The maximum number of retries allowed for the sender to attempt delivering an AS2 message.                        |
 |                 |                                                                                                                   |
-|                 | Hermes 2 tries to deliver the AS2 message under the specification of reliable messaging until exceeding           |
+|                 | Hermes tries to deliver the AS2 message under the specification of reliable messaging until exceeding             |
 |                 | the maximum number of retries.                                                                                    |
 |                 |                                                                                                                   |
 |                 | There will be a time interval between each attempt, which is defined in `Retry Interval (ms)`_.                   |

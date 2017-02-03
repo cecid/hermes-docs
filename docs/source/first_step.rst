@@ -4,19 +4,19 @@ The First Step
 Introduction
 ----------------
 
-One of the most common difficulties in using Hermes 2 for new developers/users is managing a partnership and programming the web service requester before they are able to deliver messages to their partner. This article is purposed to assist the user to create and maintain partnerships in Hermes 2. For more information on the installation and administration console of Hermes 2, please refer to :doc:`installation`.
+One of the most common difficulties in using Hermes for new developers/users is managing a partnership and programming the web service requester before they are able to deliver messages to their partner. This article is purposed to assist the user to create and maintain partnerships in Hermes. For more information on the installation and administration console of Hermes, please refer to :doc:`installation`.
 
 What is a partnership?
 ^^^^^^^^^^^^^^^^^^^^^^
 
-A partnership in Hermes 2 is defined as a channel to your business partner. A partnership is a **simplex** (one-way) communication channel to your business partner. In a typical two-way business document exchange, the Hermes 2 in each party should have **TWO** partnerships; one for sending, another for receiving. After the partnerships have been defined, the application can reference the partnerships to send or receive business messages.
+A partnership in Hermes is defined as a channel to your business partner. A partnership is a **simplex** (one-way) communication channel to your business partner. In a typical two-way business document exchange, the Hermes in each party should have **TWO** partnerships; one for sending, another for receiving. After the partnerships have been defined, the application can reference the partnerships to send or receive business messages.
 
 .. image:: /_static/images/first_step/Partnership_Overview.png
 
 Existing partnership types
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Currently, Hermes 2 has two types of partnerships, which are ebMS and AS2. They represent the communication agreement with your partner to use ebMS protocol and AS2 protocol respectively.
+Currently, Hermes has two types of partnerships, which are ebMS and AS2. They represent the communication agreement with your partner to use ebMS protocol and AS2 protocol respectively.
 
 
 ebMS 2.0 partnership
@@ -30,9 +30,9 @@ What is an ebMS 2.0 partnership?
 For an ebms 2.0 partnership, **CPA (Collaboration Protocol Agreement) ID**, **Service** and **Action** are used to uniquely identify each partnership. The values of these parameters will appear in the headers of outgoing ebMS messages. The purpose of these parameters for a sending partnership and a receiving partnership are different:
 
 * In a sending partnership, these values are taken as the values in the ebMS headers of outgoing messages.
-* In a receiving partnership, these values are taken as filtering criteria. If Hermes 2 receives an ebMS message whose **CPA ID**, **Service** and **Action** values do not have a matching partnership, a negative acknowledgement will be sent back to the sender and no application can retrieve the message on the receiving side.
+* In a receiving partnership, these values are taken as filtering criteria. If Hermes receives an ebMS message whose **CPA ID**, **Service** and **Action** values do not have a matching partnership, a negative acknowledgement will be sent back to the sender and no application can retrieve the message on the receiving side.
 
-In Hermes 2, the **Service** parameter for sending and receiving partnerships has to be HTTP URL (Universal Resource Locator). The **Service** has a different meaning in each partnership:
+In Hermes, the **Service** parameter for sending and receiving partnerships has to be HTTP URL (Universal Resource Locator). The **Service** has a different meaning in each partnership:
 
 * For a sending artnership, the **Service** acts as the endpoint URL of the sending Hermes for receiving acknowledgement.
 * For a receiving partnership, since the **Service** is a filtering criterion for incoming messages, it should be the endpoint URL of the sending Hermes.
@@ -49,8 +49,8 @@ Since the receiving partnership's **CPA ID**, **Service** and **Action** filter 
 How to create your first ebMS 2.0 partnership
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 1. Open a Web browser.
-#. Go to Hermes 2 Administration Console at :samp:`http://{<LOCALHOST>}:{<PORT>}/corvus/admin/home`.
-#. Enter the administrator username and password for Hermes 2.
+#. Go to Hermes Administration Console at :samp:`http://{<LOCALHOST>}:{<PORT>}/corvus/admin/home`.
+#. Enter the administrator username and password for Hermes.
 #. Click :guilabel:`Ebms Plugin` in the module tab located on the left hand side.
 #. Click the :guilabel:`Partnership` tab on the central horizontal tabbed bar to display the partnership creation page.
 #. To create the simplest ebMS 2.0 partnership, you are only required to fill in the following seven fields in the form:
@@ -80,7 +80,7 @@ How to create your first ebMS 2.0 partnership
 
    The Transport Endpoint URL should be formatted as :samp:`http://{<RECEIVER_HOST>}:{<PORT>}/corvus/httpd/ebms/inbound`
 
-   where ``corvus/httpd/ebms/inbound`` is the context path for accepting and receiving incoming ebXML messages if the receiving system is also using Hermes 2.
+   where ``corvus/httpd/ebms/inbound`` is the context path for accepting and receiving incoming ebXML messages if the receiving system is also using Hermes.
 
    Since the receiving host below is the same as the sending host (i.e. the ebMS message loops back to the sender), only **ONE** partnership is required for sending and receiving.
 
@@ -109,7 +109,7 @@ How to create your first ebMS 2.0 partnership
 How to update an ebMS 2.0 partnership
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1. Do **steps 1-5** in `How to create your first ebMS 2.0 partnership`_ or all steps if you have not registered a partnership in Hermes 2.
+1. Do **steps 1-5** in `How to create your first ebMS 2.0 partnership`_ or all steps if you have not registered a partnership in Hermes.
 #. You should able to see a drop-down list under the header :guilabel:`Registered Partnership`.
 #. Click the :guilabel:`Change` button.
 #. Now you should able to see a module called :guilabel:`Selected Partnership` that contains the information of selected partnership from the previous step like here.
@@ -139,7 +139,7 @@ What is an AS2 partnership?
 For an AS2 partnership, the **AS2 From** and **AS2 To** fields in a partnership are used to uniquely identify it. The values of these parameters will appear in AS2 message headers. The purpose of these parameters for a sending partnership and a receiving partnership are different:
 
 * In a sending partnership, these values are taken as the values in the headers of outgoing messages.
-* In a receiving partnership, these values are taken as filtering criteria. If Hermes 2 receives an AS2 message whose **AS2 From** and **AS2 To** values do not have a matching partnership, the incoming message is rejected/ignored and no application can retrieve the message on the receiving side.
+* In a receiving partnership, these values are taken as filtering criteria. If Hermes receives an AS2 message whose **AS2 From** and **AS2 To** values do not have a matching partnership, the incoming message is rejected/ignored and no application can retrieve the message on the receiving side.
 
   .. note::
      The values of **AS2 From** and **AS2 To** in the incoming AS2 message are interchanged before finding the matching partnership (i.e. the filtering criteria **[AS2 From, AS2 To] = [Incoming AS2 To, Incoming AS2 From]** in the AS2 message).
@@ -154,8 +154,8 @@ How to create your first AS2 partnership
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1. Open a Web browser.
-#. Go to Hermes 2 Administration Console at :samp:`http://{<LOCALHOST>}:{<PORT>}/corvus/admin/home`.
-#. Enter the administrator user name and password for Hermes 2.
+#. Go to Hermes Administration Console at :samp:`http://{<LOCALHOST>}:{<PORT>}/corvus/admin/home`.
+#. Enter the administrator user name and password for Hermes.
 #. Click the :guilabel:`AS2 Plugin` in the module tab located on the left hand side.
 #. Click the :guilabel:`Partnership` tab on the central horizontal tabbed bar to display the partnership creation page.
 #. To create the simplest AS2 partnership, you are only required to fill in the following seven fields in the form:
@@ -183,7 +183,7 @@ How to create your first AS2 partnership
 
    The Transport Endpoint URL should be formatted as :samp:`http://{<RECEIVER_HOST>}:{<PORT>}/corvus/httpd/as2/inbound`
 
-   where  ``corvus/httpd/as2/inbound`` is the context path for accepting and receiving incoming AS2 messages if the receiving system is also using Hermes 2.
+   where  ``corvus/httpd/as2/inbound`` is the context path for accepting and receiving incoming AS2 messages if the receiving system is also using Hermes.
 
    Since the receiving host below is the same as the sending host (i.e. the AS2 message loops back to the sender), only **ONE** partnership is required for sending and receiving.
 
@@ -213,7 +213,7 @@ How to create your first AS2 partnership
 How to update an AS2 partnership
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1. Do the **steps 1-5** in `How to create your first AS2 partnership`_ or all steps if you have not registered a partnership in Hermes 2.
+1. Do the **steps 1-5** in `How to create your first AS2 partnership`_ or all steps if you have not registered a partnership in Hermes.
 #. You should able to see a drop-down list under the header :guilabel:`Registered Partnership`.
 #. Click the :guilabel:`Change` button.
 #. Now you should able to see a module called :guilabel:`Selected Partnership` that contains the information of selected partnership from previous step like here.

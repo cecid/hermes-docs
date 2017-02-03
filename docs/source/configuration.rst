@@ -4,17 +4,11 @@ Configuring Hermes
 Introduction
 ------------
 
-Purpose of this document
-^^^^^^^^^^^^^^^^^^^^^^^^
+This document acts as a configuration reference for Hermes. The configurations of Hermes are specified by various XML-based configuration files. By modifying these files, administrators or developers can configure all the settings such as the location of the message database and log file locations.
 
-This document acts as a configuration reference for Hermes 2.0 Community Edition (CE) and Enterprise Edition (EE). The configurations of Hermes 2.0 are specified by various XML-based configuration files. By modifying these files, administrators or developers can configure all the settings such as the location of the message database and log file locations.
+The intended audience of this document includes system administrators, application developers and plugin developers of the Hermes system. It assumes the audience has some background knowledge of the following:
 
-Intended audience
-^^^^^^^^^^^^^^^^^
-
-The intended audience of this document includes system administrators, application developers and plugin developers of the Hermes 2.0 system. It assumes the audience has some background knowledge of the following:
-
-*   Java 2 Standard Edition
+*   Java Standard Edition
 *   XML
 *   AS2
 *   ebXML Messaging Services
@@ -25,7 +19,7 @@ The intended audience of this document includes system administrators, applicati
 Overview on loading property files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Hermes 2 has employed a module-group-component architecture where you can define your own module for each application. You can then assign a property file for each component and the Hermes 2 Core System will load them.
+Hermes has employed a module-group-component architecture where you can define your own module for each application. You can then assign a property file for each component and the Hermes Core System will load them.
 
 There are two loading mechanisms, one for the core system and one for the plugins. The two are almost identical except for their initial definitions.  
 
@@ -33,7 +27,7 @@ Let's take a look at how the core system modules are loaded.
 
 .. image:: /_static/images/2-overview-1.jpeg
 
-For the core system, Hermes 2 will look for the existence of a file named :file:`sys.properties` from the classpath which contains the location of the module-group definition file. E.g.,
+For the core system, Hermes will look for the existence of a file named :file:`sys.properties` from the classpath which contains the location of the module-group definition file. E.g.,
 
     :file:`sys.module.group=doc-processor.module-group.xml`
 
@@ -51,7 +45,7 @@ From there, the system will look for the specified XML file and load up the modu
    ...
    </module>
 
-For the plugins, instead of looking for a file named :file:`sys.properties`, Hermes 2 will look for a file named :file:`plugin.xml` instead. 
+For the plugins, instead of looking for a file named :file:`sys.properties`, Hermes will look for a file named :file:`plugin.xml` instead. 
 
 .. image:: /_static/images/2-overview-2.jpeg
 
@@ -74,7 +68,7 @@ From within, a parameter with the value ``module-group-descriptor`` will define 
    ...
    </plugin>
 
-Hermes 2 core system properties
+Hermes core system properties
 -------------------------------
 You can modify the following information either through the web admin interface or by manipulating the XML configuration files directly.
 
@@ -83,9 +77,9 @@ The configuration files are stored in :file:`{<WEBAPPS_LOCATION>}/corvus/WEB-INF
 +-----------------------------------------------------------------------+----------------------------------------+
 | Properties                                                            | Configuration file                     |
 +=======================================================================+========================================+
-| 1.    Hermes 2 location                                               |                                        |
+| 1.    Hermes location                                                 |                                        |
 |                                                                       |                                        | 
-| 2.    Plugin location for Hermes 2                                    |                                        |
+| 2.    Plugin location for Hermes                                      |                                        |
 |                                                                       |                                        | 
 | 3.    SSL trust store information                                     |                                        |
 |                                                                       |                                        | 
@@ -98,9 +92,9 @@ The configuration files are stored in :file:`{<WEBAPPS_LOCATION>}/corvus/WEB-INF
 | 7.    Log file location and level of logging                          | :file:`corvus.log.properties.xml`      |
 +-----------------------------------------------------------------------+----------------------------------------+
 
-Hermes 2 location
+Hermes location
 ^^^^^^^^^^^^^^^^^
-You can change the location of Hermes 2 by modifying this element:
+You can change the location of Hermes by modifying this element:
 
 .. code-block:: xml
 
@@ -112,12 +106,12 @@ You can change the location of Hermes 2 by modifying this element:
 +------------------------+------------------------------------------------------------------------------------------------+
 | XPath                  | Expected information                                                                           |
 +========================+================================================================================================+
-| ``/corvus/home``       | The location in which Hermes 2 is installed. Note that the specified path is an absolute path. |
+| ``/corvus/home``       | The location in which Hermes is installed. Note that the specified path is an absolute path. |
 +------------------------+------------------------------------------------------------------------------------------------+
  
-Plugin location for Hermes 2
+Plugin location for Hermes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-You can change the plugin location of Hermes 2 by modifying this element:
+You can change the plugin location of Hermes by modifying this element:
 
 .. code-block:: xml
 
@@ -135,12 +129,12 @@ You can change the plugin location of Hermes 2 by modifying this element:
 +--------------------------------------+--------------------------------------------------------------------------------------------+
 | XPath                                | Expected information                                                                       |
 +======================================+============================================================================================+
-| ``/corvus/plugin/registry``          | The location in which Hermes 2 plugins are installed. By default, it should be the         |
-|                                      | ``plugins`` directory under the home directory where Hermes 2 is installed.                |
+| ``/corvus/plugin/registry``          | The location in which Hermes plugins are installed. By default, it should be the           |
+|                                      | ``plugins`` directory under the home directory where Hermes is installed.                  |
 |                                      | Note that the specified path is an absolute path.                                          |
 |                                      |                                                                                            |
 +--------------------------------------+--------------------------------------------------------------------------------------------+
-| ``/corvus/plugin/descriptor``        | The name of the XML file which Hermes 2 will use when loading the module-group-component.  |
+| ``/corvus/plugin/descriptor``        | The name of the XML file which Hermes will use when loading the module-group-component.    |
 +--------------------------------------+--------------------------------------------------------------------------------------------+
 
 SSL trust store information
@@ -198,13 +192,13 @@ HTTP/HTTPS proxy server
 +--------------------------------------------------------+--------------------------------------------------------------+
 | XPath                                                  | Expected information                                         |
 +========================================================+==============================================================+
-| ``/corvus/environment/properties/http.proxyHost``      | The hostname or IP address of the proxy host that Hermes 2   |
+| ``/corvus/environment/properties/http.proxyHost``      | The hostname or IP address of the proxy host that Hermes     |
 |                                                        | will establish HTTP connections with for outgoing messages.  |
 +--------------------------------------------------------+--------------------------------------------------------------+
 | ``/corvus/environment/properties/http.proxyPort``      | The TCP port of the proxy server specified above.            |
 |                                                        |                                                              |
 +--------------------------------------------------------+--------------------------------------------------------------+
-| ``/corvus/environment/properties/https.proxyHost``     | The hostname or IP address of the proxy host that Hermes 2   |
+| ``/corvus/environment/properties/https.proxyHost``     | The hostname or IP address of the proxy host that Hermes     |
 |                                                        | will establish HTTPS connections with for outgoing messages. |
 +--------------------------------------------------------+--------------------------------------------------------------+
 | ``/corvus/environment/properties/https.proxyPort``     | The TCP port of the proxy server specified above.            |
@@ -342,12 +336,12 @@ To change the settings of the log written by the core system, you will need to m
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
 
-Hermes 2 plugin properties
+Hermes plugin properties
 --------------------------
 
 AS2 plugin
 ^^^^^^^^^^
-In the directory :file:`{<HERMES_2_PLUGINS_LOCATION>}/hk.hku.cecid.edi.as2/conf/hk/hku/cecid/edi/as2/conf`, there are some configuration files for Hermes 2's AS2 plugin. Which configuration file you should edit depends on the property:
+In the directory :file:`{<HERMES_2_PLUGINS_LOCATION>}/hk.hku.cecid.edi.as2/conf/hk/hku/cecid/edi/as2/conf`, there are some configuration files for Hermes's AS2 plugin. Which configuration file you should edit depends on the property:
 
 
 +----------------------------------------------------+----------------------------------------+
@@ -642,7 +636,7 @@ Outgoing Repository:
 +-------------------------------------------------------------------+---------------------------------------------------------------------+
 
 
-Original Message Repository (a temporary message repository used when Hermes 2 is composing or receiving AS2 messages):
+Original Message Repository (a temporary message repository used when Hermes is composing or receiving AS2 messages):
 
 
 .. code-block:: xml
@@ -675,7 +669,7 @@ Original Message Repository (a temporary message repository used when Hermes 2 i
 
 ebMS plugin
 ^^^^^^^^^^^
-In the directory :file:`{<HERMES_2_PLUGINS_LOCATION>}/hk.hku.cecid.ebms/conf/hk/hku/cecid/ebms/spa/conf`, there are some configuration files for Hermes 2's ebMS plugin. The configuration file you should edit depends on the property:
+In the directory :file:`{<HERMES_2_PLUGINS_LOCATION>}/hk.hku.cecid.ebms/conf/hk/hku/cecid/ebms/spa/conf`, there are some configuration files for Hermes's ebMS plugin. The configuration file you should edit depends on the property:
 
 +------------------------------------------------------------------+----------------------------------------+
 | Properties                                                       | Configuration file                     |
@@ -928,10 +922,10 @@ Location of keystore for S/MIME decryption (incoming messages)
 
 See also
 --------
-.. Hermes 2 Application Development Guide
-   Hermes 2 Technical Guide
+.. Hermes 2 Technical Guide
    Hermes 2 Administration Tool User Guide
    Hermes 2 Plug-in Development Guide
-   
+
+* :doc:`application`   
 * `OASIS ebXML Message Service Specification 2.0 <https://www.oasis-open.org/committees/download.php/272/ebMS_v2_0.pdf>`_
 * `MIME-based Secure Peer-to-Peer Business Data Interchange over the Internet Using HTTP AS2 <https://tools.ietf.org/html/rfc4130>`_
