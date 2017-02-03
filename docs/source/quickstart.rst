@@ -1,223 +1,181 @@
 Quickstart
 ==========
-H2O development environment
----------------------------
-#. Install `Vagrant <https://www.vagrantup.com/>`_
-#. Install `Virtualbox <https://www.virtualbox.org/>`_
-#. Clone repository (if not already cloned)
+Installing Hermes
+-----------------
 
-   .. code-block:: sh
-
-      git clone git@gitlab.com:cecid/hermes.git
-
-#. Start vagrant box
-
-   .. code-block:: sh
-     
-      cd hermes
-      vagrant up
-
-   Provision is done when ``Provision done!`` message is shown.
-#. Open Hermes admin page at http://localhost:18080/corvus/admin/home. 
-   Username and password are both ``corvus``
-
-Create and run Docker containers
---------------------------------
-#. Install `Docker`_ and `Docker Compose`_
-
-   .. _Docker: https://www.docker.com/
-   .. _Docker Compose: https://docs.docker.com/compose/
-
-#. Clone repository (if not already cloned)
-
-   .. code-block:: sh
-
-      git clone git@gitlab.com:cecid/hermes.git
-
-#. Set environment variable
-
-   .. code-block:: sh
-      
-      export DOCKER_HOST=unix:///var/run/docker.sock
-
-#. Run
-
-   .. code-block:: sh
-      
-      cd hermes
-      docker-compose -f deploy/docker-compose.yml up -d
-
-Create Docker container for Hermes database
--------------------------------------------
-(Optional, should be automatically built if ``docker-compose`` is used)
-
-#. Install `Docker <https://www.docker.com/>`_
-#. Clone repository (if not already cloned)
+#. Install `Docker <https://docs.docker.com/engine/installation/>`_
+#. Create and run Docker Container for Hermes Database (MySQL)
    
    .. code-block:: sh
 
-      git clone git@gitlab.com:cecid/hermes.git
+      docker run --name hermes_db -e MYSQL_ROOT_PASSWORD=corvus -d cecid/hermes_db:2.1
 
-#. Set environment variable
-
-   .. code-block:: sh
-    
-      export DOCKER_HOST=unix:///var/run/docker.sock
-
-#. Build Hermes Database image
-
-   .. code-block:: sh
-      
-      cd hermes
-      docker build --tag "h2o/db:1.0" -f deploy/db/Dockerfile .
-
-#. Run Docker Container for Hermes Database
-
-   .. code-block:: sh
-
-      docker run --name h2o_db -e MYSQL_ROOT_PASSWORD=<ROOT_PASSWORD> -d h2o/db:1.0
-
-   Two databases (``ebms`` and ``as2``) and a user (``corvus`` with password ``corvus``) will be created.
-#. Connect to databases
+#. Create and run Docker Container for Hermes Application Server (Tomcat)
    
    .. code-block:: sh
 
-      docker run -it --link h2o_db:db --rm h2o/db:1.0 mysql -hdb -P3306 -ucorvus -p ebms
-      docker run -it --link h2o_db:db --rm h2o/db:1.0 mysql -hdb -P3306 -ucorvus -p as2
+      docker run --name hermes_app --link h2o_db:db -p 8080:8080 -d cecid/hermes_app:2.1
+#. Login to Admin page ``http://localhost:8080/corvus/admin/home`` (username:``corvus``, pwd:``corvus``) and start working with Hermes.
 
-Create Docker container for Hermes application server
------------------------------------------------------
-(Optional, should be automatically built if ``docker-compose`` is used)
 
-#. Install `Docker <https://www.docker.com/>`_
-#. Clone repository (if not already cloned)
-   
-   .. code-block:: sh
-
-      git clone git@gitlab.com:cecid/hermes.git
-
-#. Set environment variable
-
-   .. code-block:: sh
-    
-      export DOCKER_HOST=unix:///var/run/docker.sock
-
-#. Build Hermes App Server image
-
-   .. code-block:: sh
-      
-      cd hermes
-      docker build --tag "h2o/app:1.0" -f deploy/app_server/Dockerfile .
-
-#. Run Docker Container for Hermes Database (should be built beforehand)
-
-   .. code-block:: sh
-
-      docker run --name h2o_db -e MYSQL_ROOT_PASSWORD=<ROOT_PASSWORD> -d h2o/db:1.0
-
-#. Run Docker Container for Hermes Application Server
-
-   .. code-block:: sh
-      
-      docker run --name h2o_app --link h2o_db:db -p 18080:8080 -d h2o/app:1.0
-
-Admin page and connect to Hermes API
+Talking to Hermes via sample clients
 ------------------------------------
-#. Once Hermes server is deployed, you should be able to login to Admin page of Hermes and start working with it.
-   The URL is at ``http://localhost:18080/corvus/admin/home``
-#. Authentication is needed to use the admin page and API. The user settings for accessing both are located at :file:`<TOMCAT_HOME>/tomcat-users.xml`.
-   Note that for both Vagrant and Docker environments, accounts have already been created in the build script. It can be modified if needed.
-#. (Optional) The authentication setting is configured via deployment descriptor at :file:`corvus-webapp/src/main/webapp/WEB-INF/web.xml`.
-   During development, it might be handy to "disable" authentication on API temporarily.
-   To do so, just comment out the whole ``security-constraint`` element with web resource name as ``Restricted API resources`` at :file:`corvus-webapp/src/main/webapp/WEB-INF/web.xml`, and re-deploy the ``corvus`` webapp at Tomcat.
-#. To test the API, the simplest way is to connect to it using any API client. For example, ``curl`` can be used as a command line client.
-   GUI based client like Postman is a useful tool too.
-#. API for checking Hermes API server status:
-   
-   .. code-block:: sh
-      
-      $ curl -X GET http://127.0.0.1:18080/corvus/api/status
 
-   Response:
+Preparation
+^^^^^^^^^^^
+Windows environment
+"""""""""""""""""""
 
-   .. code-block:: sh
-      
-      {"status":"healthy","server_time":1479185615}
+1. Download and extract :download:`the Hermes clients sample <_static/Hermes_client_sample.zip>` to a working directory ``<WorkDir>`` 
+2. Set environment variable :envvar:`JAVA_HOME` to the directory where Java is installed.
 
-#. API for adding partnership:
-   
-   .. code-block:: sh
-      
-      $ curl -X POST \
-        -- data '{"id":"loopback", "cpa_id":"cpa", "service":"service", "action":"action", "transport-endpoint":"http://127.0.0.1:18080/corvus/httpd/ebms/inbound"}' \
-        http://127.0.0.1:18080/corvus/api/partnership/ebms
+UNIX environment
+""""""""""""""""
 
-   Response:
-
-   .. code-block:: sh
-
-      {"id":"loopback"}
-
-#. API for querying partnerships:
-
-   .. code-block:: sh
-      
-      $ curl -X GET http://127.0.0.1:18080/corvus/api/partnership/ebms
-
-   Response:
-
-   .. code-block:: sh
-
-      {"partnerships":[{"id":"loopback","cpa_id":"cpa","service":"service","action":"action","disabled":false,"transport_endpoint":"http://127.0.0.1:8080/corvus/httpd/ebms/inbound","ack_requested":null,"signed_ack_requested":null,"duplicate_elimination":null,"message_order":null,"retries":-2147483648,"retry_interval":-2147483648,"sign_requested":false,"sign_certicate":null}]}
-
-#. API for sending message:
-
-   .. code-block:: sh
-      
-      $ curl -X POST \
-        --data '{"partnership_id":"loopback", "from_party_id":"from", "to_party_id":"to", "conversation_id":"conv", "payload":"dGhpcyBpcyBhIHRlc3QK"}' \
-        http://127.0.0.1:18080/corvus/api/message/send/ebms
-
-   Response:
-
-   .. code-block:: sh
-
-      {"id":"20161115-053847-08213@127.0.1.1"}
-
-#. API for checking message status:
-
-   .. code-block:: sh
-
-      $ curl -X GET http://127.0.0.1:18080/corvus/api/message/send/ebms?id=20161115-053847-08213@127.0.1.1
-   
-   Response: 
-      
-   .. code-block:: sh
-
-      {"message_id":"20161115-053847-08213@127.0.1.1","status":"DL"}
-
-#. API for receiving message list:
-
-   .. code-block:: sh
-
-      $ curl -X GET http://127.0.0.1:18080/corvus/api/message/receive/ebms?partnership_id=loopback
-
-   Response:
-
-   .. code-block:: sh
-
-      {"message_ids":[{"id":"20161115-053847-08213@127.0.1.1","timestamp":1479188327}]}
-
-#. API for receiving a message:
+1. Download and extract :download:`the Hermes clients sample <_static/Hermes_client_sample.zip>` to a working directory ``<WorkDir>`` 
+#. Set environment variable :envvar:`JAVA_HOME` to the directory where Java is installed.
+#. Change the permissions of all shell-script files in ``<WorkDir>`` to be executable with the following command:
    
    .. code-block:: sh
 
-      $ curl -X POST \
-        --data '{"message_id":"20161115-053847-08213@127.0.1.1"}' \
-        http://127.0.0.1:18080/corvus/api/message/receive/ebms
+      sudo chmod 755 *.sh
 
-   Response:
+
+Showcases : Loopback messaging example
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Create the partnership
+""""""""""""""""""""""
+
+   ``[Unix]``
 
    .. code-block:: sh
 
-      {"id":"20161115-053847-08213@127.0.1.1","cpa_id":"cpa","service":"service","action":"action","from_party_id":"from","to_party_id":"to","conversation_id":"conv","timestamp":1479188327,"status":"DL","payloads":[{"payload":"dGhpcyBpcyBhIHRlc3QK"}]}
+      cd <WorkDir>/sample
+      ./ebms-partnership.sh
+
+   ``[Windows]``
+
+   .. code-block:: sh
+
+      cd <WorkDir>\sample
+      ebms-partnership.bat
+
+Send a loopback message
+"""""""""""""""""""""""
+
+   ``[Unix]``
+
+   .. code-block:: sh
+
+      cd <WorkDir>/sample
+      ./ebms-send.sh
+
+   ``[Windows]``
+
+   .. code-block:: sh
+
+      cd <WorkDir>\sample
+      ebms-send.bat
+
+   This script sends a request attached with the payload named :file:`testpayload` under the directory :file:`<WorkDir>/sample/config/ebms-send` to local Hermes server.
+
+   Upon successful execution, an output similar to the following will be displayed:
+
+   .. code-block:: none
+
+      ----------------------------------------------------
+                 EbMS sender web service client           
+      ----------------------------------------------------
+      Initialize Logger ...
+      Importing xml
+      Importing l
+      ebMS sending parameters ... ./config/ebms-send/ebms-request.
+      ebMS partnership parameters ... ./config/ebms-partnership.xml
+      Initialize ebMS web service client...
+      Adding
+      Sending
+      payload in the ebMS message...
+      ebMS sending request ...
+    
+                          Sending Done:
+      ----------------------------------------------------
+      New message id: 20080722-143157-97302@127.0.1.1
+      Please view log for details ..
+
+.. _ebms-message-history:
+
+List the message history
+""""""""""""""""""""""""
+
+   ``[Unix]``
+
+   .. code-block:: sh
+
+      cd <WorkDir>/sample
+      ./ebms-history.sh
+
+   ``[Windows]``
+
+   .. code-block:: sh
+
+      cd <WorkDir>\sample
+      ebms-history.bat
+
+   This script retrieves list of sent/received message to/from Hermes.
+
+   .. code-block:: none
+
+      ----------------------------------------------------
+                 EbMS Message History Queryer
+      ----------------------------------------------------
+      Initialize Logger ...
+      Importing ebMS config parameters ... ./config/ebms-history/ebms-request.xml
+      Initialize ebMS messsage history queryer ...
+      Sending ebMS message history query request ...
+    
+                          Sending Done:
+      ----------------------------------------------------
+                   EbMS Message Query Result             
+      ----------------------------------------------------
+      0   | Message id : 20080722-143157-97302@127.0.1.1 | MessageBox: outbox
+      1   | Message id : 20080722-143157-97302@127.0.1.1 | MessageBox: inbox
+      ----------------------------------------------------
+      Select message (0 - 1), -1 to exit:
+
+   Enter ``0`` to check the sent message and a screen similar to the following will be displayed: 
+
+   .. code-block:: none
+
+                          Sending Done:
+      ----------------------------------------------------
+      Query Message ID          : 20080722-143157-97302@127.0.1.1
+      Query Message Status      : DL
+      Query Message Status Desc : Message was sent.
+      ACK Message ID            : null
+      ACK Message Status        : null
+      ACK Message Status Desc   : null
+      ----------------------------------------------------
+      Please view log for details..
+
+Download the message's payload
+""""""""""""""""""""""""""""""
+
+   ``[Unix]``
+
+   .. code-block:: sh
+
+      cd <WorkDir>/sample
+      ./ebms-history.sh
+
+   ``[Windows]``
+
+   .. code-block:: sh
+
+      cd <WorkDir>\sample
+      ebms-history.bat
+
+   From the select message screen of :ref:`ebms-message-history`, enter ``1`` to select the inbox message and it will display ``Please provide the folder to store the payload(s):``. Press enter to save the payload in the current folder. A file named :file:`ebms.{<timestamp>}@127.0.1.1.Payload.0` will be downloaded, where :file:`{<timestamp>}` is the time :program:`ebms-send` was executed. Open that file and you will see the following content:
+
+   .. image:: /_static/images/4-4-1-smaple-message.png
+

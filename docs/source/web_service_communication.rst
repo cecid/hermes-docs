@@ -153,6 +153,9 @@ As with the SOAP request message, the ``<message_id>`` element is the ``message 
 
     {"id":"<message_id>"}
 
+.. note:: 
+   To try the REST API, the simplest way is to use ``curl`` as a command line REST client, or Postman as a GUI based client is a useful tool too.
+
 ebMS 2.0 receiver list web service
 ----------------------------------
 
