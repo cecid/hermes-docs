@@ -69,8 +69,8 @@ You are required to import the following Java packages to program a SOAP web ser
 Writing ebMS Messaging Client
 -----------------------------
 
-Send ebMS Messages
-^^^^^^^^^^^^^^^^^^
+Send ebMS Message
+^^^^^^^^^^^^^^^^^
 We need to create a SOAP message with the following 10 paremeters and send it to Hermes as a web service request.
 
 * ``cpaId``: Copllaboration Protocol Agreement ID
@@ -291,8 +291,8 @@ We need to create a SOAP message with the following 9 parameters and send it to 
    The method :code:`getFirstChild` gets the first element with the name :code`messageIds` and namespace :code:`nsURI`.
    It then extracts every :code:`messageId` which represents an available message awaiting a further action.
 
-Retrieve ebMS Messages
-^^^^^^^^^^^^^^^^^^^^^^
+Retrieve ebMS Message
+^^^^^^^^^^^^^^^^^^^^^
 We need to create a SOAP message with the identifier of the target message and send it to Hermes as the web service request.
 
 #. Define a namespace URI and prefix conforming to the WSDL.
@@ -591,8 +591,8 @@ We need to create a SOAP message with the following 7 parameters and send it to 
 Writing AS2 Messaging Client
 ----------------------------
 
-Send AS2 Messages
-^^^^^^^^^^^^^^^^^
+Send AS2 Message
+^^^^^^^^^^^^^^^^
 We need to create a SOAP message with the following from 3 parameters and send them to Hermes as a web service request. 
 
 * ``as2_from``: AS2 sender
@@ -775,8 +775,8 @@ We need to create a SOAP message with the following 3 parameters.
    The method :code:`getFirstChild` gets the first element with the name :code:`messageIds` and the namespace URI :code:`nsURI`.
    All children with the name :code:`messageId` and the namespace URI :code:`nsURI` are then extracted.
 
-Retrieve AS2 Messages
-^^^^^^^^^^^^^^^^^^^^^
+Retrieve AS2 Message
+^^^^^^^^^^^^^^^^^^^^
 We need to create a SOAP message with the identifier of the target message and send it to Hermes as the web service request.
 
 #. Define a namespace URI and a prefix conforming to the WSDL.
