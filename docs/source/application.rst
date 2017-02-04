@@ -1,7 +1,7 @@
 .. _application:
 
 Implementing Hermes Applications
-======================================
+================================
 
 Introduction
 ------------
@@ -67,10 +67,10 @@ You are required to import the following Java packages to program a SOAP web ser
    import javax.xml.soap.SOAPMessage;
 
 Writing ebMS Messaging Client
-=============================
+-----------------------------
 
 Send ebMS Messages
-------------------
+^^^^^^^^^^^^^^^^^^
 We need to create a SOAP message with the following 10 paremeters and send it to Hermes as a web service request.
 
 * ``cpaId``: Copllaboration Protocol Agreement ID
@@ -180,7 +180,7 @@ We need to create a SOAP message with the following 10 paremeters and send it to
    Then, the sender Hermes delivers the ebMS message to the receiver Hermes, which is specified in the SOAP request parameters, of which ``cpaId``, ``service`` and ``action`` identify the partnership between the sender and receiver.
 
 List ebMS Messages
-------------------
+^^^^^^^^^^^^^^^^^^
 We need to create a SOAP message with the following 9 parameters and send it to Hermes as a web service request.
 
 * ``cpaId``: Copllaboration Protocol Agreement ID
@@ -292,7 +292,7 @@ We need to create a SOAP message with the following 9 parameters and send it to 
    It then extracts every :code:`messageId` which represents an available message awaiting a further action.
 
 Retrieve ebMS Messages
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^
 We need to create a SOAP message with the identifier of the target message and send it to Hermes as the web service request.
 
 #. Define a namespace URI and prefix conforming to the WSDL.
@@ -381,7 +381,7 @@ We need to create a SOAP message with the identifier of the target message and s
    The payload is extracted from the attachment part, and written to the input stream. This way, the data can be piped to a processor or saved as a file.
 
 Get ebMS Message Status
------------------------
+^^^^^^^^^^^^^^^^^^^^^^^
 We need to create a SOAP message with the identifier of the target message and send it to Hermes as the web service request.
 
 #. Define a namespace URI and prefix conforming to the WSDL.
@@ -466,7 +466,7 @@ We need to create a SOAP message with the identifier of the target message and s
    The method :code:`getFirstChild` gets the first element with the name ``messageInfo`` and the namespace URI ``nsURI``. It then retrieves the status value from that element.
 
 Get ebMS Message History
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 We need to create a SOAP message with the following 7 parameters and send it to Hermes as a web service request.
 
 * ``messageId``: Message ID
@@ -589,10 +589,10 @@ We need to create a SOAP message with the following 7 parameters and send it to 
    Each :code:`messageElement` object contains the values of :code:`messageId` and :code:`messageBox`.
 
 Writing AS2 Messaging Client
-============================
+----------------------------
 
 Send AS2 Messages
------------------
+^^^^^^^^^^^^^^^^^
 We need to create a SOAP message with the following from 3 parameters and send them to Hermes as a web service request. 
 
 * ``as2_from``: AS2 sender
@@ -682,7 +682,7 @@ We need to create a SOAP message with the following from 3 parameters and send t
    The sender Hermes translates The SOAP request into an AS2 message stored in the file system, and then delivers the message to the receiver Hermes specified in the SOAP request parameters, of which ``AS2From`` and ``AS2To`` identify the partnership between the sender and the receiver.
 
 List AS2 Messages
------------------
+^^^^^^^^^^^^^^^^^
 We need to create a SOAP message with the following 3 parameters.
 
 * ``as2From``: AS2 sender
@@ -776,7 +776,7 @@ We need to create a SOAP message with the following 3 parameters.
    All children with the name :code:`messageId` and the namespace URI :code:`nsURI` are then extracted.
 
 Retrieve AS2 Messages
----------------------
+^^^^^^^^^^^^^^^^^^^^^
 We need to create a SOAP message with the identifier of the target message and send it to Hermes as the web service request.
 
 #. Define a namespace URI and a prefix conforming to the WSDL.
@@ -864,7 +864,7 @@ We need to create a SOAP message with the identifier of the target message and s
    The payload is extracted from the attachment part and sent to the input stream. The data can be piped to a processor or saved into a file.
 
 Get AS2 Message Status
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^
 We need to create a SOAP message with the identifier of the target message and send it to Hermes as a web service request.
 
 #. Define a namespace URI and a prefix conforming to the WSDL.
@@ -949,7 +949,7 @@ We need to create a SOAP message with the identifier of the target message and s
    The method :code:`getFirstChild` gets the first element with the name :code:`MessageInfo` and the namespace URI :code:`nsURI`.
 
 Get AS2 Message History
------------------------
+^^^^^^^^^^^^^^^^^^^^^^^
 We need to create a SOAP message with the following 5 parameters and send it to Hermes as the web service request.
 
 * ``messageId``: Message ID
@@ -1063,8 +1063,11 @@ We need to create a SOAP message with the following 5 parameters and send it to 
 
    The method :code:`getElement` gets the element with the name :code:`messageList` and the namespace URI :code:`nsURI`. The :code:`messageElement` objects are extracted from the :code:`messageList` object. Each :code:`messageElement` object contains the values of :code:`messageId` and :code:`messageBox`.
 
-See Also
-========
+References
+----------
+
+Reference Documentation
+^^^^^^^^^^^^^^^^^^^^^^^
 * :doc:`first_step`
 * :doc:`installation`
 * :doc:`web_service_communication`
@@ -1073,6 +1076,6 @@ See Also
 * `OASIS ebMS 2.0 Specification <http://www.oasis-open.org/committees/ebxml-msg/documents/ebMS_v2_0.pdf>`_
 * `AS2 Specification <https://tools.ietf.org/html/rfc4130>`_
 
-Reference Program Source
-========================
+Reference Source Code
+^^^^^^^^^^^^^^^^^^^^^
 * :download:`Hermes loopback test <_static/hermes2_loopback.zip>`
