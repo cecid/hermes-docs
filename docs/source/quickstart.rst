@@ -40,6 +40,7 @@ Preparation
    .. code-block:: sh
 
       update-java-alternatives -l
+      
 #. Change the permissions of all shell-script files under ``<WorkDir>`` to be executable with the following command:
    
    .. code-block:: sh
