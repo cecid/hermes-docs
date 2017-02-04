@@ -35,7 +35,11 @@ Preparation
 
 #. Install `Java 1.8 <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ or above, or `OpenJDK 8 <http://openjdk.java.net/projects/jdk8/>`_ or above.
 #. Download and extract the :download:`Hermes sample clients <_static/Hermes_client_sample.zip>` to a working directory :file:`{<WorkDir>}`
-#. Set environment variable :envvar:`JAVA_HOME` to the directory where Java is installed.
+#. Set environment variable :envvar:`JAVA_HOME` to the directory where Java is installed. On Ubuntu, you may use the following command to find the Java home directory, e.g., :file:`/usr/lib/jvm/java-8-openjdk-amd64`.
+
+   .. code-block:: sh
+
+      update-java-alternatives -l
 #. Change the permissions of all shell-script files under ``<WorkDir>`` to be executable with the following command:
    
    .. code-block:: sh
@@ -46,7 +50,7 @@ Preparation
 
 #. Install `Java 1.8 <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ or above.
 #. Download and extract the :download:`Hermes simple clients  <_static/Hermes_client_sample.zip>` to a working directory :file:`{<WorkDir>`}`.
-#. Set the environment variable :envvar:`JAVA_HOME` to the directory where Java is installed.
+#. Set the environment variable :envvar:`JAVA_HOME` to the directory where Java is installed. 
 
 
 Create Loopback Partnership
