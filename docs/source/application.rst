@@ -1,12 +1,12 @@
 .. _application:
 
-Implementing Hermes Applications
-================================
+Developing Hermes Applications
+==============================
 
-Introduction
-------------
+Overview
+--------
 
-This document provides guidelines for developing Hermes messaging applications, which exchange messages reliably and securely with Hermes. 
+This application development guide provides guidelines for developing Hermes messaging applications, which exchange messages reliably and securely with Hermes. 
 A Hermes server provides web services for an application to communicate with another Hermes server. These web services allow the application to:
 
 *  	Request Hermes to send a payload to another Hermes or a compatible messaging gateway on the receiver party;
@@ -16,13 +16,13 @@ A Hermes server provides web services for an application to communicate with ano
 
 For information about installing Hermes and communicating with Hermes using an external application, please refer to :doc:`installation` and :doc:`web_service_communication`.  
 
-General Integration Architecture
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Application Integration with Hermes
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. image:: _static/images/application/3_general_integration_architecture.png
 
 
-The above figure shows a typical application integration architecture with Hermes. Two parties exchange business messages with Hermes through ebMS 2.0 or AS2 over a transport protocol, such as HTTP, HTTPS or SMTP.
+The above figure shows a typical architecture for integrating client applications with Hermes servers. Two parties exchange business messages with Hermes through ebMS 2.0 or AS2 over a transport protocol, such as HTTP, HTTPS or SMTP.
 
 On the sender side, a backend system produces business data to be transferred to the receiver party. The sender application extracts the data from the backend system and submit them to Hermes through a web service. The sender's Hermes sends the data as payloads in a business message. Then, the application invokes a web service to check whether the message is delivered successfully.
 
