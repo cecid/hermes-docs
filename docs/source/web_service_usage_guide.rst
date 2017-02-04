@@ -148,11 +148,11 @@ The following table explains the use of each element:
 +----------------------+--------------------------------------------------------------------------+
 | ``<conversationId>`` | Identifies which conversation this message belongs to.                   |
 |                      |                                                                          |
-|                      | **This is required for Hermes to create a valid message.**             |
+|                      | **This is required for Hermes to create a valid message.**               |
 +----------------------+--------------------------------------------------------------------------+
 | ``<fromPartyId>``    | Identifies the sender and receiver.                                      |
 |                      |                                                                          |
-| ``<fromPartyType>``  | **These are required for Hermes to retrieve the message destination.** |
+| ``<fromPartyType>``  | **These are required for Hermes to retrieve the message destination.**   |
 |                      |                                                                          |
 | ``<toPartyId>``      |                                                                          |
 |                      |                                                                          |
