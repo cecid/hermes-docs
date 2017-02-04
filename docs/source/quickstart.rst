@@ -107,7 +107,7 @@ Send Loopback Message
 
    ebms-send.bat
 
-This program sends a request attached with the payload named :file:`testpayload` under the directory :file:`<WorkDir>/sample/config/ebms-send` to local Hermes server. You will see the following message.
+This program sends a request attached with the payload named :file:`testpayload` under the directory :file:`{<WorkDir>}/sample/config/ebms-send` to local Hermes server. You will see the following message.
 
 .. code-block:: none
    

@@ -6,13 +6,13 @@ Implementing Hermes Applications
 Introduction
 ------------
 
-This is the guidelines for developing messaging applications, whose messages are transferred by Hermes reliably and securely. 
-Hermes provides web services for the application to communicate with Hermes. These web services allow the application to:
+This document provides guidelines for developing Hermes messaging applications, which exchange messages reliably and securely with Hermes. 
+A Hermes server provides web services for an application to communicate with another Hermes server. These web services allow the application to:
 
-*  	Request Hermes to send a payload to the Hermes or a compatible messaging gateway on the receiver party;
-*  	Retrieve the message identifiers of the received messages which have not received yet;
-*  	Retrieve the payloads of a particular message which is identified by a message identifier; and
-*  	Obtain the message status of outgoing and incoming messages.
+*  	Request Hermes to send a payload to another Hermes or a compatible messaging gateway on the receiver party;
+*  	Retrieve the message identifier of a received message which has not retrieved yet;
+*  	Retrieve the payloads of a message which is identified by its message identifier; and
+*  	Obtain the message status of an outgoing or incoming message.
 
 For information about installing Hermes and communicating with Hermes using an external application, please refer to :doc:`installation` and :doc:`web_service_communication`.  
 
@@ -22,31 +22,32 @@ General Integration Architecture
 .. image:: _static/images/application/3_general_integration_architecture.png
 
 
-The above figure shows a typical application integration architecture in which there are two parties exchange business messages with the assistance of Hermes through ebMS 2.0 or AS2 over various transport protocols, such as HTTP, HTTPS or SMTP.
+The above figure shows a typical application integration architecture with Hermes. Two parties exchange business messages with Hermes through ebMS 2.0 or AS2 over a transport protocol, such as HTTP, HTTPS or SMTP.
 
-On the sending side, there is a backend system, which contains some business data to be transferred to the receiver party. The developers on the sender side need to develop an application, which extract the backend system and submits the data to Hermes through web services. After submitting the payloads to Hermes, the application can also invoke a web service to check whether the delivery is successful.
+On the sender side, a backend system produces business data to be transferred to the receiver party. The sender application extracts the data from the backend system and submit them to Hermes through a web service. The sender's Hermes sends the data as payloads in a business message. Then, the application invokes a web service to check whether the message is delivered successfully.
 
-On the receiver side, there is a backend system, which is responsible for storing the incoming business data, received from its business partner. The developers on the sender side need to develop an application, which invokes a web service provided by Hermes, to receive the business messages and payloads and persists them into the backend systems. In some cases, this receiving party may reply the sending party.
+On the receiver side, Hermes receives the message. The receiver application retrieves the message from Hermes, extracts the payloads from the message, and stores them into the receiver backend system.
 
-The application interfaces with Hermes using web services. So, the benefits of web services generally apply. For example,
+The application interacts with Hermes using web services, i.e., SOAP or RESTful APIs. The benefits of using web services generally apply. For example,
 
-*  	Implementation independent. Since the application interfaces with Hermes using web services, the application can be implemented in any programming languages, as long as the web service library is supported.
-*  	Firewall friendly. The web services provided by Hermes use HTTP as the transport protocol. The application needs to invoke the web services over HTTP but the Hermes does not need to connect to the application. Therefore, even if there is a firewall between Hermes and the application, the firewall is only required to allow HTTP connections from the application to Hermes. 
+*  	**Implementation-independent.** Since the application interacts with Hermes using web services, the application can be implemented in any programming languages, as long as web services are supported.
 
-Prerequisite
-^^^^^^^^^^^^
+*  	**Firewall-friendly.** The web services provided by Hermes use HTTP as the transport protocol. The application calls Herms with web services over HTTP; this way, persistant and stateful connectivity between Hermes and the application is not required. Even when there is a firewall between Hermes and the application, the application can communicate with Hermes as long as HTTP connections between them are not blocked. 
 
-The source code shown below is originally from the :download:`Hermes loopback test <_static/hermes2_loopback.zip>`. Please refer to it for more details.
-The sample code assumes that Hermes is using ``localhost`` with port ``8080`` (the default port of Tomcat).
+Prerequisites
+^^^^^^^^^^^^^
 
-The sample code requires the libraries shown below:
+The source code shown below comes the :download:`Hermes loopback test <_static/hermes2_loopback.zip>`. 
+The sample code assumes that Hermes is using :samp:`localhost` with port :literal:`8080` (i.e., the default port of Tomcat).
+
+The sample code requires the following libraries:
 
 * :file:`activation.jar`
 * :file:`mail.jar`
 
-Global import for web service sample code
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Each web service sample code requires at **least** the imports shown below to run properly:
+Import Java Packages in Web Service Client
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+You are required to import the following Java packages to program a SOAP web service:
 
 .. code-block:: java
 
@@ -65,12 +66,25 @@ Each web service sample code requires at **least** the imports shown below to ru
    import javax.xml.soap.SOAPFactory;
    import javax.xml.soap.SOAPMessage;
 
-Writing an ebMS 2.0 sender web service client
----------------------------------------------
-We need to create a SOAP message with 10 paremeters and send it to Hermes as the web service request.
-The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId``, ``fromPartyType``, ``toPartyId``, ``toPartyType``, ``refToMessageId`` and ``serviceType``.
+Writing ebMS Messaging Client
+=============================
 
-#. Define a namespace URI and prefix conforming to WSDL, and define the endpoint URL of the ebMS sender web service.
+Send ebMS Messages
+------------------
+We need to create a SOAP message with the following 10 paremeters and send it to Hermes as a web service request.
+
+* ``cpaId``: Copllaboration Protocol Agreement ID
+* ``service``: Service
+* ``action``: Action
+* ``convId``: Conversation ID
+* ``fromPartyId``: Sender party ID
+* ``fromPartyType``: Sender party type
+* ``toPartyId``: Receiver party ID
+* ``toPartyType``: Receiver party type
+* ``refToMessageId``: Refer-to message Id
+* ``serviceType``: Service type
+
+#. Define a namespace URI and prefix conforming to the WSDL, and define the endpoint URL of the ebMS sender web service.
    
    .. code-block:: java
       
@@ -78,7 +92,7 @@ The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId
       private String nsPrefix = "tns";
       private URL senderWSURL = "http://localhost:8080/corvus/httpd/ebms/sender";
 
-#. Create a SOAP message factory and SOAP message object.
+#. Create a SOAP message factory and a SOAP message object.
    
    .. code-block:: java
 
@@ -99,7 +113,7 @@ The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId
       <refToMessageId> </refToMessageId>
       <serviceType> </serviceType>
     
-   Sample WSDL request for the ebMS sender web service:
+   Compose a sample SOAP request to send an ebMS message:
    
    .. code-block:: java
       
@@ -115,7 +129,7 @@ The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId
       soapBody.addChildElement(createElement("refToMessageId", nsPrefix, nsURI, refToMessageId));
       soapBody.addChildElement(createElement("serviceType", nsPrefix, nsURI, serviceType));
    
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method :code:`createElement` creates a SOAP element with the namespace prefix :code:`nsPrefix``, the namespace URL :code:`nsURI`, and the string value of the element.
    
    The implementation of ``createElement`` is shown below:
    
@@ -125,7 +139,7 @@ The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId
       soapElement.addTextNode(value);
       return soapElement;
 
-#. Attach a payload if necessary. The example here uses a purchase order XML as the payload of the ebMS message, so the associated content type is ``application/xml``.
+#. Attach a payload to the SOAP message if necessary. The example here uses a purchase order XML as the payload, so the associated content type is :literal:`application/xml`.
 
    .. code-block:: java
 
@@ -135,20 +149,20 @@ The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId
       attachmentPart.setContentType("application/xml");
       request.addAttachmentPart(attachmentPart); 
 
-#. Save changes to the SOAP message.
+#. Save the changes to the SOAP message.
 
    .. code-block:: java
       
       request.saveChange();
 
-#. Send the SOAP request to Hermes ebMS sender web service and get a SOAP response.
+#. Send the SOAP request to Hermes and get the following SOAP response.
    
    .. code-block:: java
       
       SOAPMessage response = soapConn.call(request, senderWSURL);
       SOAPBody responseBody = response.getSOAPBody();
 
-#. Process the SOAP response and extract the identifier of the requested ebMS message to ``System.out`` if there is no SOAP fault.
+#. Process the SOAP response, extract the identifier of the requested ebMS message, and print it to :code:`System.out` if there is no SOAP fault.
    
    .. code-block:: java
       
@@ -159,18 +173,27 @@ The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId
           throw new SOAPException(responseBody.getFault().getFaultString());
       }
 
-   The method ``getFirstChild`` gets the first element with the name ``message_id`` and namespace URI equal to ``nsURI``.
-   An existing ``message_id`` signifies that the message has been successfully sent to Hermes and has a registered identifier.
+   The method :code:`getFirstChild` gets the first element with the name :code:`message_id` and the namespace URI ``nsURI``.
+   An existing :code:`message_id` is a registered identifier, showing the message has been successfully submitted to Hermes.
 
-   The SOAP request is now transformed into an ebMS message and saved in persistent storage.
-   Hermes will deliver the ebMS message to the partner specified in the SOAP request parameters (``cpaId``, ``service`` and ``action`` identify the partnership).
+   Hermes translates the SOAP request is now transformed into an ebMS message and saves it in its persistent storage.
+   Then, the sender Hermes delivers the ebMS message to the receiver Hermes, which is specified in the SOAP request parameters, of which ``cpaId``, ``service`` and ``action`` identify the partnership between the sender and receiver.
 
-Writing an ebMS 2.0 receiver list web service client
-----------------------------------------------------
-We need to create a SOAP message with 9 parameters and send it to Hermes as the web service request.
-The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId``, ``fromPartyType``, ``toPartyId``, ``toPartyType`` and ``numOfMessages``.
+List ebMS Messages
+------------------
+We need to create a SOAP message with the following 9 parameters and send it to Hermes as a web service request.
 
-#. Define a namespace URI and prefix conforming to WSDL.
+* ``cpaId``: Copllaboration Protocol Agreement ID
+* ``service``: Service
+* ``action``: Action
+* ``convId``: Conversation ID
+* ``fromPartyId``: Sender party ID
+* ``fromPartyType``: Sender party type
+* ``toPartyId``: Receiver party ID
+* ``toPartyType``: Receiver party type
+* ``numOfMessages``: Number of messages
+
+#. Define a namespace URI and prefix conforming to the WSDL.
 
    .. code-block:: java
 
@@ -178,7 +201,7 @@ The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId
       private String nsPrefix = "tns"; 
       private String URL receiverListWSURL = "http://localhost:8080/corvus/httpd/ebms/receiver_list";
 
-#. Create a SOAP message factory and SOAP message object.
+#. Create a SOAP message factory and an SOAP message object.
 
    .. code-block:: java
 
@@ -198,7 +221,7 @@ The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId
       <toPartyType> toPartyType </toPartyType>
       <numOfMessages> 100 </numOfMessages>
 
-   Sample WSDL request for the ebMS receiver list web service:
+   Compose a sample SOAP request to list ebMS messages:
 
    .. code-block:: java
 
@@ -213,7 +236,7 @@ The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId
       soapBody.addChildElement(createElement("toPartyType", nsPrefix, nsURI, toPartyType));
       soapBody.addChildElement(createElement("numOfMessages", nsPrefix, nsURI, numOfMessages));
       
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method ``createElement`` creates a SOAP element with the namespace ``nsPrefix``, the namespace URL and the string value of the element.
    
    The implementation of ``createElement`` is shown below:
 
@@ -229,27 +252,27 @@ The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId
       
       request.saveChange();
 
-#. Send the SOAP request to Hermes ebMS receiver list web service and get a SOAP response.
+#. Send the SOAP request to Hermes and get the following SOAP response.
 
    .. code-block:: java
       
       SOAPMessage response = soapConn.call(request, receiverListWSURL);
       SOAPBody responseBody = response.getSOAPBody();
 
-#. SOAP response:
+#. Here is the SOAP response:
 
    .. code-block:: xml
 
       <soap-body>
           <messageIds>
-              <messageId> .. </messageId>
-              <messageId> .. </messageId>
-              <messageId> .. </messageId>
-              <messageId> .. </messageId>
+              <messageId> ... </messageId>
+              <messageId> ... </messageId>
+              <messageId> ... </messageId>
+              <messageId> ... </messageId>
           </messageIds>
       </soap-body>
 
-   Process the SOAP response and extract the identifiers of the requested ebMS messages to ``System.out`` if there is no SOAP fault.
+   Process the SOAP response, extract the identifier of each requested  message, and print it to ``System.out`` if there is no SOAP fault.
    
    .. code-block:: java
 
@@ -265,14 +288,14 @@ The parameters are ``cpaId``, ``service``, ``action``, ``convId``, ``fromPartyId
           throw new SOAPException(responseBody.getFault().getFaultString());
       }
 
-   The method ``getFirstChild`` gets the first element with the name ``messageIds`` and namespace URI equal to ``nsURI``.
-   It then extracts every ``messageId`` which each represent an available message awaiting further action.
+   The method :code:`getFirstChild` gets the first element with the name :code`messageIds` and namespace :code:`nsURI`.
+   It then extracts every :code:`messageId` which represents an available message awaiting a further action.
 
-Writing an ebMS 2.0 receiver web service client
------------------------------------------------
+Retrieve ebMS Messages
+----------------------
 We need to create a SOAP message with the identifier of the target message and send it to Hermes as the web service request.
 
-#. Define a namespace URI and prefix conforming to WSDL.
+#. Define a namespace URI and prefix conforming to the WSDL.
 
    .. code-block:: java
 
@@ -280,7 +303,7 @@ We need to create a SOAP message with the identifier of the target message and s
       private String nsPrefix = "tns";
       private URL receiverWSURL = "http://localhost:8080/corvus/httpd/ebms/receiver";
 
-#. Create a SOAP message factory and SOAP message object.
+#. Create a SOAP message factory and a SOAP message object.
    
    .. code-block:: java
 
@@ -292,14 +315,14 @@ We need to create a SOAP message with the identifier of the target message and s
       
       <messageId> messageId </messageId>
 
-   Sample WSDL request for the ebMS receiver web service:
+   Compose a sample SOAP request to retrieve an ebMS message:
 
    .. code-block:: java
       
       SOAPBody soapBody = request.getSOAPBody();
       soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));
 
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method ``createElement`` creates a SOAP element with the namespace prefix ``nsPrefix``, the namespace URL ``nsURI``, and the string value of the element.
    
    The implementation of ``createElement`` is shown below:
    
@@ -309,31 +332,31 @@ We need to create a SOAP message with the identifier of the target message and s
       soapElement.addTextNode(value);
       return soapElement;
 
-#. Save changes to the SOAP message.
+#. Save the changes to the SOAP message.
 
    .. code-block:: java
 
       request.saveChange();
 
-#. Send the SOAP request to Hermes ebMS receiver web service and get a SOAP response.
+#. Send the SOAP request to Hermes and get a SOAP response.
 
    .. code-block:: java
       
       SOAPMessage response = soapConn.call(request, receiverWSURL);
       SOAPBody responseBody = response.getSOAPBody();
 
-#. SOAP response:
+   Here is the SOAP response:
    
    .. code-block:: xml
       
       <soap-body>
-          <hasMessage> .. </hasMessage>
+          <hasMessage> ... </hasMessage>
       </soap-body>
             .
             .
-      Attachment as a MIME part.
+      The attachment is formatted as a MIME part.
 
-   Process the SOAP response and extract the payload from the received ebMS message if available.
+   Process the SOAP response, and extract the payloads from the received ebMS message if available.
 
    .. code-block:: java
 
@@ -352,16 +375,16 @@ We need to create a SOAP message with the identifier of the target message and s
           throw new SOAPException(responseBody.getFault().getFaultString());
       }
 
-   The method ``getFirstChild`` gets the first element with the name ``hasMessage`` and namespace URI equal to ``nsURI``.
+   The method :code:`getFirstChild` gets the first element with the name :code:`hasMessage` and the namespace URI :code:`nsURI`.
    The boolean value of ``hasMessage`` represents the existence of a payload in this message.
 
-   The payload is extracted from the attachment part to the input stream and can be saved by I/O pipelining to a physical file or another business operation.
+   The payload is extracted from the attachment part, and written to the input stream. This way, the data can be piped to a processor or saved as a file.
 
-Writing an ebMS 2.0 status web service client
----------------------------------------------
+Get ebMS Message Status
+-----------------------
 We need to create a SOAP message with the identifier of the target message and send it to Hermes as the web service request.
 
-#. Define a namespace URI and prefix conforming to WSDL.
+#. Define a namespace URI and prefix conforming to the WSDL.
    
    .. code-block:: java
       
@@ -369,7 +392,7 @@ We need to create a SOAP message with the identifier of the target message and s
       private String nsPrefix = "tns";
       private URL statusQueryWSURL = "http://localhost:8080/corvus/httpd/ebms/status";
 
-#. Create a SOAP message factory and SOAP message object.
+#. Create a SOAP message factory and a SOAP message object.
    
    .. code-block:: java
       
@@ -381,14 +404,14 @@ We need to create a SOAP message with the identifier of the target message and s
       
       <messageId> messageId </messageId>
 
-   Sample WSDL request for the ebMS status web service:
+   Compose a sample SOAP request to get the status of an ebMS message:
 
    .. code-block:: java
       
       SOAPBody soapBody = request.getSOAPBody();
       soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));
 
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method ``createElement`` creates a SOAP element with the namespace prefix ``nsPrefix``, the namespace URL ``nsURI`` and the string value of the element.
    
    The implementation of ``createElement`` is shown below:
 
@@ -398,20 +421,20 @@ We need to create a SOAP message with the identifier of the target message and s
       soapElement.addTextNode(value);
       return soapElement;
 
-#. Save changes to the SOAP message.
+#. Save the changes to the SOAP message.
    
    .. code-block:: java
 
       request.saveChange();
 
-#. Send the SOAP request to Hermes ebMS status web service and get a SOAP response.
+#. Send the SOAP request to Hermes and get a SOAP response.
 
    .. code-block:: java
 
       SOAPMessage response = soapConn.call(request, statusQueryWSURL);
       SOAPBody responseBody = response.getSOAPBody();
 
-#. SOAP response:
+#. Here is the SOAP response:
    
    .. code-block:: xml
       
@@ -425,7 +448,7 @@ We need to create a SOAP message with the identifier of the target message and s
           </MessageInfo>
       </soap-body> 
    
-   Process the SOAP response and extract the status information of the ebMS message if there is no SOAP fault.
+   Process the SOAP response and extract the status information from the ebMS message if there is no SOAP fault.
 
    .. code-block:: java
       
@@ -440,14 +463,21 @@ We need to create a SOAP message with the identifier of the target message and s
           throw new SOAPException(responseBody.getFault().getFaultString());
       }
 
-   The method ``getFirstChild`` gets the first element with the name ``messageInfo`` and namespace URI equal to ``nsURI``. It then retrieves the status value from that element.
+   The method :code:`getFirstChild` gets the first element with the name ``messageInfo`` and the namespace URI ``nsURI``. It then retrieves the status value from that element.
 
-Writing an ebMS 2.0 message history web service client
-------------------------------------------------------
-We need to create a SOAP message with 7 parameters and send it to Hermes as the web service request.
-The parameters are ``messageId``, ``messageBox``, ``conversationId``, ``cpaId``, ``status``, ``action`` and ``service``.
+Get ebMS Message History
+------------------------
+We need to create a SOAP message with the following 7 parameters and send it to Hermes as a web service request.
 
-#. Define a namespace URI and prefix conforming to WSDL.
+* ``messageId``: Message ID
+* ``messageBox``: Message Box
+* ``conversationId``: Conversation ID
+* ``cpaId``: Collaboration Protocol Agreement ID
+* ``status``: Status
+* ``action``: Action
+* ``service``: Service
+
+#. Define a namespace URI and prefix conforming to the WSDL.
 
    .. code-block:: java
          
@@ -455,7 +485,7 @@ The parameters are ``messageId``, ``messageBox``, ``conversationId``, ``cpaId``,
       private String nsPrefix = "tns";
       private URL msgHistoryWSURL = "http://localhost:8080/corvus/httpd/ebms/msg_history";
 
-#. Create a SOAP message factory and SOAP message object.
+#. Create a SOAP message factory and a SOAP message object.
    
    .. code-block:: java
       
@@ -473,7 +503,7 @@ The parameters are ``messageId``, ``messageBox``, ``conversationId``, ``cpaId``,
       <action> action </action>
       <status> status </status>
 
-   Sample WSDL request for the ebMS message history web service:
+   Compose a sample SOAP request to get an ebMS message history:
 
    .. code-block:: java
       
@@ -487,7 +517,7 @@ The parameters are ``messageId``, ``messageBox``, ``conversationId``, ``cpaId``,
       soapBody.addChildElement(createElement("action", nsPrefix, nsURI, action));
       soapBody.addChildElement(createElement("status", nsPrefix, nsURI, status));
 
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method ``createElement`` creates a SOAP element with the namespace ``nsPrefix``, the namespace URL ``nsURI``, and the string value of the element.
    
    The implementation of ``createElement`` is shown below:
 
@@ -497,20 +527,20 @@ The parameters are ``messageId``, ``messageBox``, ``conversationId``, ``cpaId``,
       soapElement.addTextNode(value);
       return soapElement;
 
-#. Save changes to the SOAP message.
+#. Save the changes to the SOAP message.
 
    .. code-block:: java
       
       request.saveChange();
 
-#. Send the SOAP request to Hermes ebMS message history service and get a SOAP response.
+#. Send the SOAP request to Hermes and get the following SOAP response.
    
    .. code-block:: java
 
       SOAPMessage response = soapConn.call(request, msgHistoryWSURL);
       SOAPBody responseBody = response.getSOAPBody(); 
 
-#. SOAP response:
+#. Here is the SOAP response:
    
    .. code-block:: xml
       
@@ -524,12 +554,12 @@ The parameters are ``messageId``, ``messageBox``, ``conversationId``, ``cpaId``,
                   <messageId> Message ID of this message </messageId>
                   <messageBox> Message Box containing this message </messageBox>
               </messageElement> 
-              <messageElement> .. </messageElement> 
-              <messageElement> .. </messageElement> 
+              <messageElement> ... </messageElement> 
+              <messageElement> ... </messageElement> 
           </messageList> 
       </soap-body>
 
-   Process the SOAP response and extract the ebMS message information if there is no SOAP fault.
+   Process the SOAP response and iterate through the message history if there is no SOAP fault.
 
    .. code-block:: java
 
@@ -555,14 +585,21 @@ The parameters are ``messageId``, ``messageBox``, ``conversationId``, ``cpaId``,
           } 
       }
    
-   The method ``getElement`` gets the element with the name ``messageList`` and namespace URI equal to ``nsURI``. Then, a list of ``messageElement`` values will be extracted from ``messageList``.
-   Each ``messageElement`` contains the values of ``messageId`` and ``messageBox``.
+   The method :code:`getElement` gets the element with the name :code:`messageList` and namespace URI :code`nsURI`. Then, a list of :code:`messageElement` objects is extracted from :code:`messageList`.
+   Each :code:`messageElement` object contains the values of :code:`messageId` and :code:`messageBox`.
 
-Writing an AS2 sender web service client
-----------------------------------------
-We need to create a SOAP message with 3 parameters and send it to Hermes as the web service request. The parameters are ``as2_from``, ``as2_to`` and ``type``.
+Writing AS2 Messaging Client
+============================
 
-#. Define a namespace URI and prefix conforming to WSDL and define the AS2 sender web service for Hermes.
+Send AS2 Messages
+-----------------
+We need to create a SOAP message with the following from 3 parameters and send them to Hermes as a web service request. 
+
+* ``as2_from``: AS2 sender
+* ``as2_to``: AS2 receiver
+* ``type``: Payload content type
+
+#. Define a namespace URI and a prefix conforming to the WSDL.
    
    .. code-block:: java
       
@@ -570,7 +607,7 @@ We need to create a SOAP message with 3 parameters and send it to Hermes as the 
       private String nsPrefix = "tns"; 
       private URL senderWSURL = "http://localhost:8080/corvus/httpd/as2/sender";
 
-#. Create a SOAP message factor and SOAP message object.
+#. Create a SOAP message factor and a SOAP message object.
    
    .. code-block:: java
       
@@ -584,7 +621,7 @@ We need to create a SOAP message with 3 parameters and send it to Hermes as the 
       <as2_to> as2to <as2_to>
       <type> type </type>
 
-   Sample WSDL request for the AS2 sender web service:
+   Compose a sample SOAP request to send an AS2 message:
 
    .. code-block:: java
       
@@ -593,7 +630,7 @@ We need to create a SOAP message with 3 parameters and send it to Hermes as the 
       soapBody.addChildElement(createElement("as2_to" , nsPrefix, nsURI, this.as2To)); 
       soapBody.addChildElement(createElement("type" , nsPrefix, nsURI, this.type));
 
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method ``createElement`` creates a SOAP element with the namespace prefix ``nsPrefix``, the namespace URL ``nsURI``, and the string value of the element.
    
    The implementation of ``createElement`` is shown below:
 
@@ -603,10 +640,10 @@ We need to create a SOAP message with 3 parameters and send it to Hermes as the 
       soapElement.addTextNode(value); 
       return soapElement;
 
-#. Attach a payload if necessary. The example here uses a purchase order XML as the payload of the AS2 message, so the associated content type is ``application/xml``.
+#. Attach a payload if necessary. The following example uses a purchase order XML as the payload of the AS2 message, so the associated content type is ``application/xml``.
    
    .. note::
-      Only **ONE** payload is allowed in a SOAP request for the AS2 sender web service.
+      Only *one* payload is allowed in the SOAP request for an AS2 message.
 
    .. code-block:: java
       
@@ -616,20 +653,20 @@ We need to create a SOAP message with 3 parameters and send it to Hermes as the 
       attachmentPart.setContentType("application/xml"); 
       request.addAttachmentPart(attachmentPart);
 
-#. Save changes to the SOAP message.
+#. Save the changes to the SOAP message.
 
    .. code-block:: java
       
       request.saveChange();
 
-#. Send the SOAP request to Hermes AS2 sender web service and get a SOAP response.
+#. Send the SOAP request to Hermes and get the following SOAP response.
    
    .. code-block:: java
       
       SOAPMessage response = soapConn.call(request, senderWSURL); 
       SOAPBody responseBody = response.getSOAPBody();
 
-#. Process the SOAP response and extract the identifier of the AS2 message to ``System.out`` if there is no SOAP fault.
+#. Process the SOAP response and extract the identifier of the AS2 message, and print it to ``System.out`` if there is no SOAP fault.
 
    .. code-block:: java
       
@@ -640,16 +677,19 @@ We need to create a SOAP message with 3 parameters and send it to Hermes as the 
           throw new SOAPException(responseBody.getFault().getFaultString()); 
       }
    
-   The method ``getFirstChild`` gets the first element with the name ``message_id`` and namespace URI equal to ``nsURI``.
+   The method :code:`getFirstChild` gets the first element with the name :code:`message_id` and the namespace URI :code:`nsURI`.
 
-   The SOAP request is now transformed into an AS2 message stored in the file system.
-   Hermes will deliver the AS2 message to the partner specified in the SOAP request parameters (``AS2From`` and ``AS2To`` identify the partnership).
+   The sender Hermes translates The SOAP request into an AS2 message stored in the file system, and then delivers the message to the receiver Hermes specified in the SOAP request parameters, of which ``AS2From`` and ``AS2To`` identify the partnership between the sender and the receiver.
 
-Writing an AS2 receiver list web service client
------------------------------------------------
-We need to create a SOAP message with 3 parameters and send it to Hermes as the web service request. The parameters are ``as2From``, ``as2To`` and ``numOfMessages``.
+List AS2 Messages
+-----------------
+We need to create a SOAP message with the following 3 parameters.
 
-#. Define a namespace URi and prefix conforming to WSDL and define the AS2 receiver list web service for Hermes.
+* ``as2From``: AS2 sender
+* ``as2To``: AS2 receiver
+* ``numOfMessages``: Number of messsages
+
+#. Define a namespace URI and a prefix conforming to the WSDL.
 
    .. code-block:: java
       
@@ -657,7 +697,7 @@ We need to create a SOAP message with 3 parameters and send it to Hermes as the 
       private String nsPrefix = "tns";
       private URL receiverListWSURL = "http://localhost:8080/corvus/httpd/as2/receiver_list";
 
-#. Create a SOAP message factory and SOAP message object.
+#. Create a SOAP message factory and a SOAP message object.
    
    .. code-block:: java
       
@@ -671,7 +711,7 @@ We need to create a SOAP message with 3 parameters and send it to Hermes as the 
       <as2_to> as2to <as2_to>
       <numOfMessages> 100 </numOfMessages>
    
-   Sample WSDL request for the AS2 receiver list web service:
+   Compose a sample SOAP request to list AS2 messages:
 
    .. code-block:: java
       
@@ -680,7 +720,7 @@ We need to create a SOAP message with 3 parameters and send it to Hermes as the 
       soapBody.addChildElement(createElement("as2To" , nsPrefix, nsURI, this.as2To));
       soapBody.addChildElement(createElement("numOfMessages", nsPrefix, nsURI, this.numOfMessages + ""));
 
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method :code:`createElement` creates a SOAP element with the namespace prefix :code:`nsPrefix`, the namespace URL :code:`nsURI` and the string value of the element.
    
    The implementation of ``createElement`` is shown below: 
    
@@ -690,33 +730,33 @@ We need to create a SOAP message with 3 parameters and send it to Hermes as the 
       soapElement.addTextNode(value);
       return soapElement;
 
-#. Save changes to the SOAP message.
+#. Save the changes to the SOAP message.
 
    .. code-block:: java
       
       request.saveChange();
 
-#. Send the SOAP request to Hermes AS2 receiver list web service and get a SOAP response.
+#. Send the SOAP request to Hermes and get the following SOAP response.
 
    .. code-block:: java
       
       SOAPMessage response = soapConn.call(request, senderWSURL);
       SOAPBody responseBody = response.getSOAPBody();
 
-#. SOAP response:
+   Here is the SOAP response:
    
    .. code-block:: xml
       
       <soap-body>
           <messageIds>
-              <messageId> .. </messageId>
-              <messageId> .. </messageId>
-              <messageId> .. </messageId>
-              <messageId> .. </messageId>
+              <messageId> ... </messageId>
+              <messageId> ... </messageId>
+              <messageId> ... </messageId>
+              <messageId> ... </messageId>
           </messageIds>
       </soap-body> 
    
-   Process the SOAP response and extract identifiers of the requested AS2 messages to ``System.out`` if there is no SOAP fault.
+   Process the SOAP response and extract the identifiers of the AS2 messages to ``System.out`` if there is no SOAP fault.
    
    .. code-block:: java
       
@@ -732,14 +772,14 @@ We need to create a SOAP message with 3 parameters and send it to Hermes as the 
           throw new SOAPException(responseBody.getFault().getFaultString());
       }
    
-   The method ``getFirstChild`` gets the first element with the name ``messageIds`` and namespace URI equal to ``nsURI``.
-   All children with the name ``messageId`` and namespace URI equal to ``nsURI`` are then extracted.
+   The method :code:`getFirstChild` gets the first element with the name :code:`messageIds` and the namespace URI :code:`nsURI`.
+   All children with the name :code:`messageId` and the namespace URI :code:`nsURI` are then extracted.
 
-Writing an AS2 receiver web service client
-------------------------------------------
+Retrieve AS2 Messages
+---------------------
 We need to create a SOAP message with the identifier of the target message and send it to Hermes as the web service request.
 
-#. Define a namespace URI and prefix conforming to WSDL.
+#. Define a namespace URI and a prefix conforming to the WSDL.
 
    .. code-block:: java
 
@@ -747,7 +787,7 @@ We need to create a SOAP message with the identifier of the target message and s
       private String nsPrefix = "tns";
       private URL receiverWSURL = "http://localhost:8080/corvus/httpd/as2/receiver";
 
-#. Create a SOAP message factory and SOAP message object.
+#. Create a SOAP message factory and a SOAP message object.
    
    .. code-block:: java
 
@@ -759,14 +799,14 @@ We need to create a SOAP message with the identifier of the target message and s
       
       <messageId> messageId </messageId>
 
-   Sample WSDL request for the AS2 receiver web service:
+   Compose a sample SOAP request to retrieve an AS2 message:
 
    .. code-block:: java
       
       SOAPBody soapBody = request.getSOAPBody();
       soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));
 
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method ``createElement`` creates a SOAP element with the namespace  ``nsPrefix``, the namespace URL ``nsURI`` and the string value of the element.
    
    The implementation of ``createElement`` is shown below:
    
@@ -776,31 +816,30 @@ We need to create a SOAP message with the identifier of the target message and s
       soapElement.addTextNode(value);
       return soapElement;
 
-#. Save changes to the SOAP message.
+#. Save the changes to the SOAP message.
 
    .. code-block:: java
 
       request.saveChange();
 
-#. Send the SOAP request to Hermes AS2 receiver web service and get a SOAP response.
+#. Send the SOAP request to Hermes and get the following SOAP response.
 
    .. code-block:: java
       
       SOAPMessage response = soapConn.call(request, receiverWSURL);
       SOAPBody responseBody = response.getSOAPBody();
 
-#. SOAP response:
+#. Here is the SOAP response:
    
    .. code-block:: xml
       
       <soap-body>
-          <hasMessage> .. </hasMessage>
+          <hasMessage> ... </hasMessage>
       </soap-body>
-            .
-            .
-      Attachment as a MIME part.
+            
+   The attachment is formatted as a MIME part.
 
-   Process the SOAP response and extract the payload from the received AS2 message if available.
+   Process the SOAP response and extract the payload from the AS2 message if available.
 
    .. code-block:: java
 
@@ -819,16 +858,16 @@ We need to create a SOAP message with the identifier of the target message and s
           throw new SOAPException(responseBody.getFault().getFaultString());
       }
 
-   The method ``getFirstChild`` gets the first element with the name ``hasMessage`` and namespace URI equal to ``nsURI``.
-   The boolean value of ``hasMessage`` represents the existence of a payload in this message.
+   The method :code:`getFirstChild` gets the first element with the name :code:`hasMessage` and namespace URI :code:`nsURI`.
+   The boolean value of :code:`hasMessage` represents the existence of a payload in this message.
 
-   The payload is extracted from the attachment part to the input stream and can be saved by I/O pipelining to a physical file or another business operation.
+   The payload is extracted from the attachment part and sent to the input stream. The data can be piped to a processor or saved into a file.
 
-Writing an AS2 status web service client
-----------------------------------------
-We need to create a SOAP message with the identifier of the target message and send it to Hermes as the web service request.
+Get AS2 Message Status
+----------------------
+We need to create a SOAP message with the identifier of the target message and send it to Hermes as a web service request.
 
-#. Define a namespace URI and prefix conforming to WSDL.
+#. Define a namespace URI and a prefix conforming to the WSDL.
    
    .. code-block:: java
       
@@ -836,7 +875,7 @@ We need to create a SOAP message with the identifier of the target message and s
       private String nsPrefix = "tns";
       private URL statusQueryWSURL = "http://localhost:8080/corvus/httpd/as2/status";
 
-#. Create a SOAP message factory and SOAP message object.
+#. Create a SOAP message factory and a SOAP message object.
    
    .. code-block:: java
       
@@ -848,14 +887,14 @@ We need to create a SOAP message with the identifier of the target message and s
       
       <messageId> messageId </messageId>
 
-   Sample WSDL request for the AS2 status web service:
+   Compose a sample SOAP request to get the status of an AS2 message:
 
    .. code-block:: java
       
       SOAPBody soapBody = request.getSOAPBody();
       soapBody.addChildElement(createElement("messageId", nsPrefix, nsURI, messageId));
 
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method :code:`createElement` creates a SOAP element with the namespace prefix :code`nsPrefix`, the namespace URL :code:`nsURI` and the string value of the element.
    
    The implementation of ``createElement`` is shown below:
 
@@ -865,20 +904,20 @@ We need to create a SOAP message with the identifier of the target message and s
       soapElement.addTextNode(value);
       return soapElement;
 
-#. Save changes to the SOAP message.
+#. Save the changes to the SOAP message.
    
    .. code-block:: java
       
       request.saveChange();
 
-#. Send the SOAP request to Hermes AS2 status web service and get a SOAP response.
+#. Send the SOAP request to get the status of an AS2 message and get the following SOAP response.
    
    .. code-block:: java
 
       SOAPMessage response = soapConn.call(request, statusQueryWSURL);
       SOAPBody responseBody = response.getSOAPBody();
 
-#. SOAP response:
+#. Here is the SOAP response:
    
    .. code-block:: xml
       
@@ -892,7 +931,7 @@ We need to create a SOAP message with the identifier of the target message and s
           </MessageInfo> 
       </soap-body>
    
-   Process the SOAP response and extract the status information of the AS2 message if there is no SOAP fault.
+   Process the SOAP response and extract the status of the AS2 message if there is no SOAP fault.
 
    .. code-block:: java
       
@@ -907,14 +946,19 @@ We need to create a SOAP message with the identifier of the target message and s
           throw new SOAPException(responseBody.getFault().getFaultString());
       }
 
-   The method ``getFirstChild`` gets the first element with the name ``MessageInfo`` and namespace URI equal to ``nsURI``.
+   The method :code:`getFirstChild` gets the first element with the name :code:`MessageInfo` and the namespace URI :code:`nsURI`.
 
-Writing an AS2 message history web service client
--------------------------------------------------
-We need to create a SOAP message with 5 parameters and send it to Hermes as the web service request.
-The parameters are ``messageId``, ``messageBox``, ``as2From``, ``as2To``, and ``status``.
+Get AS2 Message History
+-----------------------
+We need to create a SOAP message with the following 5 parameters and send it to Hermes as the web service request.
 
-#. Define the namespace URI and prefix conforming to WSDL.
+* ``messageId``: Message ID
+* ``messageBox``: Message box
+* ``as2From``: AS2 sender
+* ``as2To``: AS2 receiver
+* ``status``: Status
+
+#. Define the namespace URI and a prefix conforming to the WSDL.
    
    .. code-block:: java
       
@@ -922,7 +966,7 @@ The parameters are ``messageId``, ``messageBox``, ``as2From``, ``as2To``, and ``
       private String nsPrefix = "tns";
       private URL msgHistoryWSURL = "http://localhost:8080/corvus/httpd/as2/msg_history";
 
-#. Create a SOAP message factory and SOAP message object.
+#. Create a SOAP message factory and a SOAP message object.
 
    .. code-block:: java
       
@@ -938,7 +982,7 @@ The parameters are ``messageId``, ``messageBox``, ``as2From``, ``as2To``, and ``
       <as2To> as2To </as2To>
       <status> status </status>
 
-   Sample WSDL request for the message history web service:
+   Compose a sample SOAP request to get an AS2 message history:
 
    .. code-block:: java
       
@@ -949,7 +993,7 @@ The parameters are ``messageId``, ``messageBox``, ``as2From``, ``as2To``, and ``
       soapBody.addChildElement(createElement("as2To", nsPrefix, nsURI, service));
       soapBody.addChildElement(createElement("status", nsPrefix, nsURI, status));
 
-   The method ``createElement`` creates a SOAP element with namespace prefix equal to ``nsPrefix``, namespace URL equal to ``nsURI`` and textual value equal to the last arguments of the method.
+   The method :code:`createElement` creates a SOAP element with the namespace prefix :code:`nsPrefix`, the namespace URL :code:`nsURI`, and the string value of the element.
    
    The implementation of ``createElement`` is shown below:
 
@@ -959,20 +1003,20 @@ The parameters are ``messageId``, ``messageBox``, ``as2From``, ``as2To``, and ``
       soapElement.addTextNode(value);
       return soapElement;
 
-#. Save changes to the SOAP message. 
+#. Save the changes to the SOAP message. 
    
    .. code-block:: java
       
       request.saveChange();
 
-#. Send the SOAP request to Hermes AS2 message history web service and get a SOAP response.
+#. Send the SOAP request to Hermes to get an AS2 message history and get a SOAP response.
    
    .. code-block:: java
       
       SOAPMessage response = soapConn.call(request, receiverListWSURL);
       SOAPBody responseBody = response.getSOAPBody();
 
-#. SOAP response:
+   Here is the SOAP response.
    
    .. code-block:: xml
       
@@ -986,12 +1030,12 @@ The parameters are ``messageId``, ``messageBox``, ``as2From``, ``as2To``, and ``
                   <messageId> Message ID of this message </messageId>
                   <messageBox> Message Box containing this message </messageBox>
               </messageElement> 
-              <messageElement> .. </messageElement> 
-              <messageElement> .. </messageElement> 
+              <messageElement> ... </messageElement> 
+              <messageElement> ... </messageElement> 
           </messageList> 
       </soap-body>
    
-   Process the SOAP response and extract the AS2 message information if there is no SOAP fault.
+   Process the SOAP response and iterate through the AS2 message history if there is no SOAP fault.
    
    .. code-block:: java
       
@@ -1017,11 +1061,10 @@ The parameters are ``messageId``, ``messageBox``, ``as2From``, ``as2To``, and ``
           }
       }
 
-   The method ``getElement`` gets the element with the name ``messageList`` and namespace URI equal to ``nsURI``. The ``messageElement`` values will then be extracted from ``messageList``.
-   Each ``messageElement`` contains the values of ``messageId`` and ``messageBox``.
+   The method :code:`getElement` gets the element with the name :code:`messageList` and the namespace URI :code:`nsURI`. The :code:`messageElement` objects are extracted from the :code:`messageList` object. Each :code:`messageElement` object contains the values of :code:`messageId` and :code:`messageBox`.
 
-See also
---------
+See Also
+========
 * :doc:`first_step`
 * :doc:`installation`
 * :doc:`web_service_communication`
@@ -1030,6 +1073,6 @@ See also
 * `OASIS ebMS 2.0 Specification <http://www.oasis-open.org/committees/ebxml-msg/documents/ebMS_v2_0.pdf>`_
 * `AS2 Specification <https://tools.ietf.org/html/rfc4130>`_
 
-Reference program source
-------------------------
+Reference Program Source
+========================
 * :download:`Hermes loopback test <_static/hermes2_loopback.zip>`
