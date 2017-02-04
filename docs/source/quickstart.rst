@@ -35,23 +35,25 @@ Preparation
 
 #. Install `Java 1.8 <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ or above, or `OpenJDK 8 <http://openjdk.java.net/projects/jdk8/>`_ or above.
 #. Download and extract the :download:`Hermes sample clients <_static/Hermes_client_sample.zip>` to a working directory :file:`{<WorkDir>}`
-#. Set environment variable :envvar:`JAVA_HOME` to the directory where Java is installed. On Ubuntu, you may use the following command to find the Java home directory, e.g., :file:`/usr/lib/jvm/java-8-openjdk-amd64`.
+#. Set environment variable :envvar:`JAVA_HOME` to the directory where Java is installed. On Ubuntu, you may use the following command to locate the Java home directory, e.g., :file:`/usr/lib/jvm/java-8-openjdk-amd64`.
 
    .. code-block:: sh
 
       update-java-alternatives -l
-      
-#. Change the permissions of all shell-script files under ``<WorkDir>`` to be executable with the following command:
-   
-   .. code-block:: sh
 
-      chmod 755 sample/*.sh
+
+#. Change the current directory to :file:`{<WorkDir>}/sample`.
+
 
 **Windows:**
 
 #. Install `Java 1.8 <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ or above.
-#. Download and extract the :download:`Hermes simple clients  <_static/Hermes_client_sample.zip>` to a working directory :file:`{<WorkDir>`}`.
+
+#. Download and extract the :download:`Hermes simple clients  <_static/Hermes_client_sample.zip>` to a working directory :file:`{<WorkDir>}/sample`.
+
 #. Set the environment variable :envvar:`JAVA_HOME` to the directory where Java is installed. 
+
+#. Change the current directory to :file:`{<WorkDir>}/sample`.
 
 
 Create Loopback Partnership
@@ -61,14 +63,12 @@ Create Loopback Partnership
 
 .. code-block:: sh
 
-    cd <WorkDir>/sample
-    ./ebms-partnership.sh
+   ./ebms-partnership.sh
 
 **Windows:**
 
 .. code-block:: doscon
 
-   cd <WorkDir>\sample
    ebms-partnership.bat
 
 You will see the following message.
@@ -99,14 +99,12 @@ Send Loopback Message
 
 .. code-block:: sh
 
-   cd <WorkDir>/sample
    ./ebms-send.sh
 
 **Windows:**
 
 .. code-block:: doscon
 
-   cd <WorkDir>\sample
    ebms-send.bat
 
 This program sends a request attached with the payload named :file:`testpayload` under the directory :file:`<WorkDir>/sample/config/ebms-send` to local Hermes server. You will see the following message.
@@ -135,14 +133,12 @@ Query Message History
 
 .. code-block:: sh
 
-   cd <WorkDir>/sample
    ./ebms-history.sh
 
 **Windows:**
 
 .. code-block:: doscon
 
-   cd <WorkDir>\sample
    ebms-history.bat
 
 This program lists all sent and received messages. You will see the following message.
@@ -196,7 +192,6 @@ Download Payload of Received Message
 
 .. code-block:: sh
 
-   cd <WorkDir>/sample
    ./ebms-history.sh
 
 
@@ -204,7 +199,6 @@ Download Payload of Received Message
 
 .. code-block:: doscon
 
-   cd <WorkDir>\sample
    ebms-history.bat
 
 You will see the following message.
