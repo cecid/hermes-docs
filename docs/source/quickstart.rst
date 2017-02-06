@@ -1,181 +1,279 @@
 Quickstart
 ==========
-Installing Hermes
------------------
 
-#. Install `Docker <https://docs.docker.com/engine/installation/>`_
-#. Create and run Docker Container for Hermes Database (MySQL)
-   
+Install Hermes with Docker
+--------------------------
+
+#. Install the `Docker Engine <https://docs.docker.com/engine/installation/>`_.
+#. Run the Docker container for Hermes database (MySQL).
+
    .. code-block:: sh
 
       docker run --name hermes_db -e MYSQL_ROOT_PASSWORD=corvus -d cecid/hermes_db:2.1
 
-#. Create and run Docker Container for Hermes Application Server (Tomcat)
+#. Run the Docker container for Hermes application server (Tomcat).
    
    .. code-block:: sh
 
-      docker run --name hermes_app --link h2o_db:db -p 8080:8080 -d cecid/hermes_app:2.1
-#. Login to Admin page ``http://localhost:8080/corvus/admin/home`` (username:``corvus``, pwd:``corvus``) and start working with Hermes.
+      docker run --name hermes_app --link hermes_db:db -p 8080:8080 -d cecid/hermes_app:2.1
+
+#. Log in to the Hermes administration console at ``http://localhost:8080/corvus/admin/home`` (username:``corvus``, password:``corvus``) to check if Hermes is up and running.
+
+.. note::
+
+   1. When it is the first time to run a container, the Docker image will be downloaded from the `Docker Hub <https://hub.docker.com/>`_. The Docker images are large. The sizes of ``cecid/hermes_db`` and ``cecid/hermes_app`` are about 400MB and 1.4GB. 
+   2. You may need the administrator or root privilage to execute ``docker run``.
 
 
-Talking to Hermes via sample clients
-------------------------------------
+Loopback Messaging with Sample Clients
+--------------------------------------
 
 Preparation
 ^^^^^^^^^^^
-Windows environment
-"""""""""""""""""""
 
-1. Download and extract :download:`the Hermes clients sample <_static/Hermes_client_sample.zip>` to a working directory ``<WorkDir>`` 
-2. Set environment variable :envvar:`JAVA_HOME` to the directory where Java is installed.
+**Linux / Unix:**
 
-UNIX environment
-""""""""""""""""
+#. Install `Java 1.8 <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ or above, or `OpenJDK 8 <http://openjdk.java.net/projects/jdk8/>`_ or above.
 
-1. Download and extract :download:`the Hermes clients sample <_static/Hermes_client_sample.zip>` to a working directory ``<WorkDir>`` 
-#. Set environment variable :envvar:`JAVA_HOME` to the directory where Java is installed.
-#. Change the permissions of all shell-script files in ``<WorkDir>`` to be executable with the following command:
+#. Please check JAVA is installed successfully.  
+
+   .. code-block:: sh
+
+      java -version
+
+   If above command fail to run, please try to set environment variable :envvar:`JAVA_HOME` to the directory where Java is installed. On Ubuntu, you may use the following command to locate the Java home directory, e.g., :file:`/usr/lib/jvm/java-8-openjdk-amd64`.
+
+   .. code-block:: sh
+
+      update-java-alternatives -l
+
+#. Download and extract the :download:`Hermes sample clients <_static/Hermes_client_sample.zip>` to a working directory :file:`{<WorkDir>}`
+
+#. Change the current directory to :file:`{<WorkDir>}/sample`.
+
+
+**Windows:**
+
+#. Install `Java 1.8 <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ or above.
+
+#. Please check JAVA is installed successfully.  
+
+   .. code-block:: sh
+
+      java -version
+
+  If above command fail to run, please try to set environment variable :envvar:`JAVA_HOME` to the directory where Java is installed.
+
+#. Download and extract the :download:`Hermes simple clients  <_static/Hermes_client_sample.zip>` to a working directory :file:`{<WorkDir>}/sample`.
+
+#. Change the current directory to :file:`{<WorkDir>}/sample`.
+
+
+Create Loopback Partnership
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Linux / Unix:**
+
+.. code-block:: sh
+
+   ./ebms-partnership.sh
+
+**Windows:**
+
+.. code-block:: doscon
+
+   ebms-partnership.bat
+
+You will see the following message.
+
+.. code-block:: none
    
-   .. code-block:: sh
+   ----------------------------------------------------
+         EBMS Partnership Maintainance Tool      
+   ----------------------------------------------------
+   Initialize logger .. 
+   Importing EBMS partnership parameters ...
+   Importing EBMS administrative sending parameters ... 
+   Initialize EBMS HTTP data service client... 
+   log4j:WARN No appenders could be found for logger    (org.apache.commons.httpclient.HttpClient).
+   log4j:WARN Please initialize the log4j system properly.
+   Sending    EBMS HTTP partnership maintenance request ... 
+   
+                       Sending Done:                   
+   ----------------------------------------------------
+   The result status : Operation executed successfully.
+   Please view log for details .. 
 
-      sudo chmod 755 *.sh
+
+Send Loopback Message
+^^^^^^^^^^^^^^^^^^^^^
+
+**Linux / Unix:**
+
+.. code-block:: sh
+
+   ./ebms-send.sh
+
+**Windows:**
+
+.. code-block:: doscon
+
+   ebms-send.bat
+
+This program sends a request attached with the payload named :file:`testpayload` under the directory :file:`{<WorkDir>}/sample/config/ebms-send` to local Hermes server. You will see the following message.
+
+.. code-block:: none
+   
+   ----------------------------------------------------
+             EbMS sender web service client            
+   ----------------------------------------------------
+   Initialize Logger ... 
+   Importing  ebMS sending parameters ... ./config/ebms-send/ebms-request.xml
+   Importing  ebMS partnership parameters ... ./config/ebms-partnership.xml
+   Initialize ebMS web service client... 
+   Adding     payload in the ebMS message... 
+   Sending    ebMS sending request ... 
+   
+                       Sending Done:                   
+   ----------------------------------------------------
+   New message id: 20170204-090520-45900@172.17.0.3
 
 
-Showcases : Loopback messaging example
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Query Message History
+^^^^^^^^^^^^^^^^^^^^^
 
-Create the partnership
-""""""""""""""""""""""
+**Linux / Unix:**
 
-   ``[Unix]``
+.. code-block:: sh
 
-   .. code-block:: sh
+   ./ebms-history.sh
 
-      cd <WorkDir>/sample
-      ./ebms-partnership.sh
+**Windows:**
 
-   ``[Windows]``
+.. code-block:: doscon
 
-   .. code-block:: sh
+   ebms-history.bat
 
-      cd <WorkDir>\sample
-      ebms-partnership.bat
+This program lists all sent and received messages. You will see the following message.
 
-Send a loopback message
-"""""""""""""""""""""""
+.. code-block:: none
+   
+   ----------------------------------------------------
+            EbMS Message History Queryer      
+   ----------------------------------------------------
+   Initialize Logger ... 
+   Importing  ebMS config parameters ... ./config/ebms-history/ebms-request.xml
+   Initialize ebMS messsage history queryer ... 
+   Sending ebMS message history query request ... 
+   
+                       Sending Done:                   
+   ----------------------------------------------------
+   ----------------------------------------------------
+            EbMS Message Query Result          
+   ----------------------------------------------------
+   0	| Message id : 20170204-090520-45900@172.17.0.3 | MessageBox: outbox
+   1	| Message id : 20170204-090520-45900@172.17.0.3 | MessageBox: inbox
+   ----------------------------------------------------
+   
+   Select message (0 - 1), -1 to exit: 0
 
-   ``[Unix]``
 
-   .. code-block:: sh
+Enter :kbd:`0` to check the sent message and the following message will be displayed: 
 
-      cd <WorkDir>/sample
-      ./ebms-send.sh
+.. code-block:: none
+   
+   Sending    EBMS-status sending request ... 
 
-   ``[Windows]``
+                    Sending Done:                   
+   ----------------------------------------------------
+   Query Message ID          : 20170204-090520-45900@172.17.0.3
+   Query Message Status      : DL
+   Query Message Status Desc : Message was sent.
+   ACK   Message ID          : null
+   ACK   Message Status      : null
+   ACK   Message Status Desc : null
+   
+   ----------------------------------------------------
+   
+   Please view log for details .. 
 
-   .. code-block:: sh
 
-      cd <WorkDir>\sample
-      ebms-send.bat
+Download Payload of Received Message
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-   This script sends a request attached with the payload named :file:`testpayload` under the directory :file:`<WorkDir>/sample/config/ebms-send` to local Hermes server.
+**Linux / Unix:**
 
-   Upon successful execution, an output similar to the following will be displayed:
+.. code-block:: sh
 
-   .. code-block:: none
+   ./ebms-history.sh
 
-      ----------------------------------------------------
-                 EbMS sender web service client           
-      ----------------------------------------------------
-      Initialize Logger ...
-      Importing xml
-      Importing l
-      ebMS sending parameters ... ./config/ebms-send/ebms-request.
-      ebMS partnership parameters ... ./config/ebms-partnership.xml
-      Initialize ebMS web service client...
-      Adding
-      Sending
-      payload in the ebMS message...
-      ebMS sending request ...
-    
-                          Sending Done:
-      ----------------------------------------------------
-      New message id: 20080722-143157-97302@127.0.1.1
-      Please view log for details ..
 
-.. _ebms-message-history:
+**Windows:**
 
-List the message history
-""""""""""""""""""""""""
+.. code-block:: doscon
 
-   ``[Unix]``
+   ebms-history.bat
 
-   .. code-block:: sh
+You will see the following message.
 
-      cd <WorkDir>/sample
-      ./ebms-history.sh
+.. code-block:: none
+   
+   ----------------------------------------------------
+            EbMS Message History Queryer      
+   ----------------------------------------------------
+   Initialize Logger ... 
+   Importing  ebMS config parameters ... ./config/ebms-history/ebms-request.xml
+   Initialize ebMS messsage history queryer ... 
+   Sending ebMS message history query request ... 
+   
+                       Sending Done:                   
+   ----------------------------------------------------
+   ----------------------------------------------------
+            EbMS Message Query Result          
+   ----------------------------------------------------
+   0	| Message id : 20170204-090520-45900@172.17.0.3 | MessageBox: outbox
+   1	| Message id : 20170204-090520-45900@172.17.0.3 | MessageBox: inbox
+   ----------------------------------------------------
+   
+   Select message (0 - 1), -1 to exit: 1
+   Currrent Dir: /home/cecid/WorkDir/sample
+   Please provide the folder to store the payload(s): 
+   Initialize ebMS receiving web service client... 
+   Sending    ebMS receiving request ... for 20170204-090520-45900@172.17.0.3
+   ----------------------------------------------------
+   
+   Please view log for details .. 
 
-   ``[Windows]``
+#. Enter :kbd:`1` to select the received message and you will be asked to the folder to store the payloads. 
 
-   .. code-block:: sh
+#. Press enter to save the payload in the current folder. A file named :file:`ebms.{<timestamp>}@127.0.1.1.Payload.0` will be downloaded, where :file:`{<timestamp>}` indicates the time :program:`ebms-send` was executed. 
 
-      cd <WorkDir>\sample
-      ebms-history.bat
+#. Open the payload file and you will see the following content:
 
-   This script retrieves list of sent/received message to/from Hermes.
+.. code-block:: none
 
-   .. code-block:: none
-
-      ----------------------------------------------------
-                 EbMS Message History Queryer
-      ----------------------------------------------------
-      Initialize Logger ...
-      Importing ebMS config parameters ... ./config/ebms-history/ebms-request.xml
-      Initialize ebMS messsage history queryer ...
-      Sending ebMS message history query request ...
-    
-                          Sending Done:
-      ----------------------------------------------------
-                   EbMS Message Query Result             
-      ----------------------------------------------------
-      0   | Message id : 20080722-143157-97302@127.0.1.1 | MessageBox: outbox
-      1   | Message id : 20080722-143157-97302@127.0.1.1 | MessageBox: inbox
-      ----------------------------------------------------
-      Select message (0 - 1), -1 to exit:
-
-   Enter ``0`` to check the sent message and a screen similar to the following will be displayed: 
-
-   .. code-block:: none
-
-                          Sending Done:
-      ----------------------------------------------------
-      Query Message ID          : 20080722-143157-97302@127.0.1.1
-      Query Message Status      : DL
-      Query Message Status Desc : Message was sent.
-      ACK Message ID            : null
-      ACK Message Status        : null
-      ACK Message Status Desc   : null
-      ----------------------------------------------------
-      Please view log for details..
-
-Download the message's payload
-""""""""""""""""""""""""""""""
-
-   ``[Unix]``
-
-   .. code-block:: sh
-
-      cd <WorkDir>/sample
-      ./ebms-history.sh
-
-   ``[Windows]``
-
-   .. code-block:: sh
-
-      cd <WorkDir>\sample
-      ebms-history.bat
-
-   From the select message screen of :ref:`ebms-message-history`, enter ``1`` to select the inbox message and it will display ``Please provide the folder to store the payload(s):``. Press enter to save the payload in the current folder. A file named :file:`ebms.{<timestamp>}@127.0.1.1.Payload.0` will be downloaded, where :file:`{<timestamp>}` is the time :program:`ebms-send` was executed. Open that file and you will see the following content:
-
-   .. image:: /_static/images/4-4-1-smaple-message.png
-
+   This is an sample message.
+   
+                     :#+,                                               
+                    +'++                                                
+                  ,++'+                                                 
+                 ++'+#`                                                 
+               ;+''++             `           `           `             
+              #++''+;`        `++++` ``,:;::   `,::::  ++  ;+'++;       
+            ;++''+++         '++++#` `;:;;;;  `;;;;;;  ++  ;'+++++:     
+           +'''''++:``;;;:   +#`     ,;;     `::,      ++  ;+   `+#     
+          +''''''''  ;:;;;: ;+:      ;;``     ;;`      ++  ;+`   ++`    
+         ,+'+''''++ .:;:;;; ;+.     `;;,.,,, `;;`      ++  ;+    ;'.    
+         ''+''''''+`,;;;::;`'+......`;::;;;;`.;;``..`.`+#``;+``..:+:`..`
+         `++'''+'++ `;;;;;; ''`      :;.```` `:;       ++  ;+`   :'.    
+          ;'''+'''+` ;::;;. :':`     ;; `     ;;       ++  ;+    +'`    
+           :+'+'+''+  .,,` ` ++`     ::,````  ::,````  ++  ;+   .+#     
+         `   #'+'''+`        ''++++` `;;;:;;  `;;:;;;  ++  ;'+++++,`    
+              ,++'''#         .;;''`   .:::,`  `,:::,  ''  :'''';       
+                +'+''; `                          `                     
+                `,+''',                                                 
+                   '''+.                                                
+                    `+++`                                               
+                     :+:     
+                     
+   This is an sample message.
