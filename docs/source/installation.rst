@@ -63,9 +63,10 @@ Prerequisite
 
       <?xml version='1.0' encoding='utf-8'?>
       <tomcat-users>
-        <role rolename="tomcat"/>
-        <role rolename="admin"/>
-        <user username="corvus" password="corvus" roles="tomcat,admin"/>
+          <role rolename="tomcat"/>
+          <role rolename="admin"/>
+          <role rolename="api"/>
+          <user username="corvus" password="corvus" roles="tomcat,admin,api"/>
       </tomcat-users>
 
 #. One of the following databases installed on any server:
@@ -330,6 +331,10 @@ UNIX environment
 
       sudo chown -R tomcat:cecid <HERMES2_HOME>
       sudo chown -R tomcat:cecid <TOMCAT_HOME>/webapps/corvus
+
+.. note::
+  To run the sample program, you may ask for root/Administrator privilege. 
+
 
 Partnership Maintenance
 ^^^^^^^^^^^^^^^^^^^^^^^
