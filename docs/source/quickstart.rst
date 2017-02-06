@@ -34,13 +34,20 @@ Preparation
 **Linux / Unix:**
 
 #. Install `Java 1.8 <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ or above, or `OpenJDK 8 <http://openjdk.java.net/projects/jdk8/>`_ or above.
-#. Download and extract the :download:`Hermes sample clients <_static/Hermes_client_sample.zip>` to a working directory :file:`{<WorkDir>}`
-#. Set environment variable :envvar:`JAVA_HOME` to the directory where Java is installed. On Ubuntu, you may use the following command to locate the Java home directory, e.g., :file:`/usr/lib/jvm/java-8-openjdk-amd64`.
+
+#. Please check JAVA is installed successfully.  
+
+   .. code-block:: sh
+
+      java -version
+
+   If above command fail to run, please try to set environment variable :envvar:`JAVA_HOME` to the directory where Java is installed. On Ubuntu, you may use the following command to locate the Java home directory, e.g., :file:`/usr/lib/jvm/java-8-openjdk-amd64`.
 
    .. code-block:: sh
 
       update-java-alternatives -l
 
+#. Download and extract the :download:`Hermes sample clients <_static/Hermes_client_sample.zip>` to a working directory :file:`{<WorkDir>}`
 
 #. Change the current directory to :file:`{<WorkDir>}/sample`.
 
@@ -49,9 +56,15 @@ Preparation
 
 #. Install `Java 1.8 <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ or above.
 
-#. Download and extract the :download:`Hermes simple clients  <_static/Hermes_client_sample.zip>` to a working directory :file:`{<WorkDir>}/sample`.
+#. Please check JAVA is installed successfully.  
 
-#. Set the environment variable :envvar:`JAVA_HOME` to the directory where Java is installed. 
+   .. code-block:: sh
+
+      java -version
+
+  If above command fail to run, please try to set environment variable :envvar:`JAVA_HOME` to the directory where Java is installed.
+
+#. Download and extract the :download:`Hermes simple clients  <_static/Hermes_client_sample.zip>` to a working directory :file:`{<WorkDir>}/sample`.
 
 #. Change the current directory to :file:`{<WorkDir>}/sample`.
 
