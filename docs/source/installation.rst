@@ -319,21 +319,18 @@ UNIX environment
 """"""""""""""""
 
 1. Set environment variable :envvar:`JAVA_HOME` to the directory where Java is located.
-#. Change the permissions of all shell-script files to ``755`` with the following command:
+#. Change the permissions of all files in :file:`{<HERMES2_HOME>}/sample` folder to ``775`` with the following command:
    
    .. code-block:: sh
 
-      sudo chmod 755 *.sh
+      sudo chmod -R 775 <HERMES2_HOME>/sample
 
 #. Change the owner and the group of :file:`{<HERMES2_HOME>}` and :file:`{<TOMCAT_HOME>}/webapps/corvus` with the following commands:
 
    .. code-block:: sh
 
-      sudo chown -R tomcat:cecid <HERMES2_HOME>
-      sudo chown -R tomcat:cecid <TOMCAT_HOME>/webapps/corvus
-
-.. note::
-  To run the sample program, you may ask for root/Administrator privilege. 
+      sudo chown -R tomcat:<owner group> <HERMES2_HOME>
+      sudo chown -R tomcat:<owner group> <TOMCAT_HOME>/webapps/corvus
 
 
 Partnership Maintenance
