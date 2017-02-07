@@ -47,7 +47,7 @@ Prerequisite
       .. code-block:: sh
 
          sudo chmod 775 <TOMCAT_HOME>/webapps
-         sudo chown tomcat:cecid <TOMCAT_HOME>/webapps
+         sudo chown tomcat:<OWNER_GROUP> <TOMCAT_HOME>/webapps
 
    #. Edit :file:`/etc/systemd/system/tomcat.service`. 
       Change :envvar:`Environment=JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre` to :envvar:`Environment=JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre`
@@ -319,19 +319,19 @@ UNIX environment
 """"""""""""""""
 
 1. Set environment variable :envvar:`JAVA_HOME` to the directory where Java is located.
+#. Change the owner and the group of :file:`{<HERMES2_HOME>}` and :file:`{<TOMCAT_HOME>}/webapps/corvus` with the following commands:
+
+   .. code-block:: sh
+
+      sudo chown -R tomcat:<OWNER_GROUP> <HERMES2_HOME>
+      sudo chown -R tomcat:<OWNER_GROUP> <TOMCAT_HOME>/webapps/corvus
+
 #. Change the permissions of all shell-script files to ``755`` with the following command:
    
    .. code-block:: sh
 
       sudo chmod -R 775 *.sh
-
-#. Change the owner and the group of :file:`{<HERMES2_HOME>}` and :file:`{<TOMCAT_HOME>}/webapps/corvus` with the following commands:
-
-   .. code-block:: sh
-
-      sudo chown -R tomcat:<owner group> <HERMES2_HOME>
-      sudo chown -R tomcat:<owner group> <TOMCAT_HOME>/webapps/corvus
-
+      
 
 Partnership Maintenance
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -495,60 +495,17 @@ Before executing the following AS2 web service usage sample, the partnership fro
    
    Upon successful execution, you should be able to see the similar output shown as follow:
    
-   .. code-block:: none
-
-      ----------------------------------------------------
-                      AS2 Message Sender
-      ----------------------------------------------------
-      Initialize Logger ...
-      Importing AS2 sending parameters ... ./config/as2-send/as2- request.xml
-      Importing AS2 partnership parameters ... ./config/as2- partnership.xml
-      Initialize AS2 message sender...
-      Adding payload in the AS2 message...
-      Sending AS2 sending request ...
-
-                         Sending Done:
-      ----------------------------------------------------
-      New message id: 20080722-133931-01300@127.0.1.1
-      Please view log for details ..
+   .. image:: /_static/images/as2-send.png
 
 #. Check the sent message using the script :program:`as2-history`.
 
    This program retrieves the list of sent/received message from Hermes. 
 
-   .. code-block:: none
-
-      ----------------------------------------------------
-           AS2 Message History Web Service Client
-      ----------------------------------------------------
-      Initialize Logger ...
-      Importing AS2 config parameters ... ./config/as2-history/as2- request.xml
-      Initialize AS2 messsage history queryer ...
-      Sending AS2 message history query request ...
-    
-                          Sending Done:
-      ----------------------------------------------------
-                 AS2 Message that are matched
-      ----------------------------------------------------
-      No. of message: 2
-      0 | Message id : 20080722-133931-01300@127.0.1.1
-      1 | Message id : 20080722-133931-01300@127.0.1.1
-      MessageBox: outbox
-      MessageBox: inbox
-      ----------------------------------------------------
-      Select message (0 - 1), -1 to exit:
+   .. image:: /_static/images/as2-history.png
 
    Enter ``0`` to check the sent message. A display similar to the following will appear: 
 
-   .. code-block:: none
-
-      Select message (0 - 1), -1 to exit: 0
-      Query Message ID          : 20080722-133931-01300@127.0.1.1 
-      Query Message Status      : DL 
-      Query Message Status Desc : null 
-      ACK Message ID            : null 
-      ACK Message Status        : null 
-      ACK Message Status Desc   : null
+   .. image:: /_static/images/as2-history-0.png
 
 #. Check the received message and download the payload.
 
@@ -567,64 +524,17 @@ Before executing the following ebMS web service usage sample, the partnership fr
 
    Upon successful execution, an output similar to the following will be displayed:
 
-   .. code-block:: none
-
-      ----------------------------------------------------
-                 EbMS sender web service client           
-      ----------------------------------------------------
-      Initialize Logger ...
-      Importing xml
-      Importing l
-      ebMS sending parameters ... ./config/ebms-send/ebms-request.
-      ebMS partnership parameters ... ./config/ebms-partnership.xml
-      Initialize ebMS web service client...
-      Adding
-      Sending
-      payload in the ebMS message...
-      ebMS sending request ...
-    
-                          Sending Done:
-      ----------------------------------------------------
-      New message id: 20080722-143157-97302@127.0.1.1
-      Please view log for details ..
+   .. image:: /_static/images/ebms-send.png
 
 #. Check the sent message using the script :program:`ebms-history`.
 
    This program retrieves the list of sent/received message from Hermes.
 
-   .. code-block:: none
-
-      ----------------------------------------------------
-                 EbMS Message History Queryer
-      ----------------------------------------------------
-      Initialize Logger ...
-      Importing ebMS config parameters ... ./config/ebms-history/ebms-request.xml
-      Initialize ebMS messsage history queryer ...
-      Sending ebMS message history query request ...
-    
-                          Sending Done:
-      ----------------------------------------------------
-                   EbMS Message Query Result             
-      ----------------------------------------------------
-      0   | Message id : 20080722-143157-97302@127.0.1.1 | MessageBox: outbox
-      1   | Message id : 20080722-143157-97302@127.0.1.1 | MessageBox: inbox
-      ----------------------------------------------------
-      Select message (0 - 1), -1 to exit:
+   .. image:: /_static/images/ebms-history.png
 
    Enter ``0`` to check the sent message and a screen similar to the following will be displayed: 
 
-   .. code-block:: none
-
-                          Sending Done:
-      ----------------------------------------------------
-      Query Message ID          : 20080722-143157-97302@127.0.1.1
-      Query Message Status      : DL
-      Query Message Status Desc : Message was sent.
-      ACK Message ID            : null
-      ACK Message Status        : null
-      ACK Message Status Desc   : null
-      ----------------------------------------------------
-      Please view log for details..
+   .. image:: /_static/images/ebms-history-0.png
 
 #. Check the received message and download the payload.
 
