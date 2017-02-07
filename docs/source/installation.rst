@@ -323,17 +323,14 @@ UNIX environment
    
    .. code-block:: sh
 
-      sudo chmod 755 *.sh
+      sudo chmod -R 775 *.sh
 
 #. Change the owner and the group of :file:`{<HERMES2_HOME>}` and :file:`{<TOMCAT_HOME>}/webapps/corvus` with the following commands:
 
    .. code-block:: sh
 
-      sudo chown -R tomcat:cecid <HERMES2_HOME>
-      sudo chown -R tomcat:cecid <TOMCAT_HOME>/webapps/corvus
-
-.. note::
-  To run the sample program, you may ask for root/Administrator privilege. 
+      sudo chown -R tomcat:<owner group> <HERMES2_HOME>
+      sudo chown -R tomcat:<owner group> <TOMCAT_HOME>/webapps/corvus
 
 
 Partnership Maintenance
