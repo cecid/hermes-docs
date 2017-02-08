@@ -23,6 +23,7 @@ img {
 .wy-nav-content-wrap {
     background-color: #fafafa;
     margin-left: 250px;
+    overflow-x: auto;
 }
 
 .wy-nav-top {
