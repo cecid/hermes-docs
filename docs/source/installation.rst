@@ -329,11 +329,12 @@ UNIX environment
       sudo chown -R tomcat:<OWNER_GROUP> <HERMES2_HOME>
       sudo chown -R tomcat:<OWNER_GROUP> <TOMCAT_HOME>/webapps/corvus
 
-#. Change the permissions of all files in :file:`{<HERMES2_HOME>}` to ``775`` with the following command:
+#. Change the permissions of all files in :file:`{<HERMES2_HOME>}` and :file:`{<TOMCAT_HOME>}/webapps/corvus` to ``775`` with the following command:
    
    .. code-block:: sh
 
       sudo chmod -R 775 <HERMES2_HOME>
+      sudo chmod -R 775 <TOMCAT_HOME>/webapps/corvus
       
 
 Partnership Maintenance
