@@ -315,6 +315,9 @@ Windows environment
 
 1. Set environment variable :envvar:`JAVA_HOME` to the directory where Java is located.
 
+   .. note::
+      To run the sample program, Administrator privilege is required.
+
 UNIX environment
 """"""""""""""""
 
@@ -326,11 +329,11 @@ UNIX environment
       sudo chown -R tomcat:<OWNER_GROUP> <HERMES2_HOME>
       sudo chown -R tomcat:<OWNER_GROUP> <TOMCAT_HOME>/webapps/corvus
 
-#. Change the permissions of all files in :file:`{<HERMES2_HOME>}/sample` to ``775`` with the following command:
+#. Change the permissions of all files in :file:`{<HERMES2_HOME>}` to ``775`` with the following command:
    
    .. code-block:: sh
 
-      sudo chmod -R 775 <HERMES2_HOME>/sample
+      sudo chmod -R 775 <HERMES2_HOME>
       
 
 Partnership Maintenance
