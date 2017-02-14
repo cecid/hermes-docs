@@ -49,6 +49,13 @@ Preparation
 
 #. Download and extract the :download:`Hermes sample clients <_static/Hermes_client_sample.zip>` to a working directory :file:`{<WorkDir>}`
 
+   .. code-block:: sh
+
+      cd <WorkDir> 
+      curl -O http://hermes.cecid.org/en/latest/_downloads/Hermes_client_sample.zip
+      unzip Hermes_client_sample.zip
+      sudo chmod -R 755 sample 
+
 #. Change the current directory to :file:`{<WorkDir>}/sample`.
 
 
