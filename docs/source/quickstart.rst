@@ -41,7 +41,7 @@ Preparation
 
       java -version
 
-   If above command fail to run, please try to set environment variable :envvar:`JAVA_HOME` to the directory where Java is installed. On Ubuntu, you may use the following command to locate the Java home directory, e.g., :file:`/usr/lib/jvm/java-8-openjdk-amd64`.
+   If the above command fails to run, please try to set environment variable :envvar:`JAVA_HOME` to the directory where Java is installed. On Ubuntu, you may use the following command to locate the Java home directory, e.g., :file:`/usr/lib/jvm/java-8-openjdk-amd64`.
 
    .. code-block:: sh
 
@@ -69,7 +69,7 @@ Preparation
 
       java -version
 
-  If above command fail to run, please try to set environment variable :envvar:`JAVA_HOME` to the directory where Java is installed.
+  If the above command fails to run, please try to set environment variable :envvar:`JAVA_HOME` to the directory where Java is installed.
 
 #. Download and extract the :download:`Hermes simple clients  <_static/Hermes_client_sample.zip>` to a working directory :file:`{<WorkDir>}/sample`.
 
