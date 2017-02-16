@@ -33,9 +33,9 @@ Preparation
 
 **Linux / Unix:**
 
-#. Install `Java 1.8 <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ or above, or `OpenJDK 8 <http://openjdk.java.net/projects/jdk8/>`_ or above.
+#. Install `Java 8 <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ or above, or `OpenJDK 8 <http://openjdk.java.net/projects/jdk8/>`_ or above.
 
-#. Please check JAVA is installed successfully.  
+#. Please check Java 8 has been set up properly.  
 
    .. code-block:: sh
 
@@ -61,9 +61,9 @@ Preparation
 
 **Windows:**
 
-#. Install `Java 1.8 <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ or above.
+#. Install `Java 8 <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ or above.
 
-#. Please check JAVA is installed successfully.  
+#. Please check Java 8 has been set up properly.  
 
    .. code-block:: sh
 
