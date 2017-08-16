@@ -3,7 +3,7 @@ Configuring Secure Messaging
 .. _send-message-using-https:
 
 How to send messages using self-signed Digital Certificate
---------------------------------
+----------------------------------------------------------
 
 To enable server authentication in Tomcat, a keystore and public certificate have to be generated and configured in Hermes. 
 The details of this procedure are shown below.
