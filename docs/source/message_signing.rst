@@ -2,111 +2,11 @@ Configuring Secure Messaging
 ============================
 .. _send-message-using-https:
 
-How to send messages using HTTPS
+How to send messages using self-signed Digital Certificate
 --------------------------------
-SSL server authentication
-^^^^^^^^^^^^^^^^^^^^^^^^^
-To enable server authentication in Tomcat, a truststore and a keystore have to be configured in Hermes and Tomcat respectively.
 
-On the sending side, a truststore is defined in :file:`corvus.properties.xml`, which is where the certificates of trusted servers are stored.
-When the sending Hermes tries to establish a secure connection, the receiving Hermes will provide a public certificate for the sender to identify their identity.
-If this certificate is self-signed, it should be added to the truststore defined on the sending side.
-
-On the receiving side, a keystore is defined in the :file:`server.xml` of Tomcat. The keystore contains its paired private key and public certificate.
-If the keystore is self-signed, the certificate has to be exported, then imported to the trustore of the sending Hermes.
-
+To enable server authentication in Tomcat, a keystore and public certificate have to be generated and configured in Hermes. 
 The details of this procedure are shown below.
-For information about how to create a keystore and generate a public certificate, please refer to the section `How to generate a PKCS12 Keystore and Certificate`_.
-
-
-Receiver configuration
-""""""""""""""""""""""
-Once a keystore has been created, :file:`server.xml` needs to be modified to specify the keystore parameters.
-   
-   #. Uncomment the connector definition on port ``8443``.
-   #. Add the following attributes for keystore configuration.
-
-+--------------------+--------------------------------------------------------------------------------------------------------------+
-| ``keystoreFile``   | An absolute file path to the keystore file.                                                                  |
-+--------------------+--------------------------------------------------------------------------------------------------------------+
-| ``keystorePass``   | The password to access the keystore.                                                                         |
-+--------------------+--------------------------------------------------------------------------------------------------------------+
-| ``keystoreType``   | The type of keystore. Both PKCS12 and JKS are supported.                                                     |
-+--------------------+--------------------------------------------------------------------------------------------------------------+
-| ``keyalias``       | Optional. If the keystore contains more than one key pair, specify the target key-pair with an alias.        |
-+--------------------+--------------------------------------------------------------------------------------------------------------+
-| ``clientAuth``     | Set this to ``false`` to indicate only Server Authentication is needed.                                      |
-+--------------------+--------------------------------------------------------------------------------------------------------------+
-
-
-Sender configuration
-""""""""""""""""""""
-As mentioned before, a truststore needs to be configured. In this example, a JKS keystore is used as a truststore as it is much simpler to import a self-signed certificate.
-
-If there is no keystore file found, :program:`Keytool` can be used to create a new keystore:
-
-.. code-block:: sh
-
-   keytool -importcert -file {filepath-and-name-of-certificate} -alias {key-alias} -keystore {filepath-and-name-of-keystore} -storetype jks -storepass {password}
-
-The program will display the certificate information and ask for confirmation. Enter ``yes`` after verifying the details.
-
-.. image:: /_static/images/message_signing/keytool_truststore.png
-
-Open :file:`corvus.properties.xml`. The definition of the truststore can be found under the ``environment`` component.
-
-Here are descriptions of the parameters:
-
-+----------------------+-----------------------------------------------------------------+
-| ``trustStore``       | The absolute file path to the keystore.                         |
-+----------------------+-----------------------------------------------------------------+
-| ``trustStorePass``   | The password to access the keystore.                            |
-+----------------------+-----------------------------------------------------------------+
-| ``trustStoreType``   | The type of the keystore. Both PKCS12 and JKS are supported.    |
-+----------------------+-----------------------------------------------------------------+
-
-If asynchronous replies are enabled for the receiving partnership, the same configuration needs to be made for Hermes on both sides, however the roles are reversed.
-
-
-SSL client authentication
-^^^^^^^^^^^^^^^^^^^^^^^^^
-In addition to server authentication, client authentication can also be applied to Hermes to achieve secure connections for message deliveries.
-
-Once the server authentication is complete, the receiving Hermes will ask for the identity of the sending Hermes.
-The sender will provide a public certificate to the receiver, which will be compared to the trusted certificates in the truststore.
-
-
-Receiver configuration
-""""""""""""""""""""""
-In order to store trusted certificates, a truststore needs to be declared in the :file:`server.xml` of Tomcat.
-
-Here are descriptions of the attributes:
-
-+--------------------+-------------------------------------------------------------------+
-| ``keystoreFile``   | The absolute file path to the keystore.                           |
-+--------------------+-------------------------------------------------------------------+
-| ``keystorePass``   | The password to access the keystore.                              |
-+--------------------+-------------------------------------------------------------------+
-| ``keystoreType``   | The type of the keystore. Both PKCS12 and JKS are supported.      |
-+--------------------+-------------------------------------------------------------------+
-| ``clientAuth``     | Set this to ``true`` to enforce client authentication.            |
-+--------------------+-------------------------------------------------------------------+
-
-
-Sender configuration
-""""""""""""""""""""
-To store the private key and public certificate pair that identifies the sender, a keystore is needed.
-
-Here are descriptions of the parameters:
-
-+--------------------------------------+-------------------------------------------------+
-| ``javax.net.ssl.keyStore``           | The absolute file path to the keystore.         |
-+--------------------------------------+-------------------------------------------------+
-| ``javax.net.ssl.keyStorePassword``   | The password to access the keystore.            |
-+--------------------------------------+-------------------------------------------------+
-| ``javax.net.ssl.keyStoreType``       | The type of the keystore.                       |
-+--------------------------------------+-------------------------------------------------+
-
 
 .. _generate-cert:
 
@@ -209,7 +109,16 @@ Using OpenSSL
 
    .. image:: /_static/images/message_signing/openssl_pkcs12.png
 
+.. _configure-hermes:
 
+How to configure Hermes to sign and verify message
+--------------------------------------------------
+1. Edit `<hermes_home>/plugins/corvus-ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml` 
+   , and fill in the details of the p12 keystore created above.
+
+2. In the "sending" partnership, set "Signing Required?" as yes.
+
+3. In the "receiving" partnership, upload the certificate generated in above step as "Certificate For Verification"
 
 .. _support-params:
 
