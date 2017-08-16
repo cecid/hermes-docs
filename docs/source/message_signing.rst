@@ -2,10 +2,10 @@ Configuring Secure Messaging
 ============================
 .. _send-message-using-https:
 
-How to send messages using self-signed Digital Certificate
-----------------------------------------------------------
+How to send messages using Self Signed Certificate
+--------------------------------------------------
 
-To enable server authentication in Tomcat, a keystore and public certificate have to be generated and configured in Hermes. 
+To sign an outgoing message by Self Signed Certificate, a keystore and public certificate have to be generated and configured in Hermes. 
 The details of this procedure are shown below.
 
 .. _generate-cert:
@@ -113,12 +113,15 @@ Using OpenSSL
 
 How to configure Hermes to sign and verify message
 --------------------------------------------------
-1. Edit `<hermes_home>/plugins/corvus-ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml` 
+
+#. Edit `<hermes_home>/plugins/corvus-ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml` 
    , and fill in the details of the p12 keystore created above.
 
-2. In the "sending" partnership, set "Signing Required?" as yes.
+#. In the "sending" partnership, set "Signing Required?" as yes.
 
-3. In the "receiving" partnership, upload the certificate generated in above step as "Certificate For Verification"
+#. In the "receiving" partnership, upload the Certificate created above as "Certificate For Verification"
+
+   .. image:: /_static/images/message_signing/partnership.png
 
 .. _support-params:
 
