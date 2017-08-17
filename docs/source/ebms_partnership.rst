@@ -213,7 +213,8 @@ Signing Required?
 |                  | Otherwise, the recipient will return a negative acknowledgement.                                                 | 
 |                  |                                                                                                                  |
 |                  | The format of the private key should be in PKCS12 and the created signature should conform to W3C XML            |
-|                  | Signatures Specification [`XMLDsig <https://www.w3.org/TR/xmldsig-core/>`_].                                     |
+|                  | Signatures Specification [`XMLDsig <https://www.w3.org/TR/xmldsig-core/>`_]. For details of signing message,     |
+|                  | please refer to :ref:`message_signing_configuration`.                                                            |
 +------------------+------------------------------------------------------------------------------------------------------------------+
 | **Options**      | [ ``true`` = outgoing ebMS messages must be digitally signed ],                                                  |
 |                  |                                                                                                                  |
