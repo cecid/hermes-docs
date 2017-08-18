@@ -18,36 +18,46 @@ Here is a brief summary about the communication port architecture between Hermes
 
 One of the core SPAs, called Main Plugin (shown below in the core SPA layer), provides an HTTP context listener that accepts HTTP requests at the specified context path (extension point) for external invocation. The protocol-specific SPA ebMS and AS2 plugins (shown below in the external SPA layer) make use of this listener to provide all SOAP and REST web services.
 
-By default, the ebMS 2.0 and AS2 plugins each have following registered web services in Hermes:
-
-1. `ebMS 2.0 sender web service`_ (SOAP and REST)
-#. `ebMS 2.0 receiver list web service`_ (SOAP and REST)
-#. `ebMS 2.0 receiver web service`_ (SOAP and REST)
-#. `ebMS 2.0 status web service`_ (SOAP and REST)
-#. `ebMS 2.0 message history web service`_ (SOAP Only)
-#. `ebMS 2.0 adding partnership web service`_ (REST Only)
-#. `ebMS 2.0 listing partnership web service`_ (REST Only)
-
-1. `AS2 sender web service`_ (SOAP only)
-#. `AS2 receiver list web service`_ (SOAP only)
-#. `AS2 receiver web service`_ (SOAP only)
-#. `AS2 status web service`_ (SOAP only)
-#. `AS2 message history web service`_ (SOAP only)
-
 .. image:: /_static/images/web_service/ws-archtecture.png
 
-.. _ebms-2-0-sender-web-service:
+In the default Hermes installation, the ebMS 2.0 and AS2 plugins each support the following registered web services in Hermes:
 
-ebMS 2.0 sender web service
----------------------------
+.. csv-table:: Hermes API
+   :header: "Functionality", "REST(EBMS)", "SOAP(EBMS)", "REST(AS2)", "SOAP(AS2)"
+
+   "Send message", "POST:corvus/api/message/send/ebms", "/corvus/httpd/ebms/sender", "POST:/corvus/api/message/send/as2", "/corvus/httpd/as2/sender"
+   "List received message ID", "GET:/corvus/api/message/receive/ebms", "/corvus/httpd/ebms/receiver_list", "GET:/corvus/api/message/receive/as2", "/corvus/httpd/as2/receiver_list"
+   "Download received message payload", "POST:/corvus/api/message/receive/ebms", "/corvus/httpd/ebms/receiver", "POST:/corvus/api/message/receive/as2", "/corvus/httpd/as2/receiver"
+   "Get message status", "GET:/corvus/api/message/send/ebms", "/corvus/httpd/ebms/status", "GET:/corvus/api/message/send/as2", "/corvus/httpd/as2/status"
+   "Reset message status", "POST:/corvus/api/message/redownload/ebms", "/corvus/httpd/ebms/permitdl", "POST:/corvus/api/message/redownload/as2", "/corvus/httpd/as2/permitdl"
+   "Query message with parameters", "GET:/corvus/api/message/history/ebms", "/corvus/httpd/ebms/msg_history", "GET:/corvus/api/message/history/as2", "/corvus/httpd/as2/msg_history"
+   "Add partnership", "POST:/corvus/api/partnership/ebms", "NIL", "POST:/corvus/api/partnership/as2", "NIL"
+   "Delete partnership", "DELETE /corvus/api/partnership/ebms/{pid}", "NIL", "DELETE /corvus/api/partnership/as2/{pid}", "NIL"
+   "Update partnership", "POST:/corvus/api/partnership/ebms", "NIL", "POST:/corvus/api/partnership/as2", "NIL"
+   "Get partnerships", "GET:/corvus/api/partnership/ebms", "NIL", "GET:/corvus/api/partnership/as2", "NIL"
+
+.. _ebms-2-0-web-service:
+
+ebMS 2.0 Web Service
+====================
+
+.. _ebms-2-0-send-message-ws:
+
+Send Message
+------------
 
 The ebMS 2.0 sender web service is a web service interface for external parties to request Hermes to send an ebMS message to another Hermes or an ebMS compliant messaging gateway. The service provides a message identifier to the sender for future reference. This is the main channel for external applications to deliver ebMS messages using Hermes. 
 
+
+.. _ebms-2-0-sender-soap:
+
+SOAP
+````
+Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/ebms/sender`
+
 .. image:: /_static/images/web_service/h2o-ws-sender-ebms.png
 
-**SOAP request message**
-
-Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/ebms/sender`
+**Request message**
 
 Instead of requiring the sender to compose entire ebMS messages or acquire ebMS knowledge, the sender simply needs to request Hermes to do so with key identities including ``CPA ID``, ``Service`` and ``Action``. These 3 key parameter identify the sending partnership in Hermes that will be used to configure the ebMS message.
 
@@ -119,7 +129,7 @@ Descriptions of the elements in the SOAP body are as follows:
 | ``<serviceType>``        | No        | A type identifier for the ebXML service defined in the partnership.                          |
 +--------------------------+-----------+----------------------------------------------------------------------------------------------+
 
-**SOAP response message**
+**Response message**
 
 The element inside the SOAP body is using namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
 
@@ -139,15 +149,18 @@ A sample SOAP response for sender web service is shown below:
 
 As with the SOAP request message, the ``<message_id>`` element is the ``message identifier`` assigned by Hermes in the sending party. The sending application can use it for later reference and status tracking with the status web service. 
 
-**REST request message**
+.. _ebms-2-0-sender-rest:
+
+REST
+````
+
+**Request message**
 
 .. code-block:: sh
     
-    $ curl -X POST \
-    --data '{"partnership_id":"<partnership_id>", "from_party_id":"<from>", "to_party_id":"<to>", "conversation_id":"<conv>", "payload":"<payload>"}' \
-    http://<HOST>:<PORT>/corvus/api/message/send/ebms
+    $ curl -X POST --data '{"partnership_id":"<partnership_id>", "from_party_id":"<from>", "to_party_id":"<to>", "conversation_id":"<conv>", "payload":"<payload>"}' http://<HOST>:<PORT>/corvus/api/message/send/ebms
 
-**REST response message**
+**Response message**
 
 .. code-block:: sh
 
@@ -156,14 +169,22 @@ As with the SOAP request message, the ``<message_id>`` element is the ``message 
 .. note:: 
    To try the REST API, the simplest way is to use ``curl`` as a command line REST client, or Postman as a GUI based client is a useful tool too.
 
-ebMS 2.0 receiver list web service
-----------------------------------
+For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+
+.. _ebms-2-0-list-message-ws:
+
+List received message ID
+------------------------
 
 The ebMS receiver list web service is used by the application of the receiving party to retrieve message identifiers of received and processed ebMS messages that have not been downloaded. These message identifiers will be used to retrieve message payloads with the receiver web service.
 
-**SOAP request message**
+.. _ebms-2-0-list-message-soap:
 
+SOAP
+````
 Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/ebms/receiver_list`
+
+**Request message**
 
 The receiver list web service requires elements with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
@@ -210,7 +231,7 @@ Descriptions of the elements in the SOAP body are as follows:
 +-------------------------+-----------+---------------------------------------------------------------------------------------------------+
 
 
-**SOAP response message**
+**Response message**
 
 The element inside the SOAP body is using namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
 
@@ -232,7 +253,12 @@ Each element in the ``messageIds`` represents the message identifier of an ebMS 
 
 Note that a message is considered downloaded only when the message body has been downloaded by the ebMS receiver web service. If your application never calls the receiver web service to download the messages, the same set of message identifiers will always be retrieved.
 
-**REST request message**
+.. _ebms-2-0-list-message-rest:
+
+REST
+````
+
+**Request message**
 
 .. code-block:: sh
 
@@ -245,16 +271,26 @@ Note that a message is considered downloaded only when the message body has been
     {"message_ids":[{"id":"<message_id>","timestamp":<timestamp>}]}
 
 
-ebMS 2.0 receiver web service
------------------------------
+Note that a message is considered downloaded once this request is handled successfully by the ebMS receiver web service. If your application calls this web service again, no message ID will be retrieved.
+
+For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+
+.. _ebms-2-0-receiver-ws:
+
+Download received message payload
+---------------------------------
 
 The ebMS receiver web service is used by the application of the receiving party to retrieve message payloads of received ebMS messages. After the message payloads have been downloaded, the message will be marked as received, and its message identifier will no longer be retrieved by the ebMS receiver list web service.
 
+.. _ebms-2-0-receiver-soap:
+
+SOAP
+````
+Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/ebms/receiver`
+
 .. image:: /_static/images/web_service/h2o-ws-recv.png
 
-**SOAP request message**
-
-Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/ebms/receiver`
+**Request message**
 
 The ebMS receiver web service requires only one element with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
@@ -273,7 +309,7 @@ A sample SOAP request for the receiver web service is shown below:
 The ``<messageId>`` element contains a message identifier obtained from the ebMS receiver list web service.
 
 
-**SOAP response message**
+**Response message**
 
 The element inside the SOAP body is using namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
 
@@ -296,31 +332,42 @@ A sample SOAP response for the receiver web service is shown below:
 If a payload is associated with the message identifier, the ``<hasMessage>`` element will have the value ``true``.
 If the received ebMS message has payloads, the response message will have one or more SOAP attachments. Each SOAP attachment has a content type, which is set by the sending application. 
 
-**REST request message**
+.. _ebms-2-0-receiver-rest:
+
+REST
+````
+
+**Request message**
 
 .. code-block:: sh
 
-    $ curl -X POST \
-    --data '{"message_id":"<message_id"}' \
-    http://<HOST>:<PORT>/corvus/api/message/receive/ebms
+    $ curl -X POST --data '{"message_id":"<message_id"}' http://<HOST>:<PORT>/corvus/api/message/receive/ebms
 
-**REST response message**
+**Response message**
 
 .. code-block:: sh
 
     {"id":"<message_id>","cpa_id":"<cpa>","service":"<service>","action":"<action>","from_party_id":"<from>","to_party_id":"<to>","conversation_id":"<conv>","timestamp":<timestamp>,"status":"<status>","payloads":[{"payload":"<content>"}]}
 
+For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
 
-ebMS 2.0 status web service
----------------------------
+.. _ebms-2-0-get-status-ws:
+
+Get message status
+------------------
 
 The ebMS status web service is used by the application of the sending or receiving party to retrieve the status of a sent or received ebMS message respectively.
 
 The message status is a two-character code indicating the progress of an ebMS message. The ebMS status web service provides a tracking service to monitor ebMS messages requested from Hermes.
 
-**SOAP request message**
+.. _ebms-2-0-get-status-soap:
+
+SOAP
+````
 
 Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/ebms/status`
+
+**Request message**
 
 The ebMS status web service requires only one element with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
@@ -338,7 +385,7 @@ A sample SOAP request for the status web service is shown below:
 
 The ``<messageId>`` element contains a message identifier obtained from the ebMS sender web service response or the ebMS receiver list web service.
 
-**SOAP response message**
+**Response message**
 
 The element inside the SOAP body is using namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
 
@@ -376,29 +423,113 @@ Descriptions of the elements in the SOAP body are as follows:
 | ``<ackStatusDescription>``        | A text description of the associated acknowledgment (if any).      |
 +-----------------------------------+--------------------------------------------------------------------+
 
-**REST request message**
+.. _ebms-2-0-get-status-rest:
+
+REST
+````
+
+**Request message**
 
 .. code-block:: sh
 
     $ curl -X GET http://<HOST>:<PORT>/corvus/api/message/send/ebms?id=<message_id>
    
-**REST response message**
+**Response message**
       
 .. code-block:: sh
 
     {"message_id":"<message_id>","status":"<status>"}
 
+For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
 
-ebMS 2.0 message history web service
-------------------------------------
+.. _ebms-2-0-reset-status-ws:
 
-Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/ebms/msg_history`
+Reset message status
+--------------------
+
+The ebMS reset status web service is used by the application of the receiving party to reset the status of a downloaded ebMS message from DL to PS, so that it can be redownload again.
+
+.. _ebms-2-0-reset-status-soap:
+
+SOAP
+````
+Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/ebms/permitdl`
+
+**Request message**
+
+The ebMS status web service requires only one element with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
+
+A sample SOAP request for the reset status web service is shown below:
+
+.. code-block:: xml
+
+   <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Header/>
+   <SOAP-ENV:Body>
+   <tns:messageId xmlns:tns="http://service.ebms.edi.cecid.hku.hk/"> [messageId] [The_message_id_you_want_to_redownload] </tns:messageId>
+   </SOAP-ENV:Body>
+   </SOAP-ENV:Envelope>
+
+
+The ``<messageId>`` element contains a message identifier obtained from the ebMS sender web service response or the ebMS receiver list web service.
+
+**Response message**
+
+The element inside the SOAP body is using namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
+
+A sample SOAP response for the reset status web service is shown below:
+
+.. code-block:: xml
+
+   <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Header/>
+   <SOAP-ENV:Body>
+   <message_id xmlns:ns0="http://www.w3.org/2001/XMLSchema-instance" ns0:type="xsd:string" 
+               xmlns="http://service.ebms.edi.cecid.hku.hk/" 
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"> [Newly_created_message_id]
+   </message_id>
+   </SOAP-ENV:Body>
+   </SOAP-ENV:Envelope>
+
+As with the SOAP request message, the ``<message_id>`` element is the ``message identifier`` where they are the same if reset status successfully.
+
+.. _ebms-2-0-reset-status-rest:
+
+REST
+````
+
+**Request message**
+
+.. code-block:: sh
+
+    $ curl -X POST --data '{"message_id":"<message_id>"}' http://<HOST>:<PORT>/corvus/api/message/redownload/ebms
+
+   
+**Response message**
+      
+.. code-block:: sh
+
+    {"id":"<message_id>"}
+
+For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+
+
+.. _ebms-2-0-query-message-ws:
+
+Query message with parameters
+-----------------------------
 
 The ebMS message history web service is used by the application of the sending or receiving party to query messages according to specific parameters.
 
+SOAP
+````
+Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/ebms/msg_history`
+
 .. image:: /_static/images/web_service/MessageHistory.png
 
-**SOAP request message**
+.. _ebms-2-0-query-message-soap:
+
+**Request message**
 
 The ebMS message history web service requires elements with namespace URI ``http://service.ebms.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
@@ -419,7 +550,7 @@ A sample SOAP request for the message history web service is shown below:
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-**SOAP response message**
+**Response message**
 
 The element ``<messageList>`` inside the SOAP body is using namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
 
@@ -463,41 +594,123 @@ Descriptions of the elements in the SOAP body are as follows:
 | ``<messageBox>``         | The message box of a retrieved message.                                                      |
 +--------------------------+----------------------------------------------------------------------------------------------+
 
+.. _ebms-2-0-query-message-rest:
 
-ebMS 2.0 adding partnership web service
----------------------------------------
+REST
+````
 
-**REST request message**
+**Request message**
+
+.. code-block:: sh
+
+    $ curl -X GET http://<HOST>:<PORT>/corvus/api/message/history/ebms?message_id=<message_id>&message_box=<message_box>&conversation_id=<cid>&cpa_id=<cpa_id>&service=<service>&action=<action>&status=<status>&limit=<limit>
+   
+**Response message**
+      
+.. code-block:: sh
+
+    {"message_id":"<message_id>","status":"<status>"}
+
+For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+
+.. _ebms-2-0-add-partnership-ws:
+
+Add partnership
+---------------
+
+The ebMS Add Partnership web service is used by the application of the sending and receiving party to create partnership.
+
+.. _ebms-2-0-add-partnership-rest:
+
+REST
+````
+
+**Request message**
 
 .. code-block:: sh
     
-    $ curl -X POST \
-    -- data '{"id":"<partnership_id>", "cpa_id":"<cpa>", "service":"<service>", "action":"<action>", "transport-endpoint":"http://<RECEIVER HOST>:<RECEIVER PORT>/corvus/httpd/ebms/inbound"}' \
+    $ curl -X POST -- data '{"id":"<partnership_id>", "cpa_id":"<cpa>", "service":"<service>", "action":"<action>", "transport-endpoint":"http://<RECEIVER HOST>:<RECEIVER PORT>/corvus/httpd/ebms/inbound"}' \
     http://<SENDER HOST>:<SENDER PORT>/corvus/api/partnership/ebms
 
-**REST response message**
+**Response message**
       
 .. code-block:: sh
 
     {"id":"<partnership_id"}
 
+.. _ebms-2-0-delete-partnership-ws:
 
-ebMS 2.0 listing partnership web service
-----------------------------------------
+Delete partnership
+------------------
 
-**REST request message**
+The ebMS delete Partnership web service is used by the application of the sending and receiving party to delete partnership.
+
+.. _ebms-2-0-delete-partnership-rest:
+
+REST
+````
+
+**Request message**
+
+.. code-block:: sh
+    
+    $ curl -X DELETE http://<HOST>:<PORT>/corvus/api/partnership/ebms/<partnership_id>
+
+**Response message**
+
+.. code-block:: sh
+
+    {"id":"<partnership_id>", "success": true}
+
+.. _ebms-2-0-update-partnership-ws:
+
+Update partnership
+------------------
+
+The ebMS update Partnership web service is used by the application of the sending and receiving party to update partnership.
+
+.. _ebms-2-0-update-partnership-rest:
+
+REST
+````
+
+**Request message**
+
+.. code-block:: sh
+    
+    $ curl -X POST -- data '{"id":"<partnership_id>", "cpa_id":"<cpa>", "service":"<service>", "action":"<action>", "transport-endpoint":"http://<RECEIVER HOST>:<RECEIVER PORT>/corvus/httpd/ebms/inbound"}' \
+    http://<SENDER HOST>:<SENDER PORT>/corvus/api/partnership/ebms
+
+**Response message**
+      
+.. code-block:: sh
+
+    {"id":"<partnership_id>"}
+
+
+.. _ebms-2-0-get-partnership-ws:
+
+Get partnerships
+----------------
+
+The ebMS update Partnership web service is used by the application of the sending and receiving party to get all partnership details.
+
+.. _ebms-2-0-get-partnerships-rest:
+
+REST
+````
+
+**Request message**
 
 .. code-block:: sh
     
     $ curl -X GET http://<HOST>:<PORT>/corvus/api/partnership/ebms
 
-**REST response message**
+**Response message**
 
 .. code-block:: sh
 
     {"partnerships":[{"id":"<partership_id>","cpa_id":"<cpa>","service":"<service>","action":"<action>","disabled":false,"transport_endpoint":"http://<HOST>:<PORT>/corvus/httpd/ebms/inbound","ack_requested":null,"signed_ack_requested":null,"duplicate_elimination":null,"message_order":null,"retries":<retries>,"retry_interval":<interval>,"sign_requested":false,"sign_certicate":null}]}
-
-
 
 AS2 sender web service
 ----------------------
@@ -508,7 +721,7 @@ The AS2 sender web service is used by the application of the sending party to re
 
 .. image:: /_static/images/web_service/h2o-ws-sender-as2.png
 
-**SOAP request message**
+**Request message**
 
 The sender web service requires elements with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
@@ -554,7 +767,7 @@ Descriptions of the elements in the SOAP body are as follows:
 
 
 
-**SOAP response message**
+**Response message**
 
 The element inside the SOAP body is using namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
 
@@ -583,7 +796,7 @@ Service endpoint: :samp:`http://{<HERMES_HOST>}:{<HERMES_PORT>}/corvus/httpd/as2
 
 The AS2 receiver list web service is used by the application of the receiving party to retrieve message identifiers of received AS2 messages which have not been downloaded by the application. The message identifiers will be used to retrieve message payloads using the AS2 receiver web service.
 
-**SOAP request message**
+**Request message**
 
 The receiver list web service requires elements with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
@@ -613,7 +826,7 @@ Descriptions of the elements in the SOAP body are as follows:
 | ``<numOfMessages>``     | No        | The maximum number of message identifiers retrieved by this request.                        |
 +-------------------------+-----------+---------------------------------------------------------------------------------------------+
 
-**SOAP response message**
+**Response message**
 
 The element inside the SOAP body is using namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
 
@@ -649,7 +862,7 @@ The AS2 receiver web service is used by the application of the receiving party t
  
 .. image:: /_static/images/web_service/h2o-ws-recv.png
 
-**SOAP request message**
+**Request message**
 
 The receiver web service requires only one element with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
@@ -664,7 +877,7 @@ A sample SOAP request for the receiver web service is shown below:
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-**SOAP response message**
+**Response message**
 
 The element inside the SOAP body is using namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
 
@@ -695,7 +908,7 @@ Service endpoint: :samp:`http://{<OST>}:{<PORT>}/corvus/httpd/as2/status.`
 
 The AS2 status web service is used by the application of the sending or receiving party to retrieve the message status of a sent or received AS2 message respectively.
 
-**SOAP request message**
+**Request message**
 
 The status web service requires only one element with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
@@ -710,7 +923,7 @@ A sample SOAP request for the status web service is shown below:
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-**SOAP response message**
+**Response message**
 
 The element ``<messageInfo>`` inside the SOAP body is using namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
 
@@ -761,7 +974,7 @@ The AS2 message history web service is used by the application of the sending or
 
 .. image:: /_static/images/web_service/MessageHistory.png
 
-**SOAP request message**
+**Request message**
 
 The message history web service requires elements with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
@@ -780,7 +993,7 @@ A sample SOAP request for the message history web service is shown below:
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-**SOAP response message**
+**Response message**
 
 The element ``<messageList>`` in the SOAP body is using the namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
 
