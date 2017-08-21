@@ -22,19 +22,33 @@ One of the core SPAs, called Main Plugin (shown below in the core SPA layer), pr
 
 In the default Hermes installation, the ebMS 2.0 and AS2 plugins each support the following registered web services in Hermes:
 
-.. csv-table:: Hermes API
-   :header: "Functionality", "REST(EBMS)", "SOAP(EBMS)", "REST(AS2)", "SOAP(AS2)"
+.. csv-table:: ebMS 2.0 Hermes API
+   :header: "Functionality          ", "REST(ebMS)", "SOAP(ebMS)"
 
-   "Send message", "POST:corvus/api/message/send/ebms", "/corvus/httpd/ebms/sender", "POST:/corvus/api/message/send/as2", "/corvus/httpd/as2/sender"
-   "List received message ID", "GET:/corvus/api/message/receive/ebms", "/corvus/httpd/ebms/receiver_list", "GET:/corvus/api/message/receive/as2", "/corvus/httpd/as2/receiver_list"
-   "Download received message payload", "POST:/corvus/api/message/receive/ebms", "/corvus/httpd/ebms/receiver", "POST:/corvus/api/message/receive/as2", "/corvus/httpd/as2/receiver"
-   "Get message status", "GET:/corvus/api/message/send/ebms", "/corvus/httpd/ebms/status", "GET:/corvus/api/message/send/as2", "/corvus/httpd/as2/status"
-   "Reset message status", "POST:/corvus/api/message/redownload/ebms", "/corvus/httpd/ebms/permitdl", "POST:/corvus/api/message/redownload/as2", "/corvus/httpd/as2/permitdl"
-   "Query message with parameters", "GET:/corvus/api/message/history/ebms", "/corvus/httpd/ebms/msg_history", "GET:/corvus/api/message/history/as2", "/corvus/httpd/as2/msg_history"
-   "Add partnership", "POST:/corvus/api/partnership/ebms", "NIL", "POST:/corvus/api/partnership/as2", "NIL"
-   "Delete partnership", "DELETE /corvus/api/partnership/ebms/{pid}", "NIL", "DELETE /corvus/api/partnership/as2/{pid}", "NIL"
-   "Update partnership", "POST:/corvus/api/partnership/ebms", "NIL", "POST:/corvus/api/partnership/as2", "NIL"
-   "Get partnerships", "GET:/corvus/api/partnership/ebms", "NIL", "GET:/corvus/api/partnership/as2", "NIL"
+   ":ref:`ebms-2-0-send-message-ws`", "POST:corvus/api/message/send/ebms", "/corvus/httpd/ebms/sender"
+   ":ref:`ebms-2-0-list-message-ws`", "GET:/corvus/api/message/receive/ebms", "/corvus/httpd/ebms/receiver_list"
+   ":ref:`ebms-2-0-receiver-ws`", "POST:/corvus/api/message/receive/ebms", "/corvus/httpd/ebms/receiver"
+   ":ref:`ebms-2-0-get-status-ws`", "GET:/corvus/api/message/send/ebms", "/corvus/httpd/ebms/status"
+   ":ref:`ebms-2-0-reset-status-ws`", "POST:/corvus/api/message/redownload/ebms", "/corvus/httpd/ebms/permitdl"
+   ":ref:`ebms-2-0-query-message-ws`", "GET:/corvus/api/message/history/ebms", "/corvus/httpd/ebms/msg_history"
+   ":ref:`ebms-2-0-add-partnership-ws`", "POST:/corvus/api/partnership/ebms", "NIL"
+   ":ref:`ebms-2-0-delete-partnership-ws`", "DELETE /corvus/api/partnership/ebms/{pid}", "NIL"
+   ":ref:`ebms-2-0-update-partnership-ws`", "POST:/corvus/api/partnership/ebms", "NIL"
+   ":ref:`ebms-2-0-get-partnership-ws`", "GET:/corvus/api/partnership/ebms", "NIL"
+
+.. csv-table:: AS2 Hermes API
+   :header: "Functionality          ", "REST(AS2)", "SOAP(AS2)"
+
+   ":ref:`as2-2-0-send-message-ws`", "POST:/corvus/api/message/send/as2", "/corvus/httpd/as2/sender"
+   ":ref:`as2-2-0-list-message-ws`", "GET:/corvus/api/message/receive/as2", "/corvus/httpd/as2/receiver_list"
+   ":ref:`as2-2-0-receiver-ws`", "POST:/corvus/api/message/receive/as2", "/corvus/httpd/as2/receiver"
+   ":ref:`as2-2-0-get-status-ws`", "GET:/corvus/api/message/send/as2", "/corvus/httpd/as2/status"
+   "Reset message status", "NIL", "NIL"
+   ":ref:`as2-2-0-query-message-ws`", "GET:/corvus/api/message/history/as2", "/corvus/httpd/as2/msg_history"
+   ":ref:`as2-2-0-add-partnership-ws`", "POST:/corvus/api/partnership/as2", "NIL"
+   ":ref:`as2-2-0-delete-partnership-ws`", "DELETE /corvus/api/partnership/as2/{pid}", "NIL"
+   ":ref:`as2-2-0-update-partnership-ws`", "POST:/corvus/api/partnership/as2", "NIL"
+   ":ref:`as2-2-0-get-partnership-ws`", "GET:/corvus/api/partnership/as2", "NIL"
 
 .. _ebms-2-0-web-service:
 
@@ -43,19 +57,18 @@ ebMS 2.0 Web Service
 
 .. _ebms-2-0-send-message-ws:
 
-Send Message
+Send message
 ------------
 
 The ebMS 2.0 sender web service is a web service interface for external parties to request Hermes to send an ebMS message to another Hermes or an ebMS compliant messaging gateway. The service provides a message identifier to the sender for future reference. This is the main channel for external applications to deliver ebMS messages using Hermes. 
 
+.. image:: /_static/images/web_service/h2o-ws-sender-ebms.png
 
 .. _ebms-2-0-sender-soap:
 
 SOAP
 ````
 Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/ebms/sender`
-
-.. image:: /_static/images/web_service/h2o-ws-sender-ebms.png
 
 **Request message**
 
@@ -268,7 +281,7 @@ REST
 
 .. code-block:: sh
 
-    {"message_ids":[{"id":"<message_id>","timestamp":<timestamp>}]}
+    {"message_ids":[{"id":"<message_id>","timestamp":<timestamp>,"status":<status>}]}
 
 
 Note that a message is considered downloaded once this request is handled successfully by the ebMS receiver web service. If your application calls this web service again, no message ID will be retrieved.
@@ -282,13 +295,13 @@ Download received message payload
 
 The ebMS receiver web service is used by the application of the receiving party to retrieve message payloads of received ebMS messages. After the message payloads have been downloaded, the message will be marked as received, and its message identifier will no longer be retrieved by the ebMS receiver list web service.
 
+.. image:: /_static/images/web_service/h2o-ws-recv.png
+
 .. _ebms-2-0-receiver-soap:
 
 SOAP
 ````
 Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/ebms/receiver`
-
-.. image:: /_static/images/web_service/h2o-ws-recv.png
 
 **Request message**
 
@@ -356,7 +369,7 @@ For the details specification of this REST API, please refer to `HERMES RESTful 
 Get message status
 ------------------
 
-The ebMS status web service is used by the application of the sending or receiving party to retrieve the status of a sent or received ebMS message respectively.
+The ebMS status web service is used by the application of the sending party to retrieve the status of a sent or received ebMS message respectively.
 
 The message status is a two-character code indicating the progress of an ebMS message. The ebMS status web service provides a tracking service to monitor ebMS messages requested from Hermes.
 
@@ -513,7 +526,6 @@ REST
 
 For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
 
-
 .. _ebms-2-0-query-message-ws:
 
 Query message with parameters
@@ -521,13 +533,13 @@ Query message with parameters
 
 The ebMS message history web service is used by the application of the sending or receiving party to query messages according to specific parameters.
 
-SOAP
-````
-Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/ebms/msg_history`
-
 .. image:: /_static/images/web_service/MessageHistory.png
 
 .. _ebms-2-0-query-message-soap:
+
+SOAP
+````
+Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/ebms/msg_history`
 
 **Request message**
 
@@ -609,7 +621,7 @@ REST
       
 .. code-block:: sh
 
-    {"message_id":"<message_id>","status":"<status>"}
+    {  "message_ids": [ { "id": <message_Id>, "cpa_id": <cpa_id>, "service": <service>, "action": <action>, "conversation_id": <conversation_id>, "message_box": <message_box>, "timestamp": <timestamp>, "status": <status>} ] }
 
 For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
 
@@ -693,7 +705,7 @@ REST
 Get partnerships
 ----------------
 
-The ebMS update Partnership web service is used by the application of the sending and receiving party to get all partnership details.
+The ebMS get Partnership web service is used by the application of the sending and receiving party to get all partnership details.
 
 .. _ebms-2-0-get-partnerships-rest:
 
@@ -712,14 +724,25 @@ REST
 
     {"partnerships":[{"id":"<partership_id>","cpa_id":"<cpa>","service":"<service>","action":"<action>","disabled":false,"transport_endpoint":"http://<HOST>:<PORT>/corvus/httpd/ebms/inbound","ack_requested":null,"signed_ack_requested":null,"duplicate_elimination":null,"message_order":null,"retries":<retries>,"retry_interval":<interval>,"sign_requested":false,"sign_certicate":null}]}
 
-AS2 sender web service
-----------------------
+.. _as2-2-0-web-service:
 
-Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/as2/sender`
+AS2 Web Service
+===============
+
+.. _as2-2-0-send-message-ws:
+
+Send Message
+------------
 
 The AS2 sender web service is used by the application of the sending party to request Hermes to send an AS2 message to another Hermes or a compatible messaging gateway. The service returns a message identifier to the application for future reference.
 
 .. image:: /_static/images/web_service/h2o-ws-sender-as2.png
+
+.. _as2-2-0-send-message-soap:
+
+SOAP
+````
+Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/as2/sender`
 
 **Request message**
 
@@ -765,8 +788,6 @@ Descriptions of the elements in the SOAP body are as follows:
 +----------------------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
-
-
 **Response message**
 
 The element inside the SOAP body is using namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
@@ -788,13 +809,40 @@ A sample SOAP response for the sender web service is shown below:
 
 The ``<message_id>`` element is the identifier of the sent message that can be used for later reference and status tracking with the AS2 status web service. 
 
+.. _as2-2-0-sender-rest:
 
-AS2 receiver list web service
------------------------------
+REST
+````
 
-Service endpoint: :samp:`http://{<HERMES_HOST>}:{<HERMES_PORT>}/corvus/httpd/as2/receiver_list`
+**Request message**
+
+.. code-block:: sh
+    
+    $ curl -X POST --data '{  "as2_from": <as2_from>, "as2_to": <as2_to>, "type": <type>, "payload": <payload>}' http://<HOST>:<PORT>/corvus/api/message/send/as2
+
+**Response message**
+
+.. code-block:: sh
+
+    {"id":"<message_id>"}
+
+.. note:: 
+   To try the REST API, the simplest way is to use ``curl`` as a command line REST client, or Postman as a GUI based client is a useful tool too.
+
+For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+
+.. _as2-2-0-list-message-ws:
+
+List received message ID
+------------------------
 
 The AS2 receiver list web service is used by the application of the receiving party to retrieve message identifiers of received AS2 messages which have not been downloaded by the application. The message identifiers will be used to retrieve message payloads using the AS2 receiver web service.
+
+.. _as2-2-0-list-message-soap:
+
+SOAP
+````
+Service endpoint: :samp:`http://{<HERMES_HOST>}:{<HERMES_PORT>}/corvus/httpd/as2/receiver_list`
 
 **Request message**
 
@@ -848,19 +896,46 @@ A sample SOAP response for the receiver list web service is shown below:
    </SOAP-ENV:Envelope>
 
 
-Each ``<message_id>`` element in the response message represents the identifier of an AS2 message received by Hermes.
+Each ``<downloadable_message_id>`` element in the response message represents the identifier of an AS2 message received by Hermes.
 
 Note that a message is considered downloaded only when the message body has been downloaded by the AS2 receiver web service. If your application never calls the receiver web service to download the messages, the same set of message identifiers will always be retrieved.
 
+.. _as2-2-0-list-message-rest:
 
-AS2 receiver web service
-------------------------
+REST
+````
 
-Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/as2/receiver.`
+**Request message**
+
+.. code-block:: sh
+
+    $ curl -X GET http://<HOST>:<PORT>/corvus/api/message/receive/as2?partnership_id=<partnership_id>
+
+**REST reponse message**
+
+.. code-block:: sh
+
+    {"message_ids":[{"id":"<message_id>","timestamp":<timestamp>,"status":<status>}]}
+
+Note that a message is considered downloaded once this request is handled successfully by the ebMS receiver web service. If your application calls this web service again, no message ID will be retrieved.
+
+For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+
+.. _as2-2-0-receiver-ws:
+
+Download received message payload
+---------------------------------
 
 The AS2 receiver web service is used by the application of the receiving party to retrieve the message payloads of received AS2 messages. After the payloads have been downloaded, the message will be marked as received, and the message identifier of the message will no longer be retrieved by the AS2 receiver list service.
- 
+
 .. image:: /_static/images/web_service/h2o-ws-recv.png
+
+.. _as2-2-0-receiver-soap:
+
+SOAP
+````
+
+Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/as2/receiver.`
 
 **Request message**
 
@@ -900,17 +975,42 @@ A sample SOAP response for the receiver web service is shown below:
 If a payload is associated with the message identifier, then ``<hasMessage>`` will have the value ``true``.
 If the received AS2 message has payloads, the response message will have one or more SOAP attachments. Each SOAP attachment has a content type, which is set by the sender application. 
 
+.. _as2-2-0-receiver-rest:
 
-AS2 status web service
-----------------------
-
-Service endpoint: :samp:`http://{<OST>}:{<PORT>}/corvus/httpd/as2/status.`
-
-The AS2 status web service is used by the application of the sending or receiving party to retrieve the message status of a sent or received AS2 message respectively.
+REST
+````
 
 **Request message**
 
-The status web service requires only one element with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
+.. code-block:: sh
+
+    $ curl -X POST --data '{"id":"<message_id"}' http://<HOST>:<PORT>/corvus/api/message/receive/as2
+
+**Response message**
+
+.. code-block:: sh
+
+    {  "id": "string",  "as2_from": "string",  "as2_to": "string",  "timestamp": 0,  "status": "string", "payloads": [ {"payload": "string"} ] }
+
+For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+
+.. _as2-2-0-get-status-ws:
+
+Get message status
+------------------
+
+The AS2 status web service is used by the application of the sending party to retrieve the message status of a sent or received AS2 message respectively.
+
+.. _as2-2-0-get-status-soap:
+
+SOAP
+````
+
+Service endpoint: :samp:`http://{<OST>}:{<PORT>}/corvus/httpd/as2/status.`
+
+**Request message**
+
+The AS2 status web service requires only one element with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the status web service is shown below:
 
@@ -964,19 +1064,44 @@ Descriptions of the elements in the SOAP body are as follows:
 | ``<mdnStatusDescription>``     | A text description of the associated receipt.              |
 +--------------------------------+------------------------------------------------------------+
 
+.. _as2-2-0-get-status-rest:
 
-AS2 message history web service
--------------------------------
+REST
+````
 
-Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/as2/msg_history`
+**Request message**
+
+.. code-block:: sh
+
+    $ curl -X GET http://<HOST>:<PORT>/corvus/api/message/send/as2?id=<message_id>
+   
+**Response message**
+      
+.. code-block:: sh
+
+    {"message_id":"<message_id>","status":"<status>"}
+
+For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+
+.. _as2-2-0-query-message-ws:
+
+Query message with parameters
+-----------------------------
 
 The AS2 message history web service is used by the application of the sending or receiving party to query messages according to specific parameters.
 
 .. image:: /_static/images/web_service/MessageHistory.png
 
+.. _as-2-0-query-message-soap:
+
+SOAP
+````
+
+Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/as2/msg_history`
+
 **Request message**
 
-The message history web service requires elements with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
+The AS2 message history web service requires elements with namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
 
 A sample SOAP request for the message history web service is shown below:
 
@@ -1032,7 +1157,128 @@ Descriptions of the elements in the SOAP body are as follows:
 +--------------------------+----------------------------------------------------------------------------------------------------+
 | ``<messageBox>``         | The message box of the retrieved message.                                                          |
 +--------------------------+----------------------------------------------------------------------------------------------------+
- 
+
+.. _as2-2-0-query-message-rest:
+
+REST
+````
+
+**Request message**
+
+.. code-block:: sh
+
+    $ curl -X GET http://<HOST>:<PORT>/corvus/api/message/history/as2?message_id=<message_id>&message_box=<message_box>&as2_from=<as2_from>&as2_to=<as2_to>&status=<status>&limit=<limit>
+   
+**Response message**
+      
+.. code-block:: sh
+
+    {  "message_ids": [ { "id": <message_Id>, "as2_from": <as2_from>, "as2_to": <as2_to>, "message_box": <message_box>, "timestamp": <timestamp>, "status": <status>} ] }
+
+For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+
+.. _as2-2-0-add-partnership-ws:
+
+Add partnership
+---------------
+
+The AS2 Add Partnership web service is used by the application of the sending and receiving party to create partnership.
+
+.. _as2-2-0-add-partnership-rest:
+
+REST
+````
+
+**Request message**
+
+.. code-block:: sh
+    
+    $ curl -X POST -- data '{"id":"<partnership_id>", "as2_from":"<as2_from>", "as2_to":"<as2_to>", "disabled":<true/false>, "sync_reply": "string", "subject": <subject>, "recipient_address": <recipient_address>, "hostname_verified": <Yes/No>, "receipt_address": <receipt_address>, "receipt_requested": <Yes/No>, "outbound_sign_required": <Yes/No>, "outbound_encrypt_required": <Yes/No>,\
+                             "outbound_compress_required": <Yes/No>, "receipt_sign_required": <Yes/No>, "inbound_sign_required": <Yes/No>, "inbound_encrypt_required": <Yes/No>, "retries": <no_of_retries>, "retry_interval": <retry_interval>, "sign_algorithm": <sha1/md5>, "encrypt_algorithm": <3des/rc2>, "mic_algorithm": <sha1/md5>, "encrypt_certicate": <cert_path>, "verify_certicate": <cert_path> }' \
+      http://<SENDER HOST>:<SENDER PORT>/corvus/api/partnership/as2
+
+**Response message**
+      
+.. code-block:: sh
+
+    {"id":"<partnership_id"}
+
+.. _as2-2-0-delete-partnership-ws:
+
+Delete partnership
+------------------
+
+The AS2 delete Partnership web service is used by the application of the sending and receiving party to delete partnership.
+
+.. _as2-2-0-delete-partnership-rest:
+
+REST
+````
+
+**Request message**
+
+.. code-block:: sh
+    
+    $ curl -X DELETE http://<HOST>:<PORT>/corvus/api/partnership/as2/<partnership_id>
+
+**Response message**
+
+.. code-block:: sh
+
+    {"id":"<partnership_id>", "success": true}
+
+.. _as2-2-0-update-partnership-ws:
+
+Update partnership
+------------------
+
+The ebMS update Partnership web service is used by the application of the sending and receiving party to update partnership.
+
+.. _as2-2-0-update-partnership-rest:
+
+REST
+````
+
+**Request message**
+
+.. code-block:: sh
+    
+    $ curl -X POST -- data '{"id":"<partnership_id>", "as2_from":"<as2_from>", "as2_to":"<as2_to>", "disabled":<true/false>, "sync_reply": "string", "subject": <subject>, "recipient_address": <recipient_address>, "hostname_verified": <Yes/No>, "receipt_address": <receipt_address>, "receipt_requested": <Yes/No>, "outbound_sign_required": <Yes/No>, "outbound_encrypt_required": <Yes/No>,\
+                             "outbound_compress_required": <Yes/No>, "receipt_sign_required": <Yes/No>, "inbound_sign_required": <Yes/No>, "inbound_encrypt_required": <Yes/No>, "retries": <no_of_retries>, "retry_interval": <retry_interval>, "sign_algorithm": <sha1/md5>, "encrypt_algorithm": <3des/rc2>, "mic_algorithm": <sha1/md5>, "encrypt_certicate": <cert_path>, "verify_certicate": <cert_path> }' \
+      http://<SENDER HOST>:<SENDER PORT>/corvus/api/partnership/as2
+
+**Response message**
+      
+.. code-block:: sh
+
+    {"id":"<partnership_id"}
+
+
+.. _as2-2-0-get-partnership-ws:
+
+Get partnerships
+----------------
+
+The AS2 get Partnership web service is used by the application of the sending and receiving party to get all partnership details.
+
+.. _as2-2-0-get-partnerships-rest:
+
+REST
+````
+
+**Request message**
+
+.. code-block:: sh
+    
+    $ curl -X GET http://<HOST>:<PORT>/corvus/api/partnership/as2
+
+**Response message**
+
+.. code-block:: sh
+
+    {"partnerships":[{"id":"<partnership_id>", "as2_from":"<as2_from>", "as2_to":"<as2_to>", "disabled":<true/false>, "sync_reply": "string", "subject": <subject>, "recipient_address": <recipient_address>, "hostname_verified": <Yes/No>, "receipt_address": <receipt_address>, "receipt_requested": <Yes/No>, "outbound_sign_required": <Yes/No>, "outbound_encrypt_required": <Yes/No>,\
+                             "outbound_compress_required": <Yes/No>, "receipt_sign_required": <Yes/No>, "inbound_sign_required": <Yes/No>, "inbound_encrypt_required": <Yes/No>, "retries": <no_of_retries>, "retry_interval": <retry_interval>, "sign_algorithm": <sha1/md5>, "encrypt_algorithm": <3des/rc2>, "mic_algorithm": <sha1/md5>, "encrypt_certicate": <cert_path>, "verify_certicate": <cert_path> } ] }
+
 See also
 --------
 * :doc:`first_step`
