@@ -4,7 +4,7 @@ Installing Hermes
 Introduction
 ------------
 
-The Hermes installer is packaged in the form of a self-extracted java archive (JAR). Upon proper invocation, you will see an installation wizard, either in graphical or text format. Following the steps will install the following components:
+The Hermes installer is packaged in the form of a self-extracted java archive (JAR). Please download the source from `GitHub <https://github.com/cecid/hermes>`_ and build the Hermes Installer by Maven. Otherwise, you may download the JAR file from :download:`hermes2_installer.jar <_static/hermes2_installer.jar>`. Upon proper invocation, you will see an installation wizard, either in graphical or text format. Following the steps will install the following components:
 
 * Hermes core
 * Hermes plugins (AS2 / AS2 Plus / ebMS)
@@ -546,7 +546,7 @@ Before executing the following ebMS web service usage sample, the partnership fr
 Configuration for Sending Secure Message
 """"""""""""""""""""""""""""""""""""""""
 
-To send signed message through HTTPS, we have to configure a trust-store, keystore and certificate separately in Hermes and Tomcat. For details, please refer to the section :ref:`secure_messaging_configuration`.
+To send signed message through HTTPS, we have to configure a trust-store, keystore and certificate separately in Hermes and Tomcat. For details, please refer to the section :ref:`send-message-HTTPS`.
 
 FAQ
 ---
