@@ -23,7 +23,7 @@ One of the core SPAs, called Main Plugin (shown below in the core SPA layer), pr
 In the default Hermes installation, the ebMS 2.0 and AS2 plugins each support the following registered web services in Hermes:
 
 .. csv-table:: ebMS 2.0 Hermes API
-   :header: "Functionality          ", "REST(ebMS)", "SOAP(ebMS)"
+   :header: "Functionality          ", "REST(ebMS) [1]_", "SOAP(ebMS)"
 
    ":ref:`ebms-2-0-send-message-ws`", "POST:corvus/api/message/send/ebms", "/corvus/httpd/ebms/sender"
    ":ref:`ebms-2-0-list-message-ws`", "GET:/corvus/api/message/receive/ebms", "/corvus/httpd/ebms/receiver_list"
@@ -37,7 +37,7 @@ In the default Hermes installation, the ebMS 2.0 and AS2 plugins each support th
    ":ref:`ebms-2-0-get-partnership-ws`", "GET:/corvus/api/partnership/ebms", "NIL"
 
 .. csv-table:: AS2 Hermes API
-   :header: "Functionality          ", "REST(AS2)", "SOAP(AS2)"
+   :header: "Functionality          ", "REST(AS2) [1]_", "SOAP(AS2)"
 
    ":ref:`as2-2-0-send-message-ws`", "POST:/corvus/api/message/send/as2", "/corvus/httpd/as2/sender"
    ":ref:`as2-2-0-list-message-ws`", "GET:/corvus/api/message/receive/as2", "/corvus/httpd/as2/receiver_list"
@@ -164,8 +164,8 @@ As with the SOAP request message, the ``<message_id>`` element is the ``message 
 
 .. _ebms-2-0-sender-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -178,9 +178,6 @@ REST
 .. code-block:: sh
 
     {"id":"<message_id>"}
-
-.. note:: 
-   To try the REST API, the simplest way is to use ``curl`` as a command line REST client, or Postman as a GUI based client is a useful tool too.
 
 For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
 
@@ -266,8 +263,8 @@ Each element in the ``messageIds`` represents the message identifier of an ebMS 
 
 .. _ebms-2-0-list-message-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -344,8 +341,8 @@ If the received ebMS message has payloads, the response message will have one or
 
 .. _ebms-2-0-receiver-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -435,8 +432,8 @@ Descriptions of the elements in the SOAP body are as follows:
 
 .. _ebms-2-0-get-status-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -505,8 +502,8 @@ As with the SOAP request message, the ``<message_id>`` element is the ``message 
 
 .. _ebms-2-0-reset-status-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -605,8 +602,8 @@ Descriptions of the elements in the SOAP body are as follows:
 
 .. _ebms-2-0-query-message-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -631,8 +628,8 @@ The ebMS Add Partnership web service is used by the application of the sending a
 
 .. _ebms-2-0-add-partnership-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -656,8 +653,8 @@ The ebMS delete Partnership web service is used by the application of the sendin
 
 .. _ebms-2-0-delete-partnership-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -680,8 +677,8 @@ The ebMS update Partnership web service is used by the application of the sendin
 
 .. _ebms-2-0-update-partnership-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -706,8 +703,8 @@ The ebMS get Partnership web service is used by the application of the sending a
 
 .. _ebms-2-0-get-partnerships-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -808,8 +805,8 @@ The ``<message_id>`` element is the identifier of the sent message that can be u
 
 .. _as2-2-0-sender-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -897,8 +894,8 @@ Each ``<downloadable_message_id>`` element in the response message represents th
 
 .. _as2-2-0-list-message-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -972,8 +969,8 @@ If the received AS2 message has payloads, the response message will have one or 
 
 .. _as2-2-0-receiver-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -1061,8 +1058,8 @@ Descriptions of the elements in the SOAP body are as follows:
 
 .. _as2-2-0-get-status-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -1155,8 +1152,8 @@ Descriptions of the elements in the SOAP body are as follows:
 
 .. _as2-2-0-query-message-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -1181,8 +1178,8 @@ The AS2 Add Partnership web service is used by the application of the sending an
 
 .. _as2-2-0-add-partnership-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -1207,8 +1204,8 @@ The AS2 delete Partnership web service is used by the application of the sending
 
 .. _as2-2-0-delete-partnership-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -1231,8 +1228,8 @@ The ebMS update Partnership web service is used by the application of the sendin
 
 .. _as2-2-0-update-partnership-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -1258,8 +1255,8 @@ The AS2 get Partnership web service is used by the application of the sending an
 
 .. _as2-2-0-get-partnerships-rest:
 
-REST
-````
+REST [1]_
+``````````
 
 **Request message**
 
@@ -1273,6 +1270,15 @@ REST
 
     {"partnerships":[{"id":"<partnership_id>", "as2_from":"<as2_from>", "as2_to":"<as2_to>", "disabled":<true/false>, "sync_reply": "string", "subject": <subject>, "recipient_address": <recipient_address>, "hostname_verified": <Yes/No>, "receipt_address": <receipt_address>, "receipt_requested": <Yes/No>, "outbound_sign_required": <Yes/No>, "outbound_encrypt_required": <Yes/No>,\
                              "outbound_compress_required": <Yes/No>, "receipt_sign_required": <Yes/No>, "inbound_sign_required": <Yes/No>, "inbound_encrypt_required": <Yes/No>, "retries": <no_of_retries>, "retry_interval": <retry_interval>, "sign_algorithm": <sha1/md5>, "encrypt_algorithm": <3des/rc2>, "mic_algorithm": <sha1/md5>, "encrypt_certicate": <cert_path>, "verify_certicate": <cert_path> } ] }
+
+.. [1]
+.. note:: 
+   * To make an REST API request, the simplest way is to use ``curl`` as a command line REST client, or Postman as a GUI based client is a useful tool too. 
+   * To enhance the security of Hermes REST API, HTTP Basic Authenication is enabled for the Rest API. Please place the base64 encoded username:password in the HTTP Header as below :
+
+     :samp:`HTTP Header:Authorization` = :samp:`basic base64encode[username:pwd]` 
+     
+     where the username and password are defined in :file:`tomcat-users.xml`
 
 See also
 --------

@@ -4,7 +4,7 @@ Installing Hermes
 Introduction
 ------------
 
-The Hermes installer is packaged in the form of a self-extracted java archive (JAR). Please download the source from `GitHub <https://github.com/cecid/hermes>`_ and build the Hermes Installer by Maven. Otherwise, you may download the JAR file from :download:`hermes2_installer.jar <_static/hermes2_installer.jar>`. Upon proper invocation, you will see an installation wizard, either in graphical or text format. Following the steps will install the following components:
+The Hermes installer is packaged in a self-extracted Java archive (JAR). Please download the source code from `GitHub <https://github.com/cecid/hermes>`_ and build the Hermes Installer by Maven. Otherwise, you may download the JAR file from :download:`hermes2_installer.jar <_static/hermes2_installer.jar>`. Upon proper invocation, you will see an installation wizard, either in graphical or text format. Following the steps will install the following components:
 
 * Hermes core
 * Hermes plugins (AS2 / AS2 Plus / ebMS)
@@ -132,13 +132,13 @@ Step 3 – Hermes Deployment
 
    .. image:: /_static/images/3-4-1-hermes-2-0-text-installer.png
 
-   Press :guilabel:`Enter` until you get to Screen (Step1).
+   Press :guilabel:`Enter` until you get to Screen in "2. Step 1 - Configure Hermes Core".
    
    * For Windows, open a command prompt as an Administrator and type ``java –jar hermes2_installer.jar`` or if :program:`java` is not set in your environment path, specify the full path.
 
    .. image:: /_static/images/3-4-1-hermes-2-0-opensource-installer.png
 
-   Click :guilabel:`Next` until you get to Screen (Step 1).
+   Click :guilabel:`Next` until you get to Screen in "2. Step 1 - Configure Hermes Core".
 
 #. Step 1 - Configure Hermes Core
 
