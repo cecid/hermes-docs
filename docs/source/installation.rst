@@ -145,7 +145,7 @@ Step 3 – Hermes Deployment
    .. image:: /_static/images/3-4-1-step-1-configure-hermes-2-core.png
    .. image:: /_static/images/3-4-1-step-1-h2o-installer.png
 
-   Descriptions of the settings:
+   Description of the settings:
 
    +-----------------------------------+---------------------------------------------------------------------+
    | Web Application Folder            | Folder to place the web application (e.g :file:`webapps`) in Tomcat.|
@@ -175,7 +175,7 @@ Step 3 – Hermes Deployment
    .. image:: /_static/images/3-4-1-step-1-1-configure-database-driver.png
    .. image:: /_static/images/3-4-1-step-1-1-h2o-installer.png
 
-   Descriptions of the settings:
+   Description of the settings:
    
    +-----------------------------+----------------------------------------------------+
    | JDBC Driver Folder (.jar)   | Directory of the downloaded JDBC driver.           |
@@ -186,7 +186,7 @@ Step 3 – Hermes Deployment
    .. image:: /_static/images/3-4-1-step-2-configure-database-for-ebms-plugin.png
    .. image:: /_static/images/3-4-1-step-2-h2o-installer.png
 
-   Descriptions of the settings:
+   Description of the settings:
      
    +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
    | Database URL      | The URL address of the database server. Port number may be attached to the address with the format :samp:`{<HOST_ADDRESS>}:{<PORT>}` where            |
@@ -215,7 +215,7 @@ Step 3 – Hermes Deployment
    .. image:: /_static/images/3-4-1-step-3-configure-database-for-as2-plugin.png
    .. image:: /_static/images/3-4-1-step-3-h2o-installer.png
 
-   Descriptions of the settings:
+   Description of the settings:
 
    +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
    | Database URL      | The URL address of the database server. Port number may be attached to the address with the format :samp:`{<HOST_ADDRESS>}:{<PORT>}` where            |
