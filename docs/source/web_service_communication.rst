@@ -3,24 +3,24 @@ Using Hermes API
 
 Introduction
 ------------
-Hermes has implemented web services to communicate with external applications. The main advantages of using web services are reducing coupling between external applications and Hermes, and allowing external applications to integrate Hermes seamlessly using any programming language that supports SOAP or REST Messages with Attachments. This article will help developers to write a client talking to Hermes using web services. 
+Hermes has implemented web services to communicate with external applications. The main advantages of using web services are to reduce coupling between external applications and Hermes, and to allow external applications to integrate Hermes seamlessly using any programming languages that support sending SOAP Messages with Attachments or calling RESTful APIs. This article helps developers  write a client talking to Hermes using web services based on SOAP or RESTful APIs. 
 
 For more information on the installation and partnerships of Hermes, please refer to :doc:`installation` and :doc:`first_step`.
 
-To choose using SOAP or REST API in your application, please refer to `Understanding SOAP and REST Basics and Differences <http://blog.smartbear.com/apis/understanding-soap-and-rest-basics/>`_ for guideline.
+To choose whether to use SOAP or REST APIs in your application, you may refer to `Understanding SOAP and REST Basics and Differences <http://blog.smartbear.com/apis/understanding-soap-and-rest-basics/>`_ for guidance.
 
 .. image:: /_static/images/web_service/h2o-ws-pl-free.png
 
 Overview
 --------
 
-Here is a brief summary about the communication port architecture between Hermes and external applications. The core of Hermes can attach to any J2EE compliant web server as a kind of servlet. The core itself does not provide any web services or HTTP listeners, nor does it have any functionality related to messaging. All features in Hermes are derived from the core using SPA (simple plugin architecture).
+Here is a brief summary about the communication architecture between Hermes and external applications. The core of Hermes can attach to any J2EE compliant web server as a servlet. The core itself provides neither any web services or HTTP listeners, nor any functionality related to messaging. All features in Hermes are derived from the core using SPA (Simple Plugin Architecture).
 
 One of the core SPAs, called Main Plugin (shown below in the core SPA layer), provides an HTTP context listener that accepts HTTP requests at the specified context path (extension point) for external invocation. The protocol-specific SPA ebMS and AS2 plugins (shown below in the external SPA layer) make use of this listener to provide all SOAP and REST web services.
 
 .. image:: /_static/images/web_service/ws-archtecture.png
 
-In the default Hermes installation, the ebMS 2.0 and AS2 plugins each support the following registered web services in Hermes:
+In the default Hermes installation, each of ebMS 2.0 and AS2 plugins supports the following registered web services in Hermes:
 
 .. csv-table:: ebMS 2.0 Hermes API
    :header: "Functionality          ", "REST(ebMS) [1]_", "SOAP(ebMS)"
