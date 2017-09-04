@@ -10,7 +10,7 @@ Sign and Verify Message
 
 In order to store a private key for message signing, a keystore is needed. Under current implementation, only PKCS12 keystore is supported. If Hermes was installed using the installer, there are keystore files placed in the folder called :file:`security` under both ebMS and AS2/AS2 Plus plugins.
 
-To enable message signing, please configure the plugin with a corresponding keystore. A default keystore setting can be set through the installer or you can create a new customized keystore. To learn more about generating a keystore, please refer to :ref:`generate-cert`.
+To enable message signing, you need to configure the plugin with a corresponding keystore. You can set the default keystore settings when running the installer or you can create a new customized keystore. To learn more about generating a keystore, please refer to :ref:`generate-cert`.
 
 Sender configuration
 ^^^^^^^^^^^^^^^^^^^^
@@ -44,7 +44,7 @@ Open the configuration file named :file:`ebms.module.xml` that is placed in the 
 
     <component id="keystore-manager-for-signature"
                name="Key Store Manager for Digital Signature">
-      <class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
+        <class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
         <parameter name="keystore-location"
                    value="/corvus/plugins/hk.hku.cecid.ebms/security/corvus.p12" />
         <parameter name="keystore-password" value="password" />
@@ -63,14 +63,14 @@ Open the configuration file named :file:`as2.module.core.xml` that is placed in 
   .. code-block:: xml
 
     <component id="keystore-manager" name=" AS2 Key Store Manager">
-      <class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
-      <parameter name="keystore-location" value="corvus.p12" />
-      <parameter name="keystore-password" value="password" />
-      <parameter name="key-alias" value="corvus" />
-      <parameter name="key-password" value="password" />
-      <parameter name="keystore-type" value="PKCS12" />
-      <parameter name="keystore-provider"
-                 value="org.bouncycastle.jce.provider.BouncyCastleProvider" />
+        <class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
+        <parameter name="keystore-location" value="corvus.p12" />
+        <parameter name="keystore-password" value="password" />
+        <parameter name="key-alias" value="corvus" />
+        <parameter name="key-password" value="password" />
+        <parameter name="keystore-type" value="PKCS12" />
+        <parameter name="keystore-provider" 
+                   value="org.bouncycastle.jce.provider.BouncyCastleProvider" />
     </component>
 
 Receiver configuration
@@ -323,7 +323,6 @@ Signature algorithm (``sigalg``)
 |                  | SHA-1 digest algorithm and DSA to create and verify DSA       |
 |             	   | digital signatures as defined in FIPS PUB 186.                |
 +------------------+---------------------------------------------------------------+
-
 
 Parameter combinations
 ^^^^^^^^^^^^^^^^^^^^^^
