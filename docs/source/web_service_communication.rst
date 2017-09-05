@@ -43,7 +43,6 @@ In the default Hermes installation, each of ebMS 2.0 and AS2 plugins supports th
    ":ref:`as2-2-0-list-message-ws`", "GET:/corvus/api/message/receive/as2", "/corvus/httpd/as2/receiver_list"
    ":ref:`as2-2-0-receiver-ws`", "POST:/corvus/api/message/receive/as2", "/corvus/httpd/as2/receiver"
    ":ref:`as2-2-0-get-status-ws`", "GET:/corvus/api/message/send/as2", "/corvus/httpd/as2/status"
-   "Reset message status", "NIL", "NIL"
    ":ref:`as2-2-0-query-message-ws`", "GET:/corvus/api/message/history/as2", "/corvus/httpd/as2/msg_history"
    ":ref:`as2-2-0-add-partnership-ws`", "POST:/corvus/api/partnership/as2", "NIL"
    ":ref:`as2-2-0-delete-partnership-ws`", "DELETE /corvus/api/partnership/as2/{pid}", "NIL"
