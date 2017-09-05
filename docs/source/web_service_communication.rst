@@ -141,7 +141,7 @@ Descriptions of the elements in the SOAP body are as follows:
 
 **Response message**
 
-The elements inside the SOAP body ueses namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
+The elements inside the SOAP body uses namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
 
 A sample SOAP response is shown below:
 
@@ -257,6 +257,8 @@ A sample SOAP response is shown below:
 
 Each element in the ``messageIds`` represents the message identifier of an ebMS message received by Hermes.
 
+Please note that a message is considered to be downloaded only when the message body has been downloaded by :ref:`ebms-2-0-receiver-ws` SOAP web service. If your application never calls :ref:`ebms-2-0-receiver-ws` SOAP web service to download the messages, the same set of message identifiers will always be retrieved.
+
 .. _ebms-2-0-list-message-rest:
 
 REST [1]_
@@ -282,8 +284,7 @@ REST [1]_
         ]
     }
 
-
-Please note that a message is considered to be downloaded only when the message body has been downloaded by :ref:`ebms-2-0-receiver-ws` web service. If your application never calls :ref:`ebms-2-0-receiver-ws` web service to download the messages, the same set of message identifiers will always be retrieved.
+Please note that a message is considered to be downloaded when the message id is returned by this REST API call.
 
 For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
 
@@ -339,6 +340,8 @@ A sample SOAP response is shown below:
 
 If a payload is associated with the message identifier, the ``<hasMessage>`` element will have the value ``true``.
 If the received ebMS message has payloads, the response message will have one or more SOAP attachments. Each SOAP attachment has a content type, which is set by the sending application. 
+
+Please note that a message is considered to be downloaded when the message is returned by this SOAP request.
 
 .. _ebms-2-0-receiver-rest:
 
@@ -934,6 +937,8 @@ A sample SOAP response is shown below:
 
 Each ``<downloadable_message_id>`` element in the response message represents the identifier of an AS2 message received by Hermes.
 
+Please note that a message is considered to be downloaded only when the message body has been downloaded by :ref:`as2-2-0-receiver-ws` SOAP web service. If your application never calls :ref:`as2-2-0-receiver-ws` SOAP web service to download the messages, the same set of message identifiers will always be retrieved.
+
 .. _as2-2-0-list-message-rest:
 
 REST [1]_
@@ -959,7 +964,7 @@ REST [1]_
         ]
     }
 
-Note that a message is considered to be downloaded only when the message body has been downloaded by :ref:`as2-2-0-receiver-ws` web service. If your application never calls the :ref:`as2-2-0-receiver-ws` web service to download the messages, the same set of message identifiers will always be retrieved.
+Please note that a message is considered to be downloaded when the message id is returned by this REST API call.
 
 For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
 
@@ -1012,6 +1017,8 @@ A sample SOAP response is shown below:
 
 If a payload is associated with the message identifier, then ``<hasMessage>`` will have the value ``true``.
 If the received AS2 message has payloads, the response message will have one or more SOAP attachments. Each SOAP attachment has a content type, which is set by the sender application. 
+
+Please note that a message is considered to be downloaded when the message is returned by this SOAP request.
 
 .. _as2-2-0-receiver-rest:
 
@@ -1169,7 +1176,7 @@ A sample SOAP request is shown below:
 
 **Response message**
 
-The element ``<messageList>`` in the SOAP body use the namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
+The element ``<messageList>`` in the SOAP body uses the namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
 
 A sample SOAP response is shown below:
 
