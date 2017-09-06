@@ -96,7 +96,7 @@ A sample SOAP request is shown below.
     </SOAP-ENV:Envelope>
     <!-- Attached payloads... -->
 
-Descriptions of the elements in the SOAP body are as follows:
+The descriptions of the elements in the SOAP body are as follows:
 
 +--------------------------+-----------+----------------------------------------------------------------------------------------------+
 | Element                  | Mandatory | Description                                                                                  |
@@ -212,7 +212,7 @@ A sample SOAP request is shown below:
         </SOAP-ENV:Body>
     </SOAP-ENV:Envelope>
 
-Descriptions of the elements in the SOAP body are as follows:
+The descriptions of the elements in the SOAP body are as follows:
 
 +-------------------------+-----------+---------------------------------------------------------------------------------------------------+
 | Element                 | Mandatory | Description                                                                                       |
@@ -430,7 +430,7 @@ A sample SOAP response is shown below:
         </SOAP-ENV:Body>
     </SOAP-ENV:Envelope>
 
-Descriptions of the elements in the SOAP body are as follows:
+The descriptions of the elements in the SOAP body are as follows:
 
 +-----------------------------------+--------------------------------------------------------------------+
 | Element                           | Description                                                        |
@@ -577,7 +577,7 @@ A sample SOAP request is shown below:
 
 **Response message**
 
-The element ``<messageList>`` inside the SOAP body use the namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
+The element ``<messageList>`` inside the SOAP body uses the namespace URI ``http://service.ebms.edi.cecid.hku.hk/``.
 
 A sample SOAP response is shown below:
 
@@ -601,7 +601,7 @@ A sample SOAP response is shown below:
         </SOAP-ENV:Body>
     </SOAP-ENV:Envelope>
 
-Descriptions of the elements in the SOAP body are as follows:
+The descriptions of the elements in the SOAP body are as follows:
 
 +--------------------------+----------------------------------------------------------------------------------------------+
 | Element                  | Description                                                                                  |
@@ -810,7 +810,7 @@ A sample SOAP request is shown below:
     </SOAP-ENV:Envelope>
     <!-- Attached payloads... -->
 
-Descriptions of the elements in the SOAP body are as follows:
+The descriptions of the elements in the SOAP body are as follows:
 
 +----------------------+-----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Element              | Mandatory | Description                                                                                                                                               |
@@ -903,7 +903,7 @@ A sample SOAP request is shown below:
         </SOAP-ENV:Body>
     </SOAP-ENV:Envelope>
 
-Descriptions of the elements in the SOAP body are as follows:
+The descriptions of the elements in the SOAP body are as follows:
 
 +-------------------------+-----------+---------------------------------------------------------------------------------------------+
 | Element                 | Mandatory | Description                                                                                 |
@@ -985,7 +985,7 @@ Service endpoint: :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/as2/receiver.`
 
 **Request message**
 
-The elements in the SOAP body the namespace URI ``http://service.as2.edi.cecid.hku.hk/`` and namespace prefix ``tns``.
+The elements in the SOAP body use the namespace URI ``http://service.as2.edi.cecid.hku.hk/``.
 
 A sample SOAP request is shown below:
 
@@ -1100,7 +1100,7 @@ A sample SOAP response is shown below:
     </SOAP-ENV:Envelope>
 
 
-Descriptions of the elements in the SOAP body are as follows:
+The descriptions of the elements in the SOAP body are as follows:
 
 +--------------------------------+------------------------------------------------------------+
 | Element                        | Description                                                |
@@ -1199,7 +1199,7 @@ A sample SOAP response is shown below:
         </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-Descriptions of the elements in the SOAP body are as follows:
+The descriptions of the elements in the SOAP body are as follows:
 
 +--------------------------+----------------------------------------------------------------------------------------------------+
 | Element                  | Description                                                                                        |
