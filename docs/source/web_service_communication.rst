@@ -1383,10 +1383,33 @@ REST [1]_
 .. note:: 
    * To make an REST API request, the simplest way is to use ``curl`` as a command line REST client, or Postman as a GUI based client is a useful tool too. 
    * To enhance the security of Hermes REST API, HTTP Basic Authenication is enabled for the Rest API. Please place the base64 encoded username:password in the HTTP Header as below :
+     :samp:`HTTP Header:Authorization` = :samp:`basic base64encode[username:pwd]` where the username and pwd are defined in :file:`tomcat-users.xml`
 
-     :samp:`HTTP Header:Authorization` = :samp:`basic base64encode[username:pwd]` 
-     
-     where the username and password are defined in :file:`tomcat-users.xml`
+   * If error occurs when processing REST API request, it will return an error JSON response.
+
+     .. code-block:: json
+
+        {
+            "code": "<error code>",
+            "message": "<error description>"
+        }
+ 
+    .. csv-table:: Error code and message
+       :header: "Error code          ", "Error Message"
+
+       "10000", "ERROR_UNKNOWN"
+       "10001", "ERROR_MISSING_REQUIRED_PARAMETER"
+       "10002", "ERROR_PROTOCOL_UNSUPPORTED"
+       "10003", "ERROR_READING_DATABASE"
+       "10004", "ERROR_WRITING_DATABASE"
+       "10005", "ERROR_READING_REQUEST"
+       "10006", "ERROR_PARSING_REQUEST"
+       "10007", "ERROR_RECORD_ALREADY_EXIST"
+       "10008", "ERROR_DATA_NOT_FOUND"
+       "10009", "ERROR_WRITING_MESSAGE"
+       "10010", "ERROR_SENDING_MESSAGE"
+       "10011", "ERROR_EXTRACTING_PAYLOAD_FROM_MESSAGE"
+       "10012", "ERROR_UNKNOWN_ACTION"
 
 See also
 --------
