@@ -49,6 +49,11 @@ In the default Hermes installation, each of ebMS 2.0 and AS2 plugins supports th
    ":ref:`as2-2-0-update-partnership-ws`", "POST:/corvus/api/partnership/as2", "NIL"
    ":ref:`as2-2-0-get-partnership-ws`", "GET:/corvus/api/partnership/as2", "NIL"
 
+.. note:: 
+   * To make an REST API request, the simplest way is to use ``curl`` as a command line REST client, or Postman as a GUI based client is a useful tool too. 
+   * To enhance the security of Hermes REST API, HTTP Basic Authenication is enabled for the Rest API. Please place the base64 encoded username:password in the HTTP Header as below :
+     :samp:`HTTP Header:Authorization` = :samp:`basic base64encode[username:pwd]` where the username and pwd are defined in :file:`tomcat-users.xml`
+
 .. _ebms-2-0-web-service:
 
 ebMS 2.0 Web Service
@@ -1381,9 +1386,6 @@ REST [1]_
 
 .. [1]
 .. note:: 
-   * To make an REST API request, the simplest way is to use ``curl`` as a command line REST client, or Postman as a GUI based client is a useful tool too. 
-   * To enhance the security of Hermes REST API, HTTP Basic Authenication is enabled for the Rest API. Please place the base64 encoded username:password in the HTTP Header as below :
-     :samp:`HTTP Header:Authorization` = :samp:`basic base64encode[username:pwd]` where the username and pwd are defined in :file:`tomcat-users.xml`
 
    * If error occurs when processing REST API request, it will return an error JSON response.
 
