@@ -341,7 +341,7 @@ Hermes plugin properties
 
 AS2 plugin
 ^^^^^^^^^^
-In the directory :file:`{<HERMES_2_PLUGINS_LOCATION>}/hk.hku.cecid.edi.as2/conf/hk/hku/cecid/edi/as2/conf`, there are some configuration files for Hermes's AS2 plugin. Which configuration file you should edit depends on the property:
+In the directory :file:`{<HERMES_2_PLUGINS_LOCATION>}/corvus-as2/conf/hk/hku/cecid/edi/as2/conf`, there are some configuration files for Hermes's AS2 plugin. Which configuration file you should edit depends on the property:
 
 
 +----------------------------------------------------+----------------------------------------+
@@ -361,24 +361,24 @@ Log file location and level of logging
 """"""""""""""""""""""""""""""""""""""
 To change the location of the log file, you will need to modify the XML file named :file:`as2.log.properties.xml`.
 
-    .. code-block:: xml
+.. code-block:: xml
 
-       <log4j:configuration debug="null" threshold="null" xmlns:log4j="http://jakarta.apache.org/log4j/">
-       <appender name="as2" class="org.apache.log4j.RollingFileAppender">     
-         <param name="File" value="/as2.log"/>     
-         <param name="Encoding" value="UTF-8"/>     
-         <param name="MaxFileSize" value="100KB"/>     
-         <param name="MaxBackupIndex" value="1"/>     
-         <layout class="org.apache.log4j.PatternLayout">       
-         <param name="ConversionPattern" 
-                value="%d{yyyy-MM-dd HH:mm:ss} [%-12.12t] &lt;%-5p&gt; &lt;%m&gt;%n"/>     
-         </layout>  
-       </appender>
-       <category additivity="true" name="hk.hku.cecid.piazza">
-         <priority value="debug"/>
-         <appender-ref ref="as2"/>
-       </category>
-       </log4j:configuration>
+   <log4j:configuration debug="null" threshold="null" xmlns:log4j="http://jakarta.apache.org/log4j/">
+   <appender name="as2" class="org.apache.log4j.RollingFileAppender">     
+     <param name="File" value="/as2.log"/>     
+     <param name="Encoding" value="UTF-8"/>     
+     <param name="MaxFileSize" value="100KB"/>     
+     <param name="MaxBackupIndex" value="1"/>     
+     <layout class="org.apache.log4j.PatternLayout">       
+     <param name="ConversionPattern" 
+           value="%d{yyyy-MM-dd HH:mm:ss} [%-12.12t] &lt;%-5p&gt; &lt;%m&gt;%n"/>     
+     </layout>  
+   </appender>
+   <category additivity="true" name="hk.hku.cecid.edi.as2">
+     <priority value="debug"/>
+     <appender-ref ref="as2"/>
+   </category>
+   </log4j:configuration>
 
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
 | XPath                                                                  | Expected information                                            | 
@@ -520,10 +520,10 @@ Location of keystore for signing outgoing messages
     ...
     <component id="keystore-manager" name="AS2 Key Store Manager">
       <class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
-      <parameter name="keystore-location" value="as2.p12"/>
+      <parameter name="keystore-location" value="corvus.p12"/>
       <parameter name="keystore-password" value="password"/>
-      <parameter name="key-alias" value="corvusas2"/>
-      <parameter name="key-password" value=""/>
+      <parameter name="key-alias" value="corvus"/>
+      <parameter name="key-password" value="password"/>
       <parameter name="keystore-type" value="PKCS12"/>
       <parameter name="keystore-provider" 
                  value="org.bouncycastle.jce.provider.BouncyCastleProvider"/>
@@ -531,25 +531,25 @@ Location of keystore for signing outgoing messages
     ...
     </module>
 
-+-----------------------------------------------------------------------------------------------+--------------------------------------+
-| XPath                                                                                         | Expected information                 |
-+===============================================================================================+======================================+
-| ``/module/component[@id='keystore-manager']/parameter[@name='keystore-location']/@value``     | The path of the keystore for         |
-|                                                                                               | signing outgoing messages.           |
-+-----------------------------------------------------------------------------------------------+--------------------------------------+
-| ``/module/component[@id='keystore-manager']/parameter[@name='keystore-password']/@value``     | The password for accessing the       |
-|                                                                                               | keystore.                            |
-+-----------------------------------------------------------------------------------------------+--------------------------------------+
-| ``/module/component[@id='keystore-manager]/parameter[@name='key-alias']/@value``              | The alias of the private key         |
-|                                                                                               | for a digital signature.             |
-+-----------------------------------------------------------------------------------------------+--------------------------------------+
-| ``/module/component[@id='keystore-manager]/parameter[@name='key-password']/@value``           | The password protecting the          |
-|                                                                                               | private key for a digital signature. |
-+-----------------------------------------------------------------------------------------------+--------------------------------------+
-| ``/module/component[@id='keystore-manager]/parameter[@name='keystore-type']/@value``          | The keystore format.                 |
-|                                                                                               | It is either ``PKCS12`` or           |
-|                                                                                               | ``JKS``.                             |
-+-----------------------------------------------------------------------------------------------+--------------------------------------+
++-------------------------------------------------------------------------------------------+--------------------------------------------------+
+| XPath                                                                                     | Expected information                             |
++===========================================================================================+==================================================+
+| ``/module/component[@id='keystore-manager']/parameter[@name='keystore-location']/@value`` | The path of the keystore for                     |
+|                                                                                           | signing outgoing messages.                       |
++-------------------------------------------------------------------------------------------+--------------------------------------------------+
+| ``/module/component[@id='keystore-manager']/parameter[@name='keystore-password']/@value`` | The password for accessing the                   |
+|                                                                                           | keystore.                                        |
++-------------------------------------------------------------------------------------------+--------------------------------------------------+
+| ``/module/component[@id='keystore-manager]/parameter[@name='key-alias']/@value``          | The alias of the private key                     |
+|                                                                                           | for a digital signature.                         |
++-------------------------------------------------------------------------------------------+--------------------------------------------------+
+| ``/module/component[@id='keystore-manager]/parameter[@name='key-password']/@value``       | The password protecting the                      |
+|                                                                                           | private key for a digital signature.             |
++-------------------------------------------------------------------------------------------+--------------------------------------------------+
+| ``/module/component[@id='keystore-manager]/parameter[@name='keystore-type']/@value``      | The keystore format.                             |
+|                                                                                           | It is either ``PKCS12`` or                       |
+|                                                                                           | ``JKS``.                                         |
++-------------------------------------------------------------------------------------------+--------------------------------------------------+
 
 Location of the message repository
 """"""""""""""""""""""""""""""""""
@@ -620,7 +620,7 @@ Outgoing Repository:
 |                                                                   | You should just leave it as is.                                     |
 +-------------------------------------------------------------------+---------------------------------------------------------------------+
 | ``/module/component[id='outgoing-payload-repository']/``          | The directory that will store the outgoing payload. E.g.,           |
-| ``parameter[@name='location']/@value``                            | :file:`c:\program files\hermes2\repository\as2-incoming-repository` |
+| ``parameter[@name='location']/@value``                            | :file:`c:/program files/hermes2/repository/as2-incoming-repository` |
 +-------------------------------------------------------------------+---------------------------------------------------------------------+
 | ``/module/component[id='outgoing-payload-repository']/``          | You should leave these fields as is.                                |
 | ``parameter[@name='type-edi']/@value``                            |                                                                     |
@@ -660,7 +660,7 @@ Original Message Repository (a temporary message repository used when Hermes is 
 |                                                                   | You should just leave it as is.                                      |
 +-------------------------------------------------------------------+----------------------------------------------------------------------+
 | ``/module/component[id='original-payload-repository']/``          | The directory that will store outgoing payloads. E.g.,               |
-| ``parameter[@name='location']/@value``                            | :file:`c:\program files\hermes2\repository\as2-message-repository`   |
+| ``parameter[@name='location']/@value``                            | :file:`c:/program files/hermes2/repository/as2-message-repository`   |
 +-------------------------------------------------------------------+----------------------------------------------------------------------+
 | ``/module/component[id='original-payload-repository']/``          | This flag indicates if the original message should be stored locally.|
 | ``parameter[@name='is-disabled']/@value``                         |                                                                      |
@@ -669,12 +669,12 @@ Original Message Repository (a temporary message repository used when Hermes is 
 
 ebMS plugin
 ^^^^^^^^^^^
-In the directory :file:`{<HERMES_2_PLUGINS_LOCATION>}/hk.hku.cecid.ebms/conf/hk/hku/cecid/ebms/spa/conf`, there are some configuration files for Hermes's ebMS plugin. The configuration file you should edit depends on the property:
+In the directory :file:`{<HERMES_2_PLUGINS_LOCATION>}/corvus-ebms/conf/hk/hku/cecid/ebms/spa/conf`, there are some configuration files for Hermes's ebMS plugin. The configuration file you should edit depends on the property:
 
 +------------------------------------------------------------------+----------------------------------------+
 | Properties                                                       | Configuration file                     |
 +==================================================================+========================================+
-| Log file location and level of logging                           | :file:`ebms.log.properties.xml`        |
+| Log file location and level of logging                           | :file:`log4j.properties.xml`           |
 +------------------------------------------------------------------+----------------------------------------+
 | Connections to message database                                  | :file:`ebms.module.xml`                |
 +------------------------------------------------------------------+                                        |
@@ -686,24 +686,24 @@ In the directory :file:`{<HERMES_2_PLUGINS_LOCATION>}/hk.hku.cecid.ebms/conf/hk/
 
 Log file location and level of logging
 """"""""""""""""""""""""""""""""""""""
-To change the location of the log file, you will need to modify the XML file named :file:`ebms.log.properties.xml`
+To change the location of the log file, you will need to modify the XML file named :file:`log4j.properties.xml`
 
 .. code-block:: xml
 
    <log4j:configuration debug="null" threshold="null" xmlns:log4j="http://jakarta.apache.org/log4j/">
-   <appender name="RollingFileAppender" class="org.apache.log4j.RollingFileAppender">     
-     <param name="File" value="/as2.log"/>     
-     <param name="Encoding" value="UTF-8"/>     
-     <param name="MaxFileSize" value="100KB"/>     
-     <param name="MaxBackupIndex" value="1"/>     
-     <layout class="org.apache.log4j.PatternLayout">       
-     <param name="ConversionPattern" 
-            value="%d{yyyy-MM-dd HH:mm:ss} [%-12.12t] &lt;%-5p&gt; &lt;%m&gt;%n"/>     
-     </layout>  
-   </appender>
-   <category additivity="true" name="hk.hku.cecid.piazza">
+     <appender name="ebms" class="org.apache.log4j.RollingFileAppender">
+       <param name="File" value="/ebms.log"/>
+       <param name="Encoding" value="UTF-8"/>
+       <param name="MaxFileSize" value="100KB"/>
+       <param name="MaxBackupIndex" value="1"/>
+       <layout class="org.apache.log4j.PatternLayout">
+         <param name="ConversionPattern"
+             value="%d{yyyy-MM-dd HH:mm:ss} [%-12.12t] &lt;%-5p&gt; &lt;%m&gt;%n"/>
+       </layout>
+     </appender>
+     <category additivity="true" name="hk.hku.cecid.ebms">
        <priority value="debug"/>
-       <appender-ref ref="RollingFileAppender"/>
+       <appender-ref ref="ebms"/>
      </category>
    </log4j:configuration>
 
@@ -765,22 +765,18 @@ Connection to message database
      hk.hku.cecid.piazza.commons.dao.ds.SimpleDSDAOFactory
      </class>
      <parameter name="driver" value="org.postgresql.Driver" />
-     <parameter name="url" 
-                value="jdbc:postgresql://localhost:5432/ebms" />
+     <parameter name="url" value="jdbc:postgresql://localhost:5432/ebms" />
      <parameter name="username" value="corvus" />
      <parameter name="password" value="corvus" />
      <parameter name="pooling" value="true" />
-     <parameter name="maxActive" value="20" />
+     <parameter name="maxActive" value="30" />
      <parameter name="maxIdle" value="10" />
      <parameter name="maxWait" value="-1" />
-     <parameter name="config">
-             hk/hku/cecid/ebms/spa/conf/DAOMessage.xml,
-             hk/hku/cecid/ebms/spa/conf/DAORepository.xml,
-             hk/hku/cecid/ebms/spa/conf/DAOOutbox.xml,
-             hk/hku/cecid/ebms/spa/conf/DAOInbox.xml,
-             hk/hku/cecid/ebms/spa/conf/DAOMessageServer.xml,
-             hk/hku/cecid/ebms/spa/conf/DAOPartnership.xml
-      </parameter>
+     <parameter name="testOnBorrow" value="true" />
+     <parameter name="testOnReturn" value="false" />
+     <parameter name="testWhileIdle" value="false" />
+     <parameter name="validationQuery" value="SELECT now()" />     
+     <parameter name="config">hk/hku/cecid/ebms/spa/conf/ebms.dao.xml</parameter>
    </component>
    ...
    </module>
@@ -828,6 +824,22 @@ Connection to message database
 | ``parameter[@name='maxWait']/@value``             | available connections) for a connection to be returned before throwing an                      |
 |                                                   | exception, or ``-1`` to wait indefinitely.                                                     |
 +---------------------------------------------------+------------------------------------------------------------------------------------------------+
+| ``/module/component[@id='daofactory']/``          | Parameter used by system during testing, please keep it unchanged                              |
+| ``parameter[@name='testOnBorrow']/@value``        |                                                                                                |
+|                                                   |                                                                                                |
++---------------------------------------------------+------------------------------------------------------------------------------------------------+
+| ``/module/component[@id='daofactory']/``          | Parameter used by system during testing, please keep it unchanged                              |
+| ``parameter[@name='testOnReturn']/@value``        |                                                                                                |
+|                                                   |                                                                                                |
++---------------------------------------------------+------------------------------------------------------------------------------------------------+
+| ``/module/component[@id='daofactory']/``          | Parameter used by system during testing, please keep it unchanged                              |
+| ``parameter[@name='tesWhileIdle']/@value``        |                                                                                                |
+|                                                   |                                                                                                |
++---------------------------------------------------+------------------------------------------------------------------------------------------------+
+| ``/module/component[@id='daofactory']/``          | Parameter used by system during testing, please keep it unchanged                              |
+| ``parameter[@name='validateQuery']/@value``       |                                                                                                |
+|                                                   |                                                                                                |
++---------------------------------------------------+------------------------------------------------------------------------------------------------+
 | ``/module/component[@id='daofactory']/``          | Additional configuration files that will be used by the plugin. You should just                |
 | ``parameter[@name='config']/@value``              | leave it as is.                                                                                |
 +---------------------------------------------------+------------------------------------------------------------------------------------------------+
@@ -844,11 +856,11 @@ Location of keystore for signing outgoing messages
 
    <module id="ebms.main" name="Ebms Plugin" version="1.0">
    ...
-   <component id="keystore-manager" name="Key Store Manager for Digital Signature">
+   <component id="keystore-manager-for-signature" name="Key Store Manager for Digital Signature">
      <class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
-     <parameter name="keystore-location" value="ebms.p12"/>
+     <parameter name="keystore-location" value="corvus.p12"/>
      <parameter name="keystore-password" value="password"/>
-     <parameter name="key-alias" value="CorvusEbMS"/>
+     <parameter name="key-alias" value="corvus"/>
      <parameter name="key-password" value="password"/>
      <parameter name="keystore-type" value="PKCS12"/>
      <parameter name="keystore-provider" 
@@ -857,25 +869,25 @@ Location of keystore for signing outgoing messages
    ...
    </module>
 
-+-----------------------------------------------------------------------------------------------+--------------------------------------+
-| XPath                                                                                         | Expected information                 |
-+===============================================================================================+======================================+
-| ``/module/component[@id='keystore-manager']/parameter[@name='keystore-location']/@value``     | The path of the keystore for         |
-|                                                                                               | signing outgoing messages.           |
-+-----------------------------------------------------------------------------------------------+--------------------------------------+
-| ``/module/component[@id='keystore-manager']/parameter[@name='keystore-password']/@value``     | The password for accessing the       |
-|                                                                                               | keystore.                            |
-+-----------------------------------------------------------------------------------------------+--------------------------------------+
-| ``/module/component[@id='keystore-manager]/parameter[@name='key-alias']/@value``              | The alias of the private key for     |
-|                                                                                               | digital signature.                   |
-+-----------------------------------------------------------------------------------------------+--------------------------------------+
-| ``/module/component[@id='keystore-manager]/parameter[@name='key-password']/@value``           | The password protecting the private  |
-|                                                                                               | key for digital signature.           |
-+-----------------------------------------------------------------------------------------------+--------------------------------------+
-| ``/module/component[@id='keystore-manager]/parameter[@name='keystore-type']/@value``          | The keystore format.                 |
-|                                                                                               | It is either ``PKCS12`` or           |
-|                                                                                               | ``JKS``.                             |
-+-----------------------------------------------------------------------------------------------+--------------------------------------+
++--------------------------------------------------------------------------------+------------------------------------------------+
+| XPath                                                                          | Expected information                           |
++================================================================================+================================================+
+| ``/module/component[@id='keystore-manager-for-signature']/``                   | The path of the keystore for                   |
+| ``parameter[@name='keystore-location']/@value``                                | signing outgoing messages.                     |
++--------------------------------------------------------------------------------+------------------------------------------------+
+| ``/module/component[@id='keystore-manager-for-signature']/``                   | The password for accessing the                 |
+| ``parameter[@name='keystore-password']/@value``                                | keystore.                                      |
++--------------------------------------------------------------------------------+------------------------------------------------+
+| ``/module/component[@id='keystore-manager-for-signature']/``                   | The alias of the private key for               |
+| ``parameter[@name='key-alias']/@value``                                        | digital signature.                             |
++--------------------------------------------------------------------------------+------------------------------------------------+
+| ``/module/component[@id='keystore-manager-for-signature']/``                   | The password protecting the private            |
+| ``parameter[@name='key-password']/@value``                                     | key for digital signature.                     |
++--------------------------------------------------------------------------------+------------------------------------------------+
+| ``/module/component[@id='keystore-manager-for-signature']/``                   | The keystore format.                           |
+| ``parameter[@name='keystore-type']/@value``                                    | It is either ``PKCS12`` or                     |
+|                                                                                | ``JKS``.                                       |
++--------------------------------------------------------------------------------+------------------------------------------------+
 
 Location of keystore for S/MIME decryption (incoming messages)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -884,12 +896,11 @@ Location of keystore for S/MIME decryption (incoming messages)
 
    <module id="ebms.main" name="Ebms Plugin" version="1.0">
    ...
-     <component id="keystore-manager-for-decryption" name="Key Store Manager for Decryption">
+     <component id="keystore-manager-for-decryption" name="Key Store Manager for Decryption (ebMS over SMTP)">
        <class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
-       <parameter name="keystore-location" 
-                  value="C:/Program Files/hermes2_ee/plugins/hk.hku.cecid.ebms/security/ebms.p12"/>
+       <parameter name="keystore-location" value="corvus.p12"/>
        <parameter name="keystore-password" value="password"/>
-       <parameter name="key-alias" value="CorvusEbMS"/>
+       <parameter name="key-alias" value="corvus"/>
        <parameter name="key-password" value="password"/>
        <parameter name="keystore-type" value="PKCS12"/>
        <parameter name="keystore-provider" value="org.bouncycastle.jce.provider.BouncyCastleProvider"/>
@@ -898,26 +909,26 @@ Location of keystore for S/MIME decryption (incoming messages)
    </module>
 
 
-+-----------------------------------------------------------------------------------------------+-----------------------------------------+
-| XPath                                                                                         | Expected information                    |
-+===============================================================================================+=========================================+
-| ``/module/component[@id='keystore-manager']/parameter[@name='keystore-location']/@value``     | The path of the keystore for decrypting |
-|                                                                                               | incoming messages with S/MIME           |
-|                                                                                               | encryption.                             |
-+-----------------------------------------------------------------------------------------------+-----------------------------------------+
-| ``/module/component[@id='keystore-manager']/parameter[@name='keystore-password']/@value``     | The password for accessing the keystore.|
-|                                                                                               |                                         |
-+-----------------------------------------------------------------------------------------------+-----------------------------------------+
-| ``/module/component[@id='keystore-manager]/parameter[@name='key-alias']/@value``              | The alias of the private key for the    |
-|                                                                                               | decryption.                             |
-+-----------------------------------------------------------------------------------------------+-----------------------------------------+
-| ``/module/component[@id='keystore-manager]/parameter[@name='key-password']/@value``           | The password protecting the private key |
-|                                                                                               | for digital signatures.                 |
-+-----------------------------------------------------------------------------------------------+-----------------------------------------+
-| ``/module/component[@id='keystore-manager]/parameter[@name='keystore-type']/@value``          | The keystore format.                    |
-|                                                                                               | It is either ``PKCS12`` or              |
-|                                                                                               | ``JKS``.                                |
-+-----------------------------------------------------------------------------------------------+-----------------------------------------+
++-------------------------------------------------------------------------------+-----------------------------------------------------+
+| XPath                                                                         | Expected information                                |
++===============================================================================+=====================================================+
+| ``/module/component[@id='keystore-manager-for-decryption']/``                 | The path of the keystore for decrypting             |
+| ``parameter[@name='keystore-location']/@value``                               | incoming messages with S/MIME                       |
+|                                                                               | encryption.                                         |
++-------------------------------------------------------------------------------+-----------------------------------------------------+
+| ``/module/component[@id='keystore-manager-for-decryption']/``                 | The password for accessing the keystore             |
+| ``parameter[@name='keystore-password']/@value``                               |                                                     |
++-------------------------------------------------------------------------------+-----------------------------------------------------+
+| ``/module/component[@id='keystore-manager-for-decryption']/``                 | The alias of the private key for the                |
+| ``parameter[@name='key-alias']/@value``                                       | decryption.                                         |
++-------------------------------------------------------------------------------+-----------------------------------------------------+
+| ``/module/component[@id='keystore-manager-for-decryption']/``                 | The password protecting the private key             |
+| ``parameter[@name='key-password']/@value``                                    | for digital signatures.                             |
++-------------------------------------------------------------------------------+-----------------------------------------------------+
+| ``/module/component[@id='keystore-manager-for-decryption']/``                 | The keystore format.                                |
+| ``parameter[@name='keystore-type']/@value``                                   | It is either ``PKCS12`` or                          |
+|                                                                               | ``JKS``.                                            |
++-------------------------------------------------------------------------------+-----------------------------------------------------+
 
 
 See also
