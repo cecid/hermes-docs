@@ -283,12 +283,12 @@ To change the settings of the log written by the core system, you will need to m
 +----------------------------------------------------------------------------------+------------------------------------------------------+
 | XPath                                                                            | Expected information                                 |
 +==================================================================================+======================================================+
-| ``log4j/category/priority``                                                      | The log level of core system logging. The available  |
+| ``/log4j:configurationcategory/priority``                                        | The log level of core system logging. The available  |
 |                                                                                  | levels are ``debug``, ``info``, ``warn``, ``error``  |
 |                                                                                  | and ``fatal``. If you set the value as ``debug``,    |
 |                                                                                  | all logs will be printed.                            |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| ``/log4j/category/appender-ref@ref``                                             | The name of the ``appender`` element to be used      |
+| ``/log4j:configurationcategory/appender-ref@ref``                                | The name of the ``appender`` element to be used      |
 |                                                                                  | for logging. The ``appender`` element specifies      |
 |                                                                                  | how to generate log files. In the above example,     |
 |                                                                                  | the appender named ``corvus`` is used. The           |
@@ -296,43 +296,43 @@ To change the settings of the log written by the core system, you will need to m
 |                                                                                  | referenced ``appender`` element.                     |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| ``/log4j/appender@class``                                                        | The appender specified by the ``appender``           |
+| ``/log4j:configurationappender@class``                                           | The appender specified by the ``appender``           |
 |                                                                                  | configuration element. Apache Log4j provides a       |
 |                                                                                  | series of appenders, such as ``RollingFileAppender`` |
 |                                                                                  | and ``DailyRollingFileAppender``.                    |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| ``/log4j/appender@name``                                                         | The name of the ``appender`` configuration element.  |
-|                                                                                  | :file:`/log4j/category/appender-ref@ref` should      |
-|                                                                                  | reference the ``appender`` configuration element     |
-|                                                                                  | by this name.                                        |
+| ``/log4j:configurationappender@name``                                            | The name of the ``appender`` configuration element.  |
+|                                                                                  | :file:`/log4j:configurationcategory/appender-ref@ref`|
+|                                                                                  | should reference the ``appender`` configuration      |
+|                                                                                  | element by this name.                                |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| ``/log4j/appender/param[@name='File']/@value``                                   | The path of the core system log from this appender.  |
+| ``/log4j:configurationappender/param[@name='File']/@value``                      | The path of the core system log from this appender.  |
 |                                                                                  |                                                      |
 | (i.e. The ``value`` attribute of the ``param`` element                           |                                                      |
 | under the ``appender`` element, whose ``name`` attribute is ``File``)            |                                                      |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| ``/log4j/appender/param[@name='Encoding']/@value``                               | The encoding to be used for the log file.            |
+| ``/log4j:configurationappender/param[@name='Encoding']/@value``                  | The encoding to be used for the log file.            |
 |                                                                                  |                                                      |
 | (i.e. The ``value`` attribute of the ``param`` element under the                 |                                                      |
 | ``appender`` element, whose ``name`` attribute is ``Encoding``)                  |                                                      |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| ``/log4j/appender/param[@name='MaxFileSize']/@value``                            | If the size of a log file has grown to exceed this   |
+| ``/log4j:configurationappender/param[@name='MaxFileSize']/@value``               | If the size of a log file has grown to exceed this   |
 |                                                                                  | limit, a new log file will be written and the        |
 | (i.e. The ``value`` attribute of the ``param`` element under the                 | old log file will be backed up. An index will be     |
 | ``appender`` element, whose ``name`` attribute is ``MaxFileSize``)               | appended to the name of the old log file.            |
 |                                                                                  | (e.g. :file:`corvus.log.1`).                         |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| ``/log4j/appender/param[@name='MaxBackupIndex']/@value``                         | The maximum number of log files that will be backed  |
+| ``/log4j:configurationappender/param[@name='MaxBackupIndex']/@value``            | The maximum number of log files that will be backed  |
 |                                                                                  | up. For example, if it is set to 10, the maximum     |
 | (i.e. The ``value`` attribute of the ``param`` element under the                 | number of backed up log files will be 10 and their   |
 | ``appender`` element, whose ``name`` attribute is ``MaxBackupIndex``)            | filenames will be :file:`{xxx}.log.1`,               |
 |                                                                                  | :file:`{xxx}.log.2`, ..., :file:`{xxx}.log.10`.      |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| ``/log4j/appender/layout/param[@name='ConversionPattern']/@value``               | The pattern used when writing the log file.          |
+| ``/log4j:configurationappender/layout/param[@name='ConversionPattern']/@value``  | The pattern used when writing the log file.          |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
 
@@ -363,7 +363,7 @@ To change the location of the log file, you will need to modify the XML file nam
 
 .. code-block:: xml
 
-   <log4j:configuration debug="null" threshold="null" xmlns:log4j="http://jakarta.apache.org/log4j/">
+   <log4j:configuration debug="null" threshold="null" xmlns:log4j="http://jakarta.apache.org/log4j:configuration">
    <appender name="as2" class="org.apache.log4j.RollingFileAppender">     
      <param name="File" value="/as2.log"/>     
      <param name="Encoding" value="UTF-8"/>     
@@ -383,52 +383,53 @@ To change the location of the log file, you will need to modify the XML file nam
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
 | XPath                                                                  | Expected information                                            | 
 +========================================================================+=================================================================+
-| ``/log4j/category/priority``                                           | The log level of the AS2 plugin logging. The available          | 
+| ``/log4j:configuration/category/priority``                             | The log level of the AS2 plugin logging. The available          | 
 |                                                                        | levels are ``debug``, ``info``, ``warn``, ``error`` and         |
 |                                                                        | ``fatal``. If you set the value as ``debug``, all logs will be  |
 |                                                                        | printed.                                                        |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
-| ``/log4j/category/appender-ref@ref``                                   | The name of the ``appender`` element to be used for logging.    |
+| ``/log4j:configuration/category/appender-ref@ref``                     | The name of the ``appender`` element to be used for logging.    |
 |                                                                        | The ``appender`` element specifies how to generate log          |
 |                                                                        | files. In the above example, the appender named ``as2``         |
 |                                                                        | is used. The settings of the appender are specified by the      |
 |                                                                        | referenced ``appender`` element.                                |
 |                                                                        |                                                                 |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
-| ``/log4j/appender@class``                                              | The appender specified by this ``appender`` configuration       | 
+| ``/log4j:configuration/appender@class``                                | The appender specified by this ``appender`` configuration       | 
 |                                                                        | element. Apache Log4j provides a series of appenders, such as   |
 |                                                                        | ``RollingFileAppender`` and ``DailyRollingFileAppender``.       |
 |                                                                        |                                                                 |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
-| ``/log4j/appender@name``                                               | The name of this ``appender`` configuration element.            | 
-|                                                                        | :file:`/log4j/category/appender-ref@ref` should reference the   |
-|                                                                        | ``appender`` configuration element by this name.                |
-|                                                                        |                                                                 |
+| ``/log4j:configuration/appender@name``                                 | The name of this ``appender`` configuration element.            | 
+|                                                                        | :file:`/log4j:configuration/category/appender-ref@ref`          |
+|                                                                        | should reference the ``appender`` configuration element         |
+|                                                                        | by this name.                                                   |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
-| ``/log4j/appender/param[@name='File']/@value``                         | The path of the AS2 log of this appender.                       |
+| ``/log4j:configuration/appender/param[@name='File']/@value``           | The path of the AS2 log of this appender.                       |
 |                                                                        |                                                                 |
 | (i.e. The ``value`` attribute of the ``param`` element under the       |                                                                 |
 | ``appender`` element, whose ``name`` attribute is ``File``)            |                                                                 |
 |                                                                        |                                                                 |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
-| ``/log4j/appender/param[@name='Encoding']/@value``                     | The encoding to be used for the log file.                       |
+| ``/log4j:configuration/appender/param[@name='Encoding']/@value``       | The encoding to be used for the log file.                       |
 |                                                                        |                                                                 |
 | (i.e. The ``value`` attribute of the ``param`` element under the       |                                                                 |
 | ``appender`` element, whose ``name`` attribute is ``Encoding``)        |                                                                 |
 |                                                                        |                                                                 |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
-| ``/log4j/appender/param[@name='MaxFileSize']/@value``                  | If the size of a log file has grown to exceed this limit,       |
+| ``/log4j:configuration/appender/param[@name='MaxFileSize']/@value``    | If the size of a log file has grown to exceed this limit,       |
 |                                                                        | another new log file will be written and the old log file       |
 | (i.e. The ``value`` attribute of the ``param`` element under the       | will be backed up. An index will be appended to the name        |
 | ``appender`` element, whose ``name`` attribute is ``MaxFileSize``)     | of the old log file (e.g. :file:`as2.log.1`).                   |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
-| ``/log4j/appender/param[@name='MaxBackupIndex]/@value``                | The maximum number of log files that will be backed up.         |
+| ``/log4j:configuration/appender/param[@name='MaxBackupIndex]/@value``  | The maximum number of log files that will be backed up.         |
 |                                                                        | For example, if it is set to 10, the maximum number of          |
 | (i.e. The ``value`` attribute of the ``param`` element under the       | backed up log files will be 10 and their filenames will         |
 | ``appender`` element, whose ``name`` attribute is ``MaxBackupIndex``)  | be :file:`{xxx}.log.1`, :file:`{xxx}.log.2`, ...,               |
 |                                                                        | :file:`{xxx}.log.10`.                                           |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
-| ``/log4j/appender/layout/param[@name='ConversionPattern']/@value``     | The pattern used when writing the log file.                     |
+| ``/log4j:configuration/appender/layout/``                              | The pattern used when writing the log file.                     |
+| ``param[@name='ConversionPattern']/@value``                            |                                                                 |
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
 
 
@@ -710,47 +711,48 @@ To change the location of the log file, you will need to modify the XML file nam
 +------------------------------------------------------------------------+----------------------------------------------------------------+
 | XPath                                                                  | Expected information                                           |
 +========================================================================+================================================================+
-| ``/log4j/category/priority``                                           | The log level of the ebMS plugin logging. The available        |
+| ``/log4j:configuration/category/priority``                             | The log level of the ebMS plugin logging. The available        |
 |                                                                        | levels are ``debug``, ``info``, ``warn``,                      |
 |                                                                        | ``error`` and ``fatal``. If you set the value as               |
 |                                                                        | ``debug``, all logs will be printed.                           |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| ``/log4j/category/appender-ref@ref``                                   | The name of the ``appender`` element to be used for logging.   |
+| ``/log4j:configuration/category/appender-ref@ref``                     | The name of the ``appender`` element to be used for logging.   |
 |                                                                        | The ``appender`` element specifies how to generate log files.  |
 |                                                                        | In the above example, the appender named                       |
 |                                                                        | ``RollingFileAppender`` is used. The settings of the appender  |
 |                                                                        | are specified by the referenced ``appender`` element.          |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| ``/log4j/appender@class``                                              | The appender specified by this ``appender`` configuration      |
+| ``/log4j:configuration/appender@class``                                | The appender specified by this ``appender`` configuration      |
 |                                                                        | element. Apache Log4j provides a series of appenders, such     |
 |                                                                        | ``RollingFileAppender`` and ``DailyRollingFileAppender``.      |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| ``/log4j/appender@name``                                               | The name of this ``appender`` configuration element.           |
+| ``/log4j:configuration/appender@name``                                 | The name of this ``appender`` configuration element.           |
 |                                                                        | :file:`/category/appender-ref@ref` should reference            |
 |                                                                        | the ``appender`` configuration element by this name.           |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| ``/log4j/appender/param[@name='File']/@value``                         | The path of the ebMS log of this appender.                     |
+| ``/log4j:configuration/appender/param[@name='File']/@value``           | The path of the ebMS log of this appender.                     |
 |                                                                        |                                                                |
 | (i.e. The ``value`` attribute of the ``param`` element under the       |                                                                |
 | ``appender`` element, whose ``name`` attribute is ``File``)            |                                                                |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| ``/log4j/appender/param[@name='Encoding']/@value``                     | The encoding to be used for the log file.                      |
+| ``/log4j:configuration/appender/param[@name='Encoding']/@value``       | The encoding to be used for the log file.                      |
 |                                                                        |                                                                |
 | (i.e. The ``value`` attribute of the ``param`` element under the       |                                                                |
 | ``appender`` element, whose ``name`` attribute is ``Encoding``)        |                                                                |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| ``/log4j/appender/param[@name='MaxFileSize']/@value``                  | If the size of a log file has grown to exceed this limit,      |
+| ``/log4j:configuration/appender/param[@name='MaxFileSize']/@value``    | If the size of a log file has grown to exceed this limit,      |
 |                                                                        | another log file will be written and the old log file          |
 | (i.e. The ``value`` attribute of the ``param`` element under the       | will be backed up. An index will be appended to the name of    |
 | ``appender`` element, whose ``name`` attribute is ``MaxFileSize``)     | the old log file (e.g. :file:`ebms.log.1`).                    |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| ``/log4j/appender/param[@name='MaxBackupIndex']/@value``               | The maximum number of log files that will be backed up.        |
+| ``/log4j:configuration/appender/param[@name='MaxBackupIndex']/@value`` | The maximum number of log files that will be backed up.        |
 |                                                                        | For example, if it is set to 10, the maximum number of         |
 | (i.e. The ``value`` attribute of the ``param`` element under the       | backed up log files will be 10 and their filenames will        |
 | ``appender`` element, whose ``name`` attribute is ``MaxBackupIndex``)  | be :file:`{xxx}.log.1`, :file:`{xxx}.log.2`, ...,              |
 |                                                                        | :file:`{xxx}.log.10`.                                          |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
-| ``/log4j/appender/layout/param[@name='ConversionPattern']/@value``     | The pattern used when writing the log file.                    |
+| ``/log4j:configuration/appender/layout/                                |                                                                |
+| ``param[@name='ConversionPattern']/@value``                            | The pattern used when writing the log file.                    |
 +------------------------------------------------------------------------+----------------------------------------------------------------+
 
 Connection to message database
