@@ -104,7 +104,7 @@ The elements in a SOAP request are shown below:
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-For more information on the elements in the SOAP body of a send request, please refer to :ref:`ebms-2-0-sender-web-service`.
+For more information on the elements in the SOAP body of a send request, please refer to :ref:`ebms-2-0-sender-soap`.
 
 Before sending an ebMS message, make sure that a partnership is registered. Please refer to the section `Maintaining Partnerships`_ for more information.
 

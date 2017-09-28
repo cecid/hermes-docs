@@ -9,13 +9,13 @@ Install Hermes with Docker
 
    .. code-block:: sh
 
-      docker run --name hermes_db -e MYSQL_ROOT_PASSWORD=corvus -d cecid/hermes_db:2.1
+      docker run --name hermes_db -e MYSQL_ROOT_PASSWORD=corvus -d cecid/hermes_db:2.2
 
 #. Run the Docker container for Hermes application server (Tomcat).
    
    .. code-block:: sh
 
-      docker run --name hermes_app --link hermes_db:db -p 8080:8080 -d cecid/hermes_app:2.1
+      docker run --name hermes_app --link hermes_db:db -p 8080:8080 -d cecid/hermes_app:2.2
 
 #. Log in to the Hermes administration console at ``http://localhost:8080/corvus/admin/home`` (username:``corvus``, password:``corvus``) to check if Hermes is up and running.
 

@@ -4,7 +4,7 @@ Installing Hermes
 Introduction
 ------------
 
-The Hermes installer is packaged in the form of a self-extracted java archive (JAR). Upon proper invocation, you will see an installation wizard, either in graphical or text format. Following the steps will install the following components:
+The Hermes installer is packaged in a self-extracted Java archive (JAR). Please download the source code from `GitHub <https://github.com/cecid/hermes>`_ and build the Hermes Installer by Maven. Otherwise, you may download the JAR file from :download:`hermes2_installer.jar <_static/hermes2_installer.jar>`. Upon proper invocation, you will see an installation wizard, either in graphical or text format. Following the steps will install the following components:
 
 * Hermes core
 * Hermes plugins (AS2 / AS2 Plus / ebMS)
@@ -42,14 +42,7 @@ Prerequisite
 
 #. Tomcat 8.5 or above with port ``8080``
 
-   a. Change the access permissions, the owner and the group of :file:`{<TOMCAT_HOME>}/webapps` after Tomcat is installed.
-
-      .. code-block:: sh
-
-         sudo chmod 775 <TOMCAT_HOME>/webapps
-         sudo chown tomcat:<OWNER_GROUP> <TOMCAT_HOME>/webapps
-
-   #. Edit :file:`/etc/systemd/system/tomcat.service`. 
+   a. Edit :file:`/etc/systemd/system/tomcat.service`. 
       Change :envvar:`Environment=JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre` to :envvar:`Environment=JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre`
 
    #. Restart Tomcat
@@ -131,28 +124,28 @@ Oracle database creation involves a number of steps and custom parameters for di
 https://docs.oracle.com/cd/E11882_01/server.112/e10897/install.htm#ADMQS0232
 
 Step 3 – Hermes Deployment
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1. Execute the installer
 
-   * For Windows, open a command prompt and type ``java –jar hermes2_installer.jar`` or if :program:`java` is not set in your environment path, specify the full path.
-   * For Unix/Linux, open :program:`xterm` and follow the same procedure as above.
+   * For Unix/Linux, open :program:`terminal` and type ``sudo java –jar hermes2_installer.jar``.
 
-   **Or:**
-
-   * :guilabel:`Test` For Windows, you can execute the installer by double-clicking on the :file:`.jar` file or right-clicking and selecting :menuselection:`open with --> javaw` (located where you installed java, in the :file:`bin` folder).
-     
    .. image:: /_static/images/3-4-1-hermes-2-0-text-installer.png
-   .. image:: /_static/images/3-4-1-hermes-2-0-opensource-installer.png
+
+   Press :guilabel:`Enter` until you get to Screen in "2. Step 1 - Configure Hermes Core".
    
-   Click :guilabel:`Next` until you get to Step 1 of the installation.
+   * For Windows, open a command prompt as an Administrator and type ``java –jar hermes2_installer.jar`` or if :program:`java` is not set in your environment path, specify the full path.
+
+   .. image:: /_static/images/3-4-1-hermes-2-0-opensource-installer.png
+
+   Click :guilabel:`Next` until you get to Screen in "2. Step 1 - Configure Hermes Core".
 
 #. Step 1 - Configure Hermes Core
 
    .. image:: /_static/images/3-4-1-step-1-configure-hermes-2-core.png
    .. image:: /_static/images/3-4-1-step-1-h2o-installer.png
 
-   Descriptions of the settings:
+   Description of the settings:
 
    +-----------------------------------+---------------------------------------------------------------------+
    | Web Application Folder            | Folder to place the web application (e.g :file:`webapps`) in Tomcat.|
@@ -182,7 +175,7 @@ Step 3 – Hermes Deployment
    .. image:: /_static/images/3-4-1-step-1-1-configure-database-driver.png
    .. image:: /_static/images/3-4-1-step-1-1-h2o-installer.png
 
-   Descriptions of the settings:
+   Description of the settings:
    
    +-----------------------------+----------------------------------------------------+
    | JDBC Driver Folder (.jar)   | Directory of the downloaded JDBC driver.           |
@@ -193,7 +186,7 @@ Step 3 – Hermes Deployment
    .. image:: /_static/images/3-4-1-step-2-configure-database-for-ebms-plugin.png
    .. image:: /_static/images/3-4-1-step-2-h2o-installer.png
 
-   Descriptions of the settings:
+   Description of the settings:
      
    +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
    | Database URL      | The URL address of the database server. Port number may be attached to the address with the format :samp:`{<HOST_ADDRESS>}:{<PORT>}` where            |
@@ -222,7 +215,7 @@ Step 3 – Hermes Deployment
    .. image:: /_static/images/3-4-1-step-3-configure-database-for-as2-plugin.png
    .. image:: /_static/images/3-4-1-step-3-h2o-installer.png
 
-   Descriptions of the settings:
+   Description of the settings:
 
    +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
    | Database URL      | The URL address of the database server. Port number may be attached to the address with the format :samp:`{<HOST_ADDRESS>}:{<PORT>}` where            |
@@ -260,9 +253,13 @@ Step 4 – Start Hermes2
 #. Checklist:
 
    * Java JDK 8 or above with Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files 7.
+
    * Apache Tomcat 8.5 or above Servlet/JSP Container.
+
    * Database server is running with ebMS and/or AS2 database instances and the tables are created.
+
    * If you are running Unix/Linux, make sure that at least read permissions are set to the core directory and read/write for the AS2 repository directory in :file:`{<HERMES2_HOME>}`.
+
    * Start Tomcat.
 
 #. To verify that Hermes is running, access the following URL from a web browser:
@@ -273,7 +270,7 @@ Step 4 – Start Hermes2
 
    .. image:: /_static/images/3-5-step-4-welcome-page.jpeg
 
-#. To access the admin page, go to the following URL. The login user and password are the same as the Tomcat user with admin privileges specified in `Prerequisite`_.
+#. To access the admin page, go to the following URL. The login user and password are the same as the Tomcat user with admin privileges specified in Point 3 of `Prerequisite`_.
 
     http://localhost:8080/corvus/admin/home
 
@@ -546,94 +543,10 @@ Before executing the following ebMS web service usage sample, the partnership fr
 
    .. image:: /_static/images/4-4-1-smaple-message.png
 
-.. _configuration-for-secure-messaging:
+Configuration for Sending Secure Message
+""""""""""""""""""""""""""""""""""""""""
 
-Configuration for Secure Messaging & Secure Channels
-----------------------------------------------------
-
-In order to store a private key for message signing, a keystore is needed. Under current implementation, only PKCS12 keystore is supported. If Hermes was installed using the installer, there are keystore files placed in the folder called :file:`security` under both ebMS and AS2/AS2 Plus plugins.
-
-Message Signing
-^^^^^^^^^^^^^^^
-
-To enable message signing, please configure the plugin with a corresponding keystore. A default keystore setting can be set through the installer or you can create a new customized keystore. To learn more about generating a keystore, please refer to :ref:`generate-cert`.
-
-Sender Settings for Message Signing
-"""""""""""""""""""""""""""""""""""
-
-To instruct Hermes to perform message signing with the correct private key, the corresponding Keystore Manager should be configured with the correct parameters.
-
-Here are descriptions of the parameters:
-
-+-------------------+--------------------------------------------------------------------------------------------------------+
-| keystore-location | Absolute file path pointing to the keystore file.                                                      |
-+-------------------+--------------------------------------------------------------------------------------------------------+
-| keystore-password | Password to access to keystore.                                                                        |
-+-------------------+--------------------------------------------------------------------------------------------------------+
-| key-alias         | Name of the private key.                                                                               |
-+-------------------+--------------------------------------------------------------------------------------------------------+
-| key-password      | Password to retrieve the private key.                                                                  |
-|                   | (**PKCS12** standard: ``key-password`` is equal to ``keystore-password``)                              |
-+-------------------+--------------------------------------------------------------------------------------------------------+
-| keystore-type     | The type of the keystore. This must be ``PKCS12``.                                                     |
-+-------------------+--------------------------------------------------------------------------------------------------------+
-| keystore-provider | The class provider to handle the keystore. ``org.bouncycastle.jce.provider.BouncyCastleProvider``      |
-+-------------------+--------------------------------------------------------------------------------------------------------+
-
-ebMS Sender Settings
-''''''''''''''''''''
-
-Open the configuration file named :file:`ebms.module.xml` that is placed in the :file:`conf` folder of the ebMS plugin. A component named ``keystore-manager-for-signature`` is defined to manage the keystore.
-
-
-  .. code-block:: xml
-
-    <component id="keystore-manager-for-signature"
-               name="Key Store Manager for Digital Signature">
-      <class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
-        <parameter name="keystore-location"
-                   value="/corvus/plugins/hk.hku.cecid.ebms/security/corvus.p12" />
-        <parameter name="keystore-password" value="password" />
-        <parameter name="key-alias" value="corvus" />
-        <parameter name="key-password" value="password" />
-        <parameter name="keystore-type" value="PKCS12" />
-        <parameter name="keystore-provider"
-                   value="org.bouncycastle.jce.provider.BouncyCastleProvider" />
-    </component>
-
-AS2/AS2 Plus Sender Settings
-''''''''''''''''''''''''''''
-
-Open the configuration file named :file:`as2.module.core.xml` that is placed in the :file:`conf` folder of the AS2/AS2 Plus plugin. A component named ``keystore-manager`` is defined to manage the keystore.
-
-  .. code-block:: xml
-
-    <component id="keystore-manager" name=" AS2 Key Store Manager">
-      <class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
-      <parameter name="keystore-location" value="corvus.p12" />
-      <parameter name="keystore-password" value="password" />
-      <parameter name="key-alias" value="corvus" />
-      <parameter name="key-password" value="password" />
-      <parameter name="keystore-type" value="PKCS12" />
-      <parameter name="keystore-provider"
-                 value="org.bouncycastle.jce.provider.BouncyCastleProvider" />
-    </component>
-
-Receiver Settings for Message Signing
-"""""""""""""""""""""""""""""""""""""
-
-For a receiver to verify the signature, a public certificate should be provided by the sender through the partnership maintenance page.
-
-  .. image:: /_static/images/5-1-2-1.png
-
-Set the value of :guilabel:`Signing Required` to ``true``. For detailed settings of the partnership, please refer to :doc:`as2_partnership` or :doc:`ebms_partnership`.
-
-  .. image:: /_static/images/5-1-2-2.png
-
-Message Tranfer with Secure Channels
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To further ensure the security of message transfers, secure channels are preferable. For more details on the required configuration, please see :ref:`send-message-using-https`.
+To send signed message through HTTPS, we have to configure a trust-store, keystore and certificate separately in Hermes and Tomcat. For details, please refer to the section :ref:`send-message-HTTPS`.
 
 FAQ
 ---
