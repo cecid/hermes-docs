@@ -4,7 +4,17 @@ Quickstart
 Install Hermes with Docker
 --------------------------
 
-#. Install the `Docker Engine <https://docs.docker.com/engine/installation/>`_.
+#. Install the `Docker Engine <https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-using-the-repository>`_ on Ubuntu 16.04+.
+
+   .. code-block:: sh
+
+      sudo apt-get update
+      sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
+      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+      sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+      sudo apt-get update
+      sudo apt-get install docker-ce      
+
 #. Run the Docker container for Hermes database (MySQL).
 
    .. code-block:: sh
@@ -21,7 +31,7 @@ Install Hermes with Docker
 
 .. note::
 
-   1. When it is the first time to run a container, the Docker image will be downloaded from the `Docker Hub <https://hub.docker.com/>`_. The Docker images are large. The sizes of ``cecid/hermes_db`` and ``cecid/hermes_app`` are about 400MB and 1.4GB. 
+   1. In Step 2 and 3, the corresponding Docker image will be downloaded from the `Docker Hub <https://hub.docker.com/>`_ for the initial run. As the size of ``cecid/hermes_db`` and ``cecid/hermes_app`` are about 400MB and 1.0GB, these steps may take at least several minutes to complete depending on the network speed.
    2. You may need the administrator or root privilage to execute ``docker run``.
 
 
@@ -31,21 +41,24 @@ Loopback Messaging with Sample Clients
 Preparation
 ^^^^^^^^^^^
 
-**Linux / Unix:**
+**Linux (Ubuntu 16.04+):**
 
-#. Install `Java 8 <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ or above, or `OpenJDK 8 <http://openjdk.java.net/projects/jdk8/>`_ or above.
+.. _java-install:
+
+#. Install `Java SE 8 <http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ or above.
+
+   .. code-block:: sh
+
+      sudo add-apt-repository ppa:webupd8team/java
+      sudo apt update
+      sudo apt install oracle-java8-unlimited-jce-policy
+      sudo apt install oracle-java8-set-default
 
 #. Please check Java 8 has been set up properly.  
 
    .. code-block:: sh
 
       java -version
-
-   If the above command fails to run, please try to set environment variable :envvar:`JAVA_HOME` to the directory where Java is installed. On Ubuntu, you may use the following command to locate the Java home directory, e.g., :file:`/usr/lib/jvm/java-8-openjdk-amd64`.
-
-   .. code-block:: sh
-
-      update-java-alternatives -l
 
 #. Download and extract the :download:`Hermes sample clients <_static/Hermes_client_sample.zip>` to a working directory :file:`{<WorkDir>}`
 
@@ -61,7 +74,7 @@ Preparation
 
 **Windows:**
 
-#. Install `Java 8 <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_ or above.
+#. Install `Java 8 <http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>`_ or above.
 
 #. Please check Java 8 has been set up properly.  
 
@@ -87,7 +100,7 @@ Create Loopback Partnership
 
 **Windows:**
 
-.. code-block:: doscon
+.. code-block:: sh
 
    ebms-partnership.bat
 
@@ -111,6 +124,8 @@ You will see the following message.
    The result status : Operation executed successfully.
    Please view log for details .. 
 
+In the Hermes administration console at ``http://localhost:8080/corvus/admin/ebms/partnership``, you will find a new Partnership :kbd:`ebms-loopback` is created.
+
 
 Send Loopback Message
 ^^^^^^^^^^^^^^^^^^^^^
@@ -123,7 +138,7 @@ Send Loopback Message
 
 **Windows:**
 
-.. code-block:: doscon
+.. code-block:: sh
 
    ebms-send.bat
 
@@ -145,6 +160,7 @@ This program sends a request attached with the payload named :file:`testpayload`
    ----------------------------------------------------
    New message id: 20170204-090520-45900@172.17.0.3
 
+In the Hermes administration console at ``http://localhost:8080/corvus/admin/ebms/message_history``, you will find a new message is created in outbox.
 
 Query Message History
 ^^^^^^^^^^^^^^^^^^^^^
@@ -157,7 +173,7 @@ Query Message History
 
 **Windows:**
 
-.. code-block:: doscon
+.. code-block:: sh
 
    ebms-history.bat
 
@@ -217,7 +233,7 @@ Download Payload of Received Message
 
 **Windows:**
 
-.. code-block:: doscon
+.. code-block:: sh
 
    ebms-history.bat
 
