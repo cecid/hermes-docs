@@ -8,7 +8,7 @@ Maintaining partnerships
 
 A partnership must be registered on Hermes to send messages since partnerships contain information about your trading partner. A separate partnership is required to receive messages.
 
-If you would like more information, please refer to the articles :ref:`what-is-an-ebms-2-0-partnership` and :ref:`what-is-an-as2-partnership`.
+If you want to know more about partnership, please refer to the section :ref:`what-is-an-ebms-2-0-partnership` and :ref:`what-is-an-as2-partnership`
 
 Let's take a look at the program parameters.
 
@@ -104,9 +104,9 @@ The elements in a SOAP request are shown below:
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-For more information on the elements in the SOAP body of a send request, please refer to :ref:`ebms-2-0-sender-soap`.
+For more information on the elements in the SOAP body of a send request, please refer to the section :ref:`ebMS Send Message Web Service <ebms-2-0-sender-soap>`.
 
-Before sending an ebMS message, make sure that a partnership is registered. Please refer to the section `Maintaining Partnerships`_ for more information.
+Before sending an ebMS message, please make sure a partnership is registered. Please refer to the section `Maintaining Partnerships`_ for more information.
 
 Let’s take a look at the program parameters.
 
@@ -232,18 +232,18 @@ Here is sample content of the config-xml. This config-xml is named :file:`ebms-r
 Program operation
 ^^^^^^^^^^^^^^^^^
 
-If the query has successfully executed, the result will be similar to the following: 
+If the query is successfully executed, the result will look like: 
 
 .. image:: /_static/images/web_service/ebms-history-screen1.png
 
-After the messages are displayed by the program, you can perform further action by choosing your target message. If the message is placed under **OUTBOX**, the program will query its current status. If the message is placed under **INBOX**, the program will download the payload(s) if available.
+After the messages are displayed by the program, you can perform further action on a selected message. If the selected message is placed under **OUTBOX**, the program will query its current status. If the message is placed under **INBOX**, the program will download the payload(s) if available.
 
 Retrieving message payloads
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 There is a receiver web service provided by the ebMS plugin to retrieve messages. The receiver service endpoint is :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/ebms/receiver`.
 
-The required elements in a SOAP request are the following:
+The required elements in a SOAP request are as follows:
 
 
 .. code-block:: xml
@@ -255,9 +255,9 @@ The required elements in a SOAP request are the following:
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-The message id is the only criteria needed to retrieve the payload of the target message. However, the payload is only available once. If the payload of a message has already been downloaded, the program will not be able to retrieve it again.
+The message id is the only criteria needed to retrieve the payload of the target message. However, the payload is only available once. If the payload of a message has already been downloaded, the program cannot retrieve it again.
 
-The program will ask for a directory to store the payload, which will be stored with the name :file:`ebms.{<MessageId>}.Payload.{<IndexofPayload>}`.
+The program will ask for a folder path to store the payload with the filename :file:`ebms.{<MessageId>}.Payload.{<IndexofPayload>}`.
 
 .. image:: /_static/images/web_service/ebms-history-screen2-in.png
 
@@ -266,7 +266,7 @@ Check outgoing message status
 
 To check the status of outgoing messages, the program uses the status web service provided in the ebMS plugin. This service cannot check the status of incoming messages.
 
-The required elements in a SOAP request are the following:
+The required elements in a SOAP request are as follows:
 
 .. code-block:: xml
 
@@ -290,7 +290,7 @@ We created similar sample programs for AS2 as well. The programs :program:`as2-s
 Sending an AS2 message
 ^^^^^^^^^^^^^^^^^^^^^^
 
-:program:`as2-send` is a sample program to demonstrate how to upload a message to Hermes using the sender web service in the AS2 plugin. You can pack your payload as a SOAP message and send it to this service with the endpoint :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/as2/sender`.
+:program:`as2-send` is a sample program to demonstrate how to upload a message to Hermes using the Sender Web Service in the AS2 plugin. You can pack your payload as a SOAP message and send it to this service with the endpoint :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/as2/sender`.
 
 The required elements in a SOAP request are shown below:
 
@@ -311,7 +311,7 @@ The required elements in a SOAP request are shown below:
 
 ``<as2_from>`` and ``<as2_to>`` contain the partnership information and ``<type>`` contains the content type of the payload.
 
-Before sending an AS2 message, check that a partnership is registered. Please refer to the section `Maintaining Partnerships`_ for more information.
+Before sending an AS2 message, please check a partnership is registered. Please refer to the section `Maintaining Partnerships`_ for more information.
 
 Let’s take a look at the program parameters.
 
@@ -347,7 +347,7 @@ Below is sample content of the config-xml file. This file is named :file:`as2-re
 The elements are explained in the table below:
 
 +------------------------+-----------------------------------------------------------------------------------------+
-| ``<sendEndpoint>``     | Refers to the address of the AS2 sender web service.                                    |
+| ``<sendEndpoint>``     | Refer to the address of the AS2 sender web service.                                     |
 |                        |                                                                                         |
 |                        | It should be :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/as2/sender`.                  |
 +------------------------+-----------------------------------------------------------------------------------------+
@@ -365,9 +365,9 @@ Sample content is shown below:
 
 .. image:: /_static/images/web_service/as2-partnership-xml.png
 
-``<as2From>`` and ``<as2To>`` are required to construct a SOAP message according to the WSDL. For more information, please refer to AS2 Partnership.
+``<as2From>`` and ``<as2To>`` are required to construct a SOAP message according to the WSDL. For more information, please refer to :doc:`as2_partnership`.
 
-Once you have configured these parameters, you can execute the program. A message id will be returned if the program has been successfully executed. Below is sample output from the program.
+Once you have configured these parameters, you can execute the program. A message id will be returned if the program has been successfully executed. Below is a sample output from the program.
 
 .. image:: /_static/images/web_service/as2-send-screen.png
 
@@ -378,7 +378,7 @@ AS2 history query
 
 The message history web service endpoint is :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/as2/msg_history`.
 
-The required elements in a SOAP request are shown below:
+The required elements in a SOAP request are shown as below:
 
 
 .. code-block:: xml
@@ -394,7 +394,7 @@ The required elements in a SOAP request are shown below:
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-Using this service, you can search for messages using message properties as well as partnership information.
+Using this service, you can search for messages by message properties as well as partnership information.
 
 Let’s take a look at the program parameters.
 
@@ -415,18 +415,18 @@ Let’s take a look at the program parameters.
 config-xml
 """"""""""
 
-Below is sample content of the config-xml file. This file is named :file:`as2-request.xml`, and placed under :file:`{<HERMES2_HOME>}/config/as2-history`. There are several elements available to use as searching criteria. You can use the wildcard character ``%`` in the values and comment out unwanted elements.
+Below is sample content of the config-xml file. This file is named :file:`as2-request.xml`, and placed under :file:`{<HERMES2_HOME>}/config/as2-history`. There are several elements available to use as searching criteria. You can use the wildcard character ``%`` in the values and comment the unwanted elements.
 
 .. image:: /_static/images/web_service/as2-history-request.png
 
 Program operation
 ^^^^^^^^^^^^^^^^^
 
-If the query has been executed successfully, the result will be similar to following: 
+If the query has been executed successfully, the result will look like: 
 
 .. image:: /_static/images/web_service/as2-history-screen1.png
 
-Messages are listed in ascending order according to the timestamp of the message (i.e. the earliest message will be listed with index 0). After the results are listed, you can choose your target message. If the message is placed under **OUTBOX**, the program will query its current status. If the message is placed under **INBOX**, the program will download the payload if available.
+Messages are listed in ascending order of the message timestamp (i.e. the earliest message will be listed with index 0). After the results are listed, you can select a message. If the message is placed under **OUTBOX**, the program will query its current status. If the message is placed under **INBOX**, the program will download the payload if available.
 
 
 Retrieve message payload
@@ -434,7 +434,7 @@ Retrieve message payload
 
 There is a receiver service provided by the AS2 plugin for retrieving messages. The receiver service endpoint is :samp:`http://{<HOST>}:{<PORT>}/corvus/httpd/as2/receiver`.
 
-The required elements in a SOAP request are the following:
+The required elements in a SOAP request are as follows:
 
 .. code-block:: xml
 
@@ -445,11 +445,11 @@ The required elements in a SOAP request are the following:
    </SOAP-ENV:Body>
    </SOAP-ENV:Envelope>
 
-You can input the id of your target message in the SOAP message to retrieve its payload. However, the payload is only available once. If the payload has already been downloaded, the program will not be able to retrieve it again.
+You can specify the id of your target message in the SOAP message to retrieve its payload. However, the payload is only available once. If the payload has already been downloaded, the program cannot retrieve it again.
 
 .. image:: /_static/images/web_service/as2-history-screen2-in.png
 
-As shown above, the program will ask for a directory to store the payload(s). Each payload will be stored with the name :file:`as2.{<MessageId>}.Payload.{<IndexofPayload>}`.
+As shown above, the program will ask for a folder to store the payload(s) with filename :file:`as2.{<MessageId>}.Payload.{<IndexofPayload>}`.
 
 Check outgoing message status
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

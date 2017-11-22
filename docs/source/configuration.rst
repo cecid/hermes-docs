@@ -4,11 +4,11 @@ Configuring Hermes
 Introduction
 ------------
 
-This document acts as a configuration reference for Hermes. The configurations of Hermes are specified by various XML-based configuration files. By modifying these files, administrators or developers can configure all the settings such as the location of the message database and log file locations.
+This document acts as a configuration reference for Hermes. The configurations of Hermes are specified by various XML-based configuration files. By modifying these files, administrators or developers can configure all the settings such as the location of the database and log file.
 
-The intended audience of this document includes system administrators, application developers and plugin developers of the Hermes system. It assumes the audience has some background knowledge of the following:
+The intended audience of this document includes system administrators, application developers and plugin developers of the Hermes system. It assumes the audience has following background knowledge:
 
-*   Java Standard Edition
+*   Java (Standard Edition)
 *   XML
 *   AS2
 *   ebXML Messaging Services
@@ -19,9 +19,9 @@ The intended audience of this document includes system administrators, applicati
 Overview on loading property files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Hermes has employed a module-group-component architecture where you can define your own module for each application. You can then assign a property file for each component and the Hermes Core System will load them.
+Hermes has employed a module-group-component architecture where you can define your own module for each application. You can assign a property file for each component and the Hermes Core System will load these files.
 
-There are two loading mechanisms, one for the core system and one for the plugins. The two are almost identical except for their initial definitions.  
+There are two loading mechanisms, one for the core system and one for the plugins. The two are almost identical except for their initial definitions.
 
 Let's take a look at how the core system modules are loaded. 
 
@@ -119,7 +119,7 @@ You can change the plugin location of Hermes by modifying this element:
      ...
      <plugin>
        ...   
-       <registry>/corvus/plugins</registry>
+       <registry>/home/hermes2/plugins</registry>
        <descriptor>plugin.xml</descriptor>
        ...
      </plugin>
@@ -146,10 +146,8 @@ SSL trust store information
        <environment>
          <properties>
              ...
-           <javax.net.ssl.trustStore>/j2sdk1.4.2_04/jre/lib/security/cacerts
-           </javax.net.ssl.trustStore>
-           <javax.net.ssl.trustStorePassword>password
-           </javax.net.ssl.trustStorePassword>
+           <javax.net.ssl.trustStore>/usr/lib/jvm/java-8-oracle/jre/lib/security/cacerts</javax.net.ssl.trustStore>
+           <javax.net.ssl.trustStorePassword>password</javax.net.ssl.trustStorePassword>
            ...
          </properties>
        <environment>
@@ -260,35 +258,42 @@ Connection timeout settings
 
 Log file location and level of logging
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-To change the settings of the log written by the core system, you will need to modify the XML file named :file:`corvus.log.properties.xml`. Configuring the logging module is the same as configuring Apache Log4j. Note that for configuring the logs of plugins, you need to edit another configuration file.
+To change the settings of the log written by the core system, you will need to modify the XML file named :file:`corvus.log.properties.xml`. Configuring the logging module is the same as configuring Apache Log4j. Note that for configuring the logs of other plugins, you need to edit another configuration file as descibed in :ref:`AS2 plugin properties <as2-log-config>` and :ref:`ebMS plugin properties <ebms-log-config>`.
 
 .. code-block:: xml
 
-   <log4j:configuration debug="null" threshold="null" xmlns:log4j="http://jakarta.apache.org/log4j/">
-   <appender name="corvus" class="org.apache.log4j.RollingFileAppender">     
-     <param name="File" value="/corvus/corvus.log"/>     
-     <param name="Encoding" value="UTF-8"/>     
-     <param name="MaxFileSize" value="100KB"/>     
-     <param name="MaxBackupIndex" value="1"/>     
-     <layout class="org.apache.log4j.PatternLayout">       
-       <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%-12.12t] &lt;%-5p&gt; &lt;%m&gt;%n"/>     
-     </layout>  
-   </appender>
-   <category additivity="true" name="hk.hku.cecid.piazza">
-     <priority value="debug"/>
-     <appender-ref ref="corvus"/>
-   </category>
-   </log4j:configuration>
+   <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+     <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+       <layout class="org.apache.log4j.PatternLayout">
+         <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%-12.12t] &lt;%-5p&gt; &lt;%m&gt;%n"/>
+       </layout>
+     </appender>
+ 
+     <appender name="corvus" class="org.apache.log4j.RollingFileAppender">
+       <param name="File" value="/home/hermes2/logs/corvus.log"/>
+       <param name="Encoding" value="UTF-8"/>
+       <param name="MaxFileSize" value="100KB"/>
+       <param name="MaxBackupIndex" value="1"/>
+       <layout class="org.apache.log4j.PatternLayout">
+         <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%-12.12t] &lt;%-5p&gt; &lt;%m&gt;%n"/>
+       </layout>
+     </appender>
+     
+     <category name="hk.hku.cecid.piazza">
+       <priority value ="debug" />
+       <appender-ref ref="corvus"/>
+     </category>
+   </log4j:configuration>  
 
 +----------------------------------------------------------------------------------+------------------------------------------------------+
 | XPath                                                                            | Expected information                                 |
 +==================================================================================+======================================================+
-| ``/log4j:configurationcategory/priority``                                        | The log level of core system logging. The available  |
+| ``/log4j:configuration/category/priority``                                       | The log level of core system logging. The available  |
 |                                                                                  | levels are ``debug``, ``info``, ``warn``, ``error``  |
 |                                                                                  | and ``fatal``. If you set the value as ``debug``,    |
 |                                                                                  | all logs will be printed.                            |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| ``/log4j:configurationcategory/appender-ref@ref``                                | The name of the ``appender`` element to be used      |
+| ``/log4j:configuration/category/appender-ref@ref``                               | The name of the ``appender`` element to be used      |
 |                                                                                  | for logging. The ``appender`` element specifies      |
 |                                                                                  | how to generate log files. In the above example,     |
 |                                                                                  | the appender named ``corvus`` is used. The           |
@@ -296,43 +301,43 @@ To change the settings of the log written by the core system, you will need to m
 |                                                                                  | referenced ``appender`` element.                     |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| ``/log4j:configurationappender@class``                                           | The appender specified by the ``appender``           |
+| ``/log4j:configuration/appender@class``                                          | The appender specified by the ``appender``           |
 |                                                                                  | configuration element. Apache Log4j provides a       |
 |                                                                                  | series of appenders, such as ``RollingFileAppender`` |
 |                                                                                  | and ``DailyRollingFileAppender``.                    |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| ``/log4j:configurationappender@name``                                            | The name of the ``appender`` configuration element.  |
+| ``/log4j:configuration/appender@name``                                           | The name of the ``appender`` configuration element.  |
 |                                                                                  | :file:`/log4j:configurationcategory/appender-ref@ref`|
 |                                                                                  | should reference the ``appender`` configuration      |
 |                                                                                  | element by this name.                                |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| ``/log4j:configurationappender/param[@name='File']/@value``                      | The path of the core system log from this appender.  |
+| ``/log4j:configuration/appender/param[@name='File']/@value``                     | The path of the core system log from this appender.  |
 |                                                                                  |                                                      |
 | (i.e. The ``value`` attribute of the ``param`` element                           |                                                      |
 | under the ``appender`` element, whose ``name`` attribute is ``File``)            |                                                      |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| ``/log4j:configurationappender/param[@name='Encoding']/@value``                  | The encoding to be used for the log file.            |
+| ``/log4j:configuration/appender/param[@name='Encoding']/@value``                 | The encoding to be used for the log file.            |
 |                                                                                  |                                                      |
 | (i.e. The ``value`` attribute of the ``param`` element under the                 |                                                      |
 | ``appender`` element, whose ``name`` attribute is ``Encoding``)                  |                                                      |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| ``/log4j:configurationappender/param[@name='MaxFileSize']/@value``               | If the size of a log file has grown to exceed this   |
+| ``/log4j:configuration/appender/param[@name='MaxFileSize']/@value``              | If the size of a log file has grown to exceed this   |
 |                                                                                  | limit, a new log file will be written and the        |
 | (i.e. The ``value`` attribute of the ``param`` element under the                 | old log file will be backed up. An index will be     |
 | ``appender`` element, whose ``name`` attribute is ``MaxFileSize``)               | appended to the name of the old log file.            |
 |                                                                                  | (e.g. :file:`corvus.log.1`).                         |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| ``/log4j:configurationappender/param[@name='MaxBackupIndex']/@value``            | The maximum number of log files that will be backed  |
+| ``/log4j:configuration/appender/param[@name='MaxBackupIndex']/@value``           | The maximum number of log files that will be backed  |
 |                                                                                  | up. For example, if it is set to 10, the maximum     |
 | (i.e. The ``value`` attribute of the ``param`` element under the                 | number of backed up log files will be 10 and their   |
 | ``appender`` element, whose ``name`` attribute is ``MaxBackupIndex``)            | filenames will be :file:`{xxx}.log.1`,               |
 |                                                                                  | :file:`{xxx}.log.2`, ..., :file:`{xxx}.log.10`.      |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
-| ``/log4j:configurationappender/layout/param[@name='ConversionPattern']/@value``  | The pattern used when writing the log file.          |
+| ``/log4j:configuration/appender/layout/param[@name='ConversionPattern']/@value`` | The pattern used when writing the log file.          |
 |                                                                                  |                                                      |
 +----------------------------------------------------------------------------------+------------------------------------------------------+
 
@@ -356,6 +361,7 @@ In the directory :file:`{<HERMES_2_PLUGINS_LOCATION>}/corvus-as2/conf/hk/hku/cec
 | Location of message repository                     |                                        |
 +----------------------------------------------------+----------------------------------------+
 
+.. _as2-log-config:
 
 Log file location and level of logging
 """"""""""""""""""""""""""""""""""""""
@@ -363,22 +369,28 @@ To change the location of the log file, you will need to modify the XML file nam
 
 .. code-block:: xml
 
-   <log4j:configuration debug="null" threshold="null" xmlns:log4j="http://jakarta.apache.org/log4j:configuration">
-   <appender name="as2" class="org.apache.log4j.RollingFileAppender">     
-     <param name="File" value="/as2.log"/>     
-     <param name="Encoding" value="UTF-8"/>     
-     <param name="MaxFileSize" value="100KB"/>     
-     <param name="MaxBackupIndex" value="1"/>     
-     <layout class="org.apache.log4j.PatternLayout">       
-     <param name="ConversionPattern" 
-           value="%d{yyyy-MM-dd HH:mm:ss} [%-12.12t] &lt;%-5p&gt; &lt;%m&gt;%n"/>     
-     </layout>  
-   </appender>
-   <category additivity="true" name="hk.hku.cecid.edi.as2">
-     <priority value="debug"/>
-     <appender-ref ref="as2"/>
-   </category>
-   </log4j:configuration>
+   <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+     <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+       <layout class="org.apache.log4j.PatternLayout">
+         <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%-12.12t] &lt;%-5p&gt; &lt;%m&gt;%n"/>
+       </layout>
+     </appender>
+     
+     <appender class="org.apache.log4j.RollingFileAppender" name="as2">
+       <param name="File" value="/home/hermes2/logs/as2.log"/>
+       <param name="Encoding" value="UTF-8"/>
+       <param name="MaxFileSize" value="5MB"/>
+       <param name="MaxBackupIndex" value="1"/>
+       <layout class="org.apache.log4j.PatternLayout">
+         <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%-12.12t] &lt;%-5p&gt; &lt;%m&gt;%n"/>
+       </layout>
+     </appender>
+     
+     <category name="hk.hku.cecid.edi.as2">
+       <priority value="debug"/>
+       <appender-ref ref="as2"/>
+     </category>
+   </log4j:configuration>     
 
 +------------------------------------------------------------------------+-----------------------------------------------------------------+
 | XPath                                                                  | Expected information                                            | 
@@ -450,9 +462,13 @@ Connection to message database
      <parameter name="username" value="corvus" />
      <parameter name="password" value="corvus" />
      <parameter name="pooling" value="true" />
-     <parameter name="maxActive" value="20" />
+     <parameter name="maxActive" value="30" />
      <parameter name="maxIdle" value="10" />
      <parameter name="maxWait" value="-1" />
+     <parameter name="testOnBorrow" value="true" />
+     <parameter name="testOnReturn" value="false" />
+     <parameter name="testWhileIdle" value="false" />
+     <parameter name="validationQuery" value="SELECT now()" />
      <parameter name="config" 
                 value="hk/hku/cecid/edi/as2/conf/as2.dao.xml" />
    </component>
@@ -502,6 +518,22 @@ Connection to message database
 | ``/module/component[@id='daofactory']/``          | The maximum amount of time (milliseconds) that the pool will wait (when there are no          |
 | ``parameter[@name='maxWait']/@value``             | available connections) for a connection to be returned before throwing an                     | 
 |                                                   | exception, or ``-1`` to wait indefinitely.                                                    | 
++---------------------------------------------------+-----------------------------------------------------------------------------------------------+
+| ``/module/component[@id='daofactory']/``          | Parameter used by system during testing, please keep it unchanged                             |
+| ``parameter[@name='testOnBorrow']/@value``        |                                                                                               |
+|                                                   |                                                                                               |
++---------------------------------------------------+-----------------------------------------------------------------------------------------------+
+| ``/module/component[@id='daofactory']/``          | Parameter used by system during testing, please keep it unchanged                             |
+| ``parameter[@name='testOnReturn']/@value``        |                                                                                               |
+|                                                   |                                                                                               |
++---------------------------------------------------+-----------------------------------------------------------------------------------------------+
+| ``/module/component[@id='daofactory']/``          | Parameter used by system during testing, please keep it unchanged                             |
+| ``parameter[@name='tesWhileIdle']/@value``        |                                                                                               |
+|                                                   |                                                                                               |
++---------------------------------------------------+-----------------------------------------------------------------------------------------------+
+| ``/module/component[@id='daofactory']/``          | Parameter used by system during testing, please keep it unchanged                             |
+| ``parameter[@name='validateQuery']/@value``       |                                                                                               |
+|                                                   |                                                                                               |
 +---------------------------------------------------+-----------------------------------------------------------------------------------------------+
 | ``/module/component[@id='daofactory']/``          | Additional configuration files that will be used by the plugin. You should just               |
 | ``parameter[@name='config']/@value``              | leave it as is.                                                                               | 
@@ -561,10 +593,8 @@ Outgoing Repository:
    <module id="as2.core" name="Corvus AS2" version="1.0">
    ...
    <component id="outgoing-payload-repository" name="AS2 Outgoing Payload Repository">
-   <class>
-   hk.hku.cecid.edi.as2.module.PayloadRepository
-   </class>
-     <parameter name="location" value="/as2-outgoing-repository" />
+   <class>hk.hku.cecid.edi.as2.module.PayloadRepository</class>
+     <parameter name="location" value="/home/hermes2/repository/as2-outgoing-repository" />
      <parameter name="type-edi" value="application/EDIFACT" />
      <parameter name="type-x12" value="application/EDI-X12" />
      <parameter name="type-eco" value="application/edi-consent" />
@@ -581,7 +611,7 @@ Outgoing Repository:
 |                                                                   | You should just leave it as is.                                           |
 +-------------------------------------------------------------------+---------------------------------------------------------------------------+
 | ``/module/component[id='outgoing-payload-repository']/``          | The directory that will store the outgoing payload.                       |
-| ``parameter[@name='location']/@value``                            | E.g., :file:`c:\program files\hermes2\repository\as2-outgoing-repository` |
+| ``parameter[@name='location']/@value``                            | E.g., :file:`/home/hermes2/repository/as2-outgoing-repository`            |
 +-------------------------------------------------------------------+---------------------------------------------------------------------------+
 | ``/module/component[id='outgoing-payload-repository']/``          | You should leave these fields as is.                                      |
 | ``parameter[@name='type-edi']/@value``                            |                                                                           |
@@ -601,10 +631,8 @@ Outgoing Repository:
    <module id="as2.core" name="Corvus AS2" version="1.0">
    ...
    <component id="incoming-payload-repository" name="AS2 Incoming Payload Repository">		
-     <class>
-       hk.hku.cecid.edi.as2.module.PayloadRepository
-     </class>
-     <parameter name="location" value="/as2-incoming-repository" />
+     <class>hk.hku.cecid.edi.as2.module.PayloadRepository</class>
+     <parameter name="location" value="/home/hermes2/repository/as2-incoming-repository" />
      <parameter name="type-edi" value="application/EDIFACT" />
      <parameter name="type-x12" value="application/EDI-X12" />
      <parameter name="type-eco" value="application/edi-consent" />
@@ -621,7 +649,7 @@ Outgoing Repository:
 |                                                                   | You should just leave it as is.                                     |
 +-------------------------------------------------------------------+---------------------------------------------------------------------+
 | ``/module/component[id='outgoing-payload-repository']/``          | The directory that will store the outgoing payload. E.g.,           |
-| ``parameter[@name='location']/@value``                            | :file:`c:/program files/hermes2/repository/as2-incoming-repository` |
+| ``parameter[@name='location']/@value``                            | :file:`/home/hermes2/repository/as2-incoming-repository`            |
 +-------------------------------------------------------------------+---------------------------------------------------------------------+
 | ``/module/component[id='outgoing-payload-repository']/``          | You should leave these fields as is.                                |
 | ``parameter[@name='type-edi']/@value``                            |                                                                     |
@@ -645,10 +673,8 @@ Original Message Repository (a temporary message repository used when Hermes is 
    <module id="as2.core" name="Corvus AS2" version="1.0">
    ...
    <component id="original-message-repository" name="AS2 Original Message Repository">		
-     <class>
-       hk.hku.cecid.edi.as2.module.MessageRepository
-     </class>
-     <parameter name="location" value="/as2-message-repository" />
+     <class>hk.hku.cecid.edi.as2.module.MessageRepository</class>
+     <parameter name="location" value="/home/hermes2/repository/as2-message-repository" />
      <parameter name="is-disabled" value="false" />
    </component>
    ...
@@ -661,7 +687,7 @@ Original Message Repository (a temporary message repository used when Hermes is 
 |                                                                   | You should just leave it as is.                                      |
 +-------------------------------------------------------------------+----------------------------------------------------------------------+
 | ``/module/component[id='original-payload-repository']/``          | The directory that will store outgoing payloads. E.g.,               |
-| ``parameter[@name='location']/@value``                            | :file:`c:/program files/hermes2/repository/as2-message-repository`   |
+| ``parameter[@name='location']/@value``                            | :file:`/home/hermes2/repository/as2-message-repository`              |
 +-------------------------------------------------------------------+----------------------------------------------------------------------+
 | ``/module/component[id='original-payload-repository']/``          | This flag indicates if the original message should be stored locally.|
 | ``parameter[@name='is-disabled']/@value``                         |                                                                      |
@@ -684,6 +710,7 @@ In the directory :file:`{<HERMES_2_PLUGINS_LOCATION>}/corvus-ebms/conf/hk/hku/ce
 | Location of keystore for S/MIME decryption (incoming messages)   |                                        |
 +------------------------------------------------------------------+----------------------------------------+
 
+.. _ebms-log-config:
 
 Log file location and level of logging
 """"""""""""""""""""""""""""""""""""""
@@ -691,23 +718,29 @@ To change the location of the log file, you will need to modify the XML file nam
 
 .. code-block:: xml
 
-   <log4j:configuration debug="null" threshold="null" xmlns:log4j="http://jakarta.apache.org/log4j/">
-     <appender name="ebms" class="org.apache.log4j.RollingFileAppender">
-       <param name="File" value="/ebms.log"/>
-       <param name="Encoding" value="UTF-8"/>
-       <param name="MaxFileSize" value="100KB"/>
-       <param name="MaxBackupIndex" value="1"/>
+   <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+     <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
        <layout class="org.apache.log4j.PatternLayout">
-         <param name="ConversionPattern"
-             value="%d{yyyy-MM-dd HH:mm:ss} [%-12.12t] &lt;%-5p&gt; &lt;%m&gt;%n"/>
+         <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%-12.12t] &lt;%-5p&gt; &lt;%m&gt;%n"/>
        </layout>
      </appender>
-     <category additivity="true" name="hk.hku.cecid.ebms">
-       <priority value="debug"/>
-       <appender-ref ref="ebms"/>
+ 
+     <appender name="ebms" class="org.apache.log4j.RollingFileAppender">
+       <param name="File" value="/home/hermes2/logs/ebms.log"/>
+       <param name="Encoding" value="UTF-8"/>
+       <param name="MaxFileSize" value="5MB"/>
+       <param name="MaxBackupIndex" value="1"/>
+       <layout class="org.apache.log4j.PatternLayout">
+         <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%-12.12t] &lt;%-5p&gt; &lt;%c{3}&gt; &lt;%m&gt;%n"/>
+       </layout>
+     </appender>
+     
+     <category name="hk.hku.cecid.ebms">
+       <priority value ="debug" />
+     <appender-ref ref="ebms"/>
      </category>
-   </log4j:configuration>
-
+   </log4j:configuration>   
+ 
 +------------------------------------------------------------------------+----------------------------------------------------------------+
 | XPath                                                                  | Expected information                                           |
 +========================================================================+================================================================+
@@ -762,24 +795,22 @@ Connection to message database
 
    <module>
    ...
-   <component id="daofactory" name="System DAO Factory">
-     <class>
-     hk.hku.cecid.piazza.commons.dao.ds.SimpleDSDAOFactory
-     </class>
-     <parameter name="driver" value="org.postgresql.Driver" />
-     <parameter name="url" value="jdbc:postgresql://localhost:5432/ebms" />
-     <parameter name="username" value="corvus" />
-     <parameter name="password" value="corvus" />
-     <parameter name="pooling" value="true" />
-     <parameter name="maxActive" value="30" />
-     <parameter name="maxIdle" value="10" />
-     <parameter name="maxWait" value="-1" />
-     <parameter name="testOnBorrow" value="true" />
-     <parameter name="testOnReturn" value="false" />
-     <parameter name="testWhileIdle" value="false" />
-     <parameter name="validationQuery" value="SELECT now()" />     
-     <parameter name="config">hk/hku/cecid/ebms/spa/conf/ebms.dao.xml</parameter>
-   </component>
+     <component id="daofactory" name="System DAO Factory">
+       <class>hk.hku.cecid.piazza.commons.dao.ds.SimpleDSDAOFactory</class>
+       <parameter name="driver" value="org.postgresql.Driver" />
+       <parameter name="url" value="jdbc:postgresql://localhost:5432/ebms" />
+       <parameter name="username" value="corvus" />
+       <parameter name="password" value="corvus" />
+       <parameter name="pooling" value="true" />
+       <parameter name="maxActive" value="30" />
+       <parameter name="maxIdle" value="10" />
+       <parameter name="maxWait" value="-1" />
+       <parameter name="testOnBorrow" value="true" />
+       <parameter name="testOnReturn" value="false" />
+       <parameter name="testWhileIdle" value="false" />
+       <parameter name="validationQuery" value="SELECT now()" />     
+       <parameter name="config">hk/hku/cecid/ebms/spa/conf/ebms.dao.xml</parameter>
+     </component>
    ...
    </module>
 
@@ -858,15 +889,14 @@ Location of keystore for signing outgoing messages
 
    <module id="ebms.main" name="Ebms Plugin" version="1.0">
    ...
-   <component id="keystore-manager-for-signature" name="Key Store Manager for Digital Signature">
-     <class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
-     <parameter name="keystore-location" value="corvus.p12"/>
-     <parameter name="keystore-password" value="password"/>
-     <parameter name="key-alias" value="corvus"/>
-     <parameter name="key-password" value="password"/>
-     <parameter name="keystore-type" value="PKCS12"/>
-     <parameter name="keystore-provider" 
-                value="org.bouncycastle.jce.provider.BouncyCastleProvider"/>
+     <component id="keystore-manager-for-signature" name="Key Store Manager for Digital Signature">
+       <class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
+       <parameter name="keystore-location" value="/home/hermes2/plugins/corvus-ebms/security/corvus.p12"/>
+       <parameter name="keystore-password" value="password"/>
+       <parameter name="key-alias" value="corvus"/>
+       <parameter name="key-password" value="password"/>
+       <parameter name="keystore-type" value="PKCS12"/>
+       <parameter name="keystore-provider" value="org.bouncycastle.jce.provider.BouncyCastleProvider"/>
      </component>
    ...
    </module>
@@ -900,7 +930,7 @@ Location of keystore for S/MIME decryption (incoming messages)
    ...
      <component id="keystore-manager-for-decryption" name="Key Store Manager for Decryption (ebMS over SMTP)">
        <class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
-       <parameter name="keystore-location" value="corvus.p12"/>
+       <parameter name="keystore-location" value="/home/hermes2/plugins/corvus-ebms/security/corvus.p12"/>
        <parameter name="keystore-password" value="password"/>
        <parameter name="key-alias" value="corvus"/>
        <parameter name="key-password" value="password"/>
