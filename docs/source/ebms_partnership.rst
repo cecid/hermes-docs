@@ -67,7 +67,7 @@ Transport Endpoint
 |                 | If the receiving messaging gateway is Hermes and HTTP/HTTPS is the transport protocol, the endpoint URL is       |
 |                 | formatted as :samp:`http://{<RECIPIENT_HOST>}:{<PORT>}/corvus/httpd/ebms/inbound`. The recipient should set this |
 |                 | field to :samp:`http://{<SENDER_HOST>}:{<PORT>}/corvus/httpd/ebms/inbound` in order to send acknowledgements     |
-|                 | upon request.                                                                                                    |
+|                 | to sender upon request.                                                                                          |
 |                 |                                                                                                                  |
 |                 | Otherwise, if the recipient host is an SMTP gateway, the endpoint URL is formatted as                            |
 |                 | :samp:`mailto:{<EMAIL ADDRESS>}`.                                                                                |
