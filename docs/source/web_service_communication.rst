@@ -27,10 +27,10 @@ In the default Hermes installation, each of ebMS 2.0 and AS2 plugins supports th
 
    ":ref:`ebms-2-0-send-message-ws`", "POST:corvus/api/message/send/ebms", "/corvus/httpd/ebms/sender"
    ":ref:`ebms-2-0-list-message-ws`", "GET:/corvus/api/message/receive/ebms", "/corvus/httpd/ebms/receiver_list"
-   ":ref:`ebms-2-0-receiver-ws`", "POST:/corvus/api/message/receive/ebms", "/corvus/httpd/ebms/receiver"
+   ":ref:`ebms-2-0-receiver-ws`", "GET:/corvus/api/message/receive/ebms", "/corvus/httpd/ebms/receiver"
    ":ref:`ebms-2-0-get-status-ws`", "GET:/corvus/api/message/send/ebms", "/corvus/httpd/ebms/status"
-   ":ref:`ebms-2-0-reset-status-ws`", "POST:/corvus/api/message/redownload/ebms", "/corvus/httpd/ebms/permitdl"
    ":ref:`ebms-2-0-query-message-ws`", "GET:/corvus/api/message/history/ebms", "/corvus/httpd/ebms/msg_history"
+   ":ref:`ebms-2-0-reset-status-ws`", "PUT:/corvus/api/message/history/ebms", "/corvus/httpd/ebms/permitdl"
    ":ref:`ebms-2-0-add-partnership-ws`", "POST:/corvus/api/partnership/ebms", "NIL"
    ":ref:`ebms-2-0-delete-partnership-ws`", "DELETE /corvus/api/partnership/ebms/{pid}", "NIL"
    ":ref:`ebms-2-0-update-partnership-ws`", "POST:/corvus/api/partnership/ebms", "NIL"
@@ -41,9 +41,10 @@ In the default Hermes installation, each of ebMS 2.0 and AS2 plugins supports th
 
    ":ref:`as2-2-0-send-message-ws`", "POST:/corvus/api/message/send/as2", "/corvus/httpd/as2/sender"
    ":ref:`as2-2-0-list-message-ws`", "GET:/corvus/api/message/receive/as2", "/corvus/httpd/as2/receiver_list"
-   ":ref:`as2-2-0-receiver-ws`", "POST:/corvus/api/message/receive/as2", "/corvus/httpd/as2/receiver"
+   ":ref:`as2-2-0-receiver-ws`", "GET:/corvus/api/message/receive/as2", "/corvus/httpd/as2/receiver"
    ":ref:`as2-2-0-get-status-ws`", "GET:/corvus/api/message/send/as2", "/corvus/httpd/as2/status"
    ":ref:`as2-2-0-query-message-ws`", "GET:/corvus/api/message/history/as2", "/corvus/httpd/as2/msg_history"
+   ":ref:`as2-2-0-reset-status-ws`", "PUT:/corvus/api/message/history/as2", "NIL"   
    ":ref:`as2-2-0-add-partnership-ws`", "POST:/corvus/api/partnership/as2", "NIL"
    ":ref:`as2-2-0-delete-partnership-ws`", "DELETE /corvus/api/partnership/as2/{pid}", "NIL"
    ":ref:`as2-2-0-update-partnership-ws`", "POST:/corvus/api/partnership/as2", "NIL"
@@ -356,7 +357,7 @@ REST [1]_
 
 .. code-block:: sh
 
-    $ curl -X POST --data '{"message_id":"<message_id"}' http://<HOST>:<PORT>/corvus/api/message/receive/ebms
+    $ curl -X GET --data '{"message_id":"<message_id"}' http://<HOST>:<PORT>/corvus/api/message/receive/ebms
 
 **Response message**
 
@@ -531,15 +532,15 @@ REST [1]_
 
 .. code-block:: sh
 
-    $ curl -X POST --data '{"message_id":"<message_id>"}' http://<HOST>:<PORT>/corvus/api/message/redownload/ebms
+    $ curl -X PUT --data '{"message_id":"<message_id>", "action": "reset"}' http://<HOST>:<PORT>/corvus/api/message/history/ebms
 
-   
 **Response message**
       
 .. code-block:: json
 
     {
-        "id": "<message_id>"
+        "id": "<message_id>",
+        "success": true
     }
 
 For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
@@ -1033,7 +1034,7 @@ REST [1]_
 
 .. code-block:: sh
 
-    $ curl -X POST --data '{"id":"<message_id"}' http://<HOST>:<PORT>/corvus/api/message/receive/as2
+    $ curl -X GET --data '{"id":"<message_id"}' http://<HOST>:<PORT>/corvus/api/message/receive/as2
 
 **Response message**
 
@@ -1247,6 +1248,34 @@ REST [1]_
     }
 
 For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+
+.. _as2-2-0-reset-status-ws:
+
+Reset message status
+--------------------
+
+This web service is used by the application of the receiving party to reset the status of a downloaded AS2 message, so that it can be redownloaded again.
+
+.. _as2-2-0-reset-status-rest:
+
+REST [1]_
+``````````
+
+**Request message**
+
+.. code-block:: sh
+    
+    $ curl -X PUT -- data '{"message_id": "string", "action": "reset"}' http://<SENDER_HOST>:<SENDER_PORT>/corvus/api/message/history/as2
+
+**Response message**
+      
+.. code-block:: json
+
+    {
+        "id": "<message_id>",
+        "success": true
+    }
+
 
 .. _as2-2-0-add-partnership-ws:
 
