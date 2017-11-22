@@ -3,9 +3,9 @@ Using Hermes API
 
 Introduction
 ------------
-Hermes has implemented web services to communicate with external applications. The main advantages of using web services are to reduce coupling between external applications and Hermes, and to allow external applications to integrate Hermes seamlessly using any programming languages that support sending SOAP Messages with Attachments or calling RESTful APIs. This article helps developers  write a client talking to Hermes using web services based on SOAP or RESTful APIs. 
+Hermes has implemented web services to communicate with external applications. The main advantages of using web services are reducing the coupling between external applications and Hermes, and to allow external applications to integrate with Hermes seamlessly using any programming languages that support sending SOAP Messages with Attachments or calling REST APIs. This article helps developers writing a client which talks to Hermes via web services based on SOAP or REST APIs on HTTP.
 
-For more information on the installation and partnerships of Hermes, please refer to :doc:`installation` and :doc:`first_step`.
+For more information on the installation and partnerships of Hermes, please refer to :doc:`installation` and :doc:`first_step` respectively.
 
 To choose whether to use SOAP or REST APIs in your application, you may refer to `Understanding SOAP and REST Basics and Differences <http://blog.smartbear.com/apis/understanding-soap-and-rest-basics/>`_ for guidance.
 
@@ -14,7 +14,7 @@ To choose whether to use SOAP or REST APIs in your application, you may refer to
 Overview
 --------
 
-Here is a brief summary about the communication architecture between Hermes and external applications. The core of Hermes can attach to any J2EE compliant web server as a servlet. The core itself provides neither any web services or HTTP listeners, nor any functionality related to messaging. All features in Hermes are derived from the core using SPA (Simple Plugin Architecture).
+Here is a brief summary about the communication architecture between Hermes and external applications. The core of Hermes can run on any J2EE compliant web server as a servlet. The core itself provides neither any web services or HTTP listeners, nor any functionality related to messaging. All features in Hermes are derived from the core using SPA (Simple Plugin Architecture).
 
 One of the core SPAs, called Main Plugin (shown below in the core SPA layer), provides an HTTP context listener that accepts HTTP requests at the specified context path (extension point) for external invocation. The protocol-specific SPA ebMS and AS2 plugins (shown below in the external SPA layer) make use of this listener to provide all SOAP and REST web services.
 
@@ -50,9 +50,9 @@ In the default Hermes installation, each of ebMS 2.0 and AS2 plugins supports th
    ":ref:`as2-2-0-get-partnership-ws`", "GET:/corvus/api/partnership/as2", "NIL"
 
 .. note:: 
-   * To make an REST API request, the simplest way is to use ``curl`` as a command line REST client, or Postman as a GUI based client is a useful tool too. 
+   * To make an REST API request, the simplest way is to use ``curl`` as a command line REST client, or Postman as a GUI based client. 
    * To enhance the security of Hermes REST API, HTTP Basic Authenication is enabled for the Rest API. Please place the base64 encoded username:password in the HTTP Header as below :
-     :samp:`HTTP Header:Authorization` = :samp:`basic base64encode[username:pwd]` where the username and pwd are defined in :file:`tomcat-users.xml`
+     :samp:`HTTP Header:Authorization` = :samp:`basic base64encode[username:pwd]` where the username and pwd are defined in :file:`tomcat-users.xml` mentioned in :ref:`Tomcat installation <tomcat-user-xml>`.
 
 .. _ebms-2-0-web-service:
 
@@ -179,7 +179,7 @@ REST [1]_
         "id": "<message_id>"
     }
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
 
 .. _ebms-2-0-list-message-ws:
 
@@ -290,7 +290,7 @@ REST [1]_
 
 Please note that a message is considered to be downloaded when the message id is returned by this REST API call.
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
 
 .. _ebms-2-0-receiver-ws:
 
@@ -379,7 +379,7 @@ REST [1]_
         ]
     }
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
 
 .. _ebms-2-0-get-status-ws:
 
@@ -471,7 +471,7 @@ REST [1]_
         "status": "<status>"
     }
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
 
 .. _ebms-2-0-reset-status-ws:
 
@@ -542,7 +542,7 @@ REST [1]_
         "id": "<message_id>"
     }
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
 
 .. _ebms-2-0-query-message-ws:
 
@@ -650,7 +650,7 @@ REST [1]_
         ] 
     }
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
 
 .. _ebms-2-0-add-partnership-ws:
 
@@ -876,7 +876,7 @@ REST [1]_
 .. note:: 
    To try the REST API, the simplest way is to use ``curl`` as a command line REST client, or Postman as a GUI based client is a useful tool too.
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
 
 .. _as2-2-0-list-message-ws:
 
@@ -970,7 +970,7 @@ REST [1]_
 
 Please note that a message is considered to be downloaded when the message id is returned by this REST API call.
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
 
 .. _as2-2-0-receiver-ws:
 
@@ -1052,7 +1052,7 @@ REST [1]_
         ] 
     }
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
 
 .. _as2-2-0-get-status-ws:
 
@@ -1141,7 +1141,7 @@ REST [1]_
         "status": "<status>"
     }
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
 
 .. _as2-2-0-query-message-ws:
 
@@ -1246,7 +1246,7 @@ REST [1]_
         ] 
     }
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
 
 .. _as2-2-0-add-partnership-ws:
 
