@@ -9,9 +9,11 @@ One of the most common difficulties in using Hermes for new developers/users is 
 What is a partnership?
 ^^^^^^^^^^^^^^^^^^^^^^
 
-A partnership in Hermes is defined as a channel to your business partner. A partnership is a **simplex** (one-way) communication channel to your business partner. In a typical two-way business document exchange, the Hermes in each party should have **TWO** partnerships; one for sending, another for receiving. After the partnerships have been defined, the application can reference the partnerships to send or receive business messages.
+A partnership in Hermes is defined as a channel to your business partner. A partnership is a **Simplex** (one-way) communication channel to your business partner. In a typical two-way business document exchange, the Hermes in each party should have **TWO** matching partnership for sending and receiving [1]_. After the partnerships have been defined, the application can reference the partnerships to send or receive business messages.
 
 .. image:: /_static/images/first_step/Partnership_Overview.png
+
+.. [1] **Duplux** communication channel in Hermes can also be setup by configuring only **ONE** matching partnership in sending and receiving parties.
 
 Existing partnership types
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -32,17 +34,6 @@ For an ebms 2.0 partnership, **CPA (Collaboration Protocol Agreement) ID**, **Se
 * In a sending partnership, these values are taken as the values in the ebMS headers of outgoing messages.
 * In a receiving partnership, these values are taken as filtering criteria. If Hermes receives an ebMS message whose **CPA ID**, **Service** and **Action** values do not have a matching partnership, a negative acknowledgement will be sent back to the sender and no application can retrieve the message on the receiving side.
 
-In Hermes, the **Service** parameter for sending and receiving partnerships has to be HTTP URL (Universal Resource Locator). The **Service** has a different meaning in each partnership:
-
-* For a sending artnership, the **Service** acts as the endpoint URL of the sending Hermes for receiving acknowledgement.
-* For a receiving partnership, since the **Service** is a filtering criterion for incoming messages, it should be the endpoint URL of the sending Hermes.
-
-Let us look at a typical example below, in which two Hermes communicate using ebMS protocol:
-
-.. image:: /_static/images/first_step/EbMS_Partnership_Overview.png
-
-In the above scenario, the Hermes in company A has an IP 1.1.1.1. Its **Service** value for receiving incoming acknowledgements is http://1.1.1.1:8080/corvus/httpd/ebms/inbound, where we suppose the application server is running on port ``8080``. Similarly, the **Service** value for company B is http://1.1.1.2:8080/corvus/httpd/ebms/inbound.
-
 Since the receiving partnership's **CPA ID**, **Service** and **Action** filter the incoming messages, the values in the receiving partnership of the receiving Hermes should always be the same as the values in the sending partnership of the sending Hermes.
 
  
@@ -53,7 +44,7 @@ How to create your first ebMS 2.0 partnership
 #. Enter the administrator username and password for Hermes.
 #. Click :guilabel:`Ebms Plugin` in the module tab located on the left hand side.
 #. Click the :guilabel:`Partnership` tab on the central horizontal tabbed bar to display the partnership creation page.
-#. To create the simplest ebMS 2.0 partnership, you are only required to fill in the following seven fields in the form:
+#. To create the simplest ebMS 2.0 partnership, you are only required to fill in the following seven fields in the form [2]_:
 
    a. Partnership ID
    #. CPA ID
@@ -63,6 +54,8 @@ How to create your first ebMS 2.0 partnership
    #. Retries
    #. Retry Interval
 
+.. [2] Detailed description of the parameters in ebMS 2.0 partnership can be found in the next section :doc:`ebms_partnership`
+
 #. Fill in **Partnership ID**, **CPA ID**, **Service** and **Action** as shown below:
    Partnership ID is the unique identifier of the partnership in the sending Hermes while the three remaining fields (CPA ID, Service and Action) form a composite identifier between sending and receiving systems.
 
@@ -71,7 +64,7 @@ How to create your first ebMS 2.0 partnership
    +--------------------+------------------------------------------------------------+
    | **CPA ID**         | ``MyFirstCPAID``                                           |
    +--------------------+------------------------------------------------------------+
-   | **Service**        | http://localhost:8080/corvus/httpd/ebms/inbound            |
+   | **Service**        | ``MyFirstService``                                         |
    +--------------------+------------------------------------------------------------+
    | **Action**         | ``MyFirstAction``                                          |
    +--------------------+------------------------------------------------------------+
@@ -158,7 +151,7 @@ How to create your first AS2 partnership
 #. Enter the administrator user name and password for Hermes.
 #. Click the :guilabel:`AS2 Plugin` in the module tab located on the left hand side.
 #. Click the :guilabel:`Partnership` tab on the central horizontal tabbed bar to display the partnership creation page.
-#. To create the simplest AS2 partnership, you are only required to fill in the following seven fields in the form:
+#. To create the simplest AS2 partnership, you are only required to fill in the following seven fields in the form [3]_:
 
    a. Partnership ID
    #. AS2 From
@@ -167,6 +160,8 @@ How to create your first AS2 partnership
    #. Transport URL
    #. Retries
    #. Retry Interval
+
+.. [3] Detailed description of the parameters in AS2 partnership can be found in the next section :doc:`as2_partnership`
 
 #. Fill in **Partnership ID**, **AS2 From** and **AS2 To** as shown below:
    Partnership ID is the unique identifier of the partnership in the sender Hermes while the two remaining fields (AS2_From, AS2_To) form a composite identifier between sending and receiving systems.
