@@ -180,7 +180,7 @@ REST [1]_
         "id": "<message_id>"
     }
 
-For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _ebms-2-0-list-message-ws:
 
@@ -291,7 +291,7 @@ REST [1]_
 
 Please note that a message is considered to be downloaded when the message id is returned by this REST API call.
 
-For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _ebms-2-0-receiver-ws:
 
@@ -380,7 +380,7 @@ REST [1]_
         ]
     }
 
-For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _ebms-2-0-get-status-ws:
 
@@ -472,7 +472,7 @@ REST [1]_
         "status": "<status>"
     }
 
-For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _ebms-2-0-reset-status-ws:
 
@@ -543,7 +543,7 @@ REST [1]_
         "success": true
     }
 
-For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _ebms-2-0-query-message-ws:
 
@@ -651,7 +651,7 @@ REST [1]_
         ] 
     }
 
-For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _ebms-2-0-add-partnership-ws:
 
@@ -877,7 +877,7 @@ REST [1]_
 .. note:: 
    To try the REST API, the simplest way is to use ``curl`` as a command line REST client, or Postman as a GUI based client is a useful tool too.
 
-For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _as2-2-0-list-message-ws:
 
@@ -971,7 +971,7 @@ REST [1]_
 
 Please note that a message is considered to be downloaded when the message id is returned by this REST API call.
 
-For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _as2-2-0-receiver-ws:
 
@@ -1053,7 +1053,7 @@ REST [1]_
         ] 
     }
 
-For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _as2-2-0-get-status-ws:
 
@@ -1142,7 +1142,7 @@ REST [1]_
         "status": "<status>"
     }
 
-For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _as2-2-0-query-message-ws:
 
@@ -1247,7 +1247,7 @@ REST [1]_
         ] 
     }
 
-For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _as2-2-0-reset-status-ws:
 
@@ -1447,4 +1447,4 @@ See also
 * :doc:`first_step`
 * :doc:`ebms_partnership`
 * :doc:`as2_partnership`
-* `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_
+* `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_
