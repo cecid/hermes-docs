@@ -46,7 +46,7 @@ Open the configuration file named :file:`ebms.module.xml` that is placed in the 
                name="Key Store Manager for Digital Signature">
         <class>hk.hku.cecid.piazza.commons.security.KeyStoreManager</class>
         <parameter name="keystore-location"
-                   value="/corvus/plugins/hk.hku.cecid.ebms/security/corvus.p12" />
+                   value="<Hermes Home>/plugins/corvus-ebms/security/corvus.p12" />
         <parameter name="keystore-password" value="password" />
         <parameter name="key-alias" value="corvus" />
         <parameter name="key-password" value="password" />

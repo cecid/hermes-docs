@@ -3,9 +3,9 @@ Using Hermes API
 
 Introduction
 ------------
-Hermes has implemented web services to communicate with external applications. The main advantages of using web services are to reduce coupling between external applications and Hermes, and to allow external applications to integrate Hermes seamlessly using any programming languages that support sending SOAP Messages with Attachments or calling RESTful APIs. This article helps developers  write a client talking to Hermes using web services based on SOAP or RESTful APIs. 
+Hermes has implemented web services to communicate with external applications. The main advantages of using web services are reducing the coupling between external applications and Hermes, and to allow external applications to integrate with Hermes seamlessly using any programming languages that support sending SOAP Messages with Attachments or calling REST APIs. This article helps developers writing a client which talks to Hermes via web services based on SOAP or REST APIs on HTTP.
 
-For more information on the installation and partnerships of Hermes, please refer to :doc:`installation` and :doc:`first_step`.
+For more information on the installation and partnerships of Hermes, please refer to :doc:`installation` and :doc:`first_step` respectively.
 
 To choose whether to use SOAP or REST APIs in your application, you may refer to `Understanding SOAP and REST Basics and Differences <http://blog.smartbear.com/apis/understanding-soap-and-rest-basics/>`_ for guidance.
 
@@ -14,7 +14,7 @@ To choose whether to use SOAP or REST APIs in your application, you may refer to
 Overview
 --------
 
-Here is a brief summary about the communication architecture between Hermes and external applications. The core of Hermes can attach to any J2EE compliant web server as a servlet. The core itself provides neither any web services or HTTP listeners, nor any functionality related to messaging. All features in Hermes are derived from the core using SPA (Simple Plugin Architecture).
+Here is a brief summary about the communication architecture between Hermes and external applications. The core of Hermes can run on any J2EE compliant web server as a servlet. The core itself provides neither any web services or HTTP listeners, nor any functionality related to messaging. All features in Hermes are derived from the core using SPA (Simple Plugin Architecture).
 
 One of the core SPAs, called Main Plugin (shown below in the core SPA layer), provides an HTTP context listener that accepts HTTP requests at the specified context path (extension point) for external invocation. The protocol-specific SPA ebMS and AS2 plugins (shown below in the external SPA layer) make use of this listener to provide all SOAP and REST web services.
 
@@ -27,10 +27,10 @@ In the default Hermes installation, each of ebMS 2.0 and AS2 plugins supports th
 
    ":ref:`ebms-2-0-send-message-ws`", "POST:corvus/api/message/send/ebms", "/corvus/httpd/ebms/sender"
    ":ref:`ebms-2-0-list-message-ws`", "GET:/corvus/api/message/receive/ebms", "/corvus/httpd/ebms/receiver_list"
-   ":ref:`ebms-2-0-receiver-ws`", "POST:/corvus/api/message/receive/ebms", "/corvus/httpd/ebms/receiver"
+   ":ref:`ebms-2-0-receiver-ws`", "GET:/corvus/api/message/receive/ebms", "/corvus/httpd/ebms/receiver"
    ":ref:`ebms-2-0-get-status-ws`", "GET:/corvus/api/message/send/ebms", "/corvus/httpd/ebms/status"
-   ":ref:`ebms-2-0-reset-status-ws`", "POST:/corvus/api/message/redownload/ebms", "/corvus/httpd/ebms/permitdl"
    ":ref:`ebms-2-0-query-message-ws`", "GET:/corvus/api/message/history/ebms", "/corvus/httpd/ebms/msg_history"
+   ":ref:`ebms-2-0-reset-status-ws`", "PUT:/corvus/api/message/history/ebms", "/corvus/httpd/ebms/permitdl"
    ":ref:`ebms-2-0-add-partnership-ws`", "POST:/corvus/api/partnership/ebms", "NIL"
    ":ref:`ebms-2-0-delete-partnership-ws`", "DELETE /corvus/api/partnership/ebms/{pid}", "NIL"
    ":ref:`ebms-2-0-update-partnership-ws`", "POST:/corvus/api/partnership/ebms", "NIL"
@@ -41,18 +41,19 @@ In the default Hermes installation, each of ebMS 2.0 and AS2 plugins supports th
 
    ":ref:`as2-2-0-send-message-ws`", "POST:/corvus/api/message/send/as2", "/corvus/httpd/as2/sender"
    ":ref:`as2-2-0-list-message-ws`", "GET:/corvus/api/message/receive/as2", "/corvus/httpd/as2/receiver_list"
-   ":ref:`as2-2-0-receiver-ws`", "POST:/corvus/api/message/receive/as2", "/corvus/httpd/as2/receiver"
+   ":ref:`as2-2-0-receiver-ws`", "GET:/corvus/api/message/receive/as2", "/corvus/httpd/as2/receiver"
    ":ref:`as2-2-0-get-status-ws`", "GET:/corvus/api/message/send/as2", "/corvus/httpd/as2/status"
    ":ref:`as2-2-0-query-message-ws`", "GET:/corvus/api/message/history/as2", "/corvus/httpd/as2/msg_history"
+   ":ref:`as2-2-0-reset-status-ws`", "PUT:/corvus/api/message/history/as2", "NIL"   
    ":ref:`as2-2-0-add-partnership-ws`", "POST:/corvus/api/partnership/as2", "NIL"
    ":ref:`as2-2-0-delete-partnership-ws`", "DELETE /corvus/api/partnership/as2/{pid}", "NIL"
    ":ref:`as2-2-0-update-partnership-ws`", "POST:/corvus/api/partnership/as2", "NIL"
    ":ref:`as2-2-0-get-partnership-ws`", "GET:/corvus/api/partnership/as2", "NIL"
 
 .. note:: 
-   * To make an REST API request, the simplest way is to use ``curl`` as a command line REST client, or Postman as a GUI based client is a useful tool too. 
+   * To make an REST API request, the simplest way is to use ``curl`` as a command line REST client, or Postman as a GUI based client. 
    * To enhance the security of Hermes REST API, HTTP Basic Authenication is enabled for the Rest API. Please place the base64 encoded username:password in the HTTP Header as below :
-     :samp:`HTTP Header:Authorization` = :samp:`basic base64encode[username:pwd]` where the username and pwd are defined in :file:`tomcat-users.xml`
+     :samp:`HTTP Header:Authorization` = :samp:`basic base64encode[username:pwd]` where the username and pwd are defined in :file:`tomcat-users.xml` mentioned in :ref:`Tomcat installation <tomcat-user-xml>`.
 
 .. _ebms-2-0-web-service:
 
@@ -179,7 +180,7 @@ REST [1]_
         "id": "<message_id>"
     }
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _ebms-2-0-list-message-ws:
 
@@ -290,7 +291,7 @@ REST [1]_
 
 Please note that a message is considered to be downloaded when the message id is returned by this REST API call.
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _ebms-2-0-receiver-ws:
 
@@ -356,7 +357,7 @@ REST [1]_
 
 .. code-block:: sh
 
-    $ curl -X POST --data '{"message_id":"<message_id"}' http://<HOST>:<PORT>/corvus/api/message/receive/ebms
+    $ curl -X GET --data '{"message_id":"<message_id"}' http://<HOST>:<PORT>/corvus/api/message/receive/ebms
 
 **Response message**
 
@@ -379,7 +380,7 @@ REST [1]_
         ]
     }
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _ebms-2-0-get-status-ws:
 
@@ -471,7 +472,7 @@ REST [1]_
         "status": "<status>"
     }
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _ebms-2-0-reset-status-ws:
 
@@ -531,18 +532,18 @@ REST [1]_
 
 .. code-block:: sh
 
-    $ curl -X POST --data '{"message_id":"<message_id>"}' http://<HOST>:<PORT>/corvus/api/message/redownload/ebms
+    $ curl -X PUT --data '{"message_id":"<message_id>", "action": "reset"}' http://<HOST>:<PORT>/corvus/api/message/history/ebms
 
-   
 **Response message**
       
 .. code-block:: json
 
     {
-        "id": "<message_id>"
+        "id": "<message_id>",
+        "success": true
     }
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _ebms-2-0-query-message-ws:
 
@@ -650,7 +651,7 @@ REST [1]_
         ] 
     }
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _ebms-2-0-add-partnership-ws:
 
@@ -876,7 +877,7 @@ REST [1]_
 .. note:: 
    To try the REST API, the simplest way is to use ``curl`` as a command line REST client, or Postman as a GUI based client is a useful tool too.
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _as2-2-0-list-message-ws:
 
@@ -970,7 +971,7 @@ REST [1]_
 
 Please note that a message is considered to be downloaded when the message id is returned by this REST API call.
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _as2-2-0-receiver-ws:
 
@@ -1033,7 +1034,7 @@ REST [1]_
 
 .. code-block:: sh
 
-    $ curl -X POST --data '{"id":"<message_id"}' http://<HOST>:<PORT>/corvus/api/message/receive/as2
+    $ curl -X GET --data '{"id":"<message_id"}' http://<HOST>:<PORT>/corvus/api/message/receive/as2
 
 **Response message**
 
@@ -1052,7 +1053,7 @@ REST [1]_
         ] 
     }
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _as2-2-0-get-status-ws:
 
@@ -1141,7 +1142,7 @@ REST [1]_
         "status": "<status>"
     }
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
 
 .. _as2-2-0-query-message-ws:
 
@@ -1246,7 +1247,35 @@ REST [1]_
         ] 
     }
 
-For the details specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_.
+For the detailed specification of this REST API, please refer to `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_.
+
+.. _as2-2-0-reset-status-ws:
+
+Reset message status
+--------------------
+
+This web service is used by the application of the receiving party to reset the status of a downloaded AS2 message, so that it can be redownloaded again.
+
+.. _as2-2-0-reset-status-rest:
+
+REST [1]_
+``````````
+
+**Request message**
+
+.. code-block:: sh
+    
+    $ curl -X PUT -- data '{"message_id": "string", "action": "reset"}' http://<SENDER_HOST>:<SENDER_PORT>/corvus/api/message/history/as2
+
+**Response message**
+      
+.. code-block:: json
+
+    {
+        "id": "<message_id>",
+        "success": true
+    }
+
 
 .. _as2-2-0-add-partnership-ws:
 
@@ -1418,4 +1447,4 @@ See also
 * :doc:`first_step`
 * :doc:`ebms_partnership`
 * :doc:`as2_partnership`
-* `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>`_
+* `HERMES RESTful OpenAPI Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>`_

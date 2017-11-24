@@ -82,7 +82,7 @@ integrate it with other systems to meet your own business needs.
 
    application.rst
    Java API Documentation <http://javadoc.hermes.cecid.org/>
-   RESTful API Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.0>
+   RESTful API Specification <https://app.swaggerhub.com/apis/cecid-dev/Hermes2/1.0.1>
 
 .. 1. Hermes System Architecture <- Hermes2 Technical Guide.doc
    2. Developing Hermes Plugins <- Hermes 2 Plugin Development Guide.doc   

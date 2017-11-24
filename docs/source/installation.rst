@@ -8,9 +8,9 @@ The Hermes installer is packaged in a self-extracted Java archive (JAR). Please 
 
 * Hermes core
 * Hermes plugins (AS2 / AS2 Plus / ebMS)
-* Database tables of Hermes plugins for one of the following database:
+* Database tables of Hermes plugins in one of the following database:
   
-  * Postgres 9.2 or later
+  * Postgres 9.4 or later
   * Oracle 11gR2 or later
   * MySQL 5.5 or later with InnoDB storage engine supported
 
@@ -19,12 +19,13 @@ The Hermes installer is packaged in a self-extracted Java archive (JAR). Please 
 
 Prerequisite
 ------------
-1. Java SE Development Kit 8
+1. Java SE Development Kit 8 (For details, pls refer to :ref:`Install Java SE 8 <java-install>`)
+
+.. _install-jce:
+
 #. Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files 
 
-   a. Download the JCE Unlimited Strength Jurisdiction Policy Files for JDK 8 from 
-
-      http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html
+   a. Download the JCE Unlimited Strength Jurisdiction Policy Files for JDK 8 from http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html
 
    #. Unzip the downloaded file
 
@@ -42,13 +43,26 @@ Prerequisite
 
 #. Tomcat 8.5 or above with port ``8080``
 
-   a. Edit :file:`/etc/systemd/system/tomcat.service`. 
-      Change :envvar:`Environment=JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre` to :envvar:`Environment=JAVA_HOME=/usr/lib/jvm/java-8-oracle/jre`
+   a. Install Tomcat8.5+ (Ubuntu 16.04)
+
+      .. code-block:: sh
+
+         sudo apt update
+         sudo apt install -y tomcat8
+   
+   #. Change the ownership and mode of tomcat-users.xml
+
+      .. code-block:: sh
+
+         sudo chown <current user>:tomcat8 /etc/tomcat8/tomcat-users.xml
+         sudo chmod 640 /etc/tomcat8/tomcat-users.xml
 
    #. Restart Tomcat
 
    .. note::
-      To access the admin page, you will need to have a Tomcat user with an admin role.  One way to do this is to define the user in :file:`tomcat-users.xml`.  Please refer to the Realm Configuration section in the Tomcat documentation for more details.
+      To access the admin page, please create a Tomcat user with an admin role by defining this user in :file:`tomcat-users.xml`.  Please refer to the `Realm Configuration section <http://www.medcordex.eu:8080/docs/realm-howto.html#UserDatabaseRealm>`_ in the Tomcat documentation for more details.
+
+.. _tomcat-user-xml:
 
    Sample of :file:`tomcat-user.xml`:
 
@@ -62,7 +76,7 @@ Prerequisite
           <user username="corvus" password="corvus" roles="tomcat,admin,api"/>
       </tomcat-users>
 
-#. One of the following databases installed on any server:
+#. One of the following databases is installed:
 
    * PostgreSQL 9.2 or later. :file:`{<POSTGRES_HOME>}` is referring to the home directory of PostgreSQL in the remaining parts of the document.
    * MySQL 5.5 or later. :file:`{<MYSQL_HOME>}` is referring to the home directory of MySQL in the remaining parts of the document.
@@ -72,37 +86,42 @@ Installation
 ------------
 Step 1 – Environment setup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
-Install all the prerequisite items. The rest of this guide assumes that they are all running on the same machine.
+The above prerequisite items are installed and running on the same machine.
+
+.. _hermes-install-db:
 
 Step 2 – Database Configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Postgres**
 
-#. Create a database user with username ``corvus`` and password ``corvus``.
+#. Create a new DB user ``corvus`` with password ``corvus``.
 
-   a. Open a command prompt
-   #. Go to :file:`{<POSTGRES_HOME>}/bin`
-   #. Type :samp:`createuser -A -d -P -U {<POSTGRES_ADMIN>} corvus` where :samp:`{<POSTGRES_ADMIN>}` represents the name of an administrator/super-user in the PostgreSQL database. This value is ``postgres`` if not specified. This may require a super user or Postgres owner to execute in Linux.
-   #. Enter the password ``corvus``
+   a. Open a terminal
+   #. Login an account with root or sudo privilege
+   #. Change folder to :file:`{<POSTGRES_HOME>}/bin`
+   #. Type :samp:`sudo -u postgres createuser -A -d -P corvus`
+   #. Enter the sudo password to escalate privilege to root user, if the current account is not `root`
+   #. Enter the password ``corvus`` for the new user ``corvus``
    #. Enter the password again for confirmation
-   #. Enter the PostgreSQL administrator password for creating a new user role.
+
 
 #. Create two databases named ``as2`` and ``ebms`` with the ``corvus`` user.
 
-   a. Open a command prompt
-   #. Go to :file:`{<POSTGRES_HOME>}/bin`
-   #. Type ``createdb –U corvus –W as2``
+   a. Change folder to :file:`{<POSTGRES_HOME>}/bin`
+   #. Type ``sudo -u postgres createdb –U corvus –W as2``
+   #. Enter the sudo password to escalate privilege to root user, if the current account is not `root`
    #. Enter the password ``corvus``
-   #. Repeat steps 2.3 - 2.4 for the ``ebms`` database.
+   #. Repeat steps 2b - 2d for the ``ebms`` database.
 
 **MySQL**
 
 1. Create two databases named ``as2`` and ``ebms`` with username ``corvus`` and password ``corvus``.
 
-   a. Open a command prompt
-   #. Go to :file:`{<MYSQL_HOME>}/bin`
-   #. Type :samp:`mysql –u {<MYSQL_ADMIN>} -p` where :samp:`{<MYSQL_ADMIN>}` represents the name of an administrator/super-user in the MySQL database. This is ``root`` by default. This may require super user or MySQL owner to execute in Linux.
+   a. Open a terminal
+   #. Login an account
+   #. Change folder to :file:`{<MYSQL_HOME>}/bin`
+   #. Type :samp:`mysql –u {<MYSQL_ADMIN>} -p` where :samp:`{<MYSQL_ADMIN>}` represents the name of an administrator/super-user in the MySQL database (default: ``root``)
    #. Enter the command below to create the ``as2`` database. Note that specifying collate to ``latin1_general_cs`` is essential.
     
       .. code-block:: sql
@@ -115,34 +134,43 @@ Step 2 – Database Configuration
 
          grant all on as2.* to 'corvus'@'localhost' identified by 'corvus';
      
-   #. Repeat steps 1.4 – 1.5 for the ``ebms`` database.
+   #. Repeat steps 1e – 1f for the ``ebms`` database.
 
 **Oracle**
 
-Oracle database creation involves a number of steps and custom parameters for different requirements for the database server. We propose the following reference as a guideline for creating an Oracle database for Hermes:
+Oracle database creation involves a number of steps and custom parameters for different requirements. Below is a guideline for creating an Oracle database for Hermes:
 
 https://docs.oracle.com/cd/E11882_01/server.112/e10897/install.htm#ADMQS0232
 
 Step 3 – Hermes Deployment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1. Execute the installer
+3.1 Execute the installer
 
-   * For Unix/Linux, open :program:`terminal` and type ``sudo java –jar hermes2_installer.jar``.
+   * For Unix/Linux, open :program:`terminal` and type
+
+     .. code-block:: sh
+
+        sudo java –jar hermes2_installer.jar
 
    .. image:: /_static/images/3-4-1-hermes-2-0-text-installer.png
 
-   Press :guilabel:`Enter` until you get to Screen in "2. Step 1 - Configure Hermes Core".
+   Press :guilabel:`Enter` until you get to Screen in :ref:`3.2 Configure Hermes <hermes-install-config-1>`.
    
    * For Windows, open a command prompt as an Administrator and type ``java –jar hermes2_installer.jar`` or if :program:`java` is not set in your environment path, specify the full path.
 
    .. image:: /_static/images/3-4-1-hermes-2-0-opensource-installer.png
 
-   Click :guilabel:`Next` until you get to Screen in "2. Step 1 - Configure Hermes Core".
+   Click :guilabel:`Next` until you get to Screen in :ref:`3.2 Configure Hermes <hermes-install-config-2>`.
 
-#. Step 1 - Configure Hermes Core
+3.2 Configure Hermes
+
+.. _hermes-install-config-1:
 
    .. image:: /_static/images/3-4-1-step-1-configure-hermes-2-core.png
+
+.. _hermes-install-config-2:
+
    .. image:: /_static/images/3-4-1-step-1-h2o-installer.png
 
    Description of the settings:
@@ -150,7 +178,7 @@ Step 3 – Hermes Deployment
    +-----------------------------------+---------------------------------------------------------------------+
    | Web Application Folder            | Folder to place the web application (e.g :file:`webapps`) in Tomcat.|
    +-----------------------------------+---------------------------------------------------------------------+
-   | Hermes Home                       | Location to place the Hermes core library and some related files.   |
+   | Hermes Home                       | Folder to place the Hermes core library and system files.           |
    +-----------------------------------+---------------------------------------------------------------------+
    | JDBC Driver                       | Specify which database vendor to connect to.                        |
    |                                   | One of the following 3 database vendors can be selected:            |
@@ -166,11 +194,11 @@ Step 3 – Hermes Deployment
    | Web Service Usage Sample          | Optional. Install the sample program of web service client.         |
    +-----------------------------------+---------------------------------------------------------------------+
 
-   Click :guilabel:`Next` and press :guilabel:`Yes` if the installer prompts you to create a new directory.
+   Click :guilabel:`Next` and press :guilabel:`Yes` if the installer prompts you to create a new folder.
 
-#. Step 1.1 - Configure Database Driver
+3.3 Configure Database Driver
    
-   Oracle and MySQL drivers need to be downloaded manually. Once this is done, specify the location of the driver:
+   Oracle and MySQL JDBC drivers are not bundled with this Installer. Please download it manually. Once this is done, specify the location of the driver:
    
    .. image:: /_static/images/3-4-1-step-1-1-configure-database-driver.png
    .. image:: /_static/images/3-4-1-step-1-1-h2o-installer.png
@@ -178,10 +206,10 @@ Step 3 – Hermes Deployment
    Description of the settings:
    
    +-----------------------------+----------------------------------------------------+
-   | JDBC Driver Folder (.jar)   | Directory of the downloaded JDBC driver.           |
+   | JDBC Driver Folder (.jar)   | Path to the downloaded JDBC driver file.           |
    +-----------------------------+----------------------------------------------------+
 
-#. Step 2 - Configure Database for ebMS Plugin (Optional)
+3.4 Configure Database for ebMS Plugin (Optional)
   
    .. image:: /_static/images/3-4-1-step-2-configure-database-for-ebms-plugin.png
    .. image:: /_static/images/3-4-1-step-2-h2o-installer.png
@@ -190,7 +218,7 @@ Step 3 – Hermes Deployment
      
    +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
    | Database URL      | The URL address of the database server. Port number may be attached to the address with the format :samp:`{<HOST_ADDRESS>}:{<PORT>}` where            |
-   |                   | :samp:`{<HOST_ADDRESS>}` is the address of the database server and :samp:`{<PORT>}` is the port number of the database server address.                |
+   |                   | :samp:`{<HOST_ADDRESS>}` is the hostname of the database server and :samp:`{<PORT>}` is the port number listened by the database server.              |
    +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
    | Database Name/SID | For Postgres and MySQL, please specify the name of the database. For Oracle, please specify the Oracle System ID (SID).                               |
    +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -205,12 +233,12 @@ Step 3 – Hermes Deployment
    |                   | * If this is your **first time** installing Hermes, please check this option.                                                                         |
    |                   |                                                                                                                                                       |
    |                   | * If you choose to re-create the tables, all of the existing data in the specified database will be removed during installation.                      |
-   |                   |   Please backup all the data in the selected database before choosing to re-create the tables.                                                        |
+   |                   |   Please backup all the data in the selected database before re-creating the tables.                                                                  |
    +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-   If you followed the prerequisite installation procedures above, you can just leave it as the default. Click :guilabel:`Next` when you have finished the configuration.
+   If you followed the steps in prerequisite :ref:`hermes-install-db` above, you can just leave the settings as default value. Click :guilabel:`Next` when you have finished the configuration.
 
-#. Step 3 - Configure Database for AS2 Plugin (Optional)
+3.5 Configure Database for AS2 Plugin (Optional)
 
    .. image:: /_static/images/3-4-1-step-3-configure-database-for-as2-plugin.png
    .. image:: /_static/images/3-4-1-step-3-h2o-installer.png
@@ -243,9 +271,9 @@ Step 3 – Hermes Deployment
    |                   |   Please backup all the data in the selected database before choosing to re-create the tables.                                                        |
    +-------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-   If you followed the prerequisite installation procedures above, you can just leave it as the default. Click :guilabel:`Next` when you have finished the configuration.
+   If you followed the prerequisite :ref:`hermes-install-db` above, you can just leave the settings as default value. Click :guilabel:`Next` when you have finished the configuration.
 
-#. Click on :guilabel:`Install` and you're done!
+3.6 Click on :guilabel:`Install` and you're done!
 
 Step 4 – Start Hermes2
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -270,21 +298,21 @@ Step 4 – Start Hermes2
 
    .. image:: /_static/images/3-5-step-4-welcome-page.jpeg
 
-#. To access the admin page, go to the following URL. The login user and password are the same as the Tomcat user with admin privileges specified in Point 3 of `Prerequisite`_.
+#. To access the admin page, go to the following URL. The login user and password are the same as the Tomcat user with admin privileges specified in Point 3 of :ref:`Prerequisite <tomcat-user-xml>`.
 
     http://localhost:8080/corvus/admin/home
 
-#. Once you have gained access to the admin page, you should see the Hermes Administration Console page:
+#. Once you have logged in, you should see the Hermes Administration Console page:
 
    .. image:: /_static/images/3-5-step-4-administration-console-page.png
 
-That's it! Hermes should now be up and running. You can test your setup by running our web service usage sample in next section.
+That's it! Hermes should now be up and running. You can test your setup by running our Web Service Usage Sample in next section.
 
 
 Partnership Maintenance and Web Service Usage Sample
 -------------------------------------------------------
 
-A tool kit called :program:`Web Service Usage Sample` was installed under the :file:`{<HERMES2_HOME>}/sample` folder. It contains tools to test the installed Hermes.
+A tool kit called :program:`Web Service Usage Sample` was installed under the :file:`{<HERMES2_HOME>}/sample` folder. It contains tools to test the Hermes.
 
 Directory Organization
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -292,16 +320,16 @@ Directory Organization
 +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
 | Directory/File                        | Description                                                                                                                                         |
 +=======================================+=====================================================================================================================================================+
-| :file:`config/*`                      | Contains the configuration file for the sample programs. The folders inside this directory contain related files for specific sample programs.      |
+| :file:`config/*`                      | Contains the configuration file for the sample programs. Each folders contain related files for specific sample programs.                           |
 +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-| :file:`config/ebms-partnership.xml`   | These two files contain partnership settings for ebMS and AS2 that are used by the sample programs.                                                 |
+| :file:`config/ebms-partnership.xml`   | Contains partnership settings for ebMS and AS2 as the input of sample programs.                                                                     |
 | :file:`config/as2-partnership.xml`    |                                                                                                                                                     |
 +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
 | :file:`logs/*`                        | A set of logs that contain the output from each sample program.                                                                                     |
 +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-| :file:`lib/*`                         | The library files required for the sample programs.                                                                                                 |
+| :file:`lib/*`                         | The library files used by the sample programs.                                                                                                      |
 +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-| :file:`*.bat`/:file:`*.sh`            | The scripts for executing the sample programs.                                                                                                      |
+| :file:`*.bat`/:file:`*.sh`            | The scripts to run the sample programs.                                                                                                             |
 +---------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Preparation
@@ -310,21 +338,21 @@ Preparation
 Windows environment
 """""""""""""""""""
 
-1. Set environment variable :envvar:`JAVA_HOME` to the directory where Java is located.
+1. Set environment variable :envvar:`JAVA_HOME` to the folder where Java is located.
 
    .. note::
-      To run the sample program, Administrator privilege is required.
+      To run the sample program, Administrator privilege or root access is required.
 
 UNIX environment
 """"""""""""""""
 
-1. Set environment variable :envvar:`JAVA_HOME` to the directory where Java is located.
+1. Set environment variable :envvar:`JAVA_HOME` to the folder where Java is located.
 #. Change the owner and the group of :file:`{<HERMES2_HOME>}` and :file:`{<TOMCAT_HOME>}/webapps/corvus` with the following commands:
 
    .. code-block:: sh
 
-      sudo chown -R tomcat:<OWNER_GROUP> <HERMES2_HOME>
-      sudo chown -R tomcat:<OWNER_GROUP> <TOMCAT_HOME>/webapps/corvus
+      sudo chown -R <tomcat user>:<OWNER_GROUP> <HERMES2_HOME>
+      sudo chown -R <tomcat user>:<OWNER_GROUP> <TOMCAT_HOME>/webapps/corvus
 
 #. Change the permissions of all files in :file:`{<HERMES2_HOME>}` and :file:`{<TOMCAT_HOME>}/webapps/corvus` to ``775`` with the following command:
    
@@ -339,19 +367,19 @@ Partnership Maintenance
 
 Users need to define a **partnership**, which contains the messaging details between sender and recipient. It is required to identify the sender and the recipient when transporting messages.
 
-A web service sample program is provided to manage partnerships (add, update or delete). The partnership configuration for the AS2/ebMS loopback test is placed in :file:`{<HERMES2_HOME>}/sample/config/{<as2/ebms>}-partnership.xml`.
+A web service sample program is provided to manage partnerships (add, update and delete). The partnership configuration for the AS2/ebMS loopback test is placed in :file:`{<HERMES2_HOME>}/sample/config/{<as2/ebms>}-partnership.xml`.
 
 +------------------------------+----------------------------------------------------------+
 | Program                      | Purpose                                                  |
 +==============================+==========================================================+
-| :program:`as2-partnership` / | Maintains a specified AS2/ebMS partnership in Hermes.    |
-| :program:`ebms-partnership`  |                                                          |
+| :program:`as2-partnership` / | Maintains a specified AS2/ebMS partnership between       |
+| :program:`ebms-partnership`  | sender and recipient.                                    |
 +------------------------------+----------------------------------------------------------+
 
 Creating an AS2 Partnership
 """""""""""""""""""""""""""
 
-To create the partnership required to perform the AS2 messaging loopback test using `AS2 Web Service Usage Sample`_, you need to execute the script :program:`as2-partnership`.
+To perform the AS2 messaging loopback test using `Steps to run AS2 Sample`_, you need to create the required partnership by executing the script :program:`as2-partnership`.
 
 **Or:**
 
@@ -416,7 +444,7 @@ Please follow the same procedure listed in `Creating an AS2 Partnership`_ .
 Creating an ebMS Partnership
 """"""""""""""""""""""""""""
 
-To create the partnership required to perform the ebMS messaging loopback test using `ebMS Web Service Usage Sample`_, you need to execute the script :program:`ebms-partnership`.
+To perform the ebMS messaging loopback test using `Steps to run ebMS Sample`_, you need to create the required partnership by executing the script :program:`ebms-partnership`.
 
 **Or:**
 
@@ -465,7 +493,7 @@ Access http://localhost:8080/corvus/admin/ebms/partnership to configure the part
 Web Service Usage Sample Flow
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In order to validate the installation of Hermes, a web service usage sample program is provided. It can be executed by running the following scripts in a command prompt.
+In order to validate the installation of Hermes, the following web service usage sample programs are provided. 
 
 +--------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Program                  | Purpose                                                                                                                                                        |
@@ -477,7 +505,7 @@ In order to validate the installation of Hermes, a web service usage sample prog
 | :program:`ebms-history`  | The user can view the details of the inbox and outbox. For inbox messages, the user can also download the payload in the repository of Hermes, if available.   |
 +--------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-In order to test whether Hermes has been installed successfully or not, we suggest running the sample programs in the following steps:
+We suggest running the sample programs in the following steps:
 
 #. Send a message to the local Hermes by running :program:`ebms-send`/:program:`as2-send`.
 
@@ -485,8 +513,8 @@ In order to test whether Hermes has been installed successfully or not, we sugge
 
 #. Check the received message by running :program:`ebms-history`/:program:`as2-history` and select the message from the inbox to download the payload.
 
-AS2 Web Service Usage Sample
-""""""""""""""""""""""""""""
+Steps to run AS2 Sample
+"""""""""""""""""""""""
 
 Before executing the following AS2 web service usage sample, the partnership from `Creating an AS2 Partnership`_ must be created.
 
@@ -514,8 +542,8 @@ Before executing the following AS2 web service usage sample, the partnership fro
 
    .. image:: /_static/images/4-4-1-smaple-message.png
 
-ebMS Web Service Usage Sample
-"""""""""""""""""""""""""""""
+Steps to run ebMS Sample
+""""""""""""""""""""""""
 
 Before executing the following ebMS web service usage sample, the partnership from `Creating an ebMS Partnership`_ must be created.
 
@@ -560,7 +588,7 @@ Q1. The :file:`corvus.log` shows:
        hk.hku.cecid.piazza.commons.spa.PluginException: Error in processing activation by handler:
        hk.hku.cecid.ebms.spa.EbmsProcessor which is caused by java.io.IOException: exception decrypting data - java.lang.SecurityException: Unsupported keysize or algorithm parameters
 
-A1. Please ensure the Java 2 SDK files have been replaced by the JCE files.
+A1. Please ensure the Java 8 SE files have been replaced by the JCE files as mentioned in :ref:`Prerequisite <install-jce>`.
 
 Q2. Some log files show the following error:
 
@@ -572,11 +600,11 @@ A2. Ensure PostgreSQL/MySQL/Oracle was installed properly and check the followin
 
     For AS2:
 
-    :file:`{<HERMES2_HOME>}/plugins/hk.hku.cecid.edi.as2/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml`. There is a tag in this file named ``parameter`` with the attribute ``name=url``. Check the ``value`` attribute to see if it references the correct server address. The format of the ``value`` attribute is the same as the JDBC connection string.
+    :file:`{<HERMES2_HOME>}/plugins/corvus-as2/conf/hk/hku/cecid/edi/as2/conf/as2.module.core.xml`. There is a tag in this file named ``parameter`` with the attribute ``name=url``. Check the ``value`` attribute to see if it references the correct server address. The format of the ``value`` attribute is the same as the JDBC connection string.
 
     For ebMS:
 
-    :file:`{<HERMES2_HOME>}/plugins/hk.hku.cecid.ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml`. There is a tag in this file named ``parameter`` with the attribute ``name=url``. Check the ``value`` attribute to see if it references the correct server address. The format of the ``value`` attribute is the same as the JDBC connection string.
+    :file:`{<HERMES2_HOME>}/plugins/corvus-ebms/conf/hk/hku/cecid/ebms/spa/conf/ebms.module.xml`. There is a tag in this file named ``parameter`` with the attribute ``name=url``. Check the ``value`` attribute to see if it references the correct server address. The format of the ``value`` attribute is the same as the JDBC connection string.
 
 **Web Service Usage Sample**
 
@@ -586,7 +614,7 @@ Q1. The following exception is thrown:
        
        Exception in thread "main" java.lang.UnsupportedClassVersionError: xxx (Unsupported major.minor version 49.0)
 
-A1. It is very likely you are using an incompatible Java version. The web service usage sample requires J2SE 5.0 or above to run properly. In the command prompt, enter ``java –version`` to check the Java version.
+A1. It is very likely you are using an incompatible Java version. The web service usage sample requires Java 8 SE or above to run properly. In the terminal, please type ``java –version`` to check the Java version.
 
 Q2. The following error occurs:
 
